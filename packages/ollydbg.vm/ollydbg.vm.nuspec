@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ollydbg.vm</id>
+    <version>1.10</version>
+    <tags>reverse engineering debugger disassembler binary analysis</tags>
+    <description>OllyDbg is a 32-bit assembler level analysing debugger for Windows. Emphasis on binary code analysis makes it particularly useful in cases where source is unavailable.</description>
+    <authors>Oleh Yuschuk</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

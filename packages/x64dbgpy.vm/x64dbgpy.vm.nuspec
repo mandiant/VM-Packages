@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>x64dbgpy.vm</id>
+    <version>1.0.56.20211021</version>
+    <description>Automating x64dbg using Python.</description>
+    <authors>mrexodia, RealGame (Tomer Zait)</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="x64dbg.vm" />
+    </dependencies>
+  </metadata>
+</package>

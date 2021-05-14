@@ -1,0 +1,6 @@
+VM-Packages
+Copyright 2021 Mandiant, Inc.
+
+This software includes code developed by Mandiant, Inc.
+
+Portions of this software may be contributed by the community.

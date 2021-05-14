@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>x64dbg.vm</id>
+    <version>2021.05.08</version>
+    <description>An open-source x64/x32 debugger for Windows.</description>
+    <authors>mrexodia</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

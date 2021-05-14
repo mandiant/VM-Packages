@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>peid.vm</id>
+    <version>0.95</version>
+    <description>PEiD detects most common packers, cryptors and compilers for PE files.</description>
+    <authors>snaker, Qwerton, Jibz, xineohP</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

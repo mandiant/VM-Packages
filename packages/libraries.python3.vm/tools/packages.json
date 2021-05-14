@@ -1,0 +1,28 @@
+{
+  "packages": [
+    {"name": "hexdump"},
+    {"name": "pycryptodome"},
+    {"name": "oletools"},
+    {"name": "olefile"},
+    {"name": "msoffcrypto-tool"},
+    {"name": "unpy2exe"},
+    {"name": "uncompyle6"},
+    {"name": "pyftpdlib"},
+    {"name": "pyasn1"},
+    {"name": "pyOpenSSL"},
+    {"name": "acefile"},
+    {"name": "stringsifter"},
+    {
+      "name": "binwalk",
+      "url": "https://github.com/ReFirmLabs/binwalk/archive/master.zip"
+    },
+    {
+      "name":"vivisect",
+      "url": "https://github.com/williballenthin/vivisect/zipball/master"
+    },
+    {"name": "unicorn"},
+    {"name": "requests"},
+    {"name": "yara-python"},
+    {"name": "mkyara"}
+  ]
+}

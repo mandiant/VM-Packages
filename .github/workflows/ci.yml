@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_test_upload:
+    runs-on: windows-2016
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get changed files
+        id: files
+        uses: Ana06/get-changed-files@v2.0.0
+        with:
+          filter: '*.nuspec'
+      - name: Build all modified packages into built_pkgs
+        id: build
+        # It runs only if there are modified files
+        if: steps.files.outputs.added_modified != ''
+        run: |
+          $root = Get-Location
+          $built_pkgs_dir = New-Item -ItemType Directory built_pkgs
+
+          $changed_files = "${{ steps.files.outputs.added_modified }} packages\common.vm\common.vm.nuspec".Split(" ")
+          foreach ($changed_file in $changed_files) {
+              Set-Location (Split-Path $root\$changed_file -Parent)
+              choco pack -out $built_pkgs_dir
+              if ($LASTEXITCODE -ne 0) { Exit 1 } # Abort with the first failing build
+          }
+      - name: Test all built packages
+        id: test
+        # Do not test if build was skipped
+        if: steps.build.outcome == 'success'
+        run: |
+          # https://github.com/chocolatey/choco/blob/5868c66a2a4ef104f92d11ec638066eac2570783/src/chocolatey/infrastructure.app/services/PowershellService.cs#L309
+          $validExitCodes = @(0, 1605, 1614, 1641, 3010)
+
+          $built_pkgs = Get-ChildItem built_pkgs | Foreach-Object {( [regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value)}
+          Set-Location built_pkgs
+
+          choco install common.vm -s .
+          foreach ($package in $built_pkgs) {
+              choco install $package -s "'.;https://community.chocolatey.org/api/v2/'"
+              if ($validExitCodes -notcontains $LASTEXITCODE) { Exit 1 } # Abort with the first failing install
+          }
+          Exit 0
+      - name: Push all built packages to MyGet
+        # Only push packages on master if they were built (not if testing was skipped)
+        if: steps.test.outcome == 'success' && github.event_name == 'push'
+        run: |
+          $built_pkgs = Get-ChildItem built_pkgs
+          Set-Location built_pkgs
+
+          foreach ($package in $built_pkgs) {
+              cpush -s "https://www.myget.org/F/vm-packages/api/v2" -k ${{ secrets.MYGET_TOKEN }} $package
+          }

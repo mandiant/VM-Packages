@@ -1,0 +1,22 @@
+{
+  "packages": [
+    {"name": "hexdump"},
+    {"name": "pefile"},
+    {"name": "winappdbg"},
+    {"name": "pycryptodome"},
+    {"name": "capstone-windows"},
+    {"name": "unicorn"},
+    {"name": "oletools"},
+    {"name": "olefile"}, 
+    {"name": "unpy2exe"},
+    {"name": "pyftpdlib"},
+    {"name": "pyasn1"},
+    {"name": "pyOpenSSL"},
+    {"name": "ldapdomaindump"},
+    {"name": "pyreadline"},
+    {"name": "flask"},
+    {"name": "networkx"},
+    {"name": "requests"},
+    {"name": "msoffcrypto-tool"}
+  ]
+}
