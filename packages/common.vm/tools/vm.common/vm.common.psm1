@@ -693,7 +693,7 @@ function VM-Add-To-Right-Click-Menu {
     }
     Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey\command" -Name '(Default)' -Value $command -Type String
   } catch {
-    FE-Write-Log "ERROR" "Failed to add $menuKey to right-click menu"
+    VM-Write-Log "ERROR" "Failed to add $menuKey to right-click menu"
   }
 }
 
@@ -724,6 +724,6 @@ function VM-Remove-From-Right-Click-Menu {
       Remove-Item -LiteralPath "HKCR:\$key\shell\$menuKey" -Recurse
     }
   } catch {
-    FE-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
+    VM-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
   }
 }
