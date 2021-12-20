@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>floss.vm</id>
-    <version>1.7.0</version>
+    <version>1.7.0.20220113</version>
     <description>FLOSS uses advanced static analysis techniques to automatically deobfuscate strings from malware binaries. You can use it just like strings.exe to enhance basic static analysis of unknown binaries.</description>
     <authors>@williballenthin, @mr-tz</authors>
     <dependencies>
