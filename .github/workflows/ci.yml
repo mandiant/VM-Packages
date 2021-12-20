@@ -7,8 +7,35 @@ on:
     branches: [ main ]
 
 jobs:
+  check_nuspec:
+    runs-on: windows-2016
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get changed files
+        id: files
+        uses: Ana06/get-changed-files@v2.0.0
+        with:
+          filter: 'packages/*/**'
+      - name: Check nuspec is modified for every modified package
+        # It runs only if there are modified files
+        if: steps.files.outputs.added_modified != ''
+        run: |
+          $changed_files = "${{ steps.files.outputs.added_modified }}".Split(" ")
+          $nuspecs = [string]@($changed_files | where { $_ -Like "*.nuspec" })
+          $others = @($changed_files | where { $_ -NotLike "*.nuspec" })
+          foreach ($file in $others) {
+              if ($file -match "packages/[^/]*") {
+                  $package = $matches.0
+                  if (!$nuspecs.contains($package)) {
+                      Write-Error "The version in $package needs to be modified"
+                  }
+              }
+          }
+
   build_test_upload:
     runs-on: windows-2016
+    needs: [check_nuspec]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
