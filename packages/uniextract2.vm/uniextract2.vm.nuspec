@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>uniextract2.vm</id>
-    <version>2.0.0.5</version>
+    <version>2.0.0.20220113</version>
     <description>Universal Extractor 2 is an unofficial updated and extended version of the original UniExtract by Jared Breland.</description>
     <authors>William Engelmann (Bioruebe)</authors>
     <dependencies>

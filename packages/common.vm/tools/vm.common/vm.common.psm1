@@ -482,11 +482,11 @@ function VM-Install-From-Zip {
     [string] $category,
     [Parameter(Mandatory=$true, Position=2)]
     [string] $zipUrl,
-    [Parameter(Mandatory=$true, Position=3)]
+    [Parameter(Mandatory=$false)]
     [string] $zipSha256,
-    [Parameter(Mandatory=$false, Position=4)]
+    [Parameter(Mandatory=$false)]
     [string] $zipUrl_64,
-    [Parameter(Mandatory=$false, Position=5)]
+    [Parameter(Mandatory=$false)]
     [string] $zipSha256_64,
     [Parameter(Mandatory=$false)]
     [bool] $consoleApp=$false,
