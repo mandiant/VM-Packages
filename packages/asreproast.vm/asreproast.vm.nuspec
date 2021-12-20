@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>asreproast.vm</id>
-    <version>0.0.0.20211029</version>
+    <version>0.0.0.20180925</version>
     <authors>HarmJ0y</authors>
     <description>Project that retrieves crackable hashes from KRB5 AS-REP responses for users without kerberoast preauthentication enabled.</description>
     <dependencies>
