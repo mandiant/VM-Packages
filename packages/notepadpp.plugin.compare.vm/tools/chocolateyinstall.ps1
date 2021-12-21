@@ -12,6 +12,9 @@ try {
   $zipUrl_64 = "https://github.com/pnedev/compare-plugin/releases/download/v2.0.1/ComparePlugin_v2.0.1_X64.zip"
   $zipSha256_64 ="77dedf98ea2280528d726c0053db2001e90da7588e14ee01a98933f121bb15cb"
 
+  # Remove files from previous zips for upgrade
+  VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
+
   # Download and unzip
   $packageArgs = @{
     packageName    = ${Env:ChocolateyPackageName}
