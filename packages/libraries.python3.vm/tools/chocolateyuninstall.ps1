@@ -13,7 +13,7 @@ function LoadPackages {
 
 function UninstallOneModule {
   param([string] $name)
-  iex "py -3 -m pip uninstall -y $name 2>&1 >> $outputFile"
+  Invoke-Expression "py -3 -m pip uninstall -y $name 2>&1 >> $outputFile"
   return $LastExitCode
 }
 
@@ -30,7 +30,7 @@ if (($null -eq $json) -Or ($null -eq $json.packages)) {
 $outputFile = VM-New-Install-Log $toolDir
 
 # upgrade pip
-iex "py -3 -m pip install --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
+Invoke-Expression "py -3 -m pip install --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
 
 $packages = $json.packages
 $success = $true

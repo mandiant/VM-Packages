@@ -21,7 +21,7 @@ if (-Not (Test-Path $packages_dir)) { Exit 1 }
 
 # Create built packages directory and enumerate package directories
 $built_pkgs_dir = New-Item -Force -ItemType Directory 'built_pkgs'
-$package_dirs = Get-ChildItem -Path $packages_dir | % { $_.FullName }
+$package_dirs = Get-ChildItem -Path $packages_dir | ForEach-Object { $_.FullName }
 
 # Ask if packages should be built
 Write-Host -ForegroundColor Yellow -NoNewline "[INFO]: Build all packages? (y/n)"
