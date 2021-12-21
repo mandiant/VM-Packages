@@ -19,7 +19,7 @@ try {
   )
   foreach ($pkg in $packages) {
     try {
-      iex "choco install $pkg -y --source cygwin"
+      Invoke-Expression "choco install $pkg -y --source cygwin"
     } catch {
         VM-Write-Log "ERROR" "$_.Exception.Message`r`n$_.InvocationInfo.PositionMessage"
     }

@@ -133,8 +133,8 @@ function VM-Install-OnePackage {
 
   if ($args -like "*-source*" -Or $args -like "*--package-parameters*" -Or $args -like "*--parameters*") {
     Write-Warning "[!] Installing using host choco.exe! Errors are ignored. Please check to confirm $name is installed properly"
-    Write-Warning "[!] Executing: iex choco upgrade $name $args"
-    $rc = iex "choco upgrade $name $args"
+    Write-Warning "[!] Executing: Invoke-Expression choco upgrade $name $args"
+    $rc = Invoke-Expression "choco upgrade $name $args"
     Write-Host $rc
   } else {
     choco upgrade $name $args
