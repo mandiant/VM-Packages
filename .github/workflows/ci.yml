@@ -7,6 +7,14 @@ on:
     branches: [ main ]
 
 jobs:
+  lint:
+    runs-on: windows-2016
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run lint.ps1
+        run: scripts/lint.ps1
+
   check_nuspec:
     runs-on: windows-2016
     steps:
@@ -35,7 +43,7 @@ jobs:
 
   build_test_upload:
     runs-on: ${{ matrix.os }}
-    needs: [check_nuspec]
+    needs: [lint, check_nuspec]
     strategy:
       fail-fast: false
       matrix:
