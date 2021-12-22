@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Get changed files
         id: files
-        uses: Ana06/get-changed-files@v2.0.0
+        uses: Ana06/get-changed-files@v2.1.0
         with:
           filter: 'packages/*/**'
       - name: Check nuspec is modified for every modified package
@@ -34,8 +34,12 @@ jobs:
           }
 
   build_test_upload:
-    runs-on: windows-2016
+    runs-on: ${{ matrix.os }}
     needs: [check_nuspec]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2016, windows-2019, windows-2022]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -76,8 +80,9 @@ jobs:
           }
           Exit 0
       - name: Push all built packages to MyGet
-        # Only push packages on master if they were built (not if testing was skipped)
-        if: steps.test.outcome == 'success' && github.event_name == 'push'
+        # Only push packages on master if they were built (not if testing was skipped) and
+        # only with one version of Windows (otherwise it would be pushed 3 times)
+        if: steps.test.outcome == 'success' && github.event_name == 'push' && matrix.os == 'windows-2019'
         run: |
           $built_pkgs = Get-ChildItem built_pkgs
           Set-Location built_pkgs

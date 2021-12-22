@@ -8,7 +8,11 @@ on:
 
 jobs:
   build_test:
-    runs-on: windows-2016
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2016, windows-2019, windows-2022]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -33,7 +37,7 @@ jobs:
 
           choco install common.vm -s .
           foreach ($package in $built_pkgs) {
-              choco install $package -s "'.;https://community.chocolatey.org/api/v2/'"
+              choco install $package -s "'.;https://community.chocolatey.org/api/v2/'" --no-progress
               if ($validExitCodes -notcontains $LASTEXITCODE) { Exit 1 } # Abort with the first failing install
           }
           Exit 0
