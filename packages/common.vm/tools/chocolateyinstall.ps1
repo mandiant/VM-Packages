@@ -20,7 +20,7 @@ function Set-EnvironmentVariableWrap([string] $key, [string] $value)
 	  [Environment]::SetEnvironmentVariable($key, $value)
 	  [Environment]::SetEnvironmentVariable($key, $value, 1)
 	  [Environment]::SetEnvironmentVariable($key, $value, 2)
-	
+
 	  $rc = $true
 	} catch {
 		$rc = $false
@@ -65,7 +65,7 @@ if (-Not $curModulePaths) {
 else {
   # Remove the previous common directory path if it is already present
   $prevPath = ($curModulePaths -Split ';' | Where-Object { !($_.ToLower() -Match "\\$($commonDirPath.split("\\")[-1])")}) -Join ';'
-}  
+}
 
 # Update the PSModulePath env var
 $prevPath = "$commonDirPath;$prevPath"
