@@ -283,7 +283,7 @@ function VM-Get-DiskSize {
 function VM-Get-FreeSpace {
   [double]$freeSpace = 0.0
   [string]$wql = "SELECT * FROM Win32_LogicalDisk WHERE MediaType=12"
-  $drives = Get-WmiObject -query $wql
+  $drives = Get-CIMInstance -query $wql
   if($null -ne $drives) {
       foreach($drive in $drives) {
           $freeSpace += ($drive.freeSpace)
