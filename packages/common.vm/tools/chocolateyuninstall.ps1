@@ -11,7 +11,7 @@ if ($modulePaths) {
 }
 else {
   $prevPath = Join-Path ${Env:ProgramFiles} "\WindowsPowerShell\Modules"
-}  
+}
 Install-ChocolateyEnvironmentVariable -VariableName $envVarName -VariableValue $prevPath -VariableType 'Machine'
 Set-Item "Env:$envVarName" $prevPath -Force
 
