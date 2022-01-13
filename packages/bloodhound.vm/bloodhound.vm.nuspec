@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>bloodhound.vm</id>
-    <version>3.0.2.0</version>
+    <version>3.0.2.20220113</version>
     <description>BloodHound uses graph theory to reveal the hidden and often unintended relationships within an Active Directory environment.</description>
     <authors>Andrew Robbins, Rohan Vazarkar, Will Schroeder</authors>
     <dependencies>
