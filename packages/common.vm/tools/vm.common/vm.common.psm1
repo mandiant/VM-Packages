@@ -232,7 +232,7 @@ function VM-Set-PinnedApplication {
     $shell=new-object -com "Shell.Application"
     $folder=$shell.Namespace($path)
     $item = $folder.Parsename((split-path $FilePath -leaf))
-    $itemVerb = $item.Verbs() | ? {$_.Name.Replace("&","") -eq $verb}
+    $itemVerb = $item.Verbs() | Where-Object {$_.Name.Replace("&","") -eq $verb}
     if($itemVerb -eq $null){
       throw "Verb $verb not found."
     } else {
