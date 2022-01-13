@@ -2,6 +2,11 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
+  # Disable Windows Defender
+  Set-MpPreference -DisableRealtimeMonitoring $true
+  New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Force
+  New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1 -PropertyType DWORD -Force
+  Uninstall-WindowsFeature -Name Windows-Defender
   $toolName = "pd"
   $category = "Utilities"
 
