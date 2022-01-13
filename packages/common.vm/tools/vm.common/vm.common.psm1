@@ -126,18 +126,18 @@ function VM-Install-OnePackage {
   }
 
   if ($null -eq $pkgargs) {
-    $args = $globalCinstArgs
+    $upgradeArgs = $globalCinstArgs
   } else {
-    $args = $pkgargs,$globalCinstArgs -Join " "
+    $upgradeArgs = $pkgargs,$globalCinstArgs -Join " "
   }
 
-  if ($args -like "*-source*" -Or $args -like "*--package-parameters*" -Or $args -like "*--parameters*") {
+  if ($upgradeArgs -like "*-source*" -Or $upgradeArgs -like "*--package-parameters*" -Or $upgradeArgs -like "*--parameters*") {
     Write-Warning "[!] Installing using host choco.exe! Errors are ignored. Please check to confirm $name is installed properly"
-    Write-Warning "[!] Executing: Invoke-Expression choco upgrade $name $args"
-    $rc = Invoke-Expression "choco upgrade $name $args"
+    Write-Warning "[!] Executing: Invoke-Expression choco upgrade $name $upgradeArgs"
+    $rc = Invoke-Expression "choco upgrade $name $upgradeArgs"
     Write-Host $rc
   } else {
-    choco upgrade $name $args
+    choco upgrade $name $upgradeArgs
   }
 
   if ($([System.Environment]::ExitCode) -ne 0 -And $([System.Environment]::ExitCode) -ne 3010) {
