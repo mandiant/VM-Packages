@@ -567,7 +567,6 @@ function VM-Uninstall {
     [string] $category
   )
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   # Remove tool files
   Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
