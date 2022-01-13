@@ -125,7 +125,7 @@ function VM-Install-OnePackage {
     }
   }
 
-  if ($pkgargs -eq $null) {
+  if ($null -eq $pkgargs) {
     $args = $globalCinstArgs
   } else {
     $args = $pkgargs,$globalCinstArgs -Join " "
