@@ -14,7 +14,7 @@
     {"name": "stringsifter"},
     {
       "name": "binwalk",
-      "url": "https://github.com/ReFirmLabs/binwalk/archive/master.zip"
+      "url": "https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"
     },
     {"name": "vivisect"},
     {"name": "unicorn"},
