@@ -1,25 +1,29 @@
 {
   "packages": [
-    {"name": "hexdump"},
-    {"name": "pycryptodome"},
-    {"name": "oletools"},
-    {"name": "olefile"},
-    {"name": "msoffcrypto-tool"},
-    {"name": "unpy2exe"},
-    {"name": "uncompyle6"},
-    {"name": "pyftpdlib"},
-    {"name": "pyasn1"},
-    {"name": "pyOpenSSL"},
     {"name": "acefile"},
-    {"name": "stringsifter"},
     {
       "name": "binwalk",
       "url": "https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"
     },
-    {"name": "vivisect"},
-    {"name": "unicorn"},
+    {"name": "capstone-windows"},
+    {"name": "hexdump"},
+    {"name": "ldapdomaindump"},
+    {"name": "mkyara"},
+    {"name": "msoffcrypto-tool"},
+    {"name": "olefile"},
+    {"name": "oletools"},
+    {"name": "pefile"},
+    {"name": "pyasn1"},
+    {"name": "pycryptodome"},
+    {"name": "pyftpdlib"},
+    {"name": "pyreadline"},
+    {"name": "pyOpenSSL"},
     {"name": "requests"},
-    {"name": "yara-python"},
-    {"name": "mkyara"}
+    {"name": "stringsifter"},
+    {"name": "uncompyle6"},
+    {"name": "unpy2exe"},
+    {"name": "unicorn"},
+    {"name": "vivisect"},
+    {"name": "yara-python"}
   ]
 }
