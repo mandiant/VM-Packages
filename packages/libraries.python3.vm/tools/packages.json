@@ -16,10 +16,7 @@
       "name": "binwalk",
       "url": "https://github.com/ReFirmLabs/binwalk/archive/master.zip"
     },
-    {
-      "name":"vivisect",
-      "url": "https://github.com/williballenthin/vivisect/zipball/master"
-    },
+    {"name": "vivisect"},
     {"name": "unicorn"},
     {"name": "requests"},
     {"name": "yara-python"},
