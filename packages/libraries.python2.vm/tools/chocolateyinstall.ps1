@@ -19,7 +19,7 @@ function InstallOneModule {
   } else {
     $url = $module.url
   }
-  iex "py -2 -m pip install $url 2>&1 >> $outputFile"
+  Invoke-Expression "py -2 -m pip install $url 2>&1 >> $outputFile"
   return $LastExitCode
 }
 
@@ -37,7 +37,7 @@ try {
   $outputFile = VM-New-Install-Log $toolDir
 
   # upgrade pip
-  iex "py -2 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
+  Invoke-Expression "py -2 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
 
   $packages = $json.packages
   $success = $true

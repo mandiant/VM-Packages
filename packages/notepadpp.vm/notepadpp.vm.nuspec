@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>notepadpp.vm</id>
-    <version>8.1.9.3</version>
+    <version>8.1.9.20220222</version>
     <description>Wrapper for Notepad++</description>
     <authors>Don Ho</authors>
     <dependencies>

@@ -14,7 +14,7 @@ try {
     # Give it a little time in case it's slow
     foreach ($item in "0", "1") {
       $notepad = Get-Process -Name "notepad++" -ErrorAction SilentlyContinue
-      if ($notepad -ne $null) {
+      if ($null -ne $notepad) {
         $notepad | ForEach-Object {$_.CloseMainWindow() | Out-Null}
       }
       Start-Sleep -Seconds 2
