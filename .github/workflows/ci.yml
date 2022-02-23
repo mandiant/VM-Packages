@@ -98,3 +98,12 @@ jobs:
           foreach ($package in $built_pkgs) {
               cpush -s "https://www.myget.org/F/vm-packages/api/v2" -k ${{ secrets.MYGET_TOKEN }} $package
           }
+      - name: Upload chocolatey logs to artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: logs-${{ matrix.os }}.zip
+          path: |
+            C:\ProgramData\chocolatey\logs\chocolatey.log
+            C:\ProgramData\chocolatey\lib-bad\**\tools\install_log.txt
+            C:\ProgramData\_VM\log.txt
