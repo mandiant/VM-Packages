@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>processdump.vm</id>
+    <version>2.1.1</version>
+    <title>Process Dump</title>
+    <authors>glmcdona</authors>
+    <description>Process Dump is a Windows reverse-engineering command-line tool to dump malware memory components back to disk for analysis.</description>
+    <dependencies>
+      <dependency id="common.vm"/>
+    </dependencies>
+  </metadata>
+</package>
