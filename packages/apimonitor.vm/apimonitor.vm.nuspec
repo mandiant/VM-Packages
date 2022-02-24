@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>apimonitor.vm</id>
+    <version>2.13.0.20210213</version>
+    <authors>Rohitab Batra</authors>
+    <description>API Monitor is a free software that lets you monitor and control API calls made by applications and services. Its a powerful tool for seeing how applications and services work or for tracking down problems that you have in your own applications.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="apimonitor" version="2.13.0.20210213" />
+    </dependencies>
+  </metadata>
+</package>
