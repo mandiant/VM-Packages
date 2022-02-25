@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>apimonitor.vm</id>
+    <version>2.13.0.20220224</version>
+    <authors>Rohitab Batra</authors>
+    <description>API Monitor lets you monitor and control API calls made by applications and services.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="apimonitor" version="[2.13.0.20210213]" />
+    </dependencies>
+  </metadata>
+</package>
