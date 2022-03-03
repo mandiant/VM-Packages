@@ -122,12 +122,12 @@ METAPACKAGE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {{
-  $toolLnk = '{tool_name}.lnk'
+  $toolName = '{tool_name}'
   $category = '{category}'
   $shimPath = '{shim_path}'
 
   $shortcutDir = Join-Path ${{Env:TOOL_LIST_DIR}} $category
-  $shortcut = Join-Path $shortcutDir $toolLnk
+  $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executablePath = Join-Path ${{Env:ChocolateyInstall}} $shimPath -Resolve
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
   VM-Assert-Path $shortcut
@@ -204,9 +204,9 @@ def create_metapackage_template(packages_path, **kwargs):
         version=kwargs.get("version"),
         authors=kwargs.get("authors"),
         description=kwargs.get("description"),
-        dependency=kwargs.get("dependency"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
+        dependency=kwargs.get("dependency"),
         shim_path=kwargs.get("shim_path"),
     )
 
@@ -273,15 +273,43 @@ def get_script_directory():
         return os.path.dirname(path)
 
 
-if __name__ == "__main__":
-    # TODO define required arguments per type
-    # dict[str, Callable]
-    TYPES = {
-        "ZIP_EXE": create_zip_exe_template,
-        "GITHUB_REPO": create_git_repo_template,
-        "METAPACKAGE": create_metapackage_template,
-    }
+# dict[str, Callable]
+TYPES = {
+    "ZIP_EXE": {
+        "cb": create_zip_exe_template,
+        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "zip_url", "zip_hash"],
+    },
+    "GITHUB_REPO": {
+        "cb": create_git_repo_template,
+        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "zip_url", "zip_hash"],
+    },
+    "METAPACKAGE": {
+        "cb": create_metapackage_template,
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "dependency",
+            "shim_path",
+        ],
+    },
+}
 
+
+def have_all_required_args(type_, args):
+    required_args = TYPES.get(type_)["arguments"]
+    for required_arg in required_args:
+        if not args.get(required_arg):
+            print(f"missing argument: {required_arg}")
+            print(f"{type_} requires: {', '.join(required_args)}")
+            return False
+    return True
+
+
+def main():
     epilog = textwrap.dedent(
         """
     Example usage:
@@ -289,29 +317,34 @@ if __name__ == "__main__":
     """
     )
     parser = argparse.ArgumentParser(description="A CLI tool to create package templates.", epilog=epilog)
-    parser.add_argument(
-        "--pkg_name", type=str, required=True, help="Package name without suffix (i.e., no '.vm' needed)"
-    )
-    parser.add_argument("--version", type=str, required=True, help="Tool's version number")
-    parser.add_argument("--authors", type=str, required=True, help="Comma separated list of authors for tool")
-    parser.add_argument(
-        "--tool_name", type=str, required=True, help="Name of tool (usually the file name with the '.exe')"
-    )
-    parser.add_argument("--category", type=str, choices=CATEGORIES, required=True, help="Category for tool")
-    parser.add_argument("--description", type=str, default="", required=False, help="Description for tool")
-    parser.add_argument("--dependency", type=str, default="", required=False, help="Metapackage dependency")
-    parser.add_argument("--zip_url", type=str, default="", required=False, help="URL to ZIP file")
-    parser.add_argument("--zip_hash", type=str, default="", required=False, help="SHA256 hash of ZIP file")
-    parser.add_argument("--shim_path", type=str, default="", required=False, help="Metapackage shim path")
-    parser.add_argument("--type", type=str, choices=TYPES.keys(), required=True, help="Template type.")
+    parser.add_argument("--pkg_name", type=str, help="Package name without suffix (i.e., no '.vm' needed)")
+    parser.add_argument("--version", type=str, help="Tool's version number")
+    parser.add_argument("--authors", type=str, help="Comma separated list of authors for tool")
+    parser.add_argument("--tool_name", type=str, help="Name of tool (usually the file name with the '.exe')")
+    parser.add_argument("--category", type=str, choices=CATEGORIES, help="Category for tool")
+    parser.add_argument("--description", type=str, default="", help="Description for tool")
+    parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
+    parser.add_argument("--zip_url", type=str, default="", help="URL to ZIP file")
+    parser.add_argument("--zip_hash", type=str, default="", help="SHA256 hash of ZIP file")
+    parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
+    parser.add_argument("--type", type=str, choices=TYPES.keys(), help="Template type.")
     args = parser.parse_args()
+
+    if not have_all_required_args(args.type, args.__dict__):
+        return -1
 
     root_dir = os.path.dirname(os.path.dirname(get_script_directory()))
     packages_path = os.path.join(root_dir, "packages")
 
-    create_type_template_cb = TYPES.get(args.type)
+    create_type_template_cb = TYPES.get(args.type)["cb"]
 
     # remove type before passing to template create function
     del args.type
 
     create_type_template_cb(packages_path, **vars(args))
+
+    return 0
+
+
+if __name__ == "__main__":
+    main()
