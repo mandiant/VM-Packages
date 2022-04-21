@@ -5,3 +5,4 @@ $toolName = 'ghidra'
 $category = 'Disassemblers'
 
 VM-Remove-Tool-Shortcut $toolName $category
+Uninstall-BinFile -Name $toolName
