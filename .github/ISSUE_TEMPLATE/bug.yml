@@ -1,0 +1,50 @@
+name: 🐛 Bug
+description: Report that a package is broken or something is not working as expected
+labels: [":bug: bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting that something is broken in [VM-Packages](https://github.com/mandiant/VM-Packages). Please ensure that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) already for this bug. If you know how to solve this problem, please send a pull request! :pray:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem?
+      description: Include the actual and expected behavior. The more details, the better!
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. First Step
+        2. Second Step
+        3. and so on…
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        Include details about your environment such as:
+        - host OS and virtualization software
+        - VM OS version and service pack
+        - VM OS ram and HDD space / usage
+        - VM PowerShell version
+        - VM Chocolatey version
+        - VM Boxstarter version
+    validations:
+      required: true
+  - type: dropdown
+    id: ci
+    attributes:
+      label: Detected by test suite
+      description: Check if this bug is cached by our [test suite](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain). If the last daily run is failing, check its log to see if the failure is the same as you are reporting.
+      options:
+        - "Yes"
+        - "No"
+        - "I don't know"
+    validations:
+      required: true
