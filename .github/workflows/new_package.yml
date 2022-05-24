@@ -1,0 +1,46 @@
+name: New package
+
+on:
+  issues:
+    types: labeled
+
+jobs:
+  create-package:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'send PR'
+    steps:
+      - name: Remove 'send PR' label
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: send PR
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Parse issue
+        uses: stefanbuck/github-issue-parser@v2
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new_package.yml
+      - name: Create and commit package
+        run: |
+          # The Python script prints the package name so that we can easily
+          # echo it to $GITHUB_ENV. Alternatively we could parse if with a
+          # regular string from the JSON string
+          pkg_name=$(./scripts/utils/create_package_template_from_json.py '${{ steps.issue-parser.outputs.jsonString }}')
+          echo "pkg_name=$pkg_name" >> $GITHUB_ENV
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: ':robot: Add ${{env.pkg_name}}.vm'
+          body: 'Automated PR from ${{github.event.issue.html_url}} :rocket:'
+          commit-message: |
+            Add ${{env.pkg_name}}.vm
+            
+            Automated from ${{github.event.issue.html_url}}
+          branch: package-${{env.pkg_name}}
+          committer: vm-packages <vm-packages@mandiant.com>
+          author: vm-packages <vm-packages@mandiant.com>
+          labels: ":new: package"
+          # GH actions can not trigger other GH actions,
+          # use a Personal Access Token to trigger the CI workflow in the created PR
+          token: ${{ secrets.REPO_TOKEN }}
+
