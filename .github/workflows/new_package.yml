@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.label.name == 'send PR'
     steps:
+      - name: Remove 'send PR' label
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: send PR
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Parse issue
@@ -36,5 +40,4 @@ jobs:
           committer: vm-packages <vm-packages@mandiant.com>
           author: vm-packages <vm-packages@mandiant.com>
           labels: ":new: package"
-
 
