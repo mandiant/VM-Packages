@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for contributing to [VM-Packages](https://github.com/mandiant/VM-Packages), your package proposal supports tools available for [FLARE-VM](https://github.com/mandiant/flare-vm), [Commando-VM](https://github.com/mandiant/commando-vm) and (ThreatPursuit-VM)[https://github.com/mandiant/ThreatPursuit-VM]! :cupid: Please ensure that your suggested tool doesn't already exist within the set of [current packages](https://github.com/mandiant/VM-Packages/tree/main/packages) and that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) proposal already.
+        Thanks for contributing to [VM-Packages](https://github.com/mandiant/VM-Packages), your package proposal supports tools available for [FLARE-VM](https://github.com/mandiant/flare-vm), [Commando-VM](https://github.com/mandiant/commando-vm) and [ThreatPursuit-VM](https://github.com/mandiant/ThreatPursuit-VM)! :cupid: Please ensure that your suggested tool doesn't already exist within the set of [current packages](https://github.com/mandiant/VM-Packages/tree/main/packages) and that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) proposal already.
   - type: input
     id: pkg_name
     attributes:
