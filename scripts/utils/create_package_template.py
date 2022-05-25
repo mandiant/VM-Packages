@@ -93,7 +93,7 @@ $category = '{category}'
 $zipUrl = '{zip_url}'
 $zipSha256 = '{zip_hash}'
 
-VM-Install-From-Zip $toolName $category $zipUrl $zipSha256
+VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
 """
 
 
