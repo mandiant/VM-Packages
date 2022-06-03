@@ -1,7 +1,4 @@
-## Run locally to test the packages, similar to .github/workflows/ci.yml
-
-# Built package directory
-$built_pkgs_dir = 'built_pkgs'
+# Uninstall all packages in 'built_pkgs'
 
 # Error Code Definitions
 # ----------------------
@@ -12,38 +9,33 @@ $built_pkgs_dir = 'built_pkgs'
 # 3010: success, reboot required
 # other (not listed): likely an error has occurred
 $validExitCodes = @(0, 1605, 1614, 1641, 3010)
+$built_pkgs_dir_name = 'built_pkgs'
 
-# Ensure packages directory exists
-if (-Not (Test-Path $built_pkgs_dir)) { Exit 1 }
 
-# Ask if we should continue install even if a package fails to install
-Write-Host -ForegroundColor Yellow -NoNewline "[INFO]: If package fails to uninstall, continue uninstalling other packages? (y/n)"
-$keep_uninstalling_response = Read-Host
+$root = Get-Location
+$built_pkgs_dir = New-Item -ItemType Directory -Force $built_pkgs_dir_name
 
-# Uninstall each package
-$built_pkgs = Get-ChildItem $built_pkgs -Recurse -Include *.nupkg | Foreach-Object {( [regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value)}
+$built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object {( [regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value)}
+Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
-  # Skip this package since it is a dependency for most packages
-  if ($package -contains "common.vm") {
-    continue
-  }
-
-  choco uninstall $package -y
-  if ($validExitCodes -notcontains $LASTEXITCODE) {
-    if ($keep_uninstalling_response -ne 'y') {
-      Write-Host -ForegroundColor Red -NoNewline "[WARN]: Uninstall failed. Continue uninstalling other packages? (y/n)"
-      $response = Read-Host
-      if ($response -ne 'y') {
-        Write-Host -ForegroundColor Red "[*] Exiting..."
-        Exit 1
-      }
+    if ($package -contains "common.vm") {
+        continue
     }
-  }
+
+    choco uninstall $package -y
+    if ($validExitCodes -notcontains $LASTEXITCODE) {
+        Write-Host -ForegroundColor Red -NoNewline "[WARN]: Failed to uninstall $package"
+        Exit 1
+    }
 }
 
 # Ask if "common.vm" should explicitly be uninstalled
 Write-Host -ForegroundColor Yellow -NoNewline "[INFO]: Uninstall common.vm package? (y/n)"
 $response = Read-Host
 if ($response -eq 'y') {
-  choco uninstall "common.vm" -y
+    choco uninstall "common.vm" -y
 }
+
+# Restore the original location
+Set-Location -Path $root -PassThru | Out-Null
+
