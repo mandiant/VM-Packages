@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run lint.ps1
-        run: scripts/lint.ps1
+        run: scripts/test/lint.ps1
 
   check_nuspec:
     runs-on: windows-2019
