@@ -151,8 +151,8 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = '{tool_name}'
 $category = '{category}'
 
-$exeUrl = '{zip_url}'
-$exeSha256 = '{zip_hash}'
+$exeUrl = '{exe_url}'
+$exeSha256 = '{exe_hash}'
 
 VM-Install-Single-Exe $toolName $category $zipUrl -exeSha256 $exeSha256
 """
