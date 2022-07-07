@@ -637,6 +637,56 @@ function VM-Install-Single-Exe {
   }
 }
 
+function VM-Install-Single-Ps1 {
+  [CmdletBinding()]
+  Param
+  (
+    [Parameter(Mandatory=$true, Position=0)]
+    [string] $toolName,
+    [Parameter(Mandatory=$true, Position=1)]
+    [string] $category,
+    [Parameter(Mandatory=$true, Position=2)]
+    [string] $ps1Url,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Sha256,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Url_64,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Sha256_64
+  )
+  try {
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+
+    # Download and install
+    $scriptPath = Join-Path $toolDir ($toolName + ".ps1")
+    $packageArgs = @{
+      packageName = ${Env:ChocolateyPackageName}
+      url = $ps1Url
+      checksum = $ps1Sha256
+      checksumType = "sha256"
+      fileFullPath = $scriptPath
+      forceDownload = $true
+    }
+    Get-ChocolateyWebFile @packageArgs
+    VM-Assert-Path $scriptPath
+    
+    # Create shortcut
+    $powershell = Join-Path (Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0") "powershell.exe" -Resolve
+    $target_cmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+    $target_args = '/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command " cd ' + "$toolsDir"
+    $target_dir = Join-Path ${Env:UserProfile} "Desktop" -Resolve
+    $target_icon = $powershell
+
+    $shortcut = Join-Path $shortcutDir ($toolName + ".ps1.lnk")
+    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $target_cmd -Arguments $target_args -WorkingDirectory $target_dir -IconLocation $target_icon -RunAsAdmin
+    VM-Assert-Path $shortcut
+
+  } catch {
+    VM-Write-Log-Exception $_
+  }
+}
+
 function VM-Uninstall {
   Param
   (
