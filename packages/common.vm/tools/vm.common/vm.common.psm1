@@ -496,6 +496,52 @@ function VM-Install-From-Zip {
   }
 }
 
+function VM-Install-Single-Exe {
+  [CmdletBinding()]
+  Param
+  (
+    [Parameter(Mandatory=$true, Position=0)]
+    [string] $toolName,
+    [Parameter(Mandatory=$true, Position=1)]
+    [string] $category,
+    [Parameter(Mandatory=$true, Position=2)]
+    [string] $exeUrl,
+    [Parameter(Mandatory=$false)]
+    [string] $exeSha256,
+    [Parameter(Mandatory=$false)]
+    [string] $exeUrl_64,
+    [Parameter(Mandatory=$false)]
+    [string] $exeSha256_64
+  )
+  try {
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+
+    # Download and install
+    $executablePath = Join-Path $toolDir ($toolName + ".exe")
+    $packageArgs = @{
+      packageName = ${Env:ChocolateyPackageName}
+      url = $exeUrl
+      checksum = $exeSha256
+      checksumType = "sha256"
+      fileFullPath = $executablePath
+      forceDownload = $true
+    }
+    Get-ChocolateyWebFile @packageArgs
+    VM-Assert-Path $executablePath
+
+    $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+    $executableDir  = Join-Path ${Env:UserProfile} "Desktop" -Resolve
+    $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
+    $shortcut = Join-Path $shortcutDir ($toolName + ".lnk")
+    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -RunAsAdmin
+    VM-Assert-Path $shortcut
+    Install-BinFile -Name $toolName -Path $executablePath
+  } catch {
+    VM-Write-Log-Exception $_
+  }
+}
+
 function VM-Uninstall {
   Param
   (
