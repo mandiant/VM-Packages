@@ -27,7 +27,7 @@ CATEGORIES = (
     "Hex Editors",
     "Java",
     "Javascript",
-    "Net",
+    "Networking Tools",
     "Office",
     "PDF",
     "Pentest",
@@ -37,6 +37,16 @@ CATEGORIES = (
     "Utilities",
     "VB",
     "Web Application",
+    "Active Directory Tools",
+    "Command & Control",
+    "Evasion",
+    "Exploitation",
+    "Information Gathering",
+    "Networking Tools",
+    "Password Attacks",
+    "Utilities",
+    "Vulnerability Analysis",
+    "Wordlists"
 )
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
@@ -135,7 +145,17 @@ try {{
   VM-Write-Log-Exception $_
 }}
 """
+SINGLE_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
 
+$toolName = '{tool_name}'
+$category = '{category}'
+
+$exeUrl = '{zip_url}'
+$exeSha256 = '{zip_hash}'
+
+VM-Install-Single-Exe $toolName $category $zipUrl -exeSha256 $exeSha256
+"""
 
 """
 Needs the following format strings:
@@ -208,6 +228,21 @@ def create_metapackage_template(packages_path, **kwargs):
         category=kwargs.get("category"),
         dependency=kwargs.get("dependency"),
         shim_path=kwargs.get("shim_path"),
+    )
+
+
+def create_single_exe_template(packages_path, **kwargs):
+    create_template(
+        SINGLE_EXE_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
+        zip_url=kwargs.get("exe_url"),
+        zip_hash=kwargs.get("exe_hash"),
     )
 
 
@@ -296,6 +331,10 @@ TYPES = {
             "shim_path",
         ],
     },
+    "SINGLE_EXE": {
+        "cb": create_single_exe_template,
+        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "exe_url", "exe_hash"],
+    }
 }
 
 
@@ -329,6 +368,8 @@ def main(argv=None):
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
     parser.add_argument("--zip_url", type=str, default="", help="URL to ZIP file")
     parser.add_argument("--zip_hash", type=str, default="", help="SHA256 hash of ZIP file")
+    parser.add_argument("--exe_url", type=str, default="", help="URL to EXE file")
+    parser.add_argument("--exe_hash", type=str, default="", help="SHA256 hash of EXE file")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
     parser.add_argument("--type", type=str, choices=TYPES.keys(), help="Template type.")
     args = parser.parse_args(args=argv)
