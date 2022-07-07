@@ -157,6 +157,18 @@ $exeSha256 = '{exe_hash}'
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256
 """
 
+SINGLE_PS1_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = '{category}'
+
+$ps1Url = '{ps1_url}'
+$ps1Sha256 = '{ps1_hash}'
+
+VM-Install-Single-Ps1 $toolName $category $ps1Url -ps1Sha256 $ps1Sha256
+"""
+
 """
 Needs the following format strings:
     tool_name="...", category="..."
@@ -246,6 +258,20 @@ def create_single_exe_template(packages_path, **kwargs):
     )
 
 
+def create_single_ps1_template(packages_path, **kwargs):
+    create_template(
+        SINGLE_PS1_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
+        zip_url=kwargs.get("ps1_url"),
+        zip_hash=kwargs.get("ps1_hash"),
+    )
+
 def create_template(
     template="",
     nuspec_template=NUSPEC_TEMPLATE,
@@ -334,6 +360,10 @@ TYPES = {
     "SINGLE_EXE": {
         "cb": create_single_exe_template,
         "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "exe_url", "exe_hash"],
+    },
+    "SINGLE_PS1": {
+        "cb": create_single_exe_template,
+        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "ps1_url", "ps1_hash"],
     }
 }
 
