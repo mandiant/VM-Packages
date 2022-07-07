@@ -154,7 +154,7 @@ $category = '{category}'
 $exeUrl = '{exe_url}'
 $exeSha256 = '{exe_hash}'
 
-VM-Install-Single-Exe $toolName $category $zipUrl -exeSha256 $exeSha256
+VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256
 """
 
 """
