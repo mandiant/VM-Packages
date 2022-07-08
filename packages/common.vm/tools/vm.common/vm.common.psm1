@@ -577,11 +577,10 @@ function VM-Install-Single-Ps1 {
     VM-Assert-Path $scriptPath
     
     # Create shortcut
-    $powershell = Join-Path (Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0") "powershell.exe" -Resolve
     $target_cmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-    $target_args = '/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command " cd ' + "$toolsDir"
-    $target_dir = Join-Path ${Env:UserProfile} "Desktop" -Resolve
-    $target_icon = $powershell
+    $target_args = '/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command "cd ' + $toolDir + '"'
+    $target_dir = $toolDir
+    $target_icon = Join-Path (Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0") "powershell.exe" -Resolve
 
     $shortcut = Join-Path $shortcutDir ($toolName + ".ps1.lnk")
     Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $target_cmd -Arguments $target_args -WorkingDirectory $target_dir -IconLocation $target_icon -RunAsAdmin
