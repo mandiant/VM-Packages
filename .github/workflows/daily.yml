@@ -7,7 +7,7 @@ on:
     - cron: '17 3 * * *'
 
 jobs:
-  build_test:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -16,31 +16,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build all packages into built_pkgs
-        run: |
-          $root = Get-Location
-          $built_pkgs_dir = New-Item -ItemType Directory built_pkgs
-
-          $nuspec_files = Get-ChildItem -Filter *.nuspec -Recurse
-          foreach ($nuspec_file in $nuspec_files) {
-              Set-Location (Split-Path $nuspec_file -Parent)
-              choco pack -out $built_pkgs_dir
-              if ($LASTEXITCODE -ne 0) { Exit 1 } # Abort with the first failing build
-          }
-      - name: Test all built packages
-        run: |
-          # https://github.com/chocolatey/choco/blob/5868c66a2a4ef104f92d11ec638066eac2570783/src/chocolatey/infrastructure.app/services/PowershellService.cs#L309
-          $validExitCodes = @(0, 1605, 1614, 1641, 3010)
-
-          $built_pkgs = Get-ChildItem built_pkgs | Foreach-Object {( [regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value)}
-          Set-Location built_pkgs
-
-          choco install common.vm -s .
-          foreach ($package in $built_pkgs) {
-              choco install $package -s "'.;https://community.chocolatey.org/api/v2/'" --no-progress
-              if ($validExitCodes -notcontains $LASTEXITCODE) { Exit 1 } # Abort with the first failing install
-          }
-          Exit 0
+      - name: Build and test all modified packages
+        id: test
+        run: scripts/test/test_install.ps1
       - name: Upload chocolatey logs to artifacts
         uses: actions/upload-artifact@v2
         if: always()
