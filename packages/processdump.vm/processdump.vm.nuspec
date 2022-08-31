@@ -3,7 +3,6 @@
   <metadata>
     <id>processdump.vm</id>
     <version>2.1.1</version>
-    <title>Process Dump</title>
     <authors>glmcdona</authors>
     <description>Process Dump is a Windows reverse-engineering command-line tool to dump malware memory components back to disk for analysis.</description>
     <dependencies>

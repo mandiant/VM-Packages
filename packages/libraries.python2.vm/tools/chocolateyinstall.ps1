@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Continue'
+$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 function LoadPackages {
