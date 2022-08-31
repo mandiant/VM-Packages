@@ -14,6 +14,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Run lint.ps1
         run: scripts/test/lint.ps1
+      - name: Run lint.py
+        run: scripts/test/lint.py packages
 
   check_nuspec:
     runs-on: windows-2019
