@@ -2,7 +2,7 @@
 # TODO: Enable other rules
 $excludedRules = "PSAvoidUsingInvokeExpression", "PSUseApprovedVerbs", "PSAvoidUsingWriteHost", "PSUseShouldProcessForStateChangingFunctions", "PSUseSingularNouns"
 
-choco install psscriptanalyzer --version 1.20.0
+choco install psscriptanalyzer --version 1.20.0 --no-progress
 
 # Manually iterate over all files instead of using -Recurse because
 # PSScriptAnalyzer only outputs the script name (and most have the name
