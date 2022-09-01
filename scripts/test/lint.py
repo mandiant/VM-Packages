@@ -172,11 +172,15 @@ class MissesImportCommonVm(Lint):
 
 
 class FirstLineDoesNotSetErrorAction(Lint):
+    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm"]
     FIRST_LINE = "$ErrorActionPreference = 'Stop'"
     name = "first line must set error handling to stop"
     recommendation = f"add `{FIRST_LINE}` to the file"
 
     def check(self, path):
+        if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
+            return False
+
         # utf-8-sig ignores BOM
         with open(path, "r", encoding="utf-8-sig") as f:
             lines = f.read().splitlines()
