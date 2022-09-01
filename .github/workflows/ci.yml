@@ -15,7 +15,7 @@ jobs:
       - name: Run lint.ps1
         run: scripts/test/lint.ps1
       - name: Run lint.py
-        run: scripts/test/lint.py packages
+        run: python scripts/test/lint.py packages
 
   # TODO removeme after testing
   check_nuspec:
