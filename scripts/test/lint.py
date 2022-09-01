@@ -19,9 +19,13 @@ import logging
 import pathlib
 import argparse
 import datetime
+import subprocess
 from typing import Dict
 from xml.dom import minidom
 
+# set log level for debugging here script-wide
+log_level = logging.DEBUG
+logging.basicConfig(level=log_level)
 logger = logging.getLogger("lint")
 
 
@@ -59,6 +63,11 @@ PATH_LINTS = (FileNameNotAllLower(),)
 
 def lint_path(path):
     return run_lints(PATH_LINTS, path)
+
+
+def run(cmd):
+    logger.debug("cmd: %s", cmd)
+    return subprocess.run(cmd, shell=True, capture_output=True, text=True).stdout.strip()
 
 
 class IncludesRequiredFieldsOnly(Lint):
@@ -144,10 +153,72 @@ class DoesNotListDependencyCommonVm(Lint):
         return True
 
 
+class VersionNotUpdated(Lint):
+    name = "the version has not been updated"
+    recommendation = "update the version in the nuspec file"
+
+    # The head ref or source branch of the pull request in a workflow run.
+    # This property is only set when the event that triggers a workflow run
+    # is either pull_request or pull_request_target. For example, feature-branch-1.
+    GITHUB_HEAD_REF = os.getenv("GITHUB_HEAD_REF")
+    if not GITHUB_HEAD_REF:
+        # assume main
+        GITHUB_HEAD_REF = "main"
+    # The name of the base ref or target branch of the pull request in a workflow run.
+    # This is only set when the event that triggers a workflow run is either pull_request or pull_request_target.
+    # For example, main.
+    GITHUB_BASE_REF = os.getenv("GITHUB_BASE_REF")
+    if not GITHUB_BASE_REF:
+        GITHUB_BASE_REF = run("git rev-parse --abbrev-ref HEAD")
+    logger.debug("GITHUB_HEAD_REF = %s", GITHUB_HEAD_REF)
+    logger.debug("GITHUB_BASE_REF = %s", GITHUB_BASE_REF)
+
+    best_common_ancestor = run(f"git merge-base {GITHUB_BASE_REF} {GITHUB_HEAD_REF}")
+    changed_files = run(f"git --no-pager diff --name-only {GITHUB_BASE_REF} {best_common_ancestor}")
+    changed_files = set(changed_files.splitlines())
+    nuspecs = set([file for file in changed_files if file.endswith(".nuspec")])
+    others = changed_files - nuspecs
+
+    logger.debug("changed: %s", changed_files)
+    logger.debug("nuspecs: %s", nuspecs)
+    logger.debug("others: %s", others)
+
+    def check(self, path):
+        """
+            $changed_files = "${{ steps.files.outputs.added_modified }}".Split(" ")
+            $nuspecs = [string]@($changed_files | where { $_ -Like "*.nuspec" })
+            $others = @($changed_files | where { $_ -NotLike "*.nuspec" })
+        foreach ($file in $others) {
+          if ($file -match "packages/[^/]*") {
+              $package = $matches.0
+              if (!$nuspecs.contains($package)) {
+                  Write-Error "The version in $package needs to be modified"
+              }
+          }
+        }
+        """
+        for part in path.parts:
+            if part.endswith(".vm"):
+                package = part
+
+        # has any file in this package been updated?
+        # if nuspec updates also count, change to self.changed_files
+        if not any([package in cfile for cfile in self.others]):
+            return False
+
+        # look for version string in git diff
+        revision_diffs = run(f"git --no-pager diff --unified=0 {self.best_common_ancestor} {str(path)}")
+        if "<version>" in revision_diffs:
+            return False
+
+        return True
+
+
 NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
     VersionFormatIncorrect(),
     DoesNotListDependencyCommonVm(),
+    VersionNotUpdated(),
 )
 
 
