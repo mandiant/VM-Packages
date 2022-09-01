@@ -276,6 +276,7 @@ def lint(path) -> Dict[str, list]:
             violations = list()
 
             path = pathlib.Path(os.path.join(root, name))
+            logger.info("linting %s", path)
 
             violations.extend(list(lint_path(path)))
 
