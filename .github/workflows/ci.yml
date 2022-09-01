@@ -11,7 +11,10 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          # fetch all history for all branches
+          fetch-depth: 0
       - name: Run lint.ps1
         run: scripts/test/lint.ps1
       - name: Run lint.py

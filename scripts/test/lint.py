@@ -23,9 +23,11 @@ import subprocess
 from typing import Dict
 from xml.dom import minidom
 
+GIT_EXE = "git"
+
 # set log level for debugging here script-wide
-log_level = logging.DEBUG
-logging.basicConfig(level=log_level)
+LOG_LEVEL = logging.DEBUG
+logging.basicConfig(level=LOG_LEVEL)
 logger = logging.getLogger("lint")
 
 
@@ -65,9 +67,15 @@ def lint_path(path):
     return run_lints(PATH_LINTS, path)
 
 
-def run(cmd):
+def run_cmd(cmd):
     logger.debug("cmd: %s", cmd)
-    return subprocess.run(cmd, shell=True, capture_output=True, text=True).stdout.strip()
+    p = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    out = out.decode("utf-8").strip()
+    err = err.decode("utf-8").strip()
+    logger.debug("cmd out: %s", out)
+    logger.debug("cmd err: %s", err)
+    return out
 
 
 class IncludesRequiredFieldsOnly(Lint):
@@ -160,21 +168,23 @@ class VersionNotUpdated(Lint):
     # The head ref or source branch of the pull request in a workflow run.
     # This property is only set when the event that triggers a workflow run
     # is either pull_request or pull_request_target. For example, feature-branch-1.
-    GITHUB_HEAD_REF = os.getenv("GITHUB_HEAD_REF")
-    if not GITHUB_HEAD_REF:
-        # assume main
-        GITHUB_HEAD_REF = "main"
+    GITHUB_REF = os.getenv("GITHUB_REF")
+    if not GITHUB_REF:
+        GITHUB_REF = run_cmd(f"{GIT_EXE} rev-parse --abbrev-ref HEAD")
     # The name of the base ref or target branch of the pull request in a workflow run.
     # This is only set when the event that triggers a workflow run is either pull_request or pull_request_target.
     # For example, main.
     GITHUB_BASE_REF = os.getenv("GITHUB_BASE_REF")
     if not GITHUB_BASE_REF:
-        GITHUB_BASE_REF = run("git rev-parse --abbrev-ref HEAD")
-    logger.debug("GITHUB_HEAD_REF = %s", GITHUB_HEAD_REF)
+        # assume main
+        GITHUB_BASE_REF = "main"
+    GITHUB_BASE_REF = "origin/" + GITHUB_BASE_REF
+    logger.debug("GITHUB_HEAD_REF = %s", GITHUB_REF)
     logger.debug("GITHUB_BASE_REF = %s", GITHUB_BASE_REF)
 
-    best_common_ancestor = run(f"git merge-base {GITHUB_BASE_REF} {GITHUB_HEAD_REF}")
-    changed_files = run(f"git --no-pager diff --name-only {GITHUB_BASE_REF} {best_common_ancestor}")
+    run_cmd(f"{GIT_EXE} version")
+    run_cmd(f"{GIT_EXE} --no-pager branch -r")
+    changed_files = run_cmd(f"{GIT_EXE} --no-pager diff --name-only {GITHUB_BASE_REF}")
     changed_files = set(changed_files.splitlines())
     nuspecs = set([file for file in changed_files if file.endswith(".nuspec")])
     others = changed_files - nuspecs
@@ -184,19 +194,6 @@ class VersionNotUpdated(Lint):
     logger.debug("others: %s", others)
 
     def check(self, path):
-        """
-            $changed_files = "${{ steps.files.outputs.added_modified }}".Split(" ")
-            $nuspecs = [string]@($changed_files | where { $_ -Like "*.nuspec" })
-            $others = @($changed_files | where { $_ -NotLike "*.nuspec" })
-        foreach ($file in $others) {
-          if ($file -match "packages/[^/]*") {
-              $package = $matches.0
-              if (!$nuspecs.contains($package)) {
-                  Write-Error "The version in $package needs to be modified"
-              }
-          }
-        }
-        """
         for part in path.parts:
             if part.endswith(".vm"):
                 package = part
@@ -207,7 +204,7 @@ class VersionNotUpdated(Lint):
             return False
 
         # look for version string in git diff
-        revision_diffs = run(f"git --no-pager diff --unified=0 {self.best_common_ancestor} {str(path)}")
+        revision_diffs = run_cmd(f"{GIT_EXE} --no-pager diff --unified=0 {self.GITHUB_BASE_REF} {str(path)}")
         if "<version>" in revision_diffs:
             return False
 
