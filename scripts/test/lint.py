@@ -198,9 +198,8 @@ class VersionNotUpdated(Lint):
             if part.endswith(".vm"):
                 package = part
 
-        # has any file in this package been updated?
-        # if nuspec updates also count, change to self.changed_files
-        if not any([package in cfile for cfile in self.others]):
+        # has any file in this package, including nuspec files, been updated?
+        if not any([package in cfile for cfile in self.changed_files]):
             return False
 
         # look for version string in git diff
