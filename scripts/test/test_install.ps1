@@ -26,7 +26,7 @@ $built_pkgs_dir = New-Item -ItemType Directory -Force $built_pkgs_dir_name
 if ($package_names) {
     $packages = $package_names.Split(" ")
 } else {
-    $packages = Get-ChildItem -Path $packages_dir_name
+    $packages = Get-ChildItem -Path $packages_dir_name | Select-Object Name
 }
 
 foreach ($package in $packages) {
