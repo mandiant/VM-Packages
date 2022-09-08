@@ -116,6 +116,13 @@ class VersionFormatIncorrect(Lint):
             print(f"{path} more than four version segments: {version}")
             return True
 
+        for seg in version:
+            try:
+                int(seg)
+            except ValueError:
+                print(f"version part '{seg}' is not a number")
+                return True
+
         if len(version) == 4:
             try:
                 datetime.datetime.strptime(version[3], "%Y%m%d")
