@@ -275,6 +275,10 @@ def lint_install(path):
 def lint(path) -> Dict[str, list]:
     ret = {}
     for root, dirs, files in os.walk(path):
+
+        # lint path name of empty directories
+        ret[root] = lint_path(pathlib.Path(root))
+
         for name in files:
             if name.endswith(".md"):
                 continue
