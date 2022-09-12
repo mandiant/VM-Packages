@@ -1,17 +1,38 @@
 #!/usr/bin/env python
-
-"""Wrapper for 'create_package_template.py' that receives the arguments as a
-   json string and prints the package name. This code could be integrated in
-   'create_package_template.py'
-"""
-
-import json
-import sys
 import os
+import json
+import argparse
 
-json_str = sys.argv[1]
-pkg = json.loads(json_str)
-os.system(f"python ./scripts/utils/create_package_template.py --pkg_name '{pkg.get('pkg_name')}' --version '{pkg.get('version')}' --authors '{pkg.get('authors')}' --tool_name '{pkg.get('tool_name')}' --category '{pkg.get('category')}' --description '{pkg.get('description')}' --zip_url '{pkg.get('url')}' --zip_hash '{pkg.get('hash')}' --type '{pkg.get('type')}' --dependency '{pkg.get('dependency')}' --shim_path '{pkg.get('shim_path')}'")
 
-# Print the package name so that we can use it from workflows/new_package.yml
-print(pkg['pkg_name'])
+def main():
+    parser = argparse.ArgumentParser(
+        description="Wrapper for 'create_package_template.py' that receives the arguments from JSON data and prints the package name."
+    )
+    parser.add_argument("--json_str", type=str, help="JSON string")
+    parser.add_argument("--json_file", type=str, help="JSON file path")
+    args = parser.parse_args()
+
+    if args.json_str:
+        pkg = json.loads(args.json_str)
+    elif args.json_file:
+        with open(args.json_file, "r", encoding="utf-8") as f:
+            pkg = json.load(f)
+    else:
+        raise parser.error("missing --json_str or --json_file argument")
+
+    cmd_args = list()
+    for k, v in pkg.items():
+        if k == "why":
+            continue
+        cmd_args.append(f"--{k}")
+        cmd_args.append(f'"{v}"')
+
+    os.system(
+        f"python ./scripts/utils/create_package_template.py {' '.join(cmd_args)}"
+    )
+
+    # Print the package name so that we can use it from workflows/new_package.yml
+    print(pkg["pkg_name"])
+
+if __name__ == "__main__":
+    main()
