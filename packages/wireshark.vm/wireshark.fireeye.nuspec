@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>wireshark.vm</id>
-    <version>3.6.0.20220222</version>
+    <version>3.6.0</version>
     <description>Wireshark lets you capture and interactively browse the traffic running on a computer network.</description>
     <authors>Gerald Combs, Wireshark team</authors>
     <dependencies>
