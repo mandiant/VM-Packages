@@ -11,39 +11,18 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          # fetch all history for all branches
+          fetch-depth: 0
       - name: Run lint.ps1
         run: scripts/test/lint.ps1
-
-  check_nuspec:
-    runs-on: windows-2019
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Get changed files
-        id: files
-        uses: Ana06/get-changed-files@v2.1.0
-        with:
-          filter: 'packages/*/**'
-      - name: Check nuspec is modified for every modified package
-        # It runs only if there are modified files
-        if: steps.files.outputs.added_modified != ''
-        run: |
-          $changed_files = "${{ steps.files.outputs.added_modified }}".Split(" ")
-          $nuspecs = [string]@($changed_files | where { $_ -Like "*.nuspec" })
-          $others = @($changed_files | where { $_ -NotLike "*.nuspec" })
-          foreach ($file in $others) {
-              if ($file -match "packages/[^/]*") {
-                  $package = $matches.0
-                  if (!$nuspecs.contains($package)) {
-                      Write-Error "The version in $package needs to be modified"
-                  }
-              }
-          }
+      - name: Run lint.py
+        run: python scripts/test/lint.py packages
 
   test_upload:
     runs-on: ${{ matrix.os }}
-    needs: [lint, check_nuspec]
+    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
