@@ -27,6 +27,7 @@ jobs:
           # regular string from the JSON string
           echo '${{ steps.issue-parser.outputs.jsonString }}' > pkg.json
           pkg_name=$(./scripts/utils/create_package_template_from_json.py --json_file pkg.json)
+          rm pkg.json
           echo "pkg_name=$pkg_name" >> $GITHUB_ENV
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
