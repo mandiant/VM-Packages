@@ -32,7 +32,7 @@ jobs:
           # The Python script prints the package name so that we can easily
           # echo it to $GITHUB_ENV. Alternatively we could parse if with a
           # regular string from the JSON string
-          pkg_name=$(./scripts/utils/create_package_template_from_json.py --json_string ${{ steps.json_escape.outputs.value }})
+          pkg_name=$(./scripts/utils/create_package_template_from_json.py --json_str ${{ steps.json_escape.outputs.value }})
           echo "pkg_name=$pkg_name" >> $GITHUB_ENV
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
