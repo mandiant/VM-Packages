@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>dnspyex.vm</id>
+    <version>6.2.0</version>
+    <authors>0xd4d, ElektroKill</authors>
+    <description>dnSpyEx is a unofficial continuation of the dnSpy project which is a debugger and .NET assembly editor. You can use it to edit and debug assemblies even if you don't have any source code available.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="dnSpyEx" version="[6.2.0]" />
+    </dependencies>
+  </metadata>
+</package>
