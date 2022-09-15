@@ -40,6 +40,8 @@ jobs:
         with:
           title: ':robot: Add ${{env.pkg_name}}.vm'
           body: 'Automated PR from ${{github.event.issue.html_url}} :rocket:'
+          add-paths:
+            packages/*
           commit-message: |
             Add ${{env.pkg_name}}.vm
             
@@ -51,4 +53,3 @@ jobs:
           # GH actions can not trigger other GH actions,
           # use a Personal Access Token to trigger the CI workflow in the created PR
           token: ${{ secrets.REPO_TOKEN }}
-
