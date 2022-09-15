@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-import os
 import json
 import argparse
+
+import create_package_template
 
 
 def main():
@@ -25,14 +26,13 @@ def main():
         if k == "why":
             continue
         cmd_args.append(f"--{k}")
-        cmd_args.append(f'"{v}"')
+        cmd_args.append(f"{v}")
 
-    os.system(
-        f"python ./scripts/utils/create_package_template.py {' '.join(cmd_args)}"
-    )
+    create_package_template.main(cmd_args)
 
     # Print the package name so that we can use it from workflows/new_package.yml
     print(pkg["pkg_name"])
+
 
 if __name__ == "__main__":
     main()

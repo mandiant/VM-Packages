@@ -309,7 +309,10 @@ def have_all_required_args(type_, args):
     return True
 
 
-def main():
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv[1:]
+
     epilog = textwrap.dedent(
         """
     Example usage:
@@ -328,7 +331,7 @@ def main():
     parser.add_argument("--zip_hash", type=str, default="", help="SHA256 hash of ZIP file")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
     parser.add_argument("--type", type=str, choices=TYPES.keys(), help="Template type.")
-    args = parser.parse_args()
+    args = parser.parse_args(args=argv)
 
     if not have_all_required_args(args.type, args.__dict__):
         return -1
