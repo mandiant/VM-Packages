@@ -88,7 +88,7 @@ body:
         - GITHUB_REPO
         - OTHER/UNKNOWN
   - type: input
-    id: url
+    id: zip_url
     validations:
       required: true
     attributes:
@@ -96,7 +96,7 @@ body:
       description: URL to download the tool installer. Use a URL that is not likely to be deleted/unavailable and whose downloaded file is not likely to change as this will eventually break the package.
       placeholder: ex. https://github.com/mandiant/flare-fakenet-ng/releases/download/v1.4.11/fakenet1.4.11.zip
   - type: input
-    id: hash
+    id: zip_hash
     validations:
       required: true
     attributes:
