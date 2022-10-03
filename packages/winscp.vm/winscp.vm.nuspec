@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>winscp.vm</id>
+    <version>5.21.3</version>
+    <description>WinSCP is an SFTP client and FTP client for Microsoft Windows.</description>
+    <authors>WinSCP.net</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
