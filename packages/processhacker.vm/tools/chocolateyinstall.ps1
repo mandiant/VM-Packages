@@ -2,11 +2,11 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $toolName = 'WinSCP'
+  $toolName = 'ProcessHacker'
   $category = 'Utilities'
 
-  $url   = 'https://winscp.net/download/WinSCP-5.21.3-Setup.exe'
-  $checksum = '6bae480b8853de60b88e51ccc6b8b6fc2eca80cc26d40019e99ebdbd70a8785a'
+  $url   = 'https://versaweb.dl.sourceforge.net/project/processhacker/processhacker2/processhacker-2.39-setup.exe'
+  $checksum = '28042DD4A92A0033B8F1D419B9E989C5B8E32D1D2D881F5C8251D58CE35B9063'
 
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
@@ -30,7 +30,7 @@ try {
   Install-BinFile -Name $toolName -Path $executablePath
 
   # Delete Desktop shortcut
-  $shortcut_desktop = Join-Path ${Env:UserProfile} "Desktop\WinSCP.lnk"
+  $shortcut_desktop = Join-Path ${Env:UserProfile} "Desktop\Process Hacker 2.lnk"
   if (Test-Path $shortcut_desktop) {
     Remove-Item $shortcut_desktop -Force -ea 0 | Out-Null
   }

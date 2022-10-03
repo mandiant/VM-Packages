@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>processhacker.vm</id>
+    <version>2.39</version>
+    <description>A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware.</description>
+    <authors>Process Hacker</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
