@@ -10,14 +10,14 @@ try {
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
-    url           = 'https://github.com/gchq/CyberChef/releases/download/v9.32.3/CyberChef_v9.32.3.zip'
-    checksum      = '465cf64bdd80cf99be72bedc9dccf7fcebaeace58d77ec62d71733c3e2ba404f'
+    url           = 'https://github.com/gchq/CyberChef/releases/download/v9.46.5/CyberChef_v9.46.5.zip'
+    checksum      = '990BB3E59ECE04CDFC016D619AE4E84E2EE5F17D7618AF7763388CC9D86FC1A0'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs
   VM-Assert-Path $toolDir
 
-  $htmlPath = Join-Path $toolDir "CyberChef_v9.32.3.html" -Resolve
+  $htmlPath = Join-Path $toolDir "CyberChef_v9.46.5.html" -Resolve
   $shortcut = Join-Path $shortcutDir "CyberChef.lnk"
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $htmlPath
   VM-Assert-Path $shortcut
