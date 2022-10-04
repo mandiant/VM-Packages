@@ -14,7 +14,7 @@ try {
     url           = $url
     checksumType  = 'sha256'
     checksum      = $checksum
-    silentArgs    = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /NOICONS /DIR=`"$toolDir`"'
+    silentArgs    = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /NOICONS'
   }
   Install-ChocolateyPackage @packageArgs
 
