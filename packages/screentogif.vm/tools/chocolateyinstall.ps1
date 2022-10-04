@@ -24,7 +24,7 @@ try {
   $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
 
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
+  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
   VM-Assert-Path $shortcut
 
   Install-BinFile -Name $toolName -Path $executablePath
