@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>screentogif.vm</id>
+    <version>2.37.1</version>
+    <description>A Screen, webcam and sketchboard recorder with an integrated editor</description>
+    <authors>Nicke Manarin</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
