@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>putty.vm</id>
+    <version>0.77</version>
+    <description>PuTTY is a free implementation of SSH and Telnet for Windows and Unix platforms, along with an xterm terminal emulator</description>
+    <authors>Simon Tatham</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
