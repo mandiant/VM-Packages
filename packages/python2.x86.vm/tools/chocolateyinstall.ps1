@@ -9,8 +9,8 @@ try {
     packageName    = ${Env:ChocolateyPackageName}
     fileType       = 'msi'
     silentArgs     = $installArgs
-    url            = 'https://www.python.org/ftp/python/2.7.15/python-2.7.15.msi'
-    checksum       = '1AFA1B10CF491C788BAA340066A813D5EC6232561472CFC3AF1664DBC6F29F77'
+    url            = 'https://www.python.org/ftp/python/2.7.18/python-2.7.18.msi'
+    checksum       = 'D901802E90026E9BAD76B8A81F8DD7E43C7D7E8269D9281C9E9DF7A9C40480A9'
     checksumType   = 'sha256'
   }
   Install-ChocolateyPackage @params
