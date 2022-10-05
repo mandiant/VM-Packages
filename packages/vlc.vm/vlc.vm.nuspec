@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>vlc.vm</id>
-    <version>3.0.17.4-win32</version>
+    <version>3.0.17.20221005</version>
     <description>VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files</description>
     <authors>VideoLAN</authors>
     <dependencies>
