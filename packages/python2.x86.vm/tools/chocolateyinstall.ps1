@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $installDir = "${Env:SystemDrive}\Python27.x86"
+  $installDir = "${Env:SystemDrive}\Python27"
   $installArgs  = '/qn /norestart ALLUSERS=1 ADDLOCAL=Extensions TargetDir="{0}"' -f $installDir
 
   $params = @{
