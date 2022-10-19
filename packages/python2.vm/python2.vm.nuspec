@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>python2.x86.vm</id>
-    <version>2.7.15</version>
+    <id>python2.vm</id>
+    <version>2.7.18</version>
     <description>Python 2.7 is a programming language that lets you work more quickly and integrate your systems more effectively.</description>
     <authors>Python Software Foundation</authors>
     <dependencies>
