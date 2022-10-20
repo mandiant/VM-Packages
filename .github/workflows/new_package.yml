@@ -42,7 +42,7 @@ jobs:
           commit-message: |
             Add ${{env.pkg_name}}.vm
             
-            Automated from ${{github.event.issue.html_url}}
+            Closes ${{github.event.issue.html_url}}.
           branch: package-${{env.pkg_name}}
           committer: vm-packages <vm-packages@mandiant.com>
           author: vm-packages <vm-packages@mandiant.com>
