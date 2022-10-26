@@ -21,6 +21,13 @@ def get_sha256(url):
 
 
 def format_version(version):
+    # Get first three segments of version (which can be preceded by `v`)
+    # For example:
+    # v1.2.3 -> 1.2.3
+    # 1.2.3-p353 -> 1.2.3
+    # 1.2.3.4 -> 1.2.3
+    # v1.2 -> 1.2
+    # 1 -> 1
     match = re.match("v?(?P<version>\d+(.\d+){0,2})", version)
     if not match:
         print("has wrong version")
@@ -32,7 +39,8 @@ def update(package):
     chocolateyinstall_path = f"packages/{package}/tools/chocolateyinstall.ps1"
     with open(chocolateyinstall_path, "r") as file:
         content = file.read()
-        # Some packages have two urls (for 32 and 64 bits), we need to update both
+        # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
+        # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
         matches = re.findall(
             "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/(?P<version>[^/]+)/[^\"']+)[\"']",
             content,
@@ -64,6 +72,7 @@ def update(package):
     nuspec_path = f"packages/{package}/{package}.nuspec"
     with open(nuspec_path, "r") as file:
         content = file.read()
+    # Replace version in nuspec, for example `<version>1.6.3</version>`
     content = re.sub("<version>[^<]+</version>", f"<version>{format_version(latest_version)}</version>", content)
     with open(nuspec_path, "w") as file:
         file.write(content)
