@@ -17,3 +17,6 @@ env.bak/
 venv.bak/
 .envrc
 .tool-versions
+
+# Test logs for Update package workflow
+test_logs/
