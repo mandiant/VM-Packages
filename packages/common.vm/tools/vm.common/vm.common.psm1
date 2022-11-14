@@ -526,8 +526,8 @@ function VM-Install-Single-Exe {
       packageName = ${Env:ChocolateyPackageName}
       url = $exeUrl
       checksum = $exeSha256
-      checksumType = "sha256",
-      url64bit = $exeUrl_64,
+      checksumType = "sha256"
+      url64bit = $exeUrl_64
       checksum64 = $exeSha256_64
       fileFullPath = $executablePath
       forceDownload = $true
@@ -536,7 +536,7 @@ function VM-Install-Single-Exe {
     VM-Assert-Path $executablePath
 
     $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-    
+
     if ($consoleApp) {
       $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
       $executableDir  = Join-Path ${Env:UserProfile} "Desktop" -Resolve
@@ -584,7 +584,7 @@ function VM-Install-Single-Ps1 {
       url = $ps1Url
       checksum = $ps1Sha256
       checksumType = "sha256"
-      url64bit = $ps1Url_64,
+      url64bit = $ps1Url_64
       checksum64 = $ps1Sha256_64
       fileFullPath = $scriptPath
       forceDownload = $true
@@ -599,7 +599,7 @@ function VM-Install-Single-Ps1 {
       $targetArgs = "/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command `"cd '$toolDir'`""
     }
     $targetIcon = Join-Path (Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0") "powershell.exe" -Resolve
-    
+
     Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $targetCmd -arguments $targetArgs -workingDirectory $toolDir -iconLocation $targetIcon
     VM-Assert-Path $shortcut
 
