@@ -91,10 +91,12 @@ body:
       description: This is needed to know how to send the automatic PR.
       options:
         - ZIP_EXE
+        - SINGLE_EXE
+        - SINGLE_PS1
         - GITHUB_REPO
         - OTHER/UNKNOWN
   - type: input
-    id: zip_url
+    id: target_url
     validations:
       required: true
     attributes:
@@ -102,7 +104,7 @@ body:
       description: URL to download the tool installer. Use a URL that is not likely to be deleted/unavailable and whose downloaded file is not likely to change as this will eventually break the package.
       placeholder: ex. https://github.com/mandiant/flare-fakenet-ng/releases/download/v1.4.11/fakenet1.4.11.zip
   - type: input
-    id: zip_hash
+    id: target_hash
     validations:
       required: true
     attributes:
