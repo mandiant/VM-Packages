@@ -15,12 +15,12 @@ jobs:
         os: [windows-2019, windows-2022]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build and test all modified packages
         id: test
         run: scripts/test/test_install.ps1
       - name: Upload chocolatey logs to artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: logs-${{ matrix.os }}.zip
