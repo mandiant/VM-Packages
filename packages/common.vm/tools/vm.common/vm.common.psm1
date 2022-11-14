@@ -636,6 +636,8 @@ function VM-Install-Single-Exe {
       url = $exeUrl
       checksum = $exeSha256
       checksumType = "sha256"
+      url64bit     = $exeUrl_64
+      checksum64   = $exeSha256_64
       fileFullPath = $executablePath
       forceDownload = $true
     }
@@ -681,13 +683,15 @@ function VM-Install-Single-Ps1 {
       packageName = ${Env:ChocolateyPackageName}
       url = $ps1Url
       checksum = $ps1Sha256
+      url64bit = $ps1Url_64
+      checksum64 = $ps1Sha256_64
       checksumType = "sha256"
       fileFullPath = $scriptPath
       forceDownload = $true
     }
     Get-ChocolateyWebFile @packageArgs
     VM-Assert-Path $scriptPath
-    
+
     # Create shortcut
     $target_cmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
     $target_args = '/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command "cd ' + $toolDir + '"'
