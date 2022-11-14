@@ -123,6 +123,22 @@ $zipSha256 = '{target_hash}'
 VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256
 """
 
+"""
+Needs the following format strings:
+    tool_name="...", category="...", tool_url="...", tool_hash="..."
+"""
+URL_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = '{category}'
+
+$toolUrl = '{tool_url}'
+$toolSha256 = '{tool_hash}'
+
+VM-Install-Executable $toolName $category $toolUrl $toolSha256
+"""
+
 
 """
 Needs the following format strings:
@@ -396,8 +412,8 @@ def main(argv=None):
     parser.add_argument("--category", type=str, choices=CATEGORIES, help="Category for tool")
     parser.add_argument("--description", type=str, default="", help="Description for tool")
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
-    parser.add_argument("--target_url", type=str, default="", help="URL to target file")
-    parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file")
+    parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
+    parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
     parser.add_argument("--type", type=str, choices=TYPES.keys(), help="Template type.")
     args = parser.parse_args(args=argv)
