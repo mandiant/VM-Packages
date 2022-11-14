@@ -29,7 +29,7 @@ jobs:
         os: [windows-2019, windows-2022]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get changed files
         id: files
         uses: Ana06/get-changed-files@v2.0.0
@@ -54,7 +54,7 @@ jobs:
               cpush -s "https://www.myget.org/F/vm-packages/api/v2" -k ${{ secrets.MYGET_TOKEN }} $package
           }
       - name: Upload chocolatey logs to artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: logs-${{ matrix.os }}.zip

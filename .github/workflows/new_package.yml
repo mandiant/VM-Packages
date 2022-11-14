@@ -14,7 +14,7 @@ jobs:
         with:
           labels: send PR
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Parse issue
         uses: stefanbuck/github-issue-parser@v2
         id: issue-parser
