@@ -27,7 +27,7 @@ CATEGORIES = (
     "Hex Editors",
     "Java",
     "Javascript",
-    "Networking Tools",
+    "Networking",
     "Office",
     "PDF",
     "Pentest",
