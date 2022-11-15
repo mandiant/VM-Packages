@@ -388,8 +388,8 @@ TYPES = {
     },
     "GITHUB_REPO": {
         "cb": create_git_repo_template,
-        "doc": "A script or code distributed via GitHub in a ZIP file",
-        "example": "https://github.com/.../tool.zip",
+        "doc": "Download a GitHub repository based on a specific commit hash",
+        "example": "https://github.com/sense-of-security/ADRecon/archive/38e4abae3e26d0fa87281c1d0c65cabd4d3c6ebd.zip",
         "arguments": [
             "pkg_name",
             "version",
@@ -404,7 +404,7 @@ TYPES = {
     "METAPACKAGE": {
         "cb": create_metapackage_template,
         "doc": "Install and configure existing packages via dependencies",
-        "example": "install a <tool> already available via chocolatey.org",
+        "example": "Install a <tool> already available via chocolatey.org",
         "arguments": [
             "pkg_name",
             "version",
