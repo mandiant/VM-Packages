@@ -520,8 +520,11 @@ function VM-Install-Single-Exe {
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
+    # Get the file extension from the URL
+    $ext = (Split-Path -Path $exeUrl -Leaf).Split(".")[-1]
+
     # Download and install
-    $executablePath = Join-Path $toolDir "$toolName.exe"
+    $executablePath = Join-Path $toolDir "$toolName.$ext"
     $packageArgs = @{
       packageName = ${Env:ChocolateyPackageName}
       url = $exeUrl
