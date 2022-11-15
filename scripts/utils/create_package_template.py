@@ -160,6 +160,11 @@ try {{
   VM-Write-Log-Exception $_
 }}
 """
+
+"""
+Needs the following format strings:
+    tool_name="...", category="...", target_url="...", target_hash="..."
+"""
 SINGLE_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
@@ -172,6 +177,10 @@ $exeSha256 = '{target_hash}'
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256
 """
 
+"""
+Needs the following format strings:
+    tool_name="...", category="...", target_url="...", target_hash="..."
+"""
 SINGLE_PS1_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
