@@ -88,7 +88,12 @@ body:
       required: true
     attributes:
       label: Package type
-      description: This is needed to know how to send the automatic PR.
+      description: |
+        This is needed to know how to send the automatic PR.
+        ZIP_EXE - An executable tool distributed in a ZIP file
+        SINGLE_EXE - An executable tool distributed via direct/raw download
+        SINGLE_PS1 - A PowerShell script distributed via direct/raw download
+        GITHUB_REPO - Download a GitHub repository based on a specific commit hash
       options:
         - ZIP_EXE
         - SINGLE_EXE

@@ -88,7 +88,9 @@ body:
       required: true
     attributes:
       label: Package type
-      description: This is needed to know how to send the automatic PR.
+      description: |
+        This is needed to know how to send the automatic PR.
+        METAPACKAGE - Install and configure existing packages via dependencies
       options:
         - METAPACKAGE
   - type: input
