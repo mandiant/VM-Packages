@@ -343,6 +343,8 @@ def get_script_directory():
 TYPES = {
     "ZIP_EXE": {
         "cb": create_zip_exe_template,
+        "doc": "An executable tool distributed in a ZIP file",
+        "example": "<url>/tool.zip",
         "arguments": [
             "pkg_name",
             "version",
@@ -352,36 +354,12 @@ TYPES = {
             "category",
             "target_url",
             "target_hash",
-        ],
-    },
-    "GITHUB_REPO": {
-        "cb": create_git_repo_template,
-        "arguments": [
-            "pkg_name",
-            "version",
-            "authors",
-            "description",
-            "tool_name",
-            "category",
-            "target_url",
-            "target_hash",
-        ],
-    },
-    "METAPACKAGE": {
-        "cb": create_metapackage_template,
-        "arguments": [
-            "pkg_name",
-            "version",
-            "authors",
-            "description",
-            "tool_name",
-            "category",
-            "dependency",
-            "shim_path",
         ],
     },
     "SINGLE_EXE": {
         "cb": create_single_exe_template,
+        "doc": "An executable tool distributed via direct/raw download",
+        "example": "<url>/tool.exe",
         "arguments": [
             "pkg_name",
             "version",
@@ -395,6 +373,8 @@ TYPES = {
     },
     "SINGLE_PS1": {
         "cb": create_single_ps1_template,
+        "doc": "A PowerShell script distributed via direct/raw download",
+        "example": "<url>/script.ps1",
         "arguments": [
             "pkg_name",
             "version",
@@ -404,6 +384,36 @@ TYPES = {
             "category",
             "target_url",
             "target_hash",
+        ],
+    },
+    "GITHUB_REPO": {
+        "cb": create_git_repo_template,
+        "doc": "A script or code distributed via GitHub in a ZIP file",
+        "example": "https://github.com/.../tool.zip",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
+    },
+    "METAPACKAGE": {
+        "cb": create_metapackage_template,
+        "doc": "Install and configure existing packages via dependencies",
+        "example": "install a <tool> already available via chocolatey.org",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "dependency",
+            "shim_path",
         ],
     },
 }
@@ -440,8 +450,14 @@ def main(argv=None):
     parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
     parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
-    parser.add_argument("--type", type=str, choices=TYPES.keys(), help="Template type.")
+    parser.add_argument("--type", type=str, choices=TYPES.keys(), nargs="?", help="Template type")
     args = parser.parse_args(args=argv)
+
+    if args.type is None:
+        print(f"{'type'.ljust(15)} {'description'.ljust(60)} {'example'}")
+        for k, t in TYPES.items():
+            print(f"{k.ljust(15)} {t['doc'].ljust(60)} {t['example']}")
+        return 0
 
     if not have_all_required_args(args.type, args.__dict__):
         return -1
