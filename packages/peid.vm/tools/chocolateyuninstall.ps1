@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'peid'
-$category = 'Utilities'
+$category = 'PE'
 
 VM-Uninstall $toolName $category

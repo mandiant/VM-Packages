@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $category = 'Utilities'
+  $category = 'PE'
 
   $url = "https://ntcore.com/files/ExplorerSuite.exe"
 
