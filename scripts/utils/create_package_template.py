@@ -43,9 +43,8 @@ CATEGORIES = (
     "Exploitation",
     "Information Gathering",
     "Password Attacks",
-    "Utilities",
     "Vulnerability Analysis",
-    "Wordlists"
+    "Wordlists",
 )
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
@@ -105,7 +104,6 @@ $zipSha256 = '{target_hash}'
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
 """
 
-
 """
 Needs the following format strings:
     tool_name="...", category="...", target_url="...", target_hash="..."
@@ -121,23 +119,6 @@ $zipSha256 = '{target_hash}'
 
 VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256
 """
-
-"""
-Needs the following format strings:
-    tool_name="...", category="...", tool_url="...", tool_hash="..."
-"""
-URL_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
-Import-Module vm.common -Force -DisableNameChecking
-
-$toolName = '{tool_name}'
-$category = '{category}'
-
-$toolUrl = '{tool_url}'
-$toolSha256 = '{tool_hash}'
-
-VM-Install-Executable $toolName $category $toolUrl $toolSha256
-"""
-
 
 """
 Needs the following format strings:
@@ -296,6 +277,7 @@ def create_single_ps1_template(packages_path, **kwargs):
         target_hash=kwargs.get("target_hash"),
     )
 
+
 def create_template(
     template="",
     nuspec_template=NUSPEC_TEMPLATE,
@@ -362,11 +344,29 @@ def get_script_directory():
 TYPES = {
     "ZIP_EXE": {
         "cb": create_zip_exe_template,
-        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "target_url", "target_hash"],
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
     },
     "GITHUB_REPO": {
         "cb": create_git_repo_template,
-        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "target_url", "target_hash"],
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
     },
     "METAPACKAGE": {
         "cb": create_metapackage_template,
@@ -383,12 +383,30 @@ TYPES = {
     },
     "SINGLE_EXE": {
         "cb": create_single_exe_template,
-        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "target_url", "target_hash"],
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
     },
     "SINGLE_PS1": {
         "cb": create_single_ps1_template,
-        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "target_url", "target_hash"],
-    }
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
+    },
 }
 
 

@@ -592,10 +592,10 @@ function VM-Install-Single-Ps1 {
     }
     Get-ChocolateyWebFile @packageArgs
     VM-Assert-Path $scriptPath
-    
+
     $shortcut = Join-Path $shortcutDir "$toolName.ps1.lnk"
     $targetCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-    
+
     if ($ps1Cmd) {
       $targetArgs = "/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command `"cd '$toolDir'; $ps1Cmd`""
     } else {
