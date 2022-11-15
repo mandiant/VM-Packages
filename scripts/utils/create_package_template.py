@@ -14,29 +14,36 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+# categories must be synchronized with the issue templates
 CATEGORIES = (
     "Android",
     "Debuggers",
-    "Decompilers",
     "Delphi",
-    "Developer Tools",
     "Disassemblers",
     "dotNet",
-    "Flash",
     "Forensic",
     "Hex Editors",
     "Java",
     "Javascript",
-    "Net",
+    "Networking",
     "Office",
     "PDF",
-    "Pentest",
+    "PE",
     "PowerShell",
     "Python",
     "Text Editors",
     "Utilities",
     "VB",
+    # CommandoVM
+    "Active Directory",
+    "Command & Control",
+    "Evasion",
+    "Exploitation",
+    "Information Gathering",
+    "Password Attacks",
+    "Vulnerability Analysis",
     "Web Application",
+    "Wordlists",
 )
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
@@ -82,7 +89,7 @@ NUSPEC_TEMPLATE_METAPACKAGE = r"""<?xml version="1.0" encoding="utf-8"?>
 
 """
 Needs the following format strings:
-    tool_name="...", category="...", zip_url="...", zip_hash="..."
+    tool_name="...", category="...", target_url="...", target_hash="..."
 """
 ZIP_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
@@ -90,16 +97,15 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = '{tool_name}'
 $category = '{category}'
 
-$zipUrl = '{zip_url}'
-$zipSha256 = '{zip_hash}'
+$zipUrl = '{target_url}'
+$zipSha256 = '{target_hash}'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
 """
 
-
 """
 Needs the following format strings:
-    tool_name="...", category="...", zip_url="...", zip_hash="..."
+    tool_name="...", category="...", target_url="...", target_hash="..."
 """
 GITHUB_REPO_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
@@ -107,12 +113,11 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = '{tool_name}'
 $category = '{category}'
 
-$zipUrl = '{zip_url}'
-$zipSha256 = '{zip_hash}'
+$zipUrl = '{target_url}'
+$zipSha256 = '{target_hash}'
 
 VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256
 """
-
 
 """
 Needs the following format strings:
@@ -136,6 +141,37 @@ try {{
 }}
 """
 
+"""
+Needs the following format strings:
+    tool_name="...", category="...", target_url="...", target_hash="..."
+"""
+SINGLE_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = '{category}'
+
+$exeUrl = '{target_url}'
+$exeSha256 = '{target_hash}'
+
+VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256
+"""
+
+"""
+Needs the following format strings:
+    tool_name="...", category="...", target_url="...", target_hash="..."
+"""
+SINGLE_PS1_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = '{category}'
+
+$ps1Url = '{target_url}'
+$ps1Sha256 = '{target_hash}'
+
+VM-Install-Single-Ps1 $toolName $category $ps1Url -ps1Sha256 $ps1Sha256
+"""
 
 """
 Needs the following format strings:
@@ -174,8 +210,8 @@ def create_git_repo_template(packages_path, **kwargs):
         description=kwargs.get("description"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
-        zip_url=kwargs.get("zip_url"),
-        zip_hash=kwargs.get("zip_hash"),
+        target_url=kwargs.get("target_url"),
+        target_hash=kwargs.get("target_hash"),
     )
 
 
@@ -189,8 +225,8 @@ def create_zip_exe_template(packages_path, **kwargs):
         description=kwargs.get("description"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
-        zip_url=kwargs.get("zip_url"),
-        zip_hash=kwargs.get("zip_hash"),
+        target_url=kwargs.get("target_url"),
+        target_hash=kwargs.get("target_hash"),
     )
 
 
@@ -211,6 +247,36 @@ def create_metapackage_template(packages_path, **kwargs):
     )
 
 
+def create_single_exe_template(packages_path, **kwargs):
+    create_template(
+        SINGLE_EXE_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
+        target_url=kwargs.get("target_url"),
+        target_hash=kwargs.get("target_hash"),
+    )
+
+
+def create_single_ps1_template(packages_path, **kwargs):
+    create_template(
+        SINGLE_PS1_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
+        target_url=kwargs.get("target_url"),
+        target_hash=kwargs.get("target_hash"),
+    )
+
+
 def create_template(
     template="",
     nuspec_template=NUSPEC_TEMPLATE,
@@ -222,8 +288,8 @@ def create_template(
     description="",
     tool_name="",
     category="",
-    zip_url="",
-    zip_hash="",
+    target_url="",
+    target_hash="",
     shim_path="",
     dependency="",
 ):
@@ -255,8 +321,8 @@ def create_template(
             template.format(
                 tool_name=tool_name,
                 category=category,
-                zip_url=zip_url,
-                zip_hash=zip_hash,
+                target_url=target_url,
+                target_hash=target_hash,
                 shim_path=shim_path,
             )
         )
@@ -277,14 +343,68 @@ def get_script_directory():
 TYPES = {
     "ZIP_EXE": {
         "cb": create_zip_exe_template,
-        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "zip_url", "zip_hash"],
+        "doc": "An executable tool distributed in a ZIP file",
+        "example": "<url>/tool.zip",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
+    },
+    "SINGLE_EXE": {
+        "cb": create_single_exe_template,
+        "doc": "An executable tool distributed via direct/raw download",
+        "example": "<url>/tool.exe",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
+    },
+    "SINGLE_PS1": {
+        "cb": create_single_ps1_template,
+        "doc": "A PowerShell script distributed via direct/raw download",
+        "example": "<url>/script.ps1",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
     },
     "GITHUB_REPO": {
         "cb": create_git_repo_template,
-        "arguments": ["pkg_name", "version", "authors", "description", "tool_name", "category", "zip_url", "zip_hash"],
+        "doc": "Download a GitHub repository based on a specific commit hash",
+        "example": "https://github.com/sense-of-security/ADRecon/archive/38e4abae3e26d0fa87281c1d0c65cabd4d3c6ebd.zip",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+        ],
     },
     "METAPACKAGE": {
         "cb": create_metapackage_template,
+        "doc": "Install and configure existing packages via dependencies",
+        "example": "Install a <tool> already available via chocolatey.org",
         "arguments": [
             "pkg_name",
             "version",
@@ -327,11 +447,17 @@ def main(argv=None):
     parser.add_argument("--category", type=str, choices=CATEGORIES, help="Category for tool")
     parser.add_argument("--description", type=str, default="", help="Description for tool")
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
-    parser.add_argument("--zip_url", type=str, default="", help="URL to ZIP file")
-    parser.add_argument("--zip_hash", type=str, default="", help="SHA256 hash of ZIP file")
+    parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
+    parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
-    parser.add_argument("--type", type=str, choices=TYPES.keys(), help="Template type.")
+    parser.add_argument("--type", type=str, choices=TYPES.keys(), nargs="?", help="Template type")
     args = parser.parse_args(args=argv)
+
+    if args.type is None:
+        print(f"{'type'.ljust(15)} {'description'.ljust(60)} {'example'}")
+        for k, t in TYPES.items():
+            print(f"{k.ljust(15)} {t['doc'].ljust(60)} {t['example']}")
+        return 0
 
     if not have_all_required_args(args.type, args.__dict__):
         return -1

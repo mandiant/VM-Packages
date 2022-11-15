@@ -496,6 +496,121 @@ function VM-Install-From-Zip {
   }
 }
 
+# This functions returns $executablePath
+function VM-Install-Single-Exe {
+  [CmdletBinding()]
+  Param
+  (
+    [Parameter(Mandatory=$true, Position=0)]
+    [string] $toolName,
+    [Parameter(Mandatory=$true, Position=1)]
+    [string] $category,
+    [Parameter(Mandatory=$true, Position=2)]
+    [string] $exeUrl,
+    [Parameter(Mandatory=$false)]
+    [string] $exeSha256,
+    [Parameter(Mandatory=$false)]
+    [string] $exeUrl_64,
+    [Parameter(Mandatory=$false)]
+    [string] $exeSha256_64,
+    [Parameter(Mandatory=$false)]
+    [bool] $consoleApp=$false
+  )
+  try {
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+
+    # Download and install
+    $executablePath = Join-Path $toolDir "$toolName.exe"
+    $packageArgs = @{
+      packageName = ${Env:ChocolateyPackageName}
+      url = $exeUrl
+      checksum = $exeSha256
+      checksumType = "sha256"
+      url64bit = $exeUrl_64
+      checksum64 = $exeSha256_64
+      fileFullPath = $executablePath
+      forceDownload = $true
+    }
+    Get-ChocolateyWebFile @packageArgs
+    VM-Assert-Path $executablePath
+
+    $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+
+    if ($consoleApp) {
+      $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+      $executableDir  = Join-Path ${Env:UserProfile} "Desktop" -Resolve
+      $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
+      Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
+    } else {
+      Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
+    }
+    VM-Assert-Path $shortcut
+
+    Install-BinFile -Name $toolName -Path $executablePath
+    return $executablePath
+  } catch {
+    VM-Write-Log-Exception $_
+  }
+}
+
+# This functions returns $scriptPath
+function VM-Install-Single-Ps1 {
+  [CmdletBinding()]
+  Param
+  (
+    [Parameter(Mandatory=$true, Position=0)]
+    [string] $toolName,
+    [Parameter(Mandatory=$true, Position=1)]
+    [string] $category,
+    [Parameter(Mandatory=$true, Position=2)]
+    [string] $ps1Url,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Sha256,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Url_64,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Sha256_64,
+    [Parameter(Mandatory=$false)]
+    [string] $ps1Cmd
+  )
+  try {
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+
+    # Download and install
+    $scriptPath = Join-Path $toolDir "$toolName.ps1"
+    $packageArgs = @{
+      packageName = ${Env:ChocolateyPackageName}
+      url = $ps1Url
+      checksum = $ps1Sha256
+      checksumType = "sha256"
+      url64bit = $ps1Url_64
+      checksum64 = $ps1Sha256_64
+      fileFullPath = $scriptPath
+      forceDownload = $true
+    }
+    Get-ChocolateyWebFile @packageArgs
+    VM-Assert-Path $scriptPath
+
+    $shortcut = Join-Path $shortcutDir "$toolName.ps1.lnk"
+    $targetCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+
+    if ($ps1Cmd) {
+      $targetArgs = "/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command `"cd '$toolDir'; $ps1Cmd`""
+    } else {
+      $targetArgs = "/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command `"cd '$toolDir'`""
+    }
+    $targetIcon = Join-Path (Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0") "powershell.exe" -Resolve
+
+    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $targetCmd -arguments $targetArgs -workingDirectory $toolDir -iconLocation $targetIcon
+    VM-Assert-Path $shortcut
+    return $scriptPath
+  } catch {
+    VM-Write-Log-Exception $_
+  }
+}
+
 function VM-Uninstall {
   Param
   (
