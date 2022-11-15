@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Developer Tools'
+  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Utils'
 
   $programFiles = ${Env:ProgramFiles(x86)}
   if (-Not ($programFiles)) {
