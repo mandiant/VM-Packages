@@ -14,15 +14,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+# categories must be synchronized with the issue templates
 CATEGORIES = (
     "Android",
     "Debuggers",
-    "Decompilers",
     "Delphi",
-    "Developer Tools",
     "Disassemblers",
     "dotNet",
-    "Flash",
     "Forensic",
     "Hex Editors",
     "Java",
@@ -30,13 +28,13 @@ CATEGORIES = (
     "Networking",
     "Office",
     "PDF",
-    "Pentest",
+    "PE",
     "PowerShell",
     "Python",
     "Text Editors",
     "Utilities",
     "VB",
-    "Web Application",
+    # CommandoVM
     "Active Directory",
     "Command & Control",
     "Evasion",
@@ -44,6 +42,7 @@ CATEGORIES = (
     "Information Gathering",
     "Password Attacks",
     "Vulnerability Analysis",
+    "Web Application",
     "Wordlists",
 )
 
