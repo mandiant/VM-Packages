@@ -42,24 +42,30 @@ body:
         - Android
         - Debuggers
         - Delphi
-        - Developer Tools
         - Disassemblers
         - dotNet
-        - Flash
         - Forensic
         - Hex Editors
         - Java
         - Javascript
-        - Net
+        - Networking
         - Office
         - PDF
-        - Pentest
+        - PE
         - PowerShell
         - Python
         - Text Editors
         - Utilities
         - VB
+        - Active Directory
+        - Command & Control
+        - Evasion
+        - Exploitation
+        - Information Gathering
+        - Password Attacks
+        - Vulnerability Analysis
         - Web Application
+        - Wordlists
   - type: input
     id: authors
     attributes:
