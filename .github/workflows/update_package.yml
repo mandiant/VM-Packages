@@ -1,10 +1,11 @@
 name: Update package
 
 on:
+  workflow_dispatch:
   schedule:
-    # Runs Wednesdays and Sundays at a weird time (22:21 UTC) to avoid
-    # delays during periods of high loads of GitHub Actions workflow runs.
-    - cron: '21 22 * * 0,3'
+    # Runs Wednesdays at a weird time (22:21 UTC) to avoid delays during
+    # periods of high loads of GitHub Actions workflow runs.
+    - cron: '4 22 * * 3'
 
 jobs:
   update:
