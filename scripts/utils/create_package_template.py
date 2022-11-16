@@ -339,7 +339,7 @@ def get_script_directory():
         return os.path.dirname(path)
 
 
-# dict[str, Callable]
+# dict[str, dict[str, any]]
 TYPES = {
     "ZIP_EXE": {
         "cb": create_zip_exe_template,
@@ -420,11 +420,13 @@ TYPES = {
 
 
 def have_all_required_args(type_, args):
-    required_args = TYPES.get(type_)["arguments"]
+    typ = TYPES.get(type_)
+    required_args = typ["arguments"]
     for required_arg in required_args:
         if not args.get(required_arg):
-            print(f"missing argument: {required_arg}")
-            print(f"{type_} requires: {', '.join(required_args)}")
+            print(f"{type_}: {typ['doc']}, e.g., {typ['example']}")
+            print(f" missing argument: {required_arg}")
+            print(f" requires: {', '.join(required_args)}")
             return False
     return True
 
