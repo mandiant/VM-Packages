@@ -24,6 +24,17 @@ body:
       placeholder: ex. FakeNet-NG
     validations:
       required: true
+  - type: dropdown
+    id: type
+    validations:
+      required: true
+    attributes:
+      label: Package type
+      description: |
+        This is needed to know how to send the automatic PR.
+        METAPACKAGE - Install and configure existing packages via dependencies
+      options:
+        - METAPACKAGE
   - type: input
     id: version
     attributes:
@@ -82,17 +93,6 @@ body:
       label: Tool's description
       description: The description should be short and not include version specific details or other information that is likely to change in a future version.
       placeholder: ex. FakeNet-NG is a next generation dynamic network analysis tool for malware analysts and penetration testers.
-  - type: dropdown
-    id: type
-    validations:
-      required: true
-    attributes:
-      label: Package type
-      description: |
-        This is needed to know how to send the automatic PR.
-        METAPACKAGE - Install and configure existing packages via dependencies
-      options:
-        - METAPACKAGE
   - type: input
     id: dependency
     validations:

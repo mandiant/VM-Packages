@@ -24,6 +24,24 @@ body:
       placeholder: ex. FakeNet-NG
     validations:
       required: true
+  - type: dropdown
+    id: type
+    validations:
+      required: true
+    attributes:
+      label: Package type
+      description: |
+        This is needed to know how to send the automatic PR.
+        ZIP_EXE - An executable tool distributed in a ZIP file
+        SINGLE_EXE - An executable tool distributed via direct/raw download
+        SINGLE_PS1 - A PowerShell script distributed via direct/raw download
+        GITHUB_REPO - Download a GitHub repository based on a specific commit hash
+      options:
+        - ZIP_EXE
+        - SINGLE_EXE
+        - SINGLE_PS1
+        - GITHUB_REPO
+        - OTHER/UNKNOWN
   - type: input
     id: version
     attributes:
@@ -82,24 +100,6 @@ body:
       label: Tool's description
       description: The description should be short and not include version specific details or other information that is likely to change in a future version.
       placeholder: ex. FakeNet-NG is a next generation dynamic network analysis tool for malware analysts and penetration testers.
-  - type: dropdown
-    id: type
-    validations:
-      required: true
-    attributes:
-      label: Package type
-      description: |
-        This is needed to know how to send the automatic PR.
-        ZIP_EXE - An executable tool distributed in a ZIP file
-        SINGLE_EXE - An executable tool distributed via direct/raw download
-        SINGLE_PS1 - A PowerShell script distributed via direct/raw download
-        GITHUB_REPO - Download a GitHub repository based on a specific commit hash
-      options:
-        - ZIP_EXE
-        - SINGLE_EXE
-        - SINGLE_PS1
-        - GITHUB_REPO
-        - OTHER/UNKNOWN
   - type: input
     id: target_url
     validations:
