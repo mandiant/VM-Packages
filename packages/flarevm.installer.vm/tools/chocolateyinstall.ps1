@@ -78,3 +78,4 @@ try {
 } catch {
     VM-Write-Log-Exception $_
 }
+
