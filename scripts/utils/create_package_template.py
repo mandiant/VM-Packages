@@ -419,6 +419,17 @@ TYPES = {
 }
 
 
+def set_placeholder_data(args):
+    for arg in TYPES.get(args.type)["arguments"]:
+        if not arg:
+            args.__setattr__(arg, f"<{arg}>")
+        if arg == "pkg_name":
+            # default placeholder package name
+            args.__setattr__("pkg_name", "new-package")
+    sys.exit()
+    return args
+
+
 def have_all_required_args(type_, args):
     required_args = TYPES.get(type_)["arguments"]
     for required_arg in required_args:
@@ -436,10 +447,24 @@ def main(argv=None):
     epilog = textwrap.dedent(
         """
     Example usage:
+      python %(prog)s --type
       python %(prog)s --pkg_name <> --version <> --authors <> --tool_name <> --category <>
     """
     )
-    parser = argparse.ArgumentParser(description="A CLI tool to create package templates.", epilog=epilog)
+    parser = argparse.ArgumentParser(
+        description="A CLI tool to create package templates.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--type",
+        required=True,
+        type=str,
+        choices=TYPES.keys(),
+        nargs="?",
+        help="Installation template type, see options via %(prog)s --type",
+    )
+    parser.add_argument("--template", action="store_true", help="Create template files with placeholder data")
     parser.add_argument("--pkg_name", type=str, help="Package name without suffix (i.e., no '.vm' needed)")
     parser.add_argument("--version", type=str, help="Tool's version number")
     parser.add_argument("--authors", type=str, help="Comma separated list of authors for tool")
@@ -450,16 +475,18 @@ def main(argv=None):
     parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
     parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
-    parser.add_argument("--type", type=str, choices=TYPES.keys(), nargs="?", help="Template type")
     args = parser.parse_args(args=argv)
 
     if args.type is None:
-        print(f"{'type'.ljust(15)} {'description'.ljust(60)} {'example'}")
+        print("No type provided, available options are:")
+        print(f"{'type'.ljust(15)} {'description'.ljust(62)} {'example'}")
         for k, t in TYPES.items():
-            print(f"{k.ljust(15)} {t['doc'].ljust(60)} {t['example']}")
+            print(f"{k.ljust(15)} {t['doc'].ljust(62)} {t['example']}")
         return 0
 
-    if not have_all_required_args(args.type, args.__dict__):
+    if args.template:
+        args = set_placeholder_data(args)
+    elif not have_all_required_args(args.type, args.__dict__):
         return -1
 
     root_dir = os.path.dirname(os.path.dirname(get_script_directory()))
