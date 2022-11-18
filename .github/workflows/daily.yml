@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Build and test all modified packages
         id: test
-        run: scripts/test/test_install.ps1
+        run: scripts/test/test_install.ps1 -all
       - name: Upload chocolatey logs to artifacts
         uses: actions/upload-artifact@v3
         if: always()
