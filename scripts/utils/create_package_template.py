@@ -419,6 +419,15 @@ TYPES = {
 }
 
 
+def set_placeholder_data(args):
+    for arg in TYPES.get(args.type)["arguments"]:
+        # set placeholder data for unset arguments
+        if not getattr(args, arg):
+            placeholder = f"{arg.replace('_', '-')}-CHANGE-ME"
+            setattr(args, arg, placeholder)
+    return args
+
+
 def have_all_required_args(type_, args):
     typ = TYPES.get(type_)
     required_args = typ["arguments"]
@@ -438,30 +447,55 @@ def main(argv=None):
     epilog = textwrap.dedent(
         """
     Example usage:
-      python %(prog)s --pkg_name <> --version <> --authors <> --tool_name <> --category <>
+      Show available package template types
+       %(prog)s --type
+
+      Show required arguments for tool distributed in a ZIP file (ZIP_EXE template)
+       %(prog)s --type ZIP_EXE
+
+      Create package template for tool distributed in a ZIP file
+       %(prog)s --type ZIP_EXE --pkg_name new-tool --version 1.0.0 --authors 'Alice, Bob' ...
+
+      Create package template files for a METAPACKAGE using placeholder data
+       %(prog)s --type METAPACKAGE --raw
     """
     )
-    parser = argparse.ArgumentParser(description="A CLI tool to create package templates.", epilog=epilog)
-    parser.add_argument("--pkg_name", type=str, help="Package name without suffix (i.e., no '.vm' needed)")
-    parser.add_argument("--version", type=str, help="Tool's version number")
-    parser.add_argument("--authors", type=str, help="Comma separated list of authors for tool")
-    parser.add_argument("--tool_name", type=str, help="Name of tool (usually the file name with the '.exe')")
-    parser.add_argument("--category", type=str, choices=CATEGORIES, help="Category for tool")
+    parser = argparse.ArgumentParser(
+        description="A CLI tool to create package templates.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--type",
+        required=True,
+        type=str,
+        choices=TYPES.keys(),
+        nargs="?",
+        help="Installation template type, see descriptions via %(prog)s --type",
+    )
+    parser.add_argument("--raw", action="store_true", help="Create package files like .nuspec with raw placeholder data")
+    parser.add_argument("--pkg_name", type=str, default="", help="Package name without suffix (i.e., no '.vm' needed)")
+    parser.add_argument("--version", type=str, default="", help="Tool's version number")
+    parser.add_argument("--authors", type=str, default="", help="Comma separated list of authors for tool")
+    parser.add_argument("--tool_name", type=str, default="", help="Name of tool (usually the file name with the '.exe')")
+    parser.add_argument("--category", type=str, default="", choices=CATEGORIES, help="Category for tool")
     parser.add_argument("--description", type=str, default="", help="Description for tool")
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
     parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
     parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
-    parser.add_argument("--type", type=str, choices=TYPES.keys(), nargs="?", help="Template type")
     args = parser.parse_args(args=argv)
 
     if args.type is None:
-        print(f"{'type'.ljust(15)} {'description'.ljust(60)} {'example'}")
+        print("No type provided, available options are:")
+        print(f"{'type'.ljust(15)} {'description'.ljust(62)} {'example'}")
         for k, t in TYPES.items():
-            print(f"{k.ljust(15)} {t['doc'].ljust(60)} {t['example']}")
+            print(f"{k.ljust(15)} {t['doc'].ljust(62)} {t['example']}")
         return 0
 
-    if not have_all_required_args(args.type, args.__dict__):
+    if args.raw:
+        args = set_placeholder_data(args)
+    elif not have_all_required_args(args.type, args.__dict__):
         return -1
 
     root_dir = os.path.dirname(os.path.dirname(get_script_directory()))
