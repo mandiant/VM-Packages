@@ -32,7 +32,7 @@ if ($package_names) {
 
 foreach ($package in $packages) {
     Set-Location "$root\$packages_dir_name\$package"
-    choco pack -out $built_pkgs_dir
+    choco pack -y -out $built_pkgs_dir
     if ($LASTEXITCODE -ne 0) { Exit 1 } # Abort with the first failing build
 }
 
