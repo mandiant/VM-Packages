@@ -423,7 +423,7 @@ def set_placeholder_data(args):
     for arg in TYPES.get(args.type)["arguments"]:
         # set placeholder data for unset arguments
         if not getattr(args, arg):
-            placeholder = f"{arg}-CHANGEME".replace('_', '-')
+            placeholder = f"{arg.replace('_', '-')}-CHANGE-ME"
             setattr(args, arg, placeholder)
     return args
 
