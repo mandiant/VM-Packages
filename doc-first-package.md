@@ -6,7 +6,7 @@ Manual package creation is the more versatile route and could lead to faster res
 
 However, the issue driven package creation, can fully streamline the addition of a new tool. In the best case:
 * you submit an issue with the required package metadata
-* a package pull request gets automatically created, after a maintainer approved it
+* a package pull request gets automatically created, after a maintainer approves it
 * the package gets tested and pushed to the package feed
 
 ### Chocolatey
