@@ -782,3 +782,85 @@ function VM-Remove-From-Right-Click-Menu {
     VM-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
   }
 }
+
+function VM-Get-Host-Info {
+  $survey = @"
+Host Information
+
+VM OS version and Service Pack
+-----
+{0}
+
+VM OS RAM (MB)
+-----
+{1}
+
+VM OS HDD Space / Usage
+-----
+{2}
+
+VM AV Details
+-----
+{3}
+
+VM PowerShell Version
+-----
+{4}
+
+VM Chocolatey Version
+-----
+{5}
+
+VM Boxstarter Version
+-----
+{6}
+"@
+
+  # Credit: https://blog.idera.com/database-tools/identifying-antivirus-engine-state
+  # Define bit flags
+  [Flags()] enum ProductState
+  {
+      Off         = 0x0000
+      On          = 0x1000
+      Snoozed     = 0x2000
+      Expired     = 0x3000
+  }
+
+  [Flags()] enum SignatureStatus
+  {
+      UpToDate     = 0x00
+      OutOfDate    = 0x10
+  }
+
+  [Flags()] enum ProductOwner
+  {
+      NonMicrosoft = 0x000
+      Microsoft    = 0x100
+  }
+
+  [Flags()] enum ProductFlags
+  {
+      SignatureStatus = 0x00F0
+      ProductOwner    = 0x0F00
+      ProductState    = 0xF000
+  }
+
+  $osInfo = (Get-CimInstance win32_operatingsystem) | Select-Object Version, BuildNumber, OSArchitecture, ServicePackMajorVersion, Caption | Out-String
+  $memInfo = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1mb | Out-String
+  $diskInfo = Get-CimInstance -ClassName Win32_LogicalDisk | Out-String
+  $psInfo = $PSVersionTable.PSVersion
+  $chocoInfo = choco --version
+  $boxstarerInfo = choco list --local-only | Select-String -Pattern "Boxstarter" | Out-String
+
+  # Decode bit flags by masking the relevant bits, then converting
+  $avInfo = Get-CimInstance -Namespace "root\SecurityCenter2" -Class AntiVirusProduct -ComputerName ${Env:computername}
+  $avInfoFormatted = @"
+DisplayName: $($avInfo.displayName)
+ProductOwner: $([ProductOwner]([UInt32]$avInfo.productState -band [ProductFlags]::ProductOwner))
+ProductState: $([ProductState]([UInt32]$avInfo.productState -band [ProductFlags]::ProductState))
+SignatureStatus: $([SignatureStatus]([UInt32]$avInfo.productState -band [ProductFlags]::SignatureStatus))
+"@
+
+  VM-Write-Log "INFO" $($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $chocoInfo, $boxstarerInfo)
+}
+
