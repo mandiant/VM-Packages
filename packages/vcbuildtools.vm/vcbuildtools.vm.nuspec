@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vcbuildtools.vm</id>
-    <version>0.0.0.20221115</version>
+    <version>0.0.0.20221120</version>
     <description>Metapackage that requires the dependencies below:
 - visualstudio2017buildtools
 - visualstudio2017-workload-vctools
