@@ -807,13 +807,21 @@ VM PowerShell Version
 -----
 {4}
 
-VM Chocolatey Version
+VM CLR Version
 -----
 {5}
 
-VM Boxstarter Version
+VM Chocolatey Version
 -----
 {6}
+
+VM Boxstarter Version
+-----
+{7}
+
+VM Installed Packages
+-----
+{8}
 "@
 
   # Credit: https://blog.idera.com/database-tools/identifying-antivirus-engine-state
@@ -849,8 +857,11 @@ VM Boxstarter Version
   $memInfo = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1mb | Out-String
   $diskInfo = Get-CimInstance -ClassName Win32_LogicalDisk | Out-String
   $psInfo = $PSVersionTable.PSVersion
-  $chocoInfo = choco --version
-  $boxstarerInfo = choco list --local-only | Select-String -Pattern "Boxstarter" | Out-String
+  $psInfoClr = $PSVersionTable.CLRVersion
+  $chocoInfo = chocolatey --version
+  $installedPackages = chocolatey list --local-only
+  $boxstarerInfo = $installedPackages | Select-String -Pattern "Boxstarter" | Out-String
+  $installedPackages = chocolatey list --local-only | Out-String
 
   # Decode bit flags by masking the relevant bits, then converting
   $avInfo = Get-CimInstance -Namespace "root\SecurityCenter2" -Class AntiVirusProduct -ComputerName ${Env:computername}
@@ -861,6 +872,6 @@ ProductState: $([ProductState]([UInt32]$avInfo.productState -band [ProductFlags]
 SignatureStatus: $([SignatureStatus]([UInt32]$avInfo.productState -band [ProductFlags]::SignatureStatus))
 "@
 
-  VM-Write-Log "INFO" $($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $chocoInfo, $boxstarerInfo)
+  VM-Write-Log "INFO" "$($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $psInfoClr, $chocoInfo, $boxstarerInfo, $installedPackages)"
 }
 
