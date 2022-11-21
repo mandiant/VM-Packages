@@ -9,174 +9,6 @@ $ErrorActionPreference = 'Stop'
 #
 # ################################################################################################ #
 
-function VM-ConvertTo-HashTable([object] $jsonTree) {
-  $result = @{}
-  foreach ($node in $jsonTree) {
-    foreach ($property in $node.Keys) {
-      if ($node[$property] -is [System.Collections.Generic.Dictionary[String, Object]] -or $node[$property] -is [Object[]]) {
-        $result[$property] = VM-ConvertTo-HashTable $node[$property]
-      } else {
-        $result[$property] = $node[$property]
-      }
-    }
-  }
-  $result
-}
-
-
-function VM-ConvertFrom-Json([object] $item) {
-<#
-.SYNOPSIS
-  Convert a JSON string into a hash table
-
-.DESCRIPTION
-  Convert a JSON string into a hash table, without any validation
-
-.OUTPUTS
-  [hashtable] or $null
-#>
-  Add-Type -Assembly system.web.extensions
-  $ps_js = New-Object system.web.script.serialization.javascriptSerializer
-
-  try {
-    $result = $ps_js.DeserializeObject($item)
-  } catch {
-    $result = $null
-  }
-
-  # Cast dictionary to hashtable
-  [hashtable] $result
-}
-
-
-function VM-ConvertTo-Json([object] $data) {
-<#
-.SYNOPSIS
-  Convert a hashtable to a JSON string
-
-.DESCRIPTION
-  Convert a hashtable to a JSON string, without any validation
-
-.OUTPUTS
-  [string] or $null
-#>
-  Add-Type -Assembly system.web.extensions
-  $ps_js = New-Object system.web.script.serialization.javascriptSerializer
-
-  #The comma operator is the array construction operator in PowerShell
-  try {
-    $result = $ps_js.Serialize($data)
-  } catch {
-    $result = $null
-  }
-
-  $result
-}
-
-
-function VM-Import-JsonFile {
-<#
-.DESCRIPTION
-  Load a hashtable from a JSON file
-
-.OUTPUTS
-  [hashtable] or $null
-#>
-  param([string] $path)
-  try {
-    $json = Get-Content $path
-    $result = VM-ConvertFrom-Json $json
-  } catch {
-    $result = $null
-  }
-
-  $result
-}
-
-
-function VM-Install-OnePackage {
-<#
-.DESCRIPTION
-  Install a package, specified by a hash table with the following properties:
-  $pkg = @{
-    name = "foo.python"
-    args = "--source python"
-    x64Only = $true
-  }
-
-.OUTPUTS
-  $true OR $false
-#>
-  param([hashtable] $pkg)
-  $name = $pkg.name
-  $pkgargs = $pkg.args
-  try {
-    $is64Only = $pkg.x64Only
-  } catch {
-    $is64Only = $false
-  }
-
-  if ($is64Only) {
-    if (Get-OSArchitectureWidth -Compare 64) {
-      # pass
-    } else {
-      Write-Warning "[!] Not installing $name on x86 systems"
-      return $true
-    }
-  }
-
-  if ($null -eq $pkgargs) {
-    $upgradeArgs = $globalCinstArgs
-  } else {
-    $upgradeArgs = $pkgargs,$globalCinstArgs -Join " "
-  }
-
-  if ($upgradeArgs -like "*-source*" -Or $upgradeArgs -like "*--package-parameters*" -Or $upgradeArgs -like "*--parameters*") {
-    Write-Warning "[!] Installing using host choco.exe! Errors are ignored. Please check to confirm $name is installed properly"
-    Write-Warning "[!] Executing: Invoke-Expression choco upgrade $name $upgradeArgs"
-    $rc = Invoke-Expression "choco upgrade $name $upgradeArgs"
-    Write-Host $rc
-  } else {
-    choco upgrade $name $upgradeArgs
-  }
-
-  if ($([System.Environment]::ExitCode) -ne 0 -And $([System.Environment]::ExitCode) -ne 3010) {
-    Write-Host "ExitCode: $([System.Environment]::ExitCode)"
-    return $false
-  }
-  return $true
-}
-
-
-function VM-Install-Packages {
-<#
-.DESCRIPTION
-  Install a list of packages, following this JSON format:
-  [
-    {"name": "foo"},
-    {"name": "bar", "x64Only": true},
-    {"name": "foo.python", "args": "--source python"},
-    {"name": "bar.fancy", "args": "--package-parameters \'/InstallDir:C\\bar.fancy\'"}
-  ]
-.OUTPUTS
-  None, however it may write to stderr
-#>
-  param([hashtable] $packages)
-  foreach ($pkg in $packages) {
-    $rc = VM-Install-OnePackage $pkg
-    $name = $pkg.name
-    if ($rc) {
-      # self throttle
-      if (-Not ($name.Contains(".flare") -Or -Not ($name.Contains(".vm")))) {
-        Start-Sleep -Seconds 4
-      }
-    } else {
-      Write-Error "Failed to install $name"
-    }
-  }
-}
-
-
 function VM-Remove-PreviousZipPackage {
 <#
 .DESCRIPTION
@@ -782,3 +614,83 @@ function VM-Remove-From-Right-Click-Menu {
     VM-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
   }
 }
+
+function VM-Get-Host-Info {
+  $survey = @"
+VM OS version and Service Pack
+-----
+{0}
+
+VM OS RAM (MB)
+-----
+{1}
+
+VM OS HDD Space / Usage
+-----
+{2}
+
+VM AV Details
+-----
+{3}
+
+VM PowerShell Version
+-----
+{4}
+
+VM Chocolatey Version
+-----
+{5}
+
+VM Boxstarter Version
+-----
+{6}
+"@
+
+  # Credit: https://blog.idera.com/database-tools/identifying-antivirus-engine-state
+  # Define bit flags
+  [Flags()] enum ProductState
+  {
+      Off         = 0x0000
+      On          = 0x1000
+      Snoozed     = 0x2000
+      Expired     = 0x3000
+  }
+
+  [Flags()] enum SignatureStatus
+  {
+      UpToDate     = 0x00
+      OutOfDate    = 0x10
+  }
+
+  [Flags()] enum ProductOwner
+  {
+      NonMicrosoft = 0x000
+      Microsoft    = 0x100
+  }
+
+  [Flags()] enum ProductFlags
+  {
+      SignatureStatus = 0x00F0
+      ProductOwner    = 0x0F00
+      ProductState    = 0xF000
+  }
+
+  $osInfo = (Get-WMIObject win32_operatingsystem) | Select-Object Version, BuildNumber, OSArchitecture, ServicePackMajorVersion, Caption | Out-String
+  $memInfo = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1mb | Out-String
+  $diskInfo = Get-CimInstance -ClassName Win32_LogicalDisk | Out-String
+  $psInfo = $PSVersionTable.PSVersion
+  $chocoInfo = choco --version
+  $boxstarerInfo = choco list --local-only | Select-String -Pattern "Boxstarter" | Out-String
+
+  # Decode bit flags by masking the relevant bits, then converting
+  $avInfo = Get-CimInstance -Namespace "root\SecurityCenter2" -Class AntiVirusProduct -ComputerName ${Env:computername}
+  $avInfoFormatted = @"
+DisplayName: $($avInfo.displayName)
+ProductOwner: $([ProductOwner]([UInt32]$avInfo.productState -band [ProductFlags]::ProductOwner))
+ProductState: $([ProductState]([UInt32]$avInfo.productState -band [ProductFlags]::ProductState))
+SignatureStatus: $([SignatureStatus]([UInt32]$avInfo.productState -band [ProductFlags]::SignatureStatus))
+"@
+
+  VM-Write-Log "INFO" $($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $chocoInfo, $boxstarerInfo)
+}
+
