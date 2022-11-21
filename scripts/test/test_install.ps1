@@ -37,7 +37,7 @@ foreach ($package in $packages) {
 
 
 $exclude_tests = @("flarevm.installer.vm")
-$built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) -and $_ -notin $exclude_tests}
+$built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
 Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
     choco install $package -y -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
