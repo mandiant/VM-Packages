@@ -617,6 +617,8 @@ function VM-Remove-From-Right-Click-Menu {
 
 function VM-Get-Host-Info {
   $survey = @"
+Host Information
+
 VM OS version and Service Pack
 -----
 {0}
