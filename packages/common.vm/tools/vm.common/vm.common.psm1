@@ -677,7 +677,7 @@ VM Boxstarter Version
       ProductState    = 0xF000
   }
 
-  $osInfo = (Get-WMIObject win32_operatingsystem) | Select-Object Version, BuildNumber, OSArchitecture, ServicePackMajorVersion, Caption | Out-String
+  $osInfo = (Get-CimInstance win32_operatingsystem) | Select-Object Version, BuildNumber, OSArchitecture, ServicePackMajorVersion, Caption | Out-String
   $memInfo = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1mb | Out-String
   $diskInfo = Get-CimInstance -ClassName Win32_LogicalDisk | Out-String
   $psInfo = $PSVersionTable.PSVersion
