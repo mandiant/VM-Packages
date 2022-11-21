@@ -15,6 +15,9 @@ function Get-InstalledPackages {
 }
 
 try {
+    # Log basic system information to assist any troubleshooting
+    VM-Get-Host_Info
+
     # Gather packages to install
     $installedPackages = (Get-InstalledPackages).Name
     $configPath = Join-Path ${Env:VM_COMMON_DIR} "config.xml" -Resolve
