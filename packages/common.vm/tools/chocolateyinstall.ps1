@@ -32,7 +32,7 @@ function Set-EnvironmentVariableWrap([string] $key, [string] $value)
 # ################################################################################################ #
 # \ \ ---------------------------------------- N O T E ---------------------------------------- / /
 #
-#     Below are uyser configurable environment variables
+#     Below are user configurable environment variables
 #
 # ################################################################################################ #
 
