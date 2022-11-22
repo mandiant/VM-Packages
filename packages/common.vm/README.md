@@ -30,5 +30,5 @@ The environment variables below are configurable by the user:
     - Directory where actual tools may be installed if not installed to the default Chocolatey package directory
 
 ## Common PowerShell Module
-We have implemented a PowerShell module that provides commonly used functions. Any package may now make use of these common functions to reduce duplication. Module is saved to: *`%PROGRAMDATA%`*`\_VM\vm.common\vm.common.psm1`
+We have implemented a PowerShell module that provides commonly used functions. Any package may now make use of these common functions to reduce duplication. The module is saved to: *`%PROGRAMDATA%`*`\_VM\vm.common\vm.common.psm1`
 
