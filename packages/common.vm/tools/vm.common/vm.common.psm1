@@ -678,6 +678,10 @@ VM Boxstarter Version
 VM Installed Packages
 -----
 {8}
+
+Common Environment Variables
+-----
+{9}
 "@
 
     # Credit: https://blog.idera.com/database-tools/identifying-antivirus-engine-state
@@ -715,19 +719,43 @@ VM Installed Packages
     $psInfo = $PSVersionTable.PSVersion
     $psInfoClr = $PSVersionTable.CLRVersion
     $chocoInfo = chocolatey --version
-    $installedPackages = chocolatey list --local-only
+    $installedPackages = chocolatey list --local-only | Out-Null
     $boxstarerInfo = $installedPackages | Select-String -Pattern "Boxstarter" | Out-String
-    $installedPackages = chocolatey list --local-only | Out-String
+    $installedPackages = $installedPackages | Out-String
 
-    # Decode bit flags by masking the relevant bits, then converting
-    $avInfo = Get-CimInstance -Namespace "root\SecurityCenter2" -Class AntiVirusProduct -ComputerName ${Env:computername}
-    $avInfoFormatted = @"
+    $namespaceName = $null
+    # Determine if the namespace exists
+    # TODO: Seems this works sometimes... need to look further into how to get system AV information
+    $cimclassname = Get-CimClass -namespace 'root/cimv2' | Where-Object cimclassname -eq 'AntiVirusProduct' | Select-Object cimclassname
+    if ($null -ne $cimclassname.CimClassName) {
+        if (Get-CimInstance -Namespace 'root' -ClassName 'AntiVirusProduct' -Filter 'Name="SecurityCenter2"' -ComputerName ${Env:computername}) {
+            $namespaceName = 'root/SecurityCenter2'
+        } elseif (Get-CimInstance -Namespace 'root' -ClassName 'AntiVirusProduct' -Filter 'Name="SecurityCenter"' -ComputerName ${Env:computername}) {
+            $namespaceName = 'root/SecurityCenter'
+        } else {
+          $avInfoFormatted = "root/SecurityCenter* namespace does not exist..."
+        }
+        if (-not [string]::IsNullOrEmpty($namespaceName)) {
+          $avInfo = Get-CimInstance -Namespace $namespaceName -Class 'AntiVirusProduct' ./.git-ComputerName ${Env:computername}
+          # Decode bit flags by masking the relevant bits, then converting
+          $avInfoFormatted = @"
 DisplayName: $($avInfo.displayName)
 ProductOwner: $([ProductOwner]([UInt32]$avInfo.productState -band [ProductFlags]::ProductOwner))
 ProductState: $([ProductState]([UInt32]$avInfo.productState -band [ProductFlags]::ProductState))
 SignatureStatus: $([SignatureStatus]([UInt32]$avInfo.productState -band [ProductFlags]::SignatureStatus))
 "@
+        }
+    } else {
+      $avInfoFormatted = "AntiVirusProduct classname does not exist..."
+    }
 
-    VM-Write-Log "INFO" "$($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $psInfoClr, $chocoInfo, $boxstarerInfo, $installedPackages)"
+    $envVars = @"
+VM_COMMON_DIR: ${Env:VM_COMMON_DIR}
+TOOL_LIST_DIR: ${Env:TOOL_LIST_DIR}
+TOOL_LIST_SHORTCUT: ${Env:TOOL_LIST_SHORTCUT}
+RAW_TOOLS_DIR: ${Env:RAW_TOOLS_DIR}
+"@
+
+    VM-Write-Log "INFO" "$($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $psInfoClr, $chocoInfo, $boxstarerInfo, $installedPackages, $envVars)"
 }
 
