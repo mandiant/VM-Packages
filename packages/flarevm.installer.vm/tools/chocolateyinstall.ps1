@@ -15,9 +15,6 @@ function Get-InstalledPackages {
 }
 
 try {
-    # Log basic system information to assist with troubleshooting
-    VM-Get-Host-Info
-
     # Gather packages to install
     $installedPackages = (Get-InstalledPackages).Name
     $configPath = Join-Path ${Env:VM_COMMON_DIR} "config.xml" -Resolve
@@ -48,7 +45,7 @@ try {
 
     # Check and list failed packages from "lib-bad"
     $chocoLibBad = Join-Path ${Env:ProgramData} "chocolatey\lib-bad"
-    if ((Test-Path $chocoLibBad)) {
+    if ((Test-Path $chocoLibBad) -and (Get-ChildItem -Path $chocoLibBad | Measure-Object).Count -gt 0) {
         VM-Write-Log "ERROR" "Based on $chocoLibBad, the packages below failed to install:"
         Get-ChildItem -Path $chocoLibBad | Foreach-Object {
             VM-Write-Log "ERROR" "$($_.Name)"
