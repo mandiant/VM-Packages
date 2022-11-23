@@ -1,11 +1,12 @@
 # Build the packages in the 'packages' directory given as argument (or all if none provided) into the 'built_pkgs'.
-# Install the built packages
+# Install the built packages. If a package install fails and the $all switch is not provided,
+# the rest of the packages are not installed
 
 # Examples
 ## ./test_install
 ## ./test_install '7zip.vm 010editor.vm'
 
-param ([string] $package_names=$null)
+param ([string] $package_names=$null, [switch] $all)
 
 # Error Code Definitions
 # ----------------------
@@ -31,7 +32,7 @@ if ($package_names) {
 
 foreach ($package in $packages) {
     Set-Location "$root\$packages_dir_name\$package"
-    choco pack -out $built_pkgs_dir
+    choco pack -y -out $built_pkgs_dir
     if ($LASTEXITCODE -ne 0) { Exit 1 } # Abort with the first failing build
 }
 
@@ -40,15 +41,15 @@ $exclude_tests = @("flarevm.installer.vm")
 $built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
 Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
-    choco install $package -y -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
-    if ($validExitCodes -notcontains $LASTEXITCODE) { # Abort with the first failing install
+    choco install $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
+    if ($validExitCodes -notcontains $LASTEXITCODE) {
         Write-Host -ForegroundColor Red "[ERROR] Failed to install $package"
-        # Restore the original location
-        Set-Location -Path $org_dir -PassThru | Out-Null
-        Exit 1
+        $failed = $true
+        if (-not $all.IsPresent) { break } # Abort with the first failing install
     }
 }
 
 # Restore the original location
 Set-Location -Path $root -PassThru | Out-Null
+if ($failed){ Exit 1 }
 
