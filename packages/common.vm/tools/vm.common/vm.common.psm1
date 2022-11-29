@@ -719,7 +719,7 @@ Common Environment Variables
     $psInfo = $PSVersionTable.PSVersion
     $psInfoClr = $PSVersionTable.CLRVersion
     $chocoInfo = chocolatey --version
-    $installedPackages = chocolatey list --local-only | Out-Null
+    $installedPackages = chocolatey list --local-only
     $boxstarerInfo = $installedPackages | Select-String -Pattern "Boxstarter" | Out-String
     $installedPackages = $installedPackages | Out-String
 
