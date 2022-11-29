@@ -11,7 +11,7 @@ try {
 
         # Wait for notepad++ to appear
         while ((Get-Process | Where-Object { $_.mainWindowTitle -and $_.name -eq "notepad++" }).Count -eq 0) {
-          Start-Sleep -Milliseconds 1
+          Start-Sleep -Seconds 1
         }
 
         # Try to gracefully close it so that it can create it's config.xml
