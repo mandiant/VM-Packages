@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 function Get-InstalledPackages {
     if (Get-Command clist -ErrorAction:SilentlyContinue) {
-        clist -lo -r -all | ForEach-Object {
+        chocolatey list -l -r -all | ForEach-Object {
             $Name, $Version = $_ -split '\|'
             New-Object -TypeName psobject -Property @{
                 'Name' = $Name
@@ -42,14 +42,14 @@ try {
     # Construct failed packages file path
     $desktopPath = [Environment]::GetFolderPath("Desktop")
     $failedPackages = Join-Path $desktopPath "failed_packages.txt"
+    $failures = @{}
 
     # Check and list failed packages from "lib-bad"
     $chocoLibBad = Join-Path ${Env:ProgramData} "chocolatey\lib-bad"
     if ((Test-Path $chocoLibBad) -and (Get-ChildItem -Path $chocoLibBad | Measure-Object).Count -gt 0) {
-        VM-Write-Log "ERROR" "Based on $chocoLibBad, the packages below failed to install:"
         Get-ChildItem -Path $chocoLibBad | Foreach-Object {
             VM-Write-Log "ERROR" "$($_.Name)"
-            Add-Content $failedPackages $_.Name
+            $failures[$_.Name] = $true
         }
     }
 
@@ -57,9 +57,14 @@ try {
     $installedPackages = (Get-InstalledPackages).Name
     foreach ($package in $packagesToInstall) {
         if ($installedPackages -notcontains $package) {
-            VM-Write-Log "ERROR" "Failed to install: $package"
-            Add-Content $failedPackages $package
+            $failures[$package] = $true
         }
+    }
+
+    # Write each failed package to failure file
+    foreach ($package in $failures.Keys) {
+        VM-Write-Log "ERROR" "Failed to install: $package"
+        Add-Content $failedPackages $package
     }
 
     # Log additional info if we found failed packages
