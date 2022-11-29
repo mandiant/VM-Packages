@@ -28,7 +28,7 @@ try {
     # Wait for config.xml to exist after notepad++ exits
     $count = 0
     while (-Not (Test-Path -Path $configFile)) {
-        Start-Sleep 1
+        Start-Sleep -Seconds 1
         if ($count++ -eq 10) {
           break
         }
