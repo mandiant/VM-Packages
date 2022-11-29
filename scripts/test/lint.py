@@ -207,10 +207,11 @@ class VersionNotUpdated(Lint):
     def check(self, path):
         for part in path.parts:
             if part.endswith(".vm"):
-                package = part
+                # only check exact package path, i.e., `/<package>/`
+                package_path = f"{os.sep}{part}{os.sep}"
 
         # has any file in this package, including nuspec files, been updated?
-        if not any([package in cfile for cfile in self.changed_files]):
+        if not any([package_path in cfile for cfile in self.changed_files]):
             return False
 
         # look for version string in git diff
