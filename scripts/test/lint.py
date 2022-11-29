@@ -147,6 +147,9 @@ class VersionFormatIncorrect(Lint):
                                 print(f"{path} package version should be {'.'.join(dep_version[:3])}")
                                 return True
                         elif dep_version != version:
+                            # when change is made to a metapackage, use the current date in the 4th segment
+                            if len(version) == 4 and dep_version[:3] == version[:3]:
+                                return False
                             print(f"{path} package version should be {'.'.join(dep_version)}")
                             return True
 
