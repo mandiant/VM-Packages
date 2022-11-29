@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>libraries.python2.vm</id>
-    <version>0.0.0.20220831</version>
+    <version>0.0.0.20221128</version>
     <description>Metapackage that requires the dependencies below:
 - vcbuildtools.vm
 - python2
@@ -12,6 +12,9 @@
       <dependency id="common.vm" />
       <dependency id="vcbuildtools.vm" />
       <dependency id="python2" />
+      <!-- Below required to install "Python Launcher for Windows" -->
+      <dependency id="python3" />
     </dependencies>
   </metadata>
 </package>
+
