@@ -76,7 +76,10 @@ try {
     # Display installer log if available
     $logPath = Join-Path ${Env:VM_COMMON_DIR} "log.txt"
     if ((Test-Path $logPath)) {
-        Write-Host "[-] Please see installer log for any errors: $logPath" -ForegroundColor Yellow
+        Write-Host "[-] Please check the following logs for any errors:" -ForegroundColor Yellow
+        Write-Host "`t[-] $logPath" -ForegroundColor Yellow
+        Write-Host "`t[-] %PROGRAMDATA%\chocolatey\logs\chocolatey.log" -ForegroundColor Yellow
+        Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
         Start-Sleep 5
         & notepad.exe $logPath
     }
