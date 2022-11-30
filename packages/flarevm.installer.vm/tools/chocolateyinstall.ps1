@@ -48,7 +48,6 @@ try {
     $chocoLibBad = Join-Path ${Env:ProgramData} "chocolatey\lib-bad"
     if ((Test-Path $chocoLibBad) -and (Get-ChildItem -Path $chocoLibBad | Measure-Object).Count -gt 0) {
         Get-ChildItem -Path $chocoLibBad | Foreach-Object {
-            VM-Write-Log "ERROR" "$($_.Name)"
             $failures[$_.Name] = $true
         }
     }
@@ -68,15 +67,22 @@ try {
     }
 
     # Log additional info if we found failed packages
+    $logPath = Join-Path ${Env:VM_COMMON_DIR} "log.txt"
     if ((Test-Path $failedPackages)) {
         VM-Write-Log "ERROR" "For each failed package, you may attempt a manual install via: choco install -y <package_name>"
         VM-Write-Log "ERROR" "Failed package list saved to: $failedPackages"
+        VM-Write-Log "ERROR" "Please check the following logs for additional errors:"
+        VM-Write-Log "ERROR" "`t$logPath (this file)"
+        VM-Write-Log "ERROR" "`t%PROGRAMDATA%\chocolatey\logs\chocolatey.log"
+        VM-Write-Log "ERROR" "`t%LOCALAPPDATA%\Boxstarter\boxstarter.log"
     }
 
     # Display installer log if available
-    $logPath = Join-Path ${Env:VM_COMMON_DIR} "log.txt"
     if ((Test-Path $logPath)) {
-        Write-Host "[-] Please see installer log for any errors: $logPath" -ForegroundColor Yellow
+        Write-Host "[-] Please check the following logs for any errors:" -ForegroundColor Yellow
+        Write-Host "`t[-] $logPath" -ForegroundColor Yellow
+        Write-Host "`t[-] %PROGRAMDATA%\chocolatey\logs\chocolatey.log" -ForegroundColor Yellow
+        Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
         Start-Sleep 5
         & notepad.exe $logPath
     }
