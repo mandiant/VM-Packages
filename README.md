@@ -1,5 +1,6 @@
-[![daily check](https://github.com/mandiant/VM-packages/workflows/daily/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
 [![CI](https://github.com/mandiant/VM-packages/workflows/CI/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3ACI+branch%3Amain)
+[![Daily run success](https://img.shields.io/badge/pkgs--install--pass-0-green.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
+[![Daily run failure](https://img.shields.io/badge/pkgs--install--fail-0-orange.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
 
 # Virtual Machine Packages
 

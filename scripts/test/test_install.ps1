@@ -5,6 +5,7 @@
 # Examples
 ## ./test_install
 ## ./test_install '7zip.vm 010editor.vm'
+## ./test_install -all
 
 param ([string] $package_names=$null, [switch] $all)
 
@@ -40,16 +41,26 @@ foreach ($package in $packages) {
 $exclude_tests = @("flarevm.installer.vm")
 $built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
 Set-Location $built_pkgs_dir
+$failed = 0
+$success = 0
 foreach ($package in $built_pkgs) {
     choco install $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
     if ($validExitCodes -notcontains $LASTEXITCODE) {
         Write-Host -ForegroundColor Red "[ERROR] Failed to install $package"
-        $failed = $true
+        $failed += 1
         if (-not $all.IsPresent) { break } # Abort with the first failing install
+    } else {
+        $success += 1
     }
 }
 
 # Restore the original location
 Set-Location -Path $root -PassThru | Out-Null
-if ($failed){ Exit 1 }
 
+$result_file = "success_failure.json"
+Write-Host "Writing success/failure counts to $result_file"
+Write-Host -ForegroundColor Green "SUCCESS:$success"
+Write-Host -ForegroundColor Red "FAILURE:$failed"
+"{success:$success,failure:$failed}" | Out-File -FilePath $result_file
+
+if ($failed -gt 0){ Exit 1 }
