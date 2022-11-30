@@ -19,8 +19,9 @@ jobs:
       - name: Build and test all modified packages
         id: test
         run: scripts/test/test_install.ps1 -all
-      - name: Display Failures context
-        run: Select-String "Failures" -Context 0,1 C:\ProgramData\chocolatey\logs\chocolatey.log
+      - name: Display log warnings and errors
+        if: always()
+        run: Select-String "ERR|WARN" -CaseSensitive -Context 0,5 C:\ProgramData\_VM\log.txt
       - name: Upload chocolatey logs to artifacts
         uses: actions/upload-artifact@v3
         if: always()
