@@ -60,6 +60,9 @@ try {
         }
     }
 
+    $installedPackages = chocolatey list -l -r -all | Out-String
+    VM-Write-Log "INFO" "Packages installed:`n$installedPackages"
+
     # Write each failed package to failure file
     foreach ($package in $failures.Keys) {
         VM-Write-Log "ERROR" "Failed to install: $package"
@@ -86,6 +89,40 @@ try {
         Start-Sleep 5
         & notepad.exe $logPath
     }
+
+    # Let users know installation is complete by setting background, playing win sound, and display message box
+    Set-ItemProperty 'HKCU:\Control Panel\Colors' -Name Background -Value "0 0 0" -Force | Out-Null
+    $backgroundImage = "${Env:VM_COMMON_DIR}\background.png"
+    if ((Test-Path $backgroundImage)) {
+        # Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
+        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 6 -Force | Out-Null
+        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force | Out-Null
+        Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+
+public class VMBackground
+{
+    [DllImport("User32.dll",CharSet=CharSet.Unicode)]
+    public static extern int SystemParametersInfo (Int32 uAction, Int32 uParam, String lpvParam, Int32 fuWinIni);
+    [DllImport("User32.dll",CharSet=CharSet.Unicode)]
+    public static extern bool SetSysColors(int cElements, int[] lpaElements, int[] lpaRgbValues);
+}
+"@
+        [VMBackground]::SystemParametersInfo(20, 0, $backgroundImage, 3)
+        [VMBackground]::SetSysColors(1, @(1), @(0x000000))
+    }
+
+    $playWav = New-Object System.Media.SoundPlayer
+    $playWav.SoundLocation = 'https://www.winhistory.de/more/winstart/down/owin31.wav'
+    $playWav.PlaySync()
+
+    Add-Type -AssemblyName PresentationCore,PresentationFramework
+    $msgBody = "Install complete!`nPlease review %VM_COMMON_DIR%\log.txt for any errors.`nThank you"
+    $msgTitle = "VM Installation Complete"
+    $msgButton = 'OK'
+    $msgImage = 'Asterisk'
+    [System.Windows.MessageBox]::Show($msgBody,$msgTitle,$msgButton,$msgImage)
 } catch {
     VM-Write-Log-Exception $_
 }

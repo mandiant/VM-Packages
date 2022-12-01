@@ -682,6 +682,7 @@ VM Installed Packages
 Common Environment Variables
 -----
 {9}
+
 "@
 
     # Credit: https://blog.idera.com/database-tools/identifying-antivirus-engine-state
@@ -719,7 +720,7 @@ Common Environment Variables
     $psInfo = $PSVersionTable.PSVersion
     $psInfoClr = $PSVersionTable.CLRVersion
     $chocoInfo = chocolatey --version
-    $installedPackages = chocolatey list --local-only
+    $installedPackages = chocolatey list -l -r -all
     $boxstarerInfo = $installedPackages | Select-String -Pattern "Boxstarter" | Out-String
     $installedPackages = $installedPackages | Out-String
 

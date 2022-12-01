@@ -12,10 +12,10 @@ try {
     # Upgrade pip
     Invoke-Expression "py -2 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
 
-    $success = $true
+    $failures = @{}
     $modules = $modulesXml.modules.module
     foreach ($module in $modules) {
-        VM-Write-Log "INFO" "Attempting to install Python2 module: $($module.name)"
+        Write-Host "[+] Attempting to install Python2 module: $($module.name)"
         $intallValue = $module.name
         if ($module.url) {
             $intallValue = $module.url
@@ -24,15 +24,17 @@ try {
         Invoke-Expression "py -2 -m pip install $intallValue 2>&1 >> $outputFile"
 
         if ($LastExitCode -eq 0) {
-            VM-Write-Log "INFO" "Installed Python2 module: $($module.name)"
+            Write-Host "`t[+] Installed Python2 module: $($module.name)" -ForegroundColor Green
         } else {
-            VM-Write-Log "ERROR" "Failed to install Python2 module: $($module.name)"
-            $success = $false
+            Write-Host "`t[!] Failed to install Python2 module: $($module.name)" -ForegroundColor Red
+            $failures[$module.Name] = $true
         }
     }
 
-    if ($success -eq $false) {
-        VM-Write-Log "ERROR" "Failed to install at least one Python2 module"
+    if ($failures.Keys.Count -gt 0) {
+        foreach ($module in $failures.Keys) {
+            VM-Write-Log "ERROR" "Failed to install Python2 module: $module"
+        }
         $outputFile = $outputFile.replace('lib\', 'lib-bad\')
         VM-Write-Log "ERROR" "Check $outputFile for more information"
         exit 1
