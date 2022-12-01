@@ -58,9 +58,9 @@ foreach ($package in $built_pkgs) {
 Set-Location -Path $root -PassThru | Out-Null
 
 $result_file = "success_failure.json"
-Write-Host "Writing success/failure counts to $result_file"
+Write-Host "Writing success/failure and total counts to $result_file"
 Write-Host -ForegroundColor Green "SUCCESS:$success"
 Write-Host -ForegroundColor Red "FAILURE:$failed"
-"{success:$success,failure:$failed}" | Out-File -FilePath $result_file
+"{success:$success,failure:$failed,total:$($packages.Count)}" | Out-File -FilePath $result_file
 
 if ($failed -gt 0){ Exit 1 }

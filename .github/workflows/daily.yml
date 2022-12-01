@@ -28,8 +28,9 @@ jobs:
           # test_install.ps1 writes success_failure.json with contents: `{success: n, failure: m}`
           $succ = (Get-Content "success_failure.json" | ConvertFrom-Json).success
           $fail = (Get-Content "success_failure.json" | ConvertFrom-Json).failure
+          $total = (Get-Content "success_failure.json" | ConvertFrom-Json).total
           # URL format: `https://img.shields.io/badge/pkgs--install--pass-1337-green.svg`
-          (Get-Content README.md) -replace 'pass-(\d{1,})-', "pass-$succ-" -replace 'fail-(\d{1,})-', "fail-$fail-" | Out-File README.md
+          (Get-Content README.md) -replace 'pkgs--install--pass-(\d{1,})-', "pkgs--install--pass-$succ-" -replace 'pkgs--install--fail-(\d{1,})-', "pkgs--install--fail-$fail-" -replace 'packages-(\d{1,})-blue', "packages-$total-blue" | Out-File README.md
       - name: Commit changes
         if: matrix.os == 'windows-2022'
         run: |
