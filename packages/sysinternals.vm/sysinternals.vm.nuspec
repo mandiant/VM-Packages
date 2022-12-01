@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sysinternals.vm</id>
-    <version>0.0.0.20211030</version>
+    <version>2022.11.28.20221201</version>
     <authors>Mark Russinovich, Bryce Cogswell</authors>
     <description>Sysinternals suite of troubleshooting tools.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="sysinternals" />
+      <dependency id="sysinternals" version="[2022.11.28]" />
     </dependencies>
   </metadata>
 </package>
