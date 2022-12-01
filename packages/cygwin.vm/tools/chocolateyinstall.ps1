@@ -28,7 +28,7 @@ try {
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
 
-  $toolDir = Join-Path ${Env:SystemDrive} "tools\Cygwin" -Resolve
+  $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "Cygwin" -Resolve
   $toolBin = Join-Path $toolDir "bin" -Resolve
   $executablePath = Join-Path $toolBin "mintty.exe" -Resolve
   $executableArgs = "-"
