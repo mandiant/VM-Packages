@@ -108,7 +108,7 @@ class IncludesRequiredFieldsOnly(Lint):
 
 class VersionFormatIncorrect(Lint):
     name = "the version value is invalid"
-    recommendation = "see the Contributing Wiki for guidance on the version string"
+    recommendation = "see the VM-Packages Wiki for conventions and package structure related to the version string"
 
     def check(self, path):
         dom = minidom.parse(str(path))
@@ -134,11 +134,11 @@ class VersionFormatIncorrect(Lint):
                 print(f"{path} fourth version segment not in format %Y%m%d")
                 return True
 
-        # for metapackage with locked dependency version
-        deps = dom.getElementsByTagName("dependencies")
+        # for metapackage that just installs/configures a specific tool (with locked dependency version)
+        deps = dom.getElementsByTagName("dependency")
         if len(deps) == 1:
-            for d in deps[0].childNodes:
-                if d.nodeName == "dependency" and d.getAttribute("version"):
+            for d in deps:
+                if d.getAttribute("version"):
                     dep_version = d.getAttribute("version")
                     if dep_version.startswith("[") and dep_version.endswith("]"):
                         dep_version = dep_version[1:-1].split(".")
@@ -165,12 +165,12 @@ class DoesNotListDependencyCommonVm(Lint):
             return False
 
         dom = minidom.parse(str(path))
-        deps = dom.getElementsByTagName("dependencies")
-        if len(deps) != 1:
+        deps = dom.getElementsByTagName("dependency")
+        if len(deps) == 0:
             return True
 
-        for d in deps[0].childNodes:
-            if d.nodeName == "dependency" and d.getAttribute("id") == "common.vm":
+        for d in deps:
+            if d.getAttribute("id") == "common.vm":
                 return False
         return True
 
