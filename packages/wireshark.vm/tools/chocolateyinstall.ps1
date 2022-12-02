@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'wireshark'
-  $category = 'Networking Tools'
+  $category = 'Networking'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
