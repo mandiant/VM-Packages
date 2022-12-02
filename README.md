@@ -24,4 +24,4 @@ Please see the [Wiki](wiki) for documentation on how to create a package using o
 Open sourcing the installation packages allows the community to not only suggest new tools, improvements, and report bugs, but to help implement them. It's now very transparent how and what gets installed. Moreover, we can use GitHub Actions (free for open-source repositories) for testing and automations. This reduces manual maintenance and simplifies contributions.
 
 ## Automation
-Once a package is submitted, our pull request automations will test the package to see if it builds and installs correctly. Additionally, we use GitHub Actions to build and test each package on a daily basis to check for any errors. Just being aware of broken packages quickly should solve a lot of problems VM users faced in the past.
+Once a package is submitted, our pull request automations test the package to see if it builds and installs correctly. Additionally, we use GitHub Actions to build and test each package on a daily basis to check for any errors. Simply being aware of broken packages should quickly solve a lot of problems VM users faced in the past.
