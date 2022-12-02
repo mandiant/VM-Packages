@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build and test all modified packages
+      - name: Build and test all packages
         id: test
         run: scripts/test/test_install.ps1 -all
       - name: Display log warnings and errors
