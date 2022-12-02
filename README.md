@@ -3,36 +3,25 @@
 
 # Virtual Machine Packages
 
-## Overview
-This repository contains the source code for packages supporting the projects below:
-* [FLARE-VM](https://github.com/mandiant/flare-vm)
-* [Commando-VM](https://github.com/mandiant/commando-vm)
-* [ThreatPursuit-VM](https://github.com/mandiant/ThreatPursuit-VM)
+This repository contains the source code for packages supporting the following analysis environment projects:
+* [FLARE VM](https://github.com/mandiant/flare-vm)
+* [CommandoVM](https://github.com/mandiant/commando-vm)
+* [ThreatPursuit VM](https://github.com/mandiant/ThreatPursuit-VM)
 
-> NOTE: Packages do not contain actual software distributions. Packages are PowerShell scripts that only contain instructions for obtaining distributions. See [Chocolatey legal information](https://docs.chocolatey.org/en-us/information/legal) for more details.
+> Packages do not contain actual software distributions. Packages are PowerShell scripts that only contain instructions for obtaining and configuring tools. See [Chocolatey legal information](https://docs.chocolatey.org/en-us/information/legal) for more details.
 
-### Package Lifecycle
-Below is a summary of a package's lifecycle from source code to tool installation:
+# How does this work?
+The packages stored in this repository are automatically built and pushed to a public package feed hosted on myget.org. From this feed FLARE VM and our other binary analysis environments download packages and execute the included scripts to install tools.
 
-1. Package source code committed
-2. Package built and pushed to MyGet repository
-   - A built package is a `.nupkg` file that's essentially a ZIP file of the package source code
-   - GitHub actions will perform building/pushing to MyGet; however, repo admins may need to manually build/push packages occasionally
-3. User runs installation script for:
-   - [FLARE-VM](https://github.com/mandiant/flare-vm)
-   - [Commando-VM](https://github.com/mandiant/commando-vm)
-   - [ThreatPursuit-VM](https://github.com/mandiant/ThreatPursuit-VM)
-4. Installation script downloads built package (aka `.nupkg` file) from MyGet
-   - The installation script contains a list of packages to install (e.g., [packages.json](https://github.com/mandiant/flare-vm/blob/master/flarevm.installer.flare/tools/packages.json))
-5. Installation script installs the package which in turn performs the actions below:
-   - Package contains a tool's URL link
-   - Package downloads and installs tool to the User's system
+The installation of packages relies on [Chocolatey](https://chocolatey.org/).
 
-## Why Open-Source the Package Code?
-Open-sourcing the package source code provides the community an avenue to both fix broken packages and submit new packages.
+# Contributing
+To report problems or to suggest new tools please open a new [Issue](issues).
 
-### Additional Benefits: Automation
-Once a package is submitted, our PR hooks will test the package to see if it builds and installs correctly. Additionally, GitHub actions can automatically build and test each package on a daily or weekly basis to check if a package has broke. The awareness of broken packages is a large problem by itself which these actions can alleviate.
+Please see the [Wiki](wiki) for documentation on how to create a package using our established best practices.
 
-## How do I Create a Package?
-Please see the Wiki for documentation on how to create a package using our established best practices.
+# Open Source Packages
+Open sourcing the installation packages allows the community to not only suggest new tools, improvements, and report bugs, but to help implement them. It's now very transparent how and what gets installed. Moreover, we can use GitHub Actions (free for open-source repositories) for testing and automations. This reduces manual maintenance and simplifies contributions.
+
+## Automation
+Once a package is submitted, our pull request automations will test the package to see if it builds and installs correctly. Additionally, we use GitHub Actions to build and test each package on a daily basis to check for any errors. Just being aware of broken packages quickly should solve a lot of problems VM users faced in the past.
