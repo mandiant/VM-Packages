@@ -1,6 +1,7 @@
 name: daily
 
 on:
+  workflow_dispatch:
   schedule:
     # Runs daily at a weird time (03:17 UTC) to avoid delays during periods of
     # high loads of GitHub Actions workflow runs.
@@ -16,11 +17,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build and test all modified packages
+      - name: Build and test all packages
         id: test
         run: scripts/test/test_install.ps1 -all
-      - name: Display Failures context
-        run: Select-String "Failures" -Context 0,1 C:\ProgramData\chocolatey\logs\chocolatey.log
+      - name: Display log warnings and errors
+        if: always()
+        run: if (Test-Path -Path C:\ProgramData\_VM\log.txt ) { Select-String "ERR|WARN" -CaseSensitive -Context 0,5 C:\ProgramData\_VM\log.txt }
+      - name: Update badges in README
+        if: matrix.os == 'windows-2022'
+        run: |
+          # test_install.ps1 writes success_failure.json with contents: `{success: n, failure: m}`
+          $succ = (Get-Content "success_failure.json" | ConvertFrom-Json).success
+          $fail = (Get-Content "success_failure.json" | ConvertFrom-Json).failure
+          $total = (Get-Content "success_failure.json" | ConvertFrom-Json).total
+          # URL format: `https://img.shields.io/badge/pkgs--install--pass-1337-green.svg`
+          (Get-Content README.md) -replace 'pkgs--install--pass-(\d{1,})-', "pkgs--install--pass-$succ-" -replace 'pkgs--install--fail-(\d{1,})-', "pkgs--install--fail-$fail-" -replace 'packages-(\d{1,})-blue', "packages-$total-blue" | Out-File README.md
+      - name: Commit changes
+        if: matrix.os == 'windows-2022'
+        run: |
+          git config user.email 'vm-packages@mandiant.com'
+          git config user.name 'vm-packages'
+          git add README.md
+          git commit -m 'Update daily success/failure badges'
+      - name: Push changes
+        if: matrix.os == 'windows-2022'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_TOKEN }}
       - name: Upload chocolatey logs to artifacts
         uses: actions/upload-artifact@v3
         if: always()
