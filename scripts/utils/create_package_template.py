@@ -474,7 +474,7 @@ def main(argv=None):
         help="Installation template type, see descriptions via %(prog)s --type",
     )
     parser.add_argument("--raw", action="store_true", help="Create package files like .nuspec with raw placeholder data")
-    parser.add_argument("--pkg_name", type=str, default="", help="Package name without suffix (i.e., no '.vm' needed)")
+    parser.add_argument("--pkg_name", type=str.lower, default="", help="Package name without suffix (i.e., no '.vm' needed)")
     parser.add_argument("--version", type=str, default="", help="Tool's version number")
     parser.add_argument("--authors", type=str, default="", help="Comma separated list of authors for tool")
     parser.add_argument("--tool_name", type=str, default="", help="Name of tool (usually the file name with the '.exe')")
