@@ -4,5 +4,3 @@ updates:
     directory: "/packages"
     schedule:
       interval: "daily"
-    reviewers:
-      - "malwaremechanic"
