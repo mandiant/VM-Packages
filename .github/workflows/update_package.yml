@@ -52,6 +52,7 @@ jobs:
           body: 'Automated package update'
           branch: package-update
           author: vm-packages <vm-packages@mandiant.com>
+          add-paths: packages/*
           # GH actions can not trigger other GH actions,
           # use a Personal Access Token to trigger the CI workflow in the created PR
           token: ${{ secrets.REPO_TOKEN }}
