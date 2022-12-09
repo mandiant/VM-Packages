@@ -1,10 +1,24 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'yara'
-$category = 'Forensic'
+try {
+    $category = 'Forensic'
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+    $shimPath = Join-Path ${Env:ChocolateyInstall} "bin" -Resolve
+    $toolPaths = Get-ChildItem $shimPath | Where-Object { $_.Name -match '^yarac?(32|64)\.exe$' }
 
-$zipUrl = 'https://github.com/VirusTotal/yara/releases/download/v4.2.3/yara-4.2.3-2029-win64.zip'
-$zipSha256 = 'a71a7070bc6dd392e0c066a590d2262382b0c3d73e76cc0851dc33ab5d51d381'
+    foreach ($toolPath in $toolPaths) {
+        $toolName = $toolPath.Name -replace ([regex]::match($toolPath.Name, '(32|64)\.exe')), ''
+        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+        Install-BinFile -Name $toolName -Path $toolPath
 
-VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
+        $executablePath = $toolPath
+        $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
+        $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
+        $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`""
+        Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir
+        VM-Assert-Path $shortcut
+    }
+} catch {
+    VM-Write-Log-Exception $_
+}

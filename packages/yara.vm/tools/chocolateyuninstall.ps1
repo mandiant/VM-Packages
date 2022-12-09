@@ -1,7 +1,12 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'yara'
 $category = 'Forensic'
+$shimPath = Join-Path ${Env:ChocolateyInstall} "bin" -Resolve
+$toolPaths = Get-ChildItem $shimPath | Where-Object { $_.Name -match '^yarac?(32|64)\.exe$' }
 
-VM-Uninstall $toolName $category
+foreach ($toolPath in $toolPaths) {
+    $toolName = $toolPath.Name -replace ([regex]::match($toolPath.Name, '(32|64)\.exe')), ''
+    VM-Remove-Tool-Shortcut $toolName $category
+    Uninstall-BinFile -Name $toolName
+}
