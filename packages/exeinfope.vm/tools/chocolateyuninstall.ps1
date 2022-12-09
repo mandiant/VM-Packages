@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'Exeinfo PE'
+$toolName = 'exeinfope'
 $category = 'Utilities'
 
 VM-Uninstall $toolName $category
