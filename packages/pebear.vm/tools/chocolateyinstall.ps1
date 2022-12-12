@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'PE-bear'
   $category = 'PE'
-  $shimPath = '%PROGRAMDATA%\chocolatey\bin\PE-bear.exe'
+  $shimPath = 'bin\PE-bear.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
