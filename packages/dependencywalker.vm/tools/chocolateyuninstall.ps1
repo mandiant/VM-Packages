@@ -4,4 +4,5 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Dependency Walker'
 $category = 'PE'
 
-VM-Uninstall $toolName $category
+VM-Remove-Tool-Shortcut $toolName $category
+
