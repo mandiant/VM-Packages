@@ -7,7 +7,7 @@
     <description>Scans PE files and builds a hierarchical tree diagram of all dependent modules</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="" version="[2.2.6000.9]" />
+      <dependency id="dependencywalker" version="[2.2.6000.9]" />
     </dependencies>
   </metadata>
 </package>
