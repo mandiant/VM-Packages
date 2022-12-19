@@ -7,7 +7,7 @@
     <description>A lightweight user-friendly Java/Android Bytecode Viewer, Decompiler and more.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="javaruntime" />
+      <dependency id="javaruntime" version="[8.0.231]" />
     </dependencies>
   </metadata>
 </package>
