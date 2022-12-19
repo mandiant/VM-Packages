@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>fiddlerclassic.vm</id>
+    <version>5.0.20211.20221209</version>
+    <authors>Telerik</authors>
+    <description>Intercepts, decrypts, and analyzes HTTPS traffic</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="fiddler" version="[5.0.20211.51073]" />
+    </dependencies>
+  </metadata>
+</package>
+
