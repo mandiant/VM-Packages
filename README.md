@@ -1,7 +1,7 @@
 [![Packages](https://img.shields.io/badge/packages-43-blue.svg)](packages)
 [![CI](https://github.com/mandiant/VM-packages/workflows/CI/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3ACI+branch%3Amain)
-[![Daily run success](https://img.shields.io/badge/pkgs--install--pass-40-green.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
-[![Daily run failure](https://img.shields.io/badge/pkgs--install--fail-2-orange.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
+[![Daily run success](https://img.shields.io/badge/pkgs--install--pass-42-green.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
+[![Daily run failure](https://img.shields.io/badge/pkgs--install--fail-0-orange.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
 
 # Virtual Machine Packages
 
@@ -18,9 +18,9 @@ The packages stored in this repository are automatically built and pushed to a p
 The installation of packages relies on [Chocolatey](https://chocolatey.org/).
 
 # Contributing
-To report problems or to suggest new tools please open a new [Issue](issues).
+To report problems or to suggest new tools please open a new [Issue](https://github.com/mandiant/VM-Packages/issues).
 
-Please see the [Wiki](wiki) for documentation on how to create a package using our established best practices.
+Please see the [Wiki](https://github.com/mandiant/VM-Packages/wiki) for documentation on how to create a package using our established best practices.
 
 # Open Source Packages
 Open sourcing the installation packages allows the community to not only suggest new tools, improvements, and report bugs, but to help implement them. It's now very transparent how and what gets installed. Moreover, we can use GitHub Actions (free for open-source repositories) for testing and automations. This reduces manual maintenance and simplifies contributions.
