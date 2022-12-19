@@ -5,3 +5,4 @@ $toolName = 'exiftool'
 $category = 'Utilities'
 
 VM-Remove-Tool-Shortcut $toolName $category
+
