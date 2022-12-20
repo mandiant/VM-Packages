@@ -503,6 +503,110 @@ function VM-Remove-Tool-Shortcut {
     Remove-Item $shortcut -Force -ea 0 | Out-Null
 }
 
+function VM-Install-With-Installer {
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
+        [Parameter(Mandatory=$true, Position=2)]
+        [ValidateSet("EXE", "MSI")]
+        [string] $fileType,
+        [Parameter(Mandatory=$true, Position=3)]
+        # Some general silent args:
+        # $silentArgs = '/qn /norestart' # MSI
+        # $silentArgs = '/S'             # NSIS
+        # $silentArgs = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' # Inno Setup
+        #   Can also specify an install directory for Inno Setup via /DIR=`"<path>`"
+        # $silentArgs = '/s'             # InstallShield
+        # $silentArgs = '/s /v"/qn"'     # InstallShield with MSI
+        # $silentArgs = '/s'             # Wise InstallMaster
+        # $silentArgs = '-s'             # Squirrel
+        # $silentArgs = '-q'             # Install4j
+        # $silentArgs = '-s -u'          # Ghost
+        [string] $silentArgs,
+        [Parameter(Mandatory=$true, Position=4)]
+        [string] $executablePath,
+        [Parameter(Mandatory=$true, Position=5)]
+        [string] $url,
+        [Parameter(Mandatory=$false)]
+        [string] $sha256,
+        [Parameter(Mandatory=$false)]
+        [array] $validExitCodes= @(0, 3010, 1605, 1614, 1641),
+        [Parameter(Mandatory=$false)]
+        [bool] $consoleApp=$false
+    )
+    try {
+        $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+
+        # Get the file extension from the URL
+        $installerName = Split-Path -Path $url -Leaf
+        $ext = $installerName.Split(".")[-1].ToLower()
+
+        # Download and install
+        $packageArgs = @{
+            packageName   = ${Env:ChocolateyPackageName}
+            url           = $url
+            checksum      = $sha256
+            checksumType  = "sha256"
+        }
+        if ($ext -in @("zip", "7z")) {
+            VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
+            $unzippedDir= Join-Path $toolDir "$($toolName)_installer"
+            $packageArgs['unzipLocation'] = $unzippedDir
+            Install-ChocolateyZipPackage @packageArgs
+            VM-Assert-Path $unzippedDir
+
+            $exePaths = Get-ChildItem $unzippedDir | Where-Object { $_.Name.ToLower() -match '^.*\.(exe|msi)$' }
+            if ($exePaths.Count -eq 1) {
+                $installerPath = $exePaths[0].FullName
+            } else {
+                $exePaths = Get-ChildItem $unzippedDir | Where-Object { $_.Name.ToLower() -match '^.*(setup|install).*\.(exe|msi)$' }
+                if ($exePaths.Count -eq 1) {
+                    $installerPath = $exePaths[0].FullName
+                } else {
+                    throw "Unable to determine installer file within: $unzippedDir"
+                }
+            }
+        } else {
+            $installerPath = Join-Path $toolDir $installerName
+            $packageArgs['fileFullPath'] = $installerPath
+            Get-ChocolateyWebFile @packageArgs
+            VM-Assert-Path $installerPath
+        }
+
+        # Install tool via native installer
+        $packageArgs = @{
+            packageName   = ${Env:ChocolateyPackageName}
+            fileType      = $fileType
+            file          = $installerPath
+            silentArgs    = $silentArgs
+            validExitCodes= $validExitCodes
+            softwareName  = $toolName
+        }
+        Install-ChocolateyInstallPackage @packageArgs
+        VM-Assert-Path $executablePath
+
+        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+        if ($consoleApp) {
+            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
+            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
+            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
+            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
+        } else {
+            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
+        }
+        VM-Assert-Path $shortcut
+
+        Install-BinFile -Name $toolName -Path $executablePath
+    } catch {
+        VM-Write-Log-Exception $_
+    }
+}
+
 function VM-Uninstall-With-Uninstaller {
     [CmdletBinding()]
     Param
@@ -527,7 +631,8 @@ function VM-Uninstall-With-Uninstaller {
         [Parameter(Mandatory=$false)]
         [array] $validExitCodes= @(0, 3010, 1605, 1614, 1641)
     )
-    # Attempt to find and execute the uninstaller
+    # Attempt to find and execute the uninstaller, may need to use wildcards
+    # See: https://docs.chocolatey.org/en-us/create/functions/get-uninstallregistrykey
     [array]$key = Get-UninstallRegistryKey -SoftwareName $softwareName
     if ($key.Count -eq 1) {
         $packageArgs = @{
