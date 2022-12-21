@@ -17,8 +17,7 @@ try {
     VM-Assert-Path $packageArgs.fileFullPath
 
     $ahkInstaller = Join-Path $(Split-Path $MyInvocation.MyCommand.Definition) "install.ahk" -Resolve
-    $ahkExe = Join-Path ${Env:ChocolateyInstall} "lib\autohotkey.portable\tools\AutoHotkey.exe" -Resolve
-    $rc = (Start-Process -FilePath $ahkExe -ArgumentList "$ahkInstaller $($packageArgs.fileFullPath)" -PassThru -Wait).ExitCode
+    $rc = (Start-Process -FilePath $ahkInstaller -ArgumentList $packageArgs.fileFullPath -PassThru -Wait).ExitCode
     if ($rc -eq 1) {
         throw "AutoHotKey returned a failure exit code ($rc) for: ${Env:ChocolateyPackageName}"
     } else {
