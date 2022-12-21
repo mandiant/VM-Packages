@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>npcap.vm</id>
+    <version>1.72</version>
+    <authors>Nmap Project</authors>
+    <description>Npcap is an architecture for packet capture and network analysis for Windows operating systems, consisting of a software library and a network driver.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="autohotkey" version="[1.1.36.02]" />
+    </dependencies>
+  </metadata>
+</package>
+
