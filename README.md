@@ -1,6 +1,6 @@
-[![Packages](https://img.shields.io/badge/packages-52-blue.svg)](packages)
+[![Packages](https://img.shields.io/badge/packages-53-blue.svg)](packages)
 [![CI](https://github.com/mandiant/VM-packages/workflows/CI/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3ACI+branch%3Amain)
-[![Daily run success](https://img.shields.io/badge/pkgs--install--pass-50-green.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
+[![Daily run success](https://img.shields.io/badge/pkgs--install--pass-51-green.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
 [![Daily run failure](https://img.shields.io/badge/pkgs--install--fail-1-orange.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain)
 
 # Virtual Machine Packages
