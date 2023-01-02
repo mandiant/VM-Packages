@@ -5,6 +5,6 @@ $toolName = 'NetworkMiner'
 $category = 'Networking'
 
 $zipUrl = 'https://www.netresec.com/?download=NetworkMiner'
-$zipSha256 = 'cf477b651c3bcc70d6f5d50f9bdcb6d8cf2dd85b7018109ff474b9df3c7a0f7e'
+$zipSha256 = '13dc519e24a44485554be6e3651bf9381b9ea13a0376cdf958508c75e3b1bb7a'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -innerFolder $true
