@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>pestudio.vm</id>
+    <version>9.46</version>
+    <authors>Marc Ochsenmeier</authors>
+    <description>The goal of pestudio is to spot artifacts of executable files in order to ease and accelerate Malware Initial Assessment.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
