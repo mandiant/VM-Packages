@@ -8,7 +8,7 @@ try {
     $zipUrl = 'https://github.com/dzzie/VS_LIBEMU/releases/download/12.7.22/VS_LIBEMU_12_7_22.zip'
     $zipSha256 = '521130E34CC0A30587FF99D030633B9D124CCAC779A213E15025535171B4113D'
 
-    VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
+    VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true
 
     # Add GUI variant of scdbg
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
