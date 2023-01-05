@@ -5,8 +5,8 @@ try {
   $toolName = 'Malcode Analyst Pack'
   $category = 'Utilities'
 
-  $url = 'http://sandsprite.com/CodeStuff/map_setup.exe'
-  $checksum = '285e4842d5aef3023594fbc2de4972c6890331c641478bdce67ecf4797c1e1d1'
+  $url = 'https://github.com/dzzie/MAP/releases/download/current/map_setup.exe'
+  $checksum = '421872a1846ec421d3b414ba1af70b1d929082f5903bdb363d1c7172488c69e9'
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
