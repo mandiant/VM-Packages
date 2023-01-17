@@ -3,6 +3,7 @@
     <module name="acefile"/>
     <module name="binwalk" url="https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"/>
     <module name="capstone-windows"/>
+    <module name="dissect"/>
     <module name="hexdump"/>
     <module name="ldapdomaindump"/>
     <module name="mkyara"/>
