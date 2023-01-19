@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>libraries.python3.vm</id>
-    <version>0.0.0.20221203</version>
+    <version>0.0.0.20230118</version>
     <description>Metapackage to install common Python3 libraries</description>
     <authors>Mandiant, Microsoft, Python Software Foundation</authors>
     <dependencies>
