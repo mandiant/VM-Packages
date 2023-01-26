@@ -138,7 +138,11 @@ class VersionFormatIncorrect(Lint):
         deps = dom.getElementsByTagName("dependency")
         # common.vm and one locked dependency
         if len(deps) <= 2:
+            pkg_id = metadata.getElementsByTagName("id")[0].firstChild.data.replace("vm", "")
             for d in deps:
+                if d.getAttribute("id") != pkg_id:
+                    continue
+
                 if d.getAttribute("version"):
                     dep_version = d.getAttribute("version")
                     if dep_version.startswith("[") and dep_version.endswith("]"):
