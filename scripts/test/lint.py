@@ -136,7 +136,8 @@ class VersionFormatIncorrect(Lint):
 
         # for metapackage that just installs/configures a specific tool (with locked dependency version)
         deps = dom.getElementsByTagName("dependency")
-        if len(deps) == 1:
+        # common.vm and one locked dependency
+        if len(deps) <= 2:
             for d in deps:
                 if d.getAttribute("version"):
                     dep_version = d.getAttribute("version")
@@ -144,7 +145,10 @@ class VersionFormatIncorrect(Lint):
                         dep_version = dep_version[1:-1].split(".")
                         if len(dep_version) == 4:
                             if dep_version[:3] != version[:3]:
-                                print(f"{path} package version should be {'.'.join(dep_version[:3])}")
+                                print(f"{path} package version should start with {'.'.join(dep_version[:3])}")
+                                return True
+                            if len(version) != 4:
+                                print(f"{path} package version should use current date (YYYYMMDD) in the 4th segment")
                                 return True
                         elif dep_version != version:
                             # when change is made to a metapackage, use the current date in the 4th segment
