@@ -1,6 +1,8 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
+# a change here, should be yelled at by the linter
+
 try {
   $toolName = '010Editor'
   $category = 'Hex Editors'
