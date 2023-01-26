@@ -26,7 +26,7 @@ from xml.dom import minidom
 GIT_EXE = "git"
 
 # set log level for debugging here script-wide
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = logging.DEBUG
 logging.basicConfig(level=LOG_LEVEL)
 logger = logging.getLogger("lint")
 
