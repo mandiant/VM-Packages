@@ -220,7 +220,8 @@ class VersionNotUpdated(Lint):
         for part in path.parts:
             if part.endswith(".vm"):
                 # only check exact package path, i.e., `/<package>/`
-                package_path = f"{os.sep}{part}{os.sep}"
+                # git appears to return slash (/) separated paths here on Windows and Linux
+                package_path = f"/{part}/"
                 break
 
         if package_path is None:
