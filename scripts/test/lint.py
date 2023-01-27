@@ -216,13 +216,21 @@ class VersionNotUpdated(Lint):
     logger.debug("others: %s", others)
 
     def check(self, path):
+        package_path = None
         for part in path.parts:
             if part.endswith(".vm"):
                 # only check exact package path, i.e., `/<package>/`
                 package_path = f"{os.sep}{part}{os.sep}"
+                break
+
+        if package_path is None:
+            logger.error("could not find package path <package.vm> in %s", path)
+            return True
 
         # has any file in this package, including nuspec files, been updated?
+        logger.debug("package path '%s' in part of changed files (%s)?", package_path, self.changed_files)
         if not any([package_path in cfile for cfile in self.changed_files]):
+            logger.debug(" computer says no")
             return False
 
         # look for version string in git diff
