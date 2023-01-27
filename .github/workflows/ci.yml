@@ -15,10 +15,10 @@ jobs:
         with:
           # fetch all history for all branches
           fetch-depth: 0
-      - name: Run lint.ps1
-        run: scripts/test/lint.ps1
       - name: Run lint.py
         run: python scripts/test/lint.py packages
+      - name: Run lint.ps1
+        run: scripts/test/lint.ps1
 
   test_upload:
     runs-on: ${{ matrix.os }}
