@@ -207,8 +207,8 @@ class VersionNotUpdated(Lint):
     run_cmd(f"{GIT_EXE} version")
     run_cmd(f"{GIT_EXE} --no-pager branch -r")
     changed_files = run_cmd(f"{GIT_EXE} --no-pager diff --name-only {GITHUB_BASE_REF}")
-    changed_files = set(changed_files.splitlines())
-    nuspecs = set([file for file in changed_files if file.endswith(".nuspec")])
+    changed_files = set(map(pathlib.Path, changed_files.splitlines()))
+    nuspecs = set([file for file in changed_files if file.suffix == ".nuspec"])
     others = changed_files - nuspecs
 
     logger.debug("changed: %s", changed_files)
@@ -219,9 +219,10 @@ class VersionNotUpdated(Lint):
         package_path = None
         for part in path.parts:
             if part.endswith(".vm"):
-                # only check exact package path, i.e., `/<package>/`
-                # git appears to return slash (/) separated paths here on Windows and Linux
-                package_path = f"/{part}/"
+                # find package path, only want to check exact path, i.e., `/<package>/`
+                # note: git appears to return slash (/) separated paths on Windows and Linux
+                # working around this here via pathlib
+                package_path = f"{part}"
                 break
 
         if package_path is None:
@@ -229,9 +230,9 @@ class VersionNotUpdated(Lint):
             return True
 
         # has any file in this package, including nuspec files, been updated?
-        logger.debug("package path '%s' in part of changed files (%s)?", package_path, self.changed_files)
-        if not any([package_path in cfile for cfile in self.changed_files]):
-            logger.debug(" computer says no")
+        logger.debug("is package path '%s' in part of changed files?", package_path)
+        if not any([package_path in cfile.parts for cfile in self.changed_files]):
+            logger.debug(" no change in %s detected", package_path)
             return False
 
         # look for version string in git diff
