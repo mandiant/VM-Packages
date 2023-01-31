@@ -96,7 +96,7 @@ def update_github_url(package):
 # Metapackages have only one dependency and same name (adding `.vm`)  and version as the dependency
 def update_dependencies(package):
     nuspec_path = f"packages/{package}/{package}.nuspec"
-    with open(nuspec_path, "r") as file:
+    with open(nuspec_path, "r", encoding="utf-8") as file:
         content = file.read()
     matches = re.findall(
         f'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>',
@@ -108,7 +108,8 @@ def update_dependencies(package):
     for dependency, version in matches:
         stream = os.popen(f"powershell.exe choco find -er {dependency}")
         output = stream.read()
-        m = re.search(f"^{dependency}\|(?P<version>.+)", output, re.M)
+        # ignore case to also find dependencies like GoogleChrome
+        m = re.search(f"^{dependency}\|(?P<version>.+)", output, re.M | re.I)
         if m:
             latest_version = m.group("version")
             if latest_version != version:
