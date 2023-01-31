@@ -136,15 +136,23 @@ class VersionFormatIncorrect(Lint):
 
         # for metapackage that just installs/configures a specific tool (with locked dependency version)
         deps = dom.getElementsByTagName("dependency")
-        if len(deps) == 1:
+        # common.vm and one locked dependency
+        if len(deps) <= 2:
+            pkg_id = metadata.getElementsByTagName("id")[0].firstChild.data.replace("vm", "")
             for d in deps:
+                if d.getAttribute("id") != pkg_id:
+                    continue
+
                 if d.getAttribute("version"):
                     dep_version = d.getAttribute("version")
                     if dep_version.startswith("[") and dep_version.endswith("]"):
                         dep_version = dep_version[1:-1].split(".")
                         if len(dep_version) == 4:
                             if dep_version[:3] != version[:3]:
-                                print(f"{path} package version should be {'.'.join(dep_version[:3])}")
+                                print(f"{path} package version should start with {'.'.join(dep_version[:3])}")
+                                return True
+                            if len(version) != 4:
+                                print(f"{path} package version should use current date (YYYYMMDD) in the 4th segment")
                                 return True
                         elif dep_version != version:
                             # when change is made to a metapackage, use the current date in the 4th segment
@@ -199,8 +207,8 @@ class VersionNotUpdated(Lint):
     run_cmd(f"{GIT_EXE} version")
     run_cmd(f"{GIT_EXE} --no-pager branch -r")
     changed_files = run_cmd(f"{GIT_EXE} --no-pager diff --name-only {GITHUB_BASE_REF}")
-    changed_files = set(changed_files.splitlines())
-    nuspecs = set([file for file in changed_files if file.endswith(".nuspec")])
+    changed_files = set(map(pathlib.Path, changed_files.splitlines()))
+    nuspecs = set([file for file in changed_files if file.suffix == ".nuspec"])
     others = changed_files - nuspecs
 
     logger.debug("changed: %s", changed_files)
@@ -208,13 +216,23 @@ class VersionNotUpdated(Lint):
     logger.debug("others: %s", others)
 
     def check(self, path):
+        package_path = None
         for part in path.parts:
             if part.endswith(".vm"):
-                # only check exact package path, i.e., `/<package>/`
-                package_path = f"{os.sep}{part}{os.sep}"
+                # find package path, only want to check exact path, i.e., `/<package>/`
+                # note: git appears to return slash (/) separated paths on Windows and Linux
+                # working around this here via pathlib
+                package_path = f"{part}"
+                break
+
+        if package_path is None:
+            logger.error("could not find package path <package.vm> in %s", path)
+            return True
 
         # has any file in this package, including nuspec files, been updated?
-        if not any([package_path in cfile for cfile in self.changed_files]):
+        logger.debug("is package path '%s' in part of changed files?", package_path)
+        if not any([package_path in cfile.parts for cfile in self.changed_files]):
+            logger.debug(" no change in %s detected", package_path)
             return False
 
         # look for version string in git diff
