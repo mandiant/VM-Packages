@@ -119,7 +119,8 @@ def update_dependencies(package):
                     content,
                 )
                 updates = True
-                if dependency == package[:-3]:  # Metapackage
+                # both should be all lowercase via the linter, but let's be sure here
+                if dependency.lower() == package[:-3].lower():  # Metapackage
                     package_version = latest_version
     if updates:
         package_version, content = replace_version(package_version, content)
