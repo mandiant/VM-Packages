@@ -183,6 +183,19 @@ class DoesNotListDependencyCommonVm(Lint):
         return True
 
 
+class DependencyContainsUppercaseChar(Lint):
+    name = "dependency contains an uppercase character"
+    recommendation = "change dependency to all lowercase characters"
+
+    def check(self, path):
+        dom = minidom.parse(str(path))
+        deps = dom.getElementsByTagName("dependency")
+        for d in deps:
+            if any(c.isupper() for c in d.getAttribute("id")):
+                return True
+        return False
+
+
 class VersionNotUpdated(Lint):
     name = "the version has not been updated"
     recommendation = "update the version in the nuspec file"
@@ -247,6 +260,7 @@ NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
     VersionFormatIncorrect(),
     DoesNotListDependencyCommonVm(),
+    DependencyContainsUppercaseChar(),
     VersionNotUpdated(),
 )
 
