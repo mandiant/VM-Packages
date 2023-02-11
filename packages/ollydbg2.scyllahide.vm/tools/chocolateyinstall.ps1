@@ -12,19 +12,16 @@ try {
         checksum      = 'c51929341ff726d219e670928433a176e114ca9a4c36f416629aef50c98b8817'
         checksumType  = 'sha256'
     }
-
     Install-ChocolateyZipPackage @packageArgs
     VM-Assert-Path $toolSrcDir
 
-    $toolDstDir = Join-Path ${Env:RAW_TOOLS_DIR} 'OllyDbg2' -Resolve
-    if (-Not (Test-Path $toolDstDir -PathType Container)) {
-        New-Item -ItemType directory $toolDstDir -Force -ea 0 | Out-Null
-    }
-    VM-Assert-Path $toolDstDir
-
     # Move plugin into the tool directory
+    $toolDstDir = Join-Path ${Env:RAW_TOOLS_DIR} 'OllyDbg2' -Resolve
     $pluginSrcPath = Join-Path $toolSrcDir "Olly2" -Resolve
     Get-ChildItem -Path $pluginSrcPath -Recurse -File | Move-Item -Destination $toolDstDir -Force -ea 0
+
+    # Remove the downloaded files to prevent unnecessary shims
+    Remove-Item -Path $toolSrcDir -Recurse -Force -ea 0
 } catch {
     VM-Write-Log-Exception $_
 }
