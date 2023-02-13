@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>pdfparser.vm</id>
+    <version>0.7.7</version>
+    <description>pdf-parser.py: a solid script to extract objects from PDF files</description>
+    <authors>Didier Stevens</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
