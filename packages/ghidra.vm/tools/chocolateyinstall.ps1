@@ -5,7 +5,7 @@ try {
     $toolName = 'ghidra'
     $category = 'Disassemblers'
     $shimPath = 'bin\ghidra.exe'
-    $versionPath = 'ghidra_10.2.2_PUBLIC'
+    $versionPath = 'ghidra_' + $env:ChocolateyPackageVersion + '_PUBLIC'
 
     $toolsDir = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
     # Get path to ghidra dependency directory
