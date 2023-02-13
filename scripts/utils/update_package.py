@@ -15,7 +15,13 @@ def replace_version(latest_version, nuspec_content):
     if not latest_version:
         latest_version = version
     else:
-        latest_version = format_version(latest_version)
+        try:
+            latest_version = format_version(latest_version)
+        except ValueError:
+            # not all tools use symver, observed examples: `cp_1.1.0` or `current`
+            print(f"unusual version format: {latest_version}")
+            print("reusing old version with updated date, manual fixing may be appropriate")
+            latest_version = version
     # If same version add date
     if version == latest_version:
         latest_version += "." + time.strftime("%Y%m%d")
