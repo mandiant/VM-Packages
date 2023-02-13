@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>lecmd.vm</id>
+    <version>1.5.0.0</version>
+    <description>LECmd: parse Windows shortcut files with LNK Explorer Command Line edition</description>
+    <authors>Eric Zimmerman</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
