@@ -15,7 +15,13 @@ def replace_version(latest_version, nuspec_content):
     if not latest_version:
         latest_version = version
     else:
-        latest_version = format_version(latest_version)
+        try:
+            latest_version = format_version(latest_version)
+        except ValueError:
+            # not all tools use symver, observed examples: `cp_1.1.0` or `current`
+            print(f"unusual version format: {latest_version}")
+            print("reusing old version with updated date, manual fixing may be appropriate")
+            latest_version = version
     # If same version add date
     if version == latest_version:
         latest_version += "." + time.strftime("%Y%m%d")
@@ -44,7 +50,7 @@ def format_version(version):
     # 1 -> 1
     match = re.match("v?(?P<version>\d+(.\d+){0,2})", version)
     if not match:
-        raise ValueError("wrong version")
+        raise ValueError(f"wrong version: {version}")
     return match.group("version")
 
 
@@ -67,7 +73,7 @@ def update_github_url(package):
     for url, org, project, version in matches:
         latest_version_match = get_latest_version(org, project, version)
         # No newer version available
-        if (not latest_version) or (latest_version_match == version):
+        if (not latest_version_match) or (latest_version_match == version):
             return None
         # The version of the 32 and 64 bit downloads need to be the same, we only have one nuspec
         if latest_version and latest_version_match != latest_version:
