@@ -4,6 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "pdf-parser"
     $toolName = "pdf-parser.py"
+    $category = "PDF"
 
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
@@ -16,7 +17,17 @@ try {
     $toolPath = Join-Path $toolDir $toolName
     VM-Assert-Path $toolPath
 
-    [System.Environment]::SetEnvironmentVariable('Path', ${env:Path} + ";" + $toolDir, [System.EnvironmentVariableTarget]::User)
+    Install-ChocolateyPath -PathToInstall $toolDir -PathType User
+
+    # This shortcut will not be super useful: we can't provide the required command-line args because the path to the PDF changes every time.
+    # But it'll show up in the Start menu and the user will see how to use it.
+    # Then they can manually invoke it because they'll be in its direcory and it's in the $PATH anyway.
+    $targetCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+    $shortcut = Join-Path $shortcutDir "${toolName}.lnk"
+    $targetArgs = "/k `"$toolPath`""
+
+    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $targetCmd -Arguments $targetArgs -WorkingDirectory $toolDir
 } catch {
     VM-Write-Log-Exception $_
 }
