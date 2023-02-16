@@ -2,8 +2,8 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "pdf-parser"
-    $toolName = "pdf-parser.py"
+    $toolName = "pdf-parser"
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
     $category = "PDF"
 
     $packageArgs = @{
@@ -14,7 +14,7 @@ try {
         checksumType  = 'sha256'
     }
     Install-ChocolateyZipPackage @packageArgs
-    $toolPath = Join-Path $toolDir $toolName
+    $toolPath = Join-Path $toolDir "$toolName.py"
     VM-Assert-Path $toolPath
 
     Install-ChocolateyPath -PathToInstall $toolDir -PathType User
@@ -24,7 +24,7 @@ try {
     # Then they can manually invoke it because they'll be in its direcory and it's in the $PATH anyway.
     $targetCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-    $shortcut = Join-Path $shortcutDir "${toolName}.lnk"
+    $shortcut = Join-Path $shortcutDir "$toolName.lnk"
     $targetArgs = "/k `"$toolPath`""
 
     Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $targetCmd -Arguments $targetArgs -WorkingDirectory $toolDir

@@ -1,10 +1,6 @@
 $ErrorActionPreference = 'Continue'
 
 $category = "PDF"
-$toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "pdf-parser"
-$toolName = "pdf-parser.py"
-$shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-$shortcut = Join-Path $shortcutDir "${toolName}.lnk"
+$toolName = "pdf-parser"
 
-Remove-Item $toolDir -recurse -Force -ea 0
-Remove-Item $shortcut -Force -ea 0
+VM-Uninstall $toolName $category
