@@ -31,6 +31,7 @@ def replace_version(latest_version, nuspec_content):
 def get_latest_version(org, project, version):
     response = requests.get(f"https://api.github.com/repos/{org}/{project}/releases/latest")
     if not response.ok:
+        print(f"GitHub API response not ok: {response.status_code}")
         return None
     latest_version = response.json()["tag_name"]
     return latest_version
