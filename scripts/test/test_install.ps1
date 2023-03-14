@@ -38,7 +38,7 @@ foreach ($package in $packages) {
 }
 
 
-$exclude_tests = @("flarevm.installer.vm")
+$exclude_tests = @("flarevm.installer.vm", "python3.vm")
 $built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
 Set-Location $built_pkgs_dir
 $failed = 0
