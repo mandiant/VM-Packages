@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>libraries.python3.vm</id>
-    <version>0.0.0.20230118</version>
+    <version>0.0.0.20230314</version>
     <description>Metapackage to install common Python3 libraries</description>
     <authors>Mandiant, Microsoft, Python Software Foundation</authors>
     <dependencies>
       <dependency id="common.vm" />
       <dependency id="vcbuildtools.vm" />
-      <dependency id="python3" version="[3.9.0, 3.10.0)" />
+      <dependency id="python3.vm" />
     </dependencies>
   </metadata>
 </package>
