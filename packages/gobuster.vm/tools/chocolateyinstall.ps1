@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'GoBuster'
 $category = 'Information Gathering'
 
-$zipUrl = "https://github.com/OJ/gobuster/releases/download/v3.4.0/gobuster-windows-386.7z"
-$zipSha256 = "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+$zipUrl = "https://github.com/OJ/gobuster/releases/download/v3.5.0/gobuster_3.5.0_Windows_x86_64.zip"
+$zipSha256 = "6b2df88eb8fc3046f54116992e9a924284d2ebb228c810eb8e799a18181e2ec8"
 
-VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true

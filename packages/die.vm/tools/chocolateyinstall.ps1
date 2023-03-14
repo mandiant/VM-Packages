@@ -10,7 +10,7 @@ try {
   $zipUrl_64 = 'https://github.com/horsicq/DIE-engine/releases/download/3.07/die_win64_portable_3.07.zip'
   $zipSha256_64 = '3450169643be76484ac4bd5e1473f6f4745d9825c8a07255a3925a4a6e8bad7e'
 
-  $executablePath = (VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -zipUrl_64 $zipUrl_64 -zipSha256_64 $zipSha256_64 -innerFolder $true)[-1]
+  $executablePath = (VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -zipUrl_64 $zipUrl_64 -zipSha256_64 $zipSha256_64)[-1]
   VM-Add-To-Right-Click-Menu $toolName "detect it easy (DIE)" "`"$executablePath`" `"%1`"" "file"
 } catch {
   VM-Write-Log-Exception $_
