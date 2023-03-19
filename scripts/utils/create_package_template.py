@@ -17,6 +17,7 @@ logger.setLevel(logging.DEBUG)
 # categories must be synchronized with the issue templates
 CATEGORIES = (
     "Android",
+    "Cloud",
     "Debuggers",
     "Delphi",
     "Disassemblers",
