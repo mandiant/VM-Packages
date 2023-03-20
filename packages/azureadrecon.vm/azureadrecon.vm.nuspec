@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>azureadrecon.vm</id>
+    <version>0.0.0.20230320</version>
+    <authors>adrecon</authors>
+    <description>AzureADRecon is a tool which extracts and combines various reconnaissance artifacts out of an Azure AD environment with a valid credential.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
