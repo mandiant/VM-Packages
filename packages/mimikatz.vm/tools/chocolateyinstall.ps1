@@ -3,8 +3,6 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
 
-
-  $toolName = 'mimikatz'
   $category = 'Password Attacks'
 
 
