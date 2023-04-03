@@ -1,5 +1,5 @@
+$ErrorActionPreference = 'Stop'
 try {
-    $ErrorActionPreference = 'Stop'
     $name = "Mimikatz"
     $path = Join-Path ${Env:TOOL_LIST_DIR} 'Password Attacks'
 

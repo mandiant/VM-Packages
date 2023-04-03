@@ -1,6 +1,8 @@
+$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
 try {
-  $ErrorActionPreference = 'Stop'
-  Import-Module vm.common -Force -DisableNameChecking
+
 
   $toolName = 'mimikatz'
   $category = 'Password Attacks'
