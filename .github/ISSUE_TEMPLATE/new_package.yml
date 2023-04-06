@@ -58,6 +58,7 @@ body:
       description: Which category should this tool be installed to?
       options:
         - Android
+        - Cloud
         - Debuggers
         - Delphi
         - Disassemblers
