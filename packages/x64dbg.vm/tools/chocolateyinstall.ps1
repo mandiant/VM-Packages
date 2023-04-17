@@ -5,7 +5,8 @@ try {
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
   $toolName = 'x64dbg'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Debuggers'
+  $category = 'Debuggers'
+  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
   $snapshotDate = '2021-05-08_14-17'
 

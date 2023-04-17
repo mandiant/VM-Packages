@@ -3,7 +3,8 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'idafree'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Disassemblers'
+  $category = 'Disassemblers'
+  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   $packageArgs = @{
     packageName  = ${Env:ChocolateyPackageName}
