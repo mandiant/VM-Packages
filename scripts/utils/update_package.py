@@ -59,14 +59,18 @@ def format_version(version):
 
 def update_github_url(package):
     chocolateyinstall_path = f"packages/{package}/tools/chocolateyinstall.ps1"
-    with open(chocolateyinstall_path, "r") as file:
-        content = file.read()
-        # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
-        # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
-        matches = re.findall(
-            "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/(?P<version>[^/]+)/[^\"']+)[\"']",
-            content,
-        )
+    try:
+        file = open(chocolateyinstall_path, "r")
+    except FileNotFoundError:
+        # chocolateyinstall.ps1 may not exist for metapackages
+        return None
+    content = file.read()
+    # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
+    # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
+    matches = re.findall(
+        "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/(?P<version>[^/]+)/[^\"']+)[\"']",
+        content,
+    )
 
     # It is not a GitHub release
     if not matches:
