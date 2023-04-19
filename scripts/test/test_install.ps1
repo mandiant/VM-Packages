@@ -44,7 +44,9 @@ Set-Location $built_pkgs_dir
 $failed = 0
 $success = 0
 foreach ($package in $built_pkgs) {
-    choco install $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
+    # install looks for a nuspec with the same version as the installed one
+    # upgrade installs the last found version (even if the package is not installed)
+    choco upgrade $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
     if ($validExitCodes -notcontains $LASTEXITCODE) {
         Write-Host -ForegroundColor Red "[ERROR] Failed to install $package"
         $failed += 1

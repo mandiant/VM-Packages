@@ -4,6 +4,8 @@ import re
 import requests
 import sys
 import time
+import argparse
+from enum import IntEnum
 
 # Replace version in nuspec, for example:
 # `<version>1.6.3</version>`
@@ -137,11 +139,39 @@ def update_dependencies(package):
     return None
 
 
+class UpdateType(IntEnum):
+    DEPENDENCIES = 1
+    GITHUB_URL = 2
+    ALL = DEPENDENCIES | GITHUB_URL
+
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def from_str(string):
+        try:
+            return UpdateType[string]
+        except:
+            # ALL is the default value
+            print("Invalid update type, default to ALL")
+            return UpdateType.ALL
+
+
 if __name__ == "__main__":
-    package_name = sys.argv[1]
-    # Only update dependencies if no GitHub url was updated
-    latest_version = update_github_url(package_name) or update_dependencies(package_name)
-    # Package was not updated
+    parser = argparse.ArgumentParser()
+    parser.add_argument("package_name")
+    parser.add_argument("--update_type", type=UpdateType.from_str, choices=list(UpdateType), default=UpdateType.ALL)
+    args = parser.parse_args()
+
+    latest_version = None
+    if args.update_type & UpdateType.DEPENDENCIES:
+        latest_version = update_dependencies(args.package_name)
+
+    if args.update_type & UpdateType.GITHUB_URL:
+        latest_version2 = update_github_url(args.package_name)
+        if latest_version2:
+            latest_version = latest_version2
+
     if not latest_version:
         exit(1)
     print(latest_version)

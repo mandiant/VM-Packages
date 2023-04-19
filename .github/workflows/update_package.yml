@@ -25,24 +25,31 @@ jobs:
           New-Item test_logs -itemType Directory | Out-Null
           foreach ($packagePath in (Get-ChildItem packages)){
             $package = $packagePath.Name
-            $version = python scripts\utils\update_package.py $package
-            $updated = $?
-            echo "$package $version"
-            if ($updated -and $version) {
-              # Test package before committing
-              scripts\test\test_install.ps1 $package *>> "test_logs/$package.txt"
-              $tested = $?
-              cd $root
-              if ($tested) {
-                git add "packages/$package/"
-                git commit -m "Update $package to $version"
-              } else {
-                echo "$package $version FAILED"
+            $newVersion = 0
+            # Test indepdendly every type of update and commit what works
+            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL')) {
+              $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
+              $updated = $?
+              echo "$package $version"
+              if ($updated -and $version) {
+                # Test package before committing
+                scripts\test\test_install.ps1 $package *>> "test_logs/$package.txt"
+                $tested = $?
+                cd $root
+                if ($tested) {
+                  git add "packages/$package/"
+                  $newVersion = $version
+                } else {
+                  echo "$package $version FAILED"
+                }
               }
+              # Clean changes and built packages
+              git restore .
+              Remove-Item built_pkgs -Recurse -ErrorAction Ignore
             }
-            # Clean changes and built packages
-            git restore .
-            Remove-Item built_pkgs -Recurse -ErrorAction Ignore
+            if ($newVersion) {
+              git commit -m "Update $package to $newVersion"
+            }
           }
           Exit(0)
       - name: Create Pull Request
