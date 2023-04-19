@@ -4,6 +4,8 @@ import re
 import requests
 import sys
 import time
+import argparse
+from enum import IntEnum
 
 # Replace version in nuspec, for example:
 # `<version>1.6.3</version>`
@@ -57,14 +59,18 @@ def format_version(version):
 
 def update_github_url(package):
     chocolateyinstall_path = f"packages/{package}/tools/chocolateyinstall.ps1"
-    with open(chocolateyinstall_path, "r") as file:
-        content = file.read()
-        # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
-        # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
-        matches = re.findall(
-            "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/(?P<version>[^/]+)/[^\"']+)[\"']",
-            content,
-        )
+    try:
+        file = open(chocolateyinstall_path, "r")
+    except FileNotFoundError:
+        # chocolateyinstall.ps1 may not exist for metapackages
+        return None
+    content = file.read()
+    # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
+    # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
+    matches = re.findall(
+        "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/(?P<version>[^/]+)/[^\"']+)[\"']",
+        content,
+    )
 
     # It is not a GitHub release
     if not matches:
@@ -137,11 +143,39 @@ def update_dependencies(package):
     return None
 
 
+class UpdateType(IntEnum):
+    DEPENDENCIES = 1
+    GITHUB_URL = 2
+    ALL = DEPENDENCIES | GITHUB_URL
+
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def from_str(string):
+        try:
+            return UpdateType[string]
+        except:
+            # ALL is the default value
+            print("Invalid update type, default to ALL")
+            return UpdateType.ALL
+
+
 if __name__ == "__main__":
-    package_name = sys.argv[1]
-    # Only update dependencies if no GitHub url was updated
-    latest_version = update_github_url(package_name) or update_dependencies(package_name)
-    # Package was not updated
+    parser = argparse.ArgumentParser()
+    parser.add_argument("package_name")
+    parser.add_argument("--update_type", type=UpdateType.from_str, choices=list(UpdateType), default=UpdateType.ALL)
+    args = parser.parse_args()
+
+    latest_version = None
+    if args.update_type & UpdateType.DEPENDENCIES:
+        latest_version = update_dependencies(args.package_name)
+
+    if args.update_type & UpdateType.GITHUB_URL:
+        latest_version2 = update_github_url(args.package_name)
+        if latest_version2:
+            latest_version = latest_version2
+
     if not latest_version:
         exit(1)
     print(latest_version)
