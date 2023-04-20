@@ -5,7 +5,8 @@ try {
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
   $toolName = 'OllyDbg2'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Debuggers'
+  $category = 'Debuggers'
+  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
   $packageArgs = @{

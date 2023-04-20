@@ -1,0 +1,28 @@
+Android
+Cloud
+Debuggers
+Delphi
+Disassemblers
+dotNet
+Forensic
+Hex Editors
+Java
+Javascript
+Networking
+Office
+PDF
+PE
+PowerShell
+Python
+Text Editors
+Utilities
+VB
+Active Directory
+Command & Control
+Evasion
+Exploitation
+Information Gathering
+Password Attacks
+Vulnerability Analysis
+Web Application
+Wordlists

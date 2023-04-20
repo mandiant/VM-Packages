@@ -4,7 +4,8 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Utilities'
+  $category = 'Utilities'
+  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} 'cyberchef'
 
   $packageArgs = @{

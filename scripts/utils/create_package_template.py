@@ -14,38 +14,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-# categories must be synchronized with the issue templates
-CATEGORIES = (
-    "Android",
-    "Cloud",
-    "Debuggers",
-    "Delphi",
-    "Disassemblers",
-    "dotNet",
-    "Forensic",
-    "Hex Editors",
-    "Java",
-    "Javascript",
-    "Networking",
-    "Office",
-    "PDF",
-    "PE",
-    "PowerShell",
-    "Python",
-    "Text Editors",
-    "Utilities",
-    "VB",
-    # CommandoVM
-    "Active Directory",
-    "Command & Control",
-    "Evasion",
-    "Exploitation",
-    "Information Gathering",
-    "Password Attacks",
-    "Vulnerability Analysis",
-    "Web Application",
-    "Wordlists",
-)
+root_path = os.path.abspath(os.path.join(__file__ ,"../../.."))
+with open(f"{root_path}/categories.txt") as file:
+    CATEGORIES = [line.rstrip() for line in file]
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
 INSTALL_TEMPLATE_NAME = "chocolateyinstall.ps1"

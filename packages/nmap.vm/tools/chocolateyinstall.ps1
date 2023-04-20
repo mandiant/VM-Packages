@@ -3,7 +3,8 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'nmap'
-    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Networking'
+    $category = 'Networking'
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
     $exeUrl = 'https://nmap.org/dist/nmap-7.93-setup.exe'
