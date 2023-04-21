@@ -12,6 +12,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+      # Updating the wiki fails if between the checkout of the wiki and the push of the update the other job pushes its update
+      max-parallel: 1
       matrix:
         os: [windows-2019, windows-2022]
     steps:
@@ -23,27 +25,23 @@ jobs:
       - name: Display log warnings and errors
         if: always()
         run: if (Test-Path -Path C:\ProgramData\_VM\log.txt ) { Select-String "ERR|WARN" -CaseSensitive -Context 0,5 C:\ProgramData\_VM\log.txt }
-      - name: Update badges in README
-        if: always() && matrix.os == 'windows-2022'
-        run: |
-          # test_install.ps1 writes success_failure.json with contents: `{success: n, failure: m}`
-          $succ = (Get-Content "success_failure.json" | ConvertFrom-Json).success
-          $fail = (Get-Content "success_failure.json" | ConvertFrom-Json).failure
-          $total = (Get-Content "success_failure.json" | ConvertFrom-Json).total
-          # URL format: `https://img.shields.io/badge/pkgs--install--pass-1337-green.svg`
-          (Get-Content README.md) -replace 'pkgs--install--pass-(\d{1,})-', "pkgs--install--pass-$succ-" -replace 'pkgs--install--fail-(\d{1,})-', "pkgs--install--fail-$fail-" -replace 'packages-(\d{1,})-blue', "packages-$total-blue" | Out-File README.md
+      - name: Checkout wiki code
+        if: always()
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+      - name: Add results to wiki
+        if: always()
+        run: python scripts/utils/generate_daily_results.py ${{ github.repository }} ${{ github.sha }} ${{ github.run_number }} ${{ github.run_id }} ${{ matrix.os }}
       - name: Commit changes
-        if: always() && matrix.os == 'windows-2022'
+        if: always()
         run: |
+          cd wiki
           git config user.email 'vm-packages@mandiant.com'
           git config user.name 'vm-packages'
-          git add README.md
-          git commit -m 'Update daily success/failure badges'
-      - name: Push changes
-        if: always() && matrix.os == 'windows-2022'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.REPO_TOKEN }}
+          git commit -am 'Add daily results'
+          git push
       - name: Upload chocolatey logs to artifacts
         uses: actions/upload-artifact@v3
         if: always()

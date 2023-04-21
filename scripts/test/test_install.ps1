@@ -20,6 +20,7 @@ param ([string] $package_names=$null, [switch] $all)
 $validExitCodes = @(0, 1605, 1614, 1641, 3010)
 $packages_dir_name = 'packages'
 $built_pkgs_dir_name = 'built_pkgs'
+$result_file = "success_failure.json"
 
 
 $root = Get-Location
@@ -39,10 +40,13 @@ foreach ($package in $packages) {
 
 
 $exclude_tests = @("flarevm.installer.vm", "python3.vm")
-$built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
-Set-Location $built_pkgs_dir
+
+$failures = New-Object Collections.Generic.List[string]
 $failed = 0
 $success = 0
+
+$built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
+Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
     # install looks for a nuspec with the same version as the installed one
     # upgrade installs the last found version (even if the package is not installed)
@@ -50,6 +54,7 @@ foreach ($package in $built_pkgs) {
     if ($validExitCodes -notcontains $LASTEXITCODE) {
         Write-Host -ForegroundColor Red "[ERROR] Failed to install $package"
         $failed += 1
+         $failures.Add("`"$package`"")
         if (-not $all.IsPresent) { break } # Abort with the first failing install
     } else {
         $success += 1
@@ -59,10 +64,11 @@ foreach ($package in $built_pkgs) {
 # Restore the original location
 Set-Location -Path $root -PassThru | Out-Null
 
-$result_file = "success_failure.json"
-Write-Host "Writing success/failure and total counts to $result_file"
-Write-Host -ForegroundColor Green "SUCCESS:$success"
+Write-Host -ForegroundColor Green "`nSUCCESS:$success"
 Write-Host -ForegroundColor Red "FAILURE:$failed"
-"{success:$success,failure:$failed,total:$($packages.Count)}" | Out-File -FilePath $result_file
 
-if ($failed -gt 0){ Exit 1 }
+Write-Host "`nWriting success/failure/total and failing packages to $result_file"
+$failures_str = $failures -join ","
+"{`"success`":$success,`"failure`":$failed,`"total`":$($packages.Count),`"failures`":[$failures_str]}" | Out-File -FilePath $result_file
+
+if ($failed){ Exit 1 }
