@@ -1,0 +1,20 @@
+name: Update logs
+description: Update test install logs to artifacts
+
+runs:
+  using: "composite"
+  steps:
+    - name: Upload VM logs to artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: log-VM-${{ matrix.os }}.zip
+        path: C:\ProgramData\_VM\log.txt
+    - name: Upload chocolatey logs to artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: logs-choco-${{ matrix.os }}.zip
+        path: |
+          C:\ProgramData\chocolatey\logs\chocolatey.log
+          C:\ProgramData\chocolatey\lib-bad\**\tools\install_log.txt

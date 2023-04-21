@@ -22,9 +22,9 @@ jobs:
       - name: Build and test all packages
         id: test
         run: scripts/test/test_install.ps1 -all
-      - name: Display log warnings and errors
+      - name: Upload logs to artifacts
+        uses: ./.github/actions/upload-logs
         if: always()
-        run: if (Test-Path -Path C:\ProgramData\_VM\log.txt ) { Select-String "ERR|WARN" -CaseSensitive -Context 0,5 C:\ProgramData\_VM\log.txt }
       - name: Checkout wiki code
         if: always()
         uses: actions/checkout@v3
@@ -42,12 +42,3 @@ jobs:
           git config user.name 'vm-packages'
           git commit -am 'Add daily results'
           git push
-      - name: Upload chocolatey logs to artifacts
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: logs-${{ matrix.os }}.zip
-          path: |
-            C:\ProgramData\chocolatey\logs\chocolatey.log
-            C:\ProgramData\chocolatey\lib-bad\**\tools\install_log.txt
-            C:\ProgramData\_VM\log.txt
