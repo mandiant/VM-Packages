@@ -33,7 +33,7 @@ jobs:
               echo "$package $version"
               if ($updated -and $version) {
                 # Test package before committing
-                scripts\test\test_install.ps1 $package *>> "test_logs/$package.txt"
+                scripts\test\test_install.ps1 $package | out-null
                 $tested = $?
                 cd $root
                 if ($tested) {
@@ -52,6 +52,9 @@ jobs:
             }
           }
           Exit(0)
+      - name: Upload logs to artifacts
+        uses: ./.github/actions/upload-logs
+        if: always()
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
@@ -63,10 +66,4 @@ jobs:
           # GH actions can not trigger other GH actions,
           # use a Personal Access Token to trigger the CI workflow in the created PR
           token: ${{ secrets.REPO_TOKEN }}
-      - name: Upload test output to assets
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test_logs
-          path: test_logs/
 
