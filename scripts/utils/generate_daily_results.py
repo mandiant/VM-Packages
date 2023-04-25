@@ -19,8 +19,11 @@ url = f"https://github.com/{repository}"
 run = f"[#{run_number}]({url}/actions/runs/{run_id}) Win{os[-2:]}"
 date = datetime.today().strftime("%Y-%m-%d %H:%M")
 log_line = f"| {run} | {date} | {result['failure']}/{result['total']} |"
-for package in result["failures"]:
-    log_line += f" [{package}]({url}/blob/{commit}/packages/{package})"
+if result["failures"]:
+    for package in result["failures"]:
+        log_line += f" [{package}]({url}/blob/{commit}/packages/{package})"
+else:
+    log_line += " :partying_face: "
 log_line += " |\n"
 
 with open(log_file) as log_f_read:
