@@ -7,7 +7,7 @@
 ## ./test_install '7zip.vm 010editor.vm'
 ## ./test_install -all
 
-param ([string] $package_names=$null, [switch] $all)
+param ([string] $package_names=$null, [int] $max_tries=2, [switch] $all)
 
 # Error Code Definitions
 # ----------------------
@@ -48,16 +48,23 @@ $success = 0
 $built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
 Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
-    # install looks for a nuspec with the same version as the installed one
-    # upgrade installs the last found version (even if the package is not installed)
-    choco upgrade $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
-    if ($validExitCodes -notcontains $LASTEXITCODE) {
-        Write-Host -ForegroundColor Red "[ERROR] Failed to install $package"
-        $failed += 1
-         $failures.Add("`"$package`"")
-        if (-not $all.IsPresent) { break } # Abort with the first failing install
-    } else {
-        $success += 1
+    # We try to install the package several times (with a minute interval) to prevent transient failures
+    for ($tries = 1; $tries += 1; $tries -le $max_tries) {
+        # install looks for a nuspec with the same version as the installed one
+        # upgrade installs the last found version (even if the package is not installed)
+        choco upgrade $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
+        if ($validExitCodes -contains $LASTEXITCODE) {
+            $success += 1
+            break
+        } elseif ($tries -lt $max_tries) {
+            Write-Host -ForegroundColor Yellow "[WARN] Failed to install $package - Try $tries"
+            Start-Sleep -Seconds 60
+        } else {
+            Write-Host -ForegroundColor Red "[ERROR] Failed to install $package - Try $tries"
+            $failed += 1
+            $failures.Add("`"$package`"")
+            if (-not $all.IsPresent) { break } # Abort with the first failing install
+        }
     }
 }
 
