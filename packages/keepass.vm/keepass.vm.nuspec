@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>keepass.vm</id>
+    <version>2.53.1</version>
+    <authors>Dominik Reichl</authors>
+    <description>KeePass is a free open source password manager, which helps you to manage your passwords in a secure way.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="keepass" version="[2.53.1]" />
+    </dependencies>
+  </metadata>
+</package>
