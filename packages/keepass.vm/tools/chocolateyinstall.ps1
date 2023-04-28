@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try{
     $toolName = 'KeePass'
-    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Utilities'
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $toolsDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
     $category = 'Utilities'
 
@@ -16,7 +16,7 @@ try{
         url           = $exeUrl
         checksum      = $exeSha256
         checksumType  = "sha256"
-        fileFullPath  = Join-Path ${Env:TEMP} $installerName     
+        fileFullPath  = Join-Path ${Env:TEMP} $installerName
     }
 
     Get-ChocolateyWebFile @packageArgs
