@@ -5,6 +5,7 @@ try{
     $toolName = 'KeePass'
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} 'Utilities'
     $toolsDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    $category = 'Utilities'
 
     $exeUrl = 'https://versaweb.dl.sourceforge.net/project/keepass/KeePass%202.x/2.53.1/KeePass-2.53.1-Setup.exe'
     $exeSha256 = '067727caa782f53f6232f8f59bc945384fce98817b014300039b28487c06a5cd'
