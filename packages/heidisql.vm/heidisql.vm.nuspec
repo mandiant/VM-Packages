@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>heidisql.vm</id>
+    <version>12.4.0.20230428</version>
+    <authors>Ansgar Becker</authors>
+    <description>HeidiSQL is an interface for MySQL, MSSQL, and PostgreSQL.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="heidisql" version="[12.4.0.6659]" />
+    </dependencies>
+  </metadata>
+</package>
