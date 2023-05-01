@@ -1,15 +1,13 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
+$category = 'Password Attacks'
 
 try {
-
-  $category = 'Password Attacks'
-
 
   $ErrorActionPreference = 'Stop'
   Import-Module vm.common -Force -DisableNameChecking
   $name = "Mimikatz"
-  $path = Join-Path ${Env:TOOL_LIST_DIR} 'Password Attacks'
+  $path = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   # Remove files from previous zips for upgrade
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
