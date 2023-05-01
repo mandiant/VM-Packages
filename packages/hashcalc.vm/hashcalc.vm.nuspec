@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>hashcalc.vm</id>
+    <version>2.02</version>
+    <authors>SlavaSoft</authors>
+    <description>HashCalc is a fast and easy-to-use calculator that allows to compute message digests, checksums and HMACs for files, as well as for text and hex strings.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
