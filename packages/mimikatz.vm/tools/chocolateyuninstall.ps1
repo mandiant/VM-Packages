@@ -1,7 +1,9 @@
 $ErrorActionPreference = 'Stop'
+$category = 'Password Attacks'
+
 try {
     $name = "Mimikatz"
-    $path = Join-Path ${Env:TOOL_LIST_DIR} 'Password Attacks'
+    $path = Join-Path ${Env:TOOL_LIST_DIR} $category
 
     $toolsDir = Join-Path "${Env:RAW_TOOLS_DIR}" $name
     Remove-Item -Path $toolsDir -ErrorAction SilentlyContinue -Recurse -Force
