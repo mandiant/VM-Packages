@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>cmder.vm</id>
-    <version>1.3.20.20230418</version>
+    <version>1.3.21</version>
     <description>Metapackage for cmder</description>
     <authors>Mandiant, Samuel Vasko</authors>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="cmder" version="[1.3.20]" />
+      <dependency id="cmder" version="[1.3.21]" />
     </dependencies>
   </metadata>
 </package>
