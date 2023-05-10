@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>cyberchef.vm</id>
-    <version>10.4.0.20230503</version>
+    <version>10.4.0.20230510</version>
     <authors>GCHQ</authors>
     <description>The Cyber Swiss Army Knife - a web app for encryption, encoding, compression, data analysis, and more.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="googlechrome" version="[113.0.5672.64]" />
+      <dependency id="googlechrome" version="[113.0.5672.93]" />
     </dependencies>
   </metadata>
 </package>
