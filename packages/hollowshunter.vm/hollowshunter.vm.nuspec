@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>hollowshunter.vm</id>
-    <version>0.3.5.20230202</version>
+    <version>0.3.6</version>
     <authors>hasherezade</authors>
     <description>Scans all running processes. Recognizes and dumps a variety of potentially malicious implants (replaced/implanted PEs, shellcodes, hooks, in-memory patches).</description>
     <dependencies>
