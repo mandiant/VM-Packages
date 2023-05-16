@@ -35,7 +35,7 @@ try {
   $target_cmd = Join-Path ${Env:WinDir} "system32\cmd.exe"
   $target_args = '/K "' + $target + '"'
   $target_icon = $target_cmd
-  $target_dir = Join-Path ${Env:UserProfile} "Desktop"
+  $target_dir = $toolsDir
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $target_cmd -Arguments $target_args -WorkingDirectory $target_dir -IconLocation $target_icon
   Install-BinFile -Name "mimikatz.x86" -Path $target
 
@@ -44,7 +44,7 @@ try {
   $target_cmd = Join-Path ${Env:WinDir} "system32\cmd.exe"
   $target_args = '/K "' + $target + '"'
   $target_icon = $target_cmd
-  $target_dir = Join-Path ${Env:UserProfile} "Desktop"
+  $target_dir = $toolsDir
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $target_cmd -Arguments $target_args -WorkingDirectory $target_dir -IconLocation $target_icon
   Install-BinFile -Name "mimikatz.x64" -Path $target
 }
