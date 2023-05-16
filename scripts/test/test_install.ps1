@@ -49,7 +49,7 @@ $built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($
 Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
     # We try to install the package several times (with a minute interval) to prevent transient failures
-    for ($tries = 1; $tries += 1; $tries -le $max_tries) {
+    for ($tries = 1; $tries -le $max_tries; $tries += 1) {
         # install looks for a nuspec with the same version as the installed one
         # upgrade installs the last found version (even if the package is not installed)
         choco upgrade $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
