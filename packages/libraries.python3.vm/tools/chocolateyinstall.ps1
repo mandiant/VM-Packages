@@ -10,7 +10,7 @@ try {
     $outputFile = VM-New-Install-Log $toolDir
 
     # Upgrade pip
-    Invoke-Expression "py -3 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
+    Invoke-Expression "py -3.9 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
 
     $failures = @{}
     $modules = $modulesXml.modules.module
@@ -21,19 +21,19 @@ try {
             $intallValue = $module.url
         }
 
-        Invoke-Expression "py -3 -m pip install $intallValue 2>&1 >> $outputFile"
+        Invoke-Expression "py -3.9 -m pip install $intallValue 2>&1 >> $outputFile"
 
         if ($LastExitCode -eq 0) {
-            Write-Host "`t[+] Installed Python3 module: $($module.name)" -ForegroundColor Green
+            Write-Host "`t[+] Installed Python 3.9 module: $($module.name)" -ForegroundColor Green
         } else {
-            Write-Host "`t[!] Failed to install Python3 module: $($module.name)" -ForegroundColor Red
+            Write-Host "`t[!] Failed to install Python 3.9 module: $($module.name)" -ForegroundColor Red
             $failures[$module.Name] = $true
         }
     }
 
     if ($failures.Keys.Count -gt 0) {
         foreach ($module in $failures.Keys) {
-            VM-Write-Log "ERROR" "Failed to install Python3 module: $module"
+            VM-Write-Log "ERROR" "Failed to install Python 3.9 module: $module"
         }
         $outputFile = $outputFile.replace('lib\', 'lib-bad\')
         VM-Write-Log "ERROR" "Check $outputFile for more information"
