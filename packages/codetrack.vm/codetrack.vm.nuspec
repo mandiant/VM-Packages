@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>codetrack.vm</id>
+    <version>1.0.3.20230525</version>
+    <authors>CodeTrack</authors>
+    <description>A free .NET Performance Profile and Execution Analyzer</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="codetrack" version="[1.0.3.301]" />
+    </dependencies>
+  </metadata>
+</package>

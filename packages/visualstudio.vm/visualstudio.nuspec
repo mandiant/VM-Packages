@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>hxd.vm</id>
-    <version>2.5.0.20230524</version>
-    <authors>Maël Hörz</authors>
-    <description>Freeware hex editor</description>
+    <id>visualstudio.vm</id>
+    <version>17.6.1</version>
+    <description>IDE.</description>
+    <authors>Microsoft</authors>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="hxd" version="[2.5.0.0]" />
     </dependencies>
   </metadata>
 </package>
-

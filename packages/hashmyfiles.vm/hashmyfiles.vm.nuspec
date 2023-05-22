@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>hashmyfiles.vm</id>
-    <version>0.0.0.20220113</version>
+    <version>0.0.0.20230524</version>
     <description>HashMyFiles is small utility that allows you to calculate the MD5 and SHA1 hashes of one or more files in your system. You can easily copy the MD5/SHA1 hashes list into the clipboard, or save them into text/html/xml file.</description>
     <authors>Nir Sofer</authors>
     <dependencies>
