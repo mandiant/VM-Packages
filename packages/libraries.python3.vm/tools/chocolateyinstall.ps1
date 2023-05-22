@@ -9,8 +9,9 @@ try {
     # Create output file to log python module installation details
     $outputFile = VM-New-Install-Log $toolDir
 
-    # Upgrade pip
-    Invoke-Expression "py -3.9 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
+    # Fix pip version, stringsifter doesn't install with pip 23:
+    # https://github.com/mandiant/stringsifter/issues/29
+    Invoke-Expression "py -3.9 -m pip install pip==20.1 >> $outputFile"
 
     $failures = @{}
     $modules = $modulesXml.modules.module
@@ -39,6 +40,8 @@ try {
         VM-Write-Log "ERROR" "Check $outputFile for more information"
         exit 1
     }
+    # Avoid WARNINGs to fail the package install
+    exit 0
 } catch {
     VM-Write-Log-Exception $_
 }
