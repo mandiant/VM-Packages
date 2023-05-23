@@ -26,7 +26,12 @@ try {
     VM-Assert-Path $shortcut
   }
 
-  Install-BinFile -Name 'CFFExplorer' -Path (Join-Path $toolDir 'CFF Explorer.exe')
+  $cffExplorerExecutablePath = Join-Path $toolDir 'CFF Explorer.exe' -Resolve
+  Install-BinFile -Name 'CFFExplorer' -Path $cffExplorerExecutablePath
+  # "Open with CFF Explorer" is added to the registry for several extensions,
+  # add it for all extension with same key to avoid duplication.
+  # Use same label and no icon to make it look the same for all extensions.
+  VM-Add-To-Right-Click-Menu 'Open with CFF Explorer' 'Open with CFF Explorer' "`"$cffExplorerExecutablePath`" %1" "file"
 } catch {
   VM-Write-Log-Exception $_
 }
