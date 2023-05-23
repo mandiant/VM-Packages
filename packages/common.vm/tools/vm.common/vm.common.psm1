@@ -691,6 +691,7 @@ function VM-Add-To-Right-Click-Menu {
         } else {
             $key = "directory"
         }
+        $key_path = "HKCR:\$key\shell\$menuKey"
 
         # Check and map "HKCR" to correct drive
         if (-NOT (Test-Path -path 'HKCR:')) {
@@ -698,16 +699,16 @@ function VM-Add-To-Right-Click-Menu {
         }
 
         # Add right-click menu display name
-        if (-NOT (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey")) {
-            New-Item -Path "HKCR:\$key\shell\$menuKey" | Out-Null
+        if (-NOT (Test-Path -LiteralPath $key_path)) {
+            New-Item -Path $key_path | Out-Null
         }
-        Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey" -Name '(Default)' -Value "$menuLabel" -Type String
+        Set-ItemProperty -LiteralPath $key_path -Name '(Default)' -Value "$menuLabel" -Type String
 
         # Add command to run when executed from right-click menu
-        if(-NOT (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey\command")) {
-            New-Item -Path "HKCR:\$key\shell\$menuKey\command" | Out-Null
+        if(-NOT (Test-Path -LiteralPath "$key_path\command")) {
+            New-Item -Path "$key_path\command" | Out-Null
         }
-        Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey\command" -Name '(Default)' -Value $command -Type String
+        Set-ItemProperty -LiteralPath "$key_path\command" -Name '(Default)' -Value $command -Type String
     } catch {
         VM-Write-Log "ERROR" "Failed to add $menuKey to right-click menu"
     }
@@ -729,6 +730,7 @@ function VM-Remove-From-Right-Click-Menu {
         } else {
             $key = "directory"
         }
+        $key_path = "HKCR:\$key\shell\$menuKey"
 
         # Check and map "HKCR" to correct drive
         if (-NOT (Test-Path -path 'HKCR:')) {
@@ -736,8 +738,8 @@ function VM-Remove-From-Right-Click-Menu {
         }
 
         # Remove right-click menu settings from registry
-        if (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey") {
-            Remove-Item -LiteralPath "HKCR:\$key\shell\$menuKey" -Recurse
+        if (Test-Path -LiteralPath $key_path) {
+            Remove-Item -LiteralPath $key_path -Recurse
         }
     } catch {
         VM-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
