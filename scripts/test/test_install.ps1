@@ -79,3 +79,5 @@ $failures_str = $failures -join ","
 "{`"success`":$success,`"failure`":$failed,`"total`":$($packages.Count),`"failures`":[$failures_str]}" | Out-File -FilePath $result_file
 
 if ($failed){ Exit 1 }
+# Return 0 to avoid valid exit codes to fail the test
+Exit 0
