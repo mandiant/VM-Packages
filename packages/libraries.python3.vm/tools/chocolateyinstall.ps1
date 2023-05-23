@@ -13,7 +13,7 @@ try {
     # https://github.com/mandiant/stringsifter/issues/29
     Invoke-Expression "py -3.9 -m pip install pip==20.1 >> $outputFile"
 
-    $failures = @{}
+    $failures = @()
     $modules = $modulesXml.modules.module
     foreach ($module in $modules) {
         Write-Host "[+] Attempting to install Python3 module: $($module.name)"
@@ -28,12 +28,12 @@ try {
             Write-Host "`t[+] Installed Python 3.9 module: $($module.name)" -ForegroundColor Green
         } else {
             Write-Host "`t[!] Failed to install Python 3.9 module: $($module.name)" -ForegroundColor Red
-            $failures[$module.Name] = $true
+            $failures += $module.Name
         }
     }
 
-    if ($failures.Keys.Count -gt 0) {
-        foreach ($module in $failures.Keys) {
+    if ($failures.Count -gt 0) {
+        foreach ($module in $failures) {
             VM-Write-Log "ERROR" "Failed to install Python 3.9 module: $module"
         }
         $outputFile = $outputFile.replace('lib\', 'lib-bad\')
