@@ -682,7 +682,9 @@ function VM-Add-To-Right-Click-Menu {
         [string] $command,
         [Parameter(Mandatory=$true, Position=3)]
         [ValidateSet("file", "directory")]
-        [string] $type
+        [string] $type,
+        [Parameter(Mandatory=$false, Position=4)]
+        [string] $menuIcon
     )
     try {
         # Determine if file or directory should show item in right-click menu
@@ -703,6 +705,9 @@ function VM-Add-To-Right-Click-Menu {
             New-Item -Path $key_path | Out-Null
         }
         Set-ItemProperty -LiteralPath $key_path -Name '(Default)' -Value "$menuLabel" -Type String
+        if ($menuIcon) {
+          Set-ItemProperty -LiteralPath $key_path -Name 'Icon' -Value "$menuIcon" -Type String
+        }
 
         # Add command to run when executed from right-click menu
         if(-NOT (Test-Path -LiteralPath "$key_path\command")) {
