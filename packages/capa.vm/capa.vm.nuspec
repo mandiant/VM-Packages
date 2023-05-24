@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>capa.vm</id>
-    <version>5.1.0.20230418</version>
+    <version>6.1.0</version>
     <description>capa detects capabilities in executable files. You run it against a PE file or shellcode and it tells you what it thinks the program can do.</description>
     <authors>@williballenthin, @mr-tz, @Ana06, @mike-hunhoff, @mwilliams31, @MalwareMechanic</authors>
     <dependencies>

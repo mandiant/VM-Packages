@@ -31,8 +31,15 @@ try {
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
   VM-Assert-Path $shortcut
 
-  $executablePath = Join-Path $toolDir "7z.exe" -Resolve
-  Install-BinFile -Name $toolName -Path $executablePath
+  $7zExecutablePath = Join-Path $toolDir "7z.exe" -Resolve
+  Install-BinFile -Name $toolName -Path $7zExecutablePath
+
+  # Add 7z unzip with password "infected" to the right menu for the most common extensions.
+  # 7z can unzip other file extensions like .docx but these don't likely use the infected password.
+  $extensions = @(".7z", ".bzip2", ".gzip", ".tar", ".wim", ".xz", ".txz", ".zip", ".rar")
+  foreach ($extension in $extensions) {
+    VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' "`"$7zExecutablePath`" e -pinfected `"%1`"" "$executablePath" -extension $extension
+  }
 } catch {
   VM-Write-Log-Exception $_
 }

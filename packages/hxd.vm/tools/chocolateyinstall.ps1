@@ -12,6 +12,8 @@ try {
     VM-Assert-Path $shortcut
 
     Install-BinFile -Name $toolName -Path $executablePath
+
+    VM-Add-To-Right-Click-Menu $toolName $toolName "`"$executablePath`" `"%1`"" "$executablePath"
 } catch {
     VM-Write-Log-Exception $_
 }

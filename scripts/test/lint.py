@@ -287,7 +287,7 @@ class MissesImportCommonVm(Lint):
 
 
 class FirstLineDoesNotSetErrorAction(Lint):
-    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm", "flarevm.installer.vm"]
+    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm", "flarevm.installer.vm", "installer.vm"]
     FIRST_LINE = "$ErrorActionPreference = 'Stop'"
     name = "first line must set error handling to stop"
     recommendation = f"add `{FIRST_LINE}` to the file"
@@ -306,20 +306,24 @@ class FirstLineDoesNotSetErrorAction(Lint):
 class UsesInvalidCategory(Lint):
     # Some packages don't have a category (we don't create a link in the tools directory)
     EXCLUSIONS = [
+        ".ollydumpex.vm",
+        ".scyllahide.vm",
         "common.vm",
+        "debloat.vm",
         "flarevm.installer.vm",
+        "ida.plugin.capa.vm",
+        "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
         "notepadplusplus.vm",
         "notepadpp.plugin.",
         "npcap.vm",
-        ".ollydumpex.vm",
-        ".scyllahide.vm",
+        "python3.vm",
         "x64dbgpy.vm",
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
-    categories_txt = f"{root_path}/categories.txt"
+    categories_txt = os.path.join(root_path, "categories.txt")
     with open(categories_txt) as file:
         CATEGORIES = [line.rstrip() for line in file]
         logger.debug(CATEGORIES)
@@ -334,7 +338,7 @@ class UsesInvalidCategory(Lint):
         # utf-8-sig ignores BOM
         file_content = open(path, "r", encoding="utf-8-sig").read()
 
-        match = re.search("\$category = ['\"](?P<category>[\w ]+)['\"]", file_content)
+        match = re.search("\$category = ['\"](?P<category>[\w &/]+)['\"]", file_content)
         if not match or match.group("category") not in self.CATEGORIES:
             return True
         return False

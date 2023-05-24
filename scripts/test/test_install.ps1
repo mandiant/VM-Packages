@@ -39,7 +39,7 @@ foreach ($package in $packages) {
 }
 
 
-$exclude_tests = @("flarevm.installer.vm", "python3.vm")
+$exclude_tests = @("flarevm.installer.vm", "installer.vm")
 
 $failures = New-Object Collections.Generic.List[string]
 $failed = 0

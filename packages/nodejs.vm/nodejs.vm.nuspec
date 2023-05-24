@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>nodejs.vm</id>
+    <version>0.0.0.20231020</version>
+    <authors>Node.js Foundation</authors>
+    <description>Metapackage for Node.js to ensure all packages use the same Node.js version.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="nodejs" version="[20.7.0, 20.8.0)" />
+    </dependencies>
+  </metadata>
+</package>

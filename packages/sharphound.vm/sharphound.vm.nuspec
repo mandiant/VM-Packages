@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>sharphound.vm</id>
+    <version>2.0.1</version>
+    <authors>specterops</authors>
+    <description>SharpHound is an Active Directory ingester tool for BloodHound.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

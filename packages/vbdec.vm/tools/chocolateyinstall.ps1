@@ -5,8 +5,8 @@ try {
     $toolName = 'vbdec'
     $category = 'VB'
 
-    $exeUrl = 'https://github.com/dzzie/pdfstreamdumper/releases/download/vbdec_12.7.22/VBDEC_Setup_SnapShot_12.8.22.exe'
-    $exeSha256 = 'baed0da101d1c5d5a326d5c6d004c811c9d23cb76638f79eaffa9150db7e8535'
+    $exeUrl = 'http://sandsprite.com/flare_vm/VBDEC_Setup_983E127DB204A3E50723E4A30D80EF8C.exe'
+    $exeSha256 = 'E6FA33F1D8C51214B1B6E49665F1EDBCBF05399D57CC2A04CED0A74A194ADA63'
 
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
     $executablePath = (Join-Path $toolDir "vbdec.exe")

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config> 
+    <apps>
+        <!--
+        INFO:
+        Removes installed AppX packages. Try:
+        $packages = Get-AppxPackage
+        $packages.Name
+        FORMAT: 
+        <app name="APP_NAME"/>
+        -->
+        <app name="Microsoft.549981C3F5F10"/>
+        <app name="Microsoft.BingWeather"/>
+        <app name="Microsoft.GetHelp"/>
+        <app name="Microsoft.Getstarted"/>
+        <app name="Microsoft.Microsoft3DViewer"/>
+        <app name="Microsoft.MicrosoftOfficeHub"/>
+        <app name="Microsoft.MicrosoftSolitaireCollection"/>
+        <app name="Microsoft.MicrosoftStickyNotes"/>
+        <app name="Microsoft.MixedReality.Portal"/>
+        <app name="Microsoft.MSPaint"/>
+        <app name="Microsoft.Office.OneNote"/>
+        <app name="Microsoft.People"/>
+        <app name="Microsoft.ScreenSketch"/>
+        <app name="Microsoft.SkypeApp"/>
+        <app name="Microsoft.Wallet"/>
+        <app name="Microsoft.Windows.Photos"/>
+        <app name="Microsoft.WindowsAlarms"/>
+        <app name="Microsoft.WindowsCalculator"/>
+        <app name="Microsoft.WindowsCamera"/>
+        <app name="microsoft.windowscommunicationsapps"/>
+        <app name="Microsoft.WindowsFeedbackHub"/>
+        <app name="Microsoft.WindowsMaps"/>
+        <app name="Microsoft.WindowsSoundRecorder"/>
+        <app name="Microsoft.Xbox.TCUI"/>
+        <app name="Microsoft.XboxApp"/>
+        <app name="Microsoft.XboxGameOverlay"/>
+        <app name="Microsoft.XboxGamingOverlay"/>
+        <app name="Microsoft.XboxIdentityProvider"/>
+        <app name="Microsoft.XboxSpeechToTextOverlay"/>
+        <app name="Microsoft.YourPhone"/>
+        <app name="Microsoft.ZuneMusic"/>
+        <app name="Microsoft.ZuneVideo"/>
+        <app name="SpotifyAB.SpotifyMusic"/>
+        <app name="Disney.37853FC22B2CE"/>
+    </apps>
+    <services>
+        <!--
+        INFO:
+        Sets Services to "Manual" startup type. Try:
+        $services = Get-WmiObject -Query "SELECT * FROM Win32_Service WHERE StartMode='Auto'" | Get-Service
+        $services.Name
+        FORMAT: 
+        <service name="SERVICE_NAME"/>
+        -->
+        <service name="XboxGipSvc"/>
+        <service name="XblAuthManager"/>
+        <service name="XblGameSave"/>
+        <service name="XboxNetApiSvc"/>
+        <service name="WMPNetworkSvc"/>
+        <service name="WerSvc"/>
+        <service name="SysMain"/>
+        <service name="RetailDemo"/>
+        <service name="Fax"/>
+        <service name="WdiSystemHost"/>
+        <service name="WdiServiceHost"/>
+        <service name="DPS"/>
+        <service name="BITS"/>
+        <service name="WpcMonSvc"/>
+        <service name="wmiApSrv"/>
+        <service name="WbioSrvc"/>
+        <service name="WalletService"/>
+        <service name="TabletInputService"/>
+        <service name="MapsBroker"/>
+        <service name="lfsvc"/>
+    </services>
+    <tasks>
+        <!--
+        INFO:
+        Disables Scheduled Tasks. Try:
+        $tasks = Get-ScheduledTask
+        $tasks.TaskName
+        FORMAT: 
+        <task name="DESCRIPTIVE_NAME" value="TASK_NAME"/> 
+        -->
+        <task name="Microsoft Compatibility Appraiser" value="Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser"/>
+        <task name="ProgramDataUpdater" value="Microsoft\Windows\Application Experience\ProgramDataUpdater"/>
+        <task name="Proxy" value="Microsoft\Windows\Autochk\Proxy"/>
+        <task name="Consolidator" value="Microsoft\Windows\Customer Experience Improvement Program\Consolidator"/>
+        <task name="UsbCeip" value="Microsoft\Windows\Customer Experience Improvement Program\UsbCeip"/>
+        <task name="Microsoft-Windows-DiskDiagnosticDataCollector" value="Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector"/>
+    </tasks>
+    <registry-items>
+        <!--
+        INFO:
+        Makes custom edits to the registry
+        FORMAT: 
+        <registry-item name="DESCRIPTIVE_NAME" path="REG_PATH" value="REG_VALUE" type="TYPE" data="NEW_DATA"/> 
+        -->
+        <registry-item name="Enable Fast Startup" path="HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" value="HiberbootEnabled" type="DWord" data="1"/>
+        <registry-item name="[1 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Desktop" value="DragFullWindows" type="DWord" data="0"/>
+        <registry-item name="[2 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Desktop" value="MenuShowDelay" type="DWord" data="0"/>
+        <registry-item name="[3 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Desktop\WindowMetrics" value="MinAnimate" type="String" data="0"/>
+        <registry-item name="[4 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Keyboard" value="KeyboardDelay" type="DWord" data="0"/>
+        <registry-item name="[5 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ListviewAlphaSelect" type="DWord" data="0"/>
+        <registry-item name="[6 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ListviewShadow" type="DWord" data="0"/>
+        <registry-item name="[7 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarAnimations" type="DWord" data="0"/>
+        <registry-item name="[8 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" value="VisualFXSetting" type="DWord" data="3"/>
+        <registry-item name="[9 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\DWM" value="EnableAeroPeek" type="DWord" data="0"/>
+        <registry-item name="DisableBingSearch" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" value="BingSearchEnabled" type="DWord" data="0"/>
+        <registry-item name="Disable Cortana Privacy Policy" path="HKCU:\Software\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="DWord" data="0" />
+        <registry-item name="Restrict Implicit Text Collection" path="HKCU:\Software\Microsoft\InputPersonalization" value="RestrictImplicitTextCollection" type="DWord" data="1" />
+        <registry-item name="Restrict Implicit Ink Collection" path="HKCU:\Software\Microsoft\InputPersonalization" value="RestrictImplicitInkCollection" type="DWord" data="1" />
+        <registry-item name="Disable Cortana Contact Harvesting" path="HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" value="HarvestContacts" type="DWord" data="0" />
+        <registry-item name="Hide Cortana Button" path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowCortanaButton" type="DWord" data="0" />
+        <registry-item name="Disable Cortana through Policy Manager" path="HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana" value="Value" type="DWord" data="0" />
+        <registry-item name="Disable Cortana through Windows Search Policy" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" value="AllowCortana" type="DWord" data="0" />
+        <registry-item name="Disable Input Personalization" path="HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" value="AllowInputPersonalization" type="DWord" data="0" />
+        <registry-item name="Disable Tailored Experiences with Diagnostic Data" path="HKCU:\Software\Policies\Microsoft\Windows\CloudContent" value="DisableTailoredExperiencesWithDiagnosticData" type="DWord" data="1" />
+        <registry-item name="Disable Tailored Experiences with Diagnostic Data" path="HKCU:\Software\Policies\Microsoft\Windows\CloudContent" value="DisableTailoredExperiencesWithDiagnosticData" type="DWord" data="1" />
+        <registry-item name="Disable OneDrive Files On-Demand" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSyncNGSC" type="DWord" data="1" />
+        <registry-item name="Disable Advertising ID" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" value="DisabledByGroupPolicy" type="DWord" data="1" />
+        <registry-item name="Disable Telemetry" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="DWord" data="0" />
+        <registry-item name="Disable Telemetry Wow6432Node" path="HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="DWord" data="0" />
+        <registry-item name="Disable Data Collection" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowTelemetry" type="DWord" data="0" />
+        <registry-item name="Disable PreviewBuilds" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="AllowBuildPreview" type="DWord" data="0" />
+        <registry-item name="Enable NoGenTicket" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" value="NoGenTicket" type="DWord" data="1" />
+        <registry-item name="Disable SQM" path="HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows" value="CEIPEnable" type="DWord" data="0" />
+        <registry-item name="Disable AppCompat AIT" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" value="AITEnable" type="DWord" data="0" />
+        <registry-item name="Disable AppCompat Inventory" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" value="DisableInventory" type="DWord" data="1" />
+        <registry-item name="Disable AppV CEIP" path="HKLM:\SOFTWARE\Policies\Microsoft\AppV\CEIP" value="CEIPEnable" type="DWord" data="0" />
+        <registry-item name="Disable PreventHandwritingDataSharing" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC" value="PreventHandwritingDataSharing" type="DWord" data="1" />
+        <registry-item name="Disable AllowLinguisticDataCollection" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput" value="AllowLinguisticDataCollection" type="DWord" data="0" />
+        <registry-item name="Disable Automatic Server Share" path="HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" value="AutoShareServer" type="DWord" data="0" />
+        <registry-item name="Disable Automatic Workstation Share" path="HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" value="AutoShareWks" type="DWord" data="0" />
+        <registry-item name="Hide Taskbar Search" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" value="SearchboxTaskbarMode" type="DWord" data="0" />
+        <registry-item name="Hide Task View" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowTaskViewButton" type="DWord" data="0" />
+        <registry-item name="Remove MeetNow User" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="DWord" data="1" />
+        <registry-item name="Remove MeetNow Machine" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="DWord" data="1" />
+        <registry-item name="Remove Bing Tab in Taksbar" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" value="ShellFeedsTaskbarViewMode" type="DWord" data="2" />
+        <registry-item name="Remove Bing Desktop Search Bar" path="HKLM:\SOFTWARE\Policies\Microsoft\Edge" value="WebWidgetAllowed" type="DWord" data="0" />
+        <registry-item name="Disable Windows Update Automatic Download" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" value="AUOptions" type="DWord" data="2" />
+        <registry-item name="Disable Windows Update Automatic Restart" path="HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" value="Debugger" type="String" data="cmd.exe" />
+    </registry-items>
+    <path-items>
+        <!--
+        INFO:
+        Removes files and folders from the system
+        FORMAT: 
+        <path-item name="DESCRIPTIVE_NAME" type="dir/file" path="DIR_PATH/FILE_PATH"/>
+        -->
+    </path-items>
+    <custom-items>
+        <!--
+        INFO:
+        Performs custom commands
+        FORMAT: 
+        <custom-item name="DESCRIPTIVE_NAME"> <cmd value="PS_COMMAND"/> ... </custom-item>
+        -->
+        <custom-item name="Remove OneDrive">
+            <cmd value="taskkill /f /im OneDrive.exe"/>
+            <cmd value="C:\Windows\SysWOW64\OneDriveSetup.exe /uninstall"/>
+        </custom-item>
+        <custom-item name="Unpin Taskbar Icons">
+            <cmd value='Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name "Favorites" -Type Binary -Value ([byte[]](255))'/>
+            <cmd value='Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name "FavoritesResolve" -ErrorAction SilentlyContinue'/>
+        </custom-item>
+        <custom-item name="Unpin all Start Menu Tiles">
+            <cmd value="$key = Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\*start.tilegrid$windows.data.curatedtilecollection.tilecollection\Current'; $data = $key.Data[0..25] + ([byte[]](202,50,0,226,44,1,1,0,0)); Set-ItemProperty -Path $key.PSPath -Name 'Data' -Type Binary -Value $data; Stop-Process -Name 'ShellExperienceHost' -Force -ErrorAction SilentlyContinue" />
+        </custom-item>
+        <custom-item name="Remove Desktop Links">
+            <cmd value="del $(Join-Path $env:USERPROFILE 'Desktop\*.lnk')" />
+            <cmd value="del $(Join-Path $env:PUBLIC 'Desktop\*.lnk')" />
+        </custom-item>
+        <custom-item name="Disabling display and sleep mode timeouts">
+            <cmd value="powercfg /X monitor-timeout-ac 0" />
+            <cmd value="powercfg /X monitor-timeout-dc 0" />
+            <cmd value="powercfg /X standby-timeout-ac 0" />
+            <cmd value="powercfg /X standby-timeout-dc 0" />
+        </custom-item>
+    </custom-items>
+</config>

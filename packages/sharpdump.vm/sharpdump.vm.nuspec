@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>sharpdump.vm</id>
+    <version>0.0.0.20230713</version>
+    <authors>HarmJ0y</authors>
+    <description>SharpDump is a C# port of PowerSploit's Out-Minidump.ps1 functionality.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
