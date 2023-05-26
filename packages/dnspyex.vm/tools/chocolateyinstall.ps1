@@ -6,11 +6,8 @@ try {
   $category = 'dotNet'
   $shimPath = 'bin\dnSpy.Console.exe'
 
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-  $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executablePath = Join-Path ${Env:ChocolateyInstall} $shimPath -Resolve
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
-  VM-Assert-Path $shortcut
+  VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $null
 } catch {
   VM-Write-Log-Exception $_
 }
