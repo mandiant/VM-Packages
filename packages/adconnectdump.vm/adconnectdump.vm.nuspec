@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>adconnectdump.vm</id>
+    <version>0.0.0.20230320</version>
+    <authors>fox-it</authors>
+    <description>This toolkit offers several ways to extract and decrypt stored Azure AD and Active Directory credentials from Azure AD Connect servers.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="python2" />
+    </dependencies>
+  </metadata>
+</package>
