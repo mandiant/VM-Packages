@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Unhook BOF'
 $category = 'Command & Control'
 
-$zipUrl = 'https://github.com/rsmudge/unhook-bof/archive/refs/heads/master.zip'
-$zipSha256 = '5015772371b536e076a3fe0a29de2a166295c59ba6d2d33014ee3ffff502ba4c'
+$zipUrl = 'https://github.com/rsmudge/unhook-bof/archive/fa3c8d8a397719c5f2310334e6549bea541b209c.zip'
+$zipSha256 = '086f7ded18af7b397be78f63a7b4879bb1a6722f4b192d0139a02863332089ef'
 
 VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256
