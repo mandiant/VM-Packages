@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>situational-awareness-bof.vm</id>
+    <version>0.0.0.20230529</version>
+    <authors>trustedsec</authors>
+    <description>Provides a set of basic situational awareness commands implemented in a Beacon Object File (BOF). This allows you to perform some checks on a host before you begin executing commands that may be more invasive.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
