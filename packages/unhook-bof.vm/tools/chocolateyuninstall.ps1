@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Unhook BOF'
-$category = 'Command & Control'
+$category = 'Evasion'
 
 VM-Uninstall $toolName $category
