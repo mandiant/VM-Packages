@@ -323,9 +323,13 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [bool] $innerFolder=$false, # subfolder in zip with the app files
+        [bool] $innerFolder=$false, # Subfolder in zip with the app files
         [Parameter(Mandatory=$false)]
-        [string] $arguments = "--help"
+        [string] $arguments = "--help",
+        [Parameter(Mandatory=$false)]
+        [string] $executableName, # Executable name, needed if different from "$toolName.exe"
+        [Parameter(Mandatory=$false)]
+        [switch] $withoutBinFile # Tool should not be installed as a bin file
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -371,9 +375,10 @@ function VM-Install-From-Zip {
             }
         }
 
-        $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
+        if (-Not $executableName) { $executableName = "$toolName.exe" }
+        $executablePath = Join-Path $toolDir $executableName -Resolve
         VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
-        Install-BinFile -Name $toolName -Path $executablePath
+        if (-Not $withoutBinFile) { Install-BinFile -Name $toolName -Path $executablePath }
         return $executablePath
     } catch {
         VM-Write-Log-Exception $_
