@@ -2,12 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dnspyex.vm</id>
-    <version>6.3.0.20230526</version>
+    <version>6.3.0.20230605</version>
     <authors>0xd4d, ElektroKill</authors>
     <description>dnSpyEx is a unofficial continuation of the dnSpy project which is a debugger and .NET assembly editor. You can use it to edit and debug assemblies even if you don't have any source code available.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="dnspyex" version="[6.3.0]" />
     </dependencies>
   </metadata>
 </package>
