@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modules>
     <module name="acefile"/>
+    <module name="art"/>
     <module name="binwalk" url="https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"/>
     <module name="capstone-windows"/>
     <module name="dissect"/>
@@ -16,9 +17,10 @@
     <module name="pyftpdlib"/>
     <module name="pyreadline"/>
     <module name="pyOpenSSL"/>
+    <module name="psutil"/>
     <module name="requests"/>
-    <!-- Having issues manually installing as well... -->
-    <!-- <module name="stringsifter"/> -->
+    <!-- Restrict stringsifter dependencies https://github.com/mandiant/stringsifter/issues/30 -->
+    <module name="stringsifter" url ="https://github.com/Ana06/stringsifter/archive/refs/heads/master.zip"/>
     <module name="uncompyle6"/>
     <module name="unpy2exe"/>
     <module name="unicorn"/>

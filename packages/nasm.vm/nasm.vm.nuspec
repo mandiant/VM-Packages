@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>nasm.vm</id>
+    <version>2.16.01.20230531</version>
+    <authors>NASM Authors</authors>
+    <description>Netwide Assembler</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="nasm" version="[2.16.01.20221231]" />
+    </dependencies>
+  </metadata>
+</package>

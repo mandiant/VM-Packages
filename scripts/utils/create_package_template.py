@@ -3,6 +3,7 @@ import sys
 import logging
 import argparse
 import textwrap
+import time
 
 # Set up logger
 logging.basicConfig(
@@ -17,6 +18,15 @@ logger.setLevel(logging.DEBUG)
 root_path = os.path.abspath(os.path.join(__file__ ,"../../.."))
 with open(f"{root_path}/categories.txt") as file:
     CATEGORIES = [line.rstrip() for line in file]
+
+# If the dependency/tool's version uses the 4th segment, update the package's
+# version to use the current date (YYYYMMDD) in the 4th segment
+def package_version(dependency_version):
+    version_segments = dependency_version.split(".")
+    if len(version_segments) < 4:
+        return dependency_version
+    version_segments[3] =  time.strftime("%Y%m%d")
+    return ".".join(version_segments[:4])
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
 INSTALL_TEMPLATE_NAME = "chocolateyinstall.ps1"
@@ -42,7 +52,7 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
 
 """
 Needs the following format strings:
-    pkg_name="...", version="...", authors="...", description="...", dependency="..."
+    pkg_name="...", version="...", authors="...", description="...", dependency="...", dependency_version="..."
 """
 NUSPEC_TEMPLATE_METAPACKAGE = r"""<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
@@ -53,7 +63,7 @@ NUSPEC_TEMPLATE_METAPACKAGE = r"""<?xml version="1.0" encoding="utf-8"?>
     <description>{description}</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="{dependency}" version="[{version}]" />
+      <dependency id="{dependency}" version="[{dependency_version}]" />
     </dependencies>
   </metadata>
 </package>
@@ -281,10 +291,11 @@ def create_template(
         f.write(
             nuspec_template.format(
                 pkg_name=pkg_name,
-                version=version or "0.0.0",
+                version=package_version(version) or "0.0.0",
                 authors=authors,
                 description=description,
                 dependency=dependency,
+                dependency_version = version,
             )
         )
 

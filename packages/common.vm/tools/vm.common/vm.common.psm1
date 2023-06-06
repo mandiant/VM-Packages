@@ -265,6 +265,44 @@ function VM-Install-Raw-GitHub-Repo {
     }
 }
 
+function VM-Install-Shortcut{
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
+        [Parameter(Mandatory=$true, Position=2)]
+        [string] $executablePath,
+        [Parameter(Mandatory=$false)]
+        [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [switch] $runAsAdmin=$false,
+        [Parameter(Mandatory=$false)]
+        [string] $executableDir,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = "--help"
+    )
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+    $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+
+    if ($consoleApp) {
+        if (!$executableDir) {
+            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
+        }
+        VM-Assert-Path $executableDir
+
+        $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+        # Change to executable dir, print command to execute, and execute command
+        $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
+        Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath -RunAsAdmin $runAsAdmin
+    } else {
+        Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executablePath -RunAsAdmin $runAsAdmin
+    }
+    VM-Assert-Path $shortcut
+}
+
 # This functions returns $executablePath and $toolDir (outputed by Install-ChocolateyZipPackage)
 function VM-Install-From-Zip {
     [CmdletBinding()]
@@ -285,11 +323,12 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [bool] $innerFolder=$false # subfolder in zip with the app files
+        [bool] $innerFolder=$false, # subfolder in zip with the app files
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = "--help"
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
@@ -333,18 +372,7 @@ function VM-Install-From-Zip {
         }
 
         $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-
-        if ($consoleApp) {
-            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
-            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
-        } else {
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        }
-        VM-Assert-Path $shortcut
-
+        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         Install-BinFile -Name $toolName -Path $executablePath
         return $executablePath
     } catch {
@@ -370,11 +398,12 @@ function VM-Install-Single-Exe {
         [Parameter(Mandatory=$false)]
         [string] $exeSha256_64,
         [Parameter(Mandatory=$false)]
-        [bool] $consoleApp=$false
+        [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = "--help"
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
         # Get the file extension from the URL
         $ext = (Split-Path -Path $exeUrl -Leaf).Split(".")[-1]
@@ -394,18 +423,7 @@ function VM-Install-Single-Exe {
         Get-ChocolateyWebFile @packageArgs
         VM-Assert-Path $executablePath
 
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-
-        if ($consoleApp) {
-            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop" -Resolve
-            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
-        } else {
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        }
-        VM-Assert-Path $shortcut
-
+        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         Install-BinFile -Name $toolName -Path $executablePath
         return $executablePath
     } catch {
@@ -536,7 +554,9 @@ function VM-Install-With-Installer {
         [Parameter(Mandatory=$false)]
         [array] $validExitCodes= @(0, 3010, 1605, 1614, 1641),
         [Parameter(Mandatory=$false)]
-        [bool] $consoleApp=$false
+        [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = "--help"
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -589,18 +609,7 @@ function VM-Install-With-Installer {
         Install-ChocolateyInstallPackage @packageArgs
         VM-Assert-Path $executablePath
 
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-        if ($consoleApp) {
-            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
-            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
-        } else {
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        }
-        VM-Assert-Path $shortcut
-
+        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         Install-BinFile -Name $toolName -Path $executablePath
     } catch {
         VM-Write-Log-Exception $_
@@ -682,7 +691,9 @@ function VM-Add-To-Right-Click-Menu {
         [string] $command,
         [Parameter(Mandatory=$true, Position=3)]
         [ValidateSet("file", "directory")]
-        [string] $type
+        [string] $type,
+        [Parameter(Mandatory=$false, Position=4)]
+        [string] $menuIcon
     )
     try {
         # Determine if file or directory should show item in right-click menu
@@ -691,6 +702,7 @@ function VM-Add-To-Right-Click-Menu {
         } else {
             $key = "directory"
         }
+        $key_path = "HKCR:\$key\shell\$menuKey"
 
         # Check and map "HKCR" to correct drive
         if (-NOT (Test-Path -path 'HKCR:')) {
@@ -698,16 +710,19 @@ function VM-Add-To-Right-Click-Menu {
         }
 
         # Add right-click menu display name
-        if (-NOT (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey")) {
-            New-Item -Path "HKCR:\$key\shell\$menuKey" | Out-Null
+        if (-NOT (Test-Path -LiteralPath $key_path)) {
+            New-Item -Path $key_path | Out-Null
         }
-        Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey" -Name '(Default)' -Value "$menuLabel" -Type String
+        Set-ItemProperty -LiteralPath $key_path -Name '(Default)' -Value "$menuLabel" -Type String
+        if ($menuIcon) {
+          Set-ItemProperty -LiteralPath $key_path -Name 'Icon' -Value "$menuIcon" -Type String
+        }
 
         # Add command to run when executed from right-click menu
-        if(-NOT (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey\command")) {
-            New-Item -Path "HKCR:\$key\shell\$menuKey\command" | Out-Null
+        if(-NOT (Test-Path -LiteralPath "$key_path\command")) {
+            New-Item -Path "$key_path\command" | Out-Null
         }
-        Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey\command" -Name '(Default)' -Value $command -Type String
+        Set-ItemProperty -LiteralPath "$key_path\command" -Name '(Default)' -Value $command -Type String
     } catch {
         VM-Write-Log "ERROR" "Failed to add $menuKey to right-click menu"
     }
@@ -729,6 +744,7 @@ function VM-Remove-From-Right-Click-Menu {
         } else {
             $key = "directory"
         }
+        $key_path = "HKCR:\$key\shell\$menuKey"
 
         # Check and map "HKCR" to correct drive
         if (-NOT (Test-Path -path 'HKCR:')) {
@@ -736,8 +752,8 @@ function VM-Remove-From-Right-Click-Menu {
         }
 
         # Remove right-click menu settings from registry
-        if (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey") {
-            Remove-Item -LiteralPath "HKCR:\$key\shell\$menuKey" -Recurse
+        if (Test-Path -LiteralPath $key_path) {
+            Remove-Item -LiteralPath $key_path -Recurse
         }
     } catch {
         VM-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
