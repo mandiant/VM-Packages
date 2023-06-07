@@ -840,8 +840,8 @@ Common Environment Variables
     $diskInfo = Get-CimInstance -ClassName Win32_LogicalDisk | Out-String
     $psInfo = $PSVersionTable.PSVersion
     $psInfoClr = $PSVersionTable.CLRVersion
-    $chocoInfo = chocolatey --version
-    $installedPackages = chocolatey list -l -r -all
+    $chocoInfo = choco --version
+    $installedPackages = choco list -r
     $boxstarerInfo = $installedPackages | Select-String -Pattern "Boxstarter" | Out-String
     $installedPackages = $installedPackages | Out-String
 

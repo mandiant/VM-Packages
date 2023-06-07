@@ -54,5 +54,5 @@ jobs:
           Set-Location built_pkgs
 
           foreach ($package in $built_pkgs) {
-              cpush -s "https://www.myget.org/F/vm-packages/api/v2" -k ${{ secrets.MYGET_TOKEN }} $package
+              choco push -s "https://www.myget.org/F/vm-packages/api/v2" -k ${{ secrets.MYGET_TOKEN }} $package
           }
