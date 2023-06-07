@@ -3,8 +3,8 @@ $global:VerbosePreference = "SilentlyContinue"
 Import-Module vm.common -Force -DisableNameChecking
 
 function Get-InstalledPackages {
-    if (Get-Command clist -ErrorAction:SilentlyContinue) {
-        chocolatey list -l -r -all | ForEach-Object {
+    if (Get-Command choco -ErrorAction:SilentlyContinue) {
+        choco list -r | ForEach-Object {
             $Name, $Version = $_ -split '\|'
             New-Object -TypeName psobject -Property @{
                 'Name' = $Name
@@ -60,7 +60,7 @@ try {
         }
     }
 
-    $installedPackages = chocolatey list -l -r -all | Out-String
+    $installedPackages = choco list -r | Out-String
     VM-Write-Log "INFO" "Packages installed:`n$installedPackages"
 
     # Write each failed package to failure file
