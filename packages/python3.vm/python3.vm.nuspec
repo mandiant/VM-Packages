@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>python3.vm</id>
-    <version>3.11.3</version>
+    <version>3.11.4</version>
     <description>Metapackage to install Python3</description>
     <authors>Python Software Foundation</authors>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="python3" version="[3.11.3]" />
+      <dependency id="python3" version="[3.11.4]" />
     </dependencies>
   </metadata>
 </package>
