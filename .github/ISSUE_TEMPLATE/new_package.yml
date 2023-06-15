@@ -32,16 +32,28 @@ body:
       label: Package type
       description: |
         This is needed to know how to send the automatic PR.
-        ZIP_EXE - An executable tool distributed in a ZIP file
-        SINGLE_EXE - An executable tool distributed via direct/raw download
-        SINGLE_PS1 - A PowerShell script distributed via direct/raw download
-        GITHUB_REPO - Download a GitHub repository based on a specific commit hash
+        `ZIP_EXE` - An executable tool distributed in a ZIP file
+        `SINGLE_EXE` - An executable tool distributed via direct/raw download
+        `SINGLE_PS1` - A PowerShell script distributed via direct/raw download
+        `GITHUB_REPO` - Download a GitHub repository based on a specific commit hash
       options:
         - ZIP_EXE
         - SINGLE_EXE
         - SINGLE_PS1
         - GITHUB_REPO
         - OTHER/UNKNOWN
+  - type: dropdown
+    id: console_app
+    validations:
+      required: true
+    attributes:
+      label: Is the tool a console application?
+      description: |
+        The tool is a console application, the shortcut should run it with `cmd /K $toolPath --help` to be able to see the output.
+        Only supported by package types `ZIP_EXE` and `SINGLE_EXE`.
+      options:
+        - 'false'
+        - 'true'
   - type: input
     id: version
     attributes:
