@@ -181,7 +181,7 @@ function VM-New-Install-Log {
     return $outputFile
 }
 
-# This functions returns $executablePath and $toolDir (outputed by Install-ChocolateyZipPackage)
+# This functions returns $toolDir
 function VM-Install-Raw-GitHub-Repo {
     [CmdletBinding()]
     Param
@@ -303,7 +303,7 @@ function VM-Install-Shortcut{
     VM-Assert-Path $shortcut
 }
 
-# This functions returns $executablePath and $toolDir (outputed by Install-ChocolateyZipPackage)
+# This functions returns $toolDir (outputed by Install-ChocolateyZipPackage) and $executablePath
 function VM-Install-From-Zip {
     [CmdletBinding()]
     Param
