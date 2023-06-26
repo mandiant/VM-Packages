@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 function Get-InstalledPackages {
     if (Get-Command choco -ErrorAction:SilentlyContinue) {
-        choco list -r | ForEach-Object {
+        powershell.exe "choco list -r" | ForEach-Object {
             $Name, $Version = $_ -split '\|'
             New-Object -TypeName psobject -Property @{
                 'Name' = $Name
