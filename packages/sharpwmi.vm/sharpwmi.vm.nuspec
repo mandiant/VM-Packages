@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>sharpwmi.vm</id>
+    <version>0.0.0.20230626</version>
+    <authors>HarmJ0y</authors>
+    <description>SharpWMI is a C# implementation of various WMI functionality.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
