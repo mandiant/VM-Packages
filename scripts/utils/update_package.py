@@ -111,6 +111,8 @@ def update_github_url(package):
         sha256 = get_sha256(url)
         latest_sha256 = get_sha256(latest_url)
         # Hash can be uppercase or downcase
+        if not latest_sha256:
+            return None
         content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
 
     content = content.replace(version, latest_version)
