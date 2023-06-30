@@ -41,6 +41,7 @@ jobs:
                   $newVersion = $version
                 } else {
                   echo "$package $version FAILED"
+                  git diff
                 }
               }
               # Clean changes and built packages
