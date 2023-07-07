@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'innounp'
-$category = 'Utilities'
+$category = 'InnoSetup'
 
 VM-Uninstall $toolName $category
