@@ -7,6 +7,7 @@
     <description>Website screenshot utility written in Golang, that uses Chrome Headless to generate screenshots of web interfaces using the command line, with a handy report viewer to process results.</description>
     <dependencies>
       <dependency id="common.vm" />
+      <dependency id="googlechrome" />
     </dependencies>
   </metadata>
 </package>
