@@ -26,3 +26,9 @@ Password Attacks
 Vulnerability Analysis
 Web Application
 Wordlists
+Payload Development
+Reconnaissance
+Persistence
+Privilege Escalation
+Credential Access
+Lateral Movement
