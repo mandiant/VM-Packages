@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>juicy-potato.vm</id>
+    <id>juicypotato.vm</id>
     <version>0.1</version>
     <authors>ohpe</authors>
-    <description>A sugared version of RottenPotatoNG, with a bit of juice, i.e. another Local Privilege Escalation tool, from a Windows Service Accounts to NT AUTHORITY\SYSTEM</description>
+    <description>Local Privilege Escalation tool that abuses the SeImpersonatePrivilege to go from a Windows Service Account to NT AUTHORITY\SYSTEM</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
