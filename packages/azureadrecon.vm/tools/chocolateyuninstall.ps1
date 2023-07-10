@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'AzureADRecon'
-$category = 'Cloud'
+$category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category
