@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'GoWitness'
-$category = 'Information Gathering'
+$category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category
