@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>seclists.vm</id>
+    <version>2023.2</version>
+    <authors>danielmiessler</authors>
+    <description>SecLists is the security tester's companion. It's a collection of multiple types of lists used during security assessments, collected in one place.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
