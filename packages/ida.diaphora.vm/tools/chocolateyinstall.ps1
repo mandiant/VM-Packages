@@ -5,8 +5,8 @@ $toolName = 'diaphora'
 $category = 'Utilities'
 $executableName = "diaphora.py"
 
-$zipUrl = 'https://github.com/joxeankoret/diaphora/archive/refs/tags/2.1.0.zip'
-$zipSha256 = 'bd946942081b46991e8ee5a2788088110e0eef7649791c661ed41566d4dd2993'
+$zipUrl = 'https://github.com/joxeankoret/diaphora/archive/refs/tags/3.0.zip'
+$zipSha256 = '3d4a1bcaea155fbadecc823d59004580aae04edc0e98a96860df550bd4c08a40'
 
 # Diaphora needs to be executed from IDA, do not install bin file
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -executableName $executableName -innerFolder $true -withoutBinFile
