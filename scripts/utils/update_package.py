@@ -92,6 +92,11 @@ def update_github_url(package):
         "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/(?P<version>[^/]+)/[^\"']+)[\"']",
         content,
     )
+    # Match also urls like https://github.com/joxeankoret/diaphora/archive/refs/tags/3.0.zip
+    matches += re.findall(
+        "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/archive/refs/tags/(?P<version>[^/]+).zip)[\"']",
+        content,
+    )
 
     # It is not a GitHub release
     if not matches:
