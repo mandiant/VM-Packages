@@ -78,6 +78,12 @@ body:
         - Vulnerability Analysis
         - Web Application
         - Wordlists
+        - Payload Development
+        - Reconnaissance
+        - Persistence
+        - Privilege Escalation
+        - Credential Access
+        - Lateral Movement
   - type: input
     id: authors
     attributes:
