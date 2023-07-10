@@ -7,6 +7,7 @@
     <description>PowerZure is a PowerShell project created to assess and exploit resources within Microsoft’s cloud platform, Azure.</description>
     <dependencies>
       <dependency id="common.vm" />
+      <dependency id="az.powershell" />
     </dependencies>
   </metadata>
 </package>
