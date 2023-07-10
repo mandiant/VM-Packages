@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'MFASweep'
-$category = 'Credential Access'
+$category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category
