@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>jd-gui.vm</id>
+    <version>1.6.6</version>
+    <authors>java-decompiler</authors>
+    <description>JD-GUI, a standalone graphical utility that displays Java sources from CLASS files.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
