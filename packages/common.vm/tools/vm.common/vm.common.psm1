@@ -428,7 +428,7 @@ function VM-Install-Single-Exe {
         Get-ChocolateyWebFile @packageArgs
         VM-Assert-Path $executablePath
 
-        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
+        VM-Install-Shortcut -toolName $toolName -category $category -executableDir $toolDir -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         Install-BinFile -Name $toolName -Path $executablePath
         return $executablePath
     } catch {
