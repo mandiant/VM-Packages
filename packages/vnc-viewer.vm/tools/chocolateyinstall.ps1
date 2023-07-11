@@ -4,7 +4,6 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'VNC-Viewer'
   $category = 'Utilities'
- 
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
