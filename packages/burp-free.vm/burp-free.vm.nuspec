@@ -7,7 +7,7 @@
     <description>Burp Suite Community Edition is PortSwigger's free integrated platform for performing security testing of web applications.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="burp-suite-free-edition" version="[0.0.0.20230711]" />
+      <dependency id="burp-suite-free-edition" version="[2022.12.4]" />
     </dependencies>
   </metadata>
 </package>
