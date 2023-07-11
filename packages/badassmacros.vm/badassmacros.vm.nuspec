@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>badassmacros.vm</id>
+    <version>1.0</version>
+    <authors>sbasu7241, Inf0secRabbit</authors>
+    <description>Proof of Concept tool to generate malicious macros leveraging techniques like VBA Purging and Shellcode Obfuscation to evade AV engines.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
