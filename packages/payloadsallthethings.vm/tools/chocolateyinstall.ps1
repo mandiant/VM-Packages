@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'PayloadAllTheThings'
+$toolName = 'PayloadsAllTheThings'
 $category = 'Wordlists'
 
 $zipUrl = 'https://github.com/swisskyrepo/PayloadsAllTheThings/archive/cd19bb94096a61ef22d0c9668bc29674fce53fa0.zip'
