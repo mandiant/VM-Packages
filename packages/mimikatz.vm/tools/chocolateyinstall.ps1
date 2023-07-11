@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
-$category = 'Password Attacks'
+$category = 'Credential Access'
 
 try {
 
