@@ -22,9 +22,8 @@ try {
     Get-ChocolateyWebFile @packageArgs
     $zipPath = $packageArgs.fileFullPath
     VM-Assert-Path $zipPath
-    
+
     # Unzip with a password
-    
     7z x -p"$zipPassword" "$zipPath" -o"$toolDir" -y
 
     # Create a shortcut
