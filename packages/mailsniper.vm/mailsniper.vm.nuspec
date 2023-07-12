@@ -4,7 +4,7 @@
     <id>mailsniper.vm</id>
     <version>0.0.0.20230712</version>
     <authors>dafthack</authors>
-    <description>MailSniper is a penetration testing tool for searching through email in a Microsoft Exchange environment for specific terms.</description>
+    <description>MailSniper is a penetration testing tool for searching through email in a Microsoft Exchange environment for specific terms and performing password spraying.</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
