@@ -20,10 +20,11 @@ try {
         fileFullPath  = Join-Path ${Env:TEMP} ("$fileName.7z")
     }
     Get-ChocolateyWebFile @packageArgs
-    VM-Assert-Path $packageArgs.fileFullPath
+    $zipPath = $packageArgs.fileFullPath
+    VM-Assert-Path $zipPath
     
     # Unzip with a password
-    $zipPath = $packageArgs.fileFullPath
+    
     7z x -p"$zipPassword" "$zipPath" -o"$toolDir" -y
 
     # Create a shortcut
