@@ -1,34 +1,35 @@
+Active Directory
 Android
 Cloud
+Command & Control
+Credential Access
 Debuggers
 Delphi
 Disassemblers
 dotNet
+Evasion
+Exploitation
 Forensic
 Hex Editors
+Information Gathering
+InnoSetup
 Java
 Javascript
+Lateral Movement
 Networking
 Office
+Password Attacks
+Payload Development
 PDF
 PE
+Persistence
 PowerShell
+Privilege Escalation
 Python
+Reconnaissance
 Text Editors
 Utilities
 VB
-Active Directory
-Command & Control
-Evasion
-Exploitation
-Information Gathering
-Password Attacks
 Vulnerability Analysis
 Web Application
 Wordlists
-Payload Development
-Reconnaissance
-Persistence
-Privilege Escalation
-Credential Access
-Lateral Movement
