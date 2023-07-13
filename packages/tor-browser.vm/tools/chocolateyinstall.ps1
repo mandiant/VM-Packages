@@ -13,7 +13,7 @@ try {
   VM-Assert-Path $shortcut
 
   # Delete Desktop shortcut
-  $desktopShortcut = Join-Path ${Home} "Desktop\$toolName.lnk"
+  $desktopShortcut = Join-Path ${Env:Public} "Desktop\$toolName.lnk"
   if (Test-Path $desktopShortcut) {
     Remove-Item $desktopShortcut -Force -ea 0
   }
