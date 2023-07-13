@@ -6,7 +6,6 @@ $category = 'Command & Control'
 
 VM-Uninstall $toolName $category
 
-
 # Silently uninstall
 VM-Uninstall-With-Uninstaller $toolName "MSI" "/q /norestart"
 
