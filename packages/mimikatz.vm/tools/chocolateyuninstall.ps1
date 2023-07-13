@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$category = 'Password Attacks'
+$category = 'Credential Access'
 
 try {
     $name = "Mimikatz"
