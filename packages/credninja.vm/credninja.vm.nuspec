@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>credninja.vm</id>
+    <version>2.3</version>
+    <authors>raikiasec</authors>
+    <description>This tool will tell you if the credentials you dumped are valid on the domain, and if you have local administrator access to a host.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
