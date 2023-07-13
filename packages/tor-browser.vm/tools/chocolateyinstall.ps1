@@ -11,6 +11,12 @@ try {
   $executablePath = Join-Path ${Env:ChocolateyInstall} $shimPath -Resolve
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
   VM-Assert-Path $shortcut
+
+  # Delete Desktop shortcut
+  $desktopShortcut = Join-Path ${Home} "Desktop\$toolName.lnk"
+  if (Test-Path $desktopShortcut) {
+    Remove-Item $desktopShortcut -Force -ea 0
+  }
 } catch {
   VM-Write-Log-Exception $_
 }
