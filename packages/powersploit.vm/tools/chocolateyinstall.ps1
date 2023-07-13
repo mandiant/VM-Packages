@@ -15,7 +15,7 @@ VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -powershellCom
 $toolName2 = 'PowerView'
 $category2 = 'Reconnaissance'
 $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category2
-$shortcut = Join-Path $shortcutDir "$toolName2.ps1.lnk"
+$shortcut = Join-Path $shortcutDir "$toolName2.lnk"
 $targetCmd = Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0\powershell.exe" -Resolve
 $executableArgs = '-NoExit Import-Module $Env:RAW_TOOLS_DIR\PowerSploit\Recon\Recon.psd1; Get-Command -Module Recon'
 
