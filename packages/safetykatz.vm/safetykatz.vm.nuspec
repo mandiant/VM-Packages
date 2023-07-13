@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>safetykatz.vm</id>
+    <version>0.0.0.20230713</version>
+    <authors>HarmJ0y</authors>
+    <description>SafetyKatz is a combination of slightly modified version of @gentilkiwi's Mimikatz project and @subtee's .NET PE Loader.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
