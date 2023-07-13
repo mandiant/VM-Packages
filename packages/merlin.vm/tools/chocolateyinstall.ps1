@@ -17,7 +17,7 @@ try {
         url           = $zipUrl
         checksum      = $zipSha256
         checksumType  = "sha256"
-        fileFullPath  = Join-Path ${Env:TEMP} ("$fileName.7z")
+        fileFullPath  = Join-Path "${Env:USERPROFILE}\AppData\Local\Temp" ("$fileName.7z")
     }
     Get-ChocolateyWebFile @packageArgs
     $zipPath = $packageArgs.fileFullPath
