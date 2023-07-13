@@ -9,6 +9,7 @@ try {
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executablePath = Join-Path ${Env:ProgramFiles} 'RealVNC\VNC Viewer\vncviewer.exe' -Resolve
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
+  Install-BinFile -Name $toolName -Path $executablePath
   VM-Assert-Path $shortcut
 } catch {
   VM-Write-Log-Exception $_
