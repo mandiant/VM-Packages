@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>tor-browser.vm</id>
+    <version>0.0.0.20230713</version>
+    <authors>Tor Project</authors>
+    <description>The Tor software protects you by bouncing your communications around a distributed network of relays run by volunteers all around the world.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="tor-browser" version="[0.0.0.20230712]" />
+    </dependencies>
+  </metadata>
+</package>
