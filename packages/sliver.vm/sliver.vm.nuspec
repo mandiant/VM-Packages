@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sliver.vm</id>
-    <version>1.5.40</version>
+    <version>1.5.41</version>
     <authors>bishopfox</authors>
     <description>Sliver is an open source cross-platform adversary emulation/red team framework.</description>
     <dependencies>
