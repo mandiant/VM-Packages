@@ -1,6 +1,7 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
+
 $toolName = 'hashcat'
 $category = 'Credential Access'
 
@@ -11,6 +12,24 @@ $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "$toolName"
 $workingDir = Join-Path "$toolDir" "$zipname"
 
 try {
+    try{
+        # Get the processor information
+        $processor = Get-WmiObject Win32_Processor
+
+
+        # Check if the manufacturer is Intel
+        if ($processor.Manufacturer -eq "GenuineIntel") {
+            Write-Output "Intel processor detected for hashcat."
+        } else {
+            Write-Output "Non-Intel processor detected. Hashcat will not work"
+            throw "Non-Intel processor detected."
+        }
+    }catch{
+        # Handle the error
+        Write-Output "Error: $($_.Exception.Message)"
+        throw
+    }
+
     # Download the zip file
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
