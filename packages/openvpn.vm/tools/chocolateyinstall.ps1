@@ -15,6 +15,10 @@ try {
   $desktopShortcut = Join-Path ${Env:Public} "Desktop\$toolName.lnk"
   Remove-Item $desktopShortcut -Force -ea 0
 
+  # Delete start menu shortcut
+  $startShortcut = Join-Path ${Env:ProgramData} "Microsoft\Windows\Start Menu\Programs\OpenVPN\"
+  Remove-Item $startShortcut -Force -Recurse -ea 0
+
   # Removing OpenVPN from startup
   Remove-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name 'OpenVPN-GUI' -ErrorAction SilentlyContinue
 
