@@ -22,10 +22,10 @@ try {
     $zipPath = $packageArgs.fileFullPath
     VM-Assert-Path $zipPath
 
-    7z x $zipPath -o$toolDir -y
+    7z x $zipPath -o"$toolDir" -y
     # Create a shortcut
-    $executablePath = Join-Path $toolDir "$zipName\$toolName.exe" -Resolve
-    VM-Install-Shortcut $toolName $category $executablePath
+    $executablePath = Join-Path "$toolDir" "$zipName\$toolName.exe" -Resolve
+    VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true
 } catch {
     VM-Write-Log-Exception $_
 }
