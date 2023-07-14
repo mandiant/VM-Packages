@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'ConfuserEx'
-$category = 'Evasion'
+$category = 'Payload Development'
 
 VM-Remove-Tool-Shortcut $toolName $category

@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'RouteSixtySink'
-$category = 'Web Application'
+$category = 'dotNet'
 
 VM-Uninstall $toolName $category

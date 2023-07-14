@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>nanodump.vm</id>
-    <version>0.0.0.20230530</version>
+    <version>0.0.0.20230713</version>
     <authors>fortra</authors>
     <description>A Beacon Object File that creates a minidump of the LSASS process.</description>
     <dependencies>

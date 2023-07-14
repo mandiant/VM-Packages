@@ -15,7 +15,7 @@ VM-Remove-Tool-Shortcut 'procmon' $category
 
 ###
 # Second category
-$category = 'Information Gathering'
+$category = 'Reconnaissance'
 VM-Remove-Tool-Shortcut 'ADExplorer' $category
 
 ###
