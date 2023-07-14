@@ -11,7 +11,7 @@ try {
   $executablePath = Join-Path ${Env:ProgramFiles} $shimPath -Resolve
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
   VM-Assert-Path $shortcut
-  
+
   # Delete desktop shortcut
   $desktopShortcut = Join-Path ${Env:Public} "Desktop\$toolName.lnk"
   Test-Path $desktopShortcut
