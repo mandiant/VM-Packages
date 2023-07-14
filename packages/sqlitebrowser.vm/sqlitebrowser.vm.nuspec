@@ -7,7 +7,7 @@
     <description>DB Browser for SQLite is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="sqlitebrowser.portable" version="[0.0.0.20230714]" />
+      <dependency id="sqlitebrowser.portable" version="[3.12.2]" />
     </dependencies>
   </metadata>
 </package>

@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'DB Browser for SQLite'
   $category = 'Utilities'
-  $shimPath = '%PROGRAMDATA%\chocolatey\bin\DB Browser for SQLite.exe'
+  $shimPath = '\bin\DB Browser for SQLite.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
