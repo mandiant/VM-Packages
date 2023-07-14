@@ -17,6 +17,11 @@ try {
   Test-Path $desktopShortcut
   Remove-Item $desktopShortcut -Force -ea 0
 
+  # Delete start menu shortcut
+  $startShortcut = Join-Path ${Env:ProgramData} "Microsoft\Windows\Start Menu\Programs\HeidiSQL\"
+  Test-Path $startShortcut
+  Remove-Item $startShortcut -Force -Recurse -ea 0
+
 } catch {
   VM-Write-Log-Exception $_
 }
