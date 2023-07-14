@@ -12,23 +12,19 @@ $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "$toolName"
 $workingDir = Join-Path "$toolDir" "$zipname"
 
 try {
-    try{
-        # Get the processor information
-        $processor = Get-WmiObject Win32_Processor
+
+    # Get the processor information
+    $processor = Get-CimInstance Win32_Processor
 
 
-        # Check if the manufacturer is Intel
-        if ($processor.Manufacturer -eq "GenuineIntel") {
-            Write-Output "Intel processor detected for hashcat."
-        } else {
-            Write-Output "Non-Intel processor detected. Hashcat will not work"
-            throw "Non-Intel processor detected."
-        }
-    }catch{
-        # Handle the error
-        Write-Output "Error: $($_.Exception.Message)"
-        throw
+    # Check if the manufacturer is Intel
+    if ($processor.Manufacturer -eq "GenuineIntel") {
+        Write-Output "Intel processor detected for hashcat."
+    } else {
+        Write-Output "Non-Intel processor detected. Hashcat will not work"
+        throw "Non-Intel processor detected."
     }
+
 
     # Download the zip file
     $packageArgs = @{
