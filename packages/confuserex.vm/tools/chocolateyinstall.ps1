@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'ConfuserEx'
-  $category = 'Evasion'
+  $category = 'Payload Development'
   $shimPath = 'bin\ConfuserEx.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'ASREPRoast'
-$category = 'Password Attacks'
+$Category = 'Credential Access'
 
 VM-Uninstall $toolName $category

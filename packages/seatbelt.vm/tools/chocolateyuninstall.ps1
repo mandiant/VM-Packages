@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'SeatBelt'
-$category = 'Information Gathering'
+$Category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category

@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'SharpHound'
-$category = 'Information Gathering'
+$Category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category

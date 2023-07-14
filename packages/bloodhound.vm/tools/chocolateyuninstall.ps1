@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'BloodHound'
-$category = 'Information Gathering'
+$Category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category
 
