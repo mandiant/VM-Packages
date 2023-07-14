@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sysinternals.vm</id>
-    <version>2023.6.27</version>
+    <version>2023.6.27.20230713</version>
     <authors>Mark Russinovich, Bryce Cogswell</authors>
     <description>Sysinternals suite of troubleshooting tools.</description>
     <dependencies>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>outflank-c2-tool-collection.vm</id>
-    <version>0.0.0.20230530</version>
+    <version>0.0.0.20230713</version>
     <authors>outflank</authors>
     <description>Contains a collection of tools which integrate with Cobalt Strike (and possibly other C2 frameworks) through BOF and reflective DLL loading techniques.</description>
     <dependencies>
