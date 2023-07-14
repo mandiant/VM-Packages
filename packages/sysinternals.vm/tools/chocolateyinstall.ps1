@@ -48,7 +48,7 @@ try {
 
   ###
   # Second category
-  $Category = 'Reconnaissance'
+  $category = 'Reconnaissance'
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   $executablePath = Join-Path $toolDir 'ADExplorer.exe' -Resolve

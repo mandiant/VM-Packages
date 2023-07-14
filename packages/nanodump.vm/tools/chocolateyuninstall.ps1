@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'NanoDump'
-$Category = 'Credential Access'
+$category = 'Credential Access'
 
 VM-Uninstall $toolName $category

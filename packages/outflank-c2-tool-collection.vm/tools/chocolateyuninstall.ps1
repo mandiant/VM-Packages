@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Outflank C2 Tool Collection'
-$Category = 'Reconnaissance'
+$category = 'Reconnaissance'
 
 VM-Uninstall $toolName $category
