@@ -4,11 +4,10 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'OpenVPN GUI'
   $category = 'Networking'
-  $shimPath = 'C:\Program Files\OpenVPN\bin\openvpn-gui.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-  $executablePath = Join-Path ${Env:ChocolateyInstall} $shimPath -Resolve
+  $executablePath = Join-Path ${Env:ProgramFiles} '\OpenVPN\bin\openvpn-gui.exe' -Resolve
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
   VM-Assert-Path $shortcut
 
