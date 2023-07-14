@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'heidisql'
   $category = 'Utilities'
-  $shimPath = '$Env:ProgramFiles\HeidiSQL\heidisql.exe'
+  $shimPath = 'Join-Path ${Env:ProgramFiles} "\HeidiSQL\heidisql.exe"'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
