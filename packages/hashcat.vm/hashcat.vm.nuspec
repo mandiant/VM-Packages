@@ -7,6 +7,7 @@
     <description>Hashcat is a fast password recovery utility.</description>
     <dependencies>
       <dependency id="common.vm" />
+      <dependency id="7zip-15-05.vm"/>
     </dependencies>
   </metadata>
 </package>
