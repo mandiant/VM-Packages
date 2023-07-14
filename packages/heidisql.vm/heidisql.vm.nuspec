@@ -7,7 +7,7 @@
     <description>HeidiSQL is an interface for MySQL, MSSQL, and PostgreSQL.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="heidisql" />
+      <dependency id="heidisql" version="[12.5.0.6677]" />
     </dependencies>
   </metadata>
 </package>
