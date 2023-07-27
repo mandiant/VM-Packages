@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>map.vm</id>
-    <version>12.20.21</version>
+    <version>7.26.23</version>
     <authors>David Zimmer</authors>
     <description>Handful of small utility type applications useful for analyzing malicious code.</description>
     <dependencies>
