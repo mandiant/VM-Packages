@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>group3r.vm</id>
-    <version>1.0.53</version>
+    <version>1.0.59</version>
     <authors>l0ss</authors>
     <description>Group3r is a tool for pentesters and red teamers to rapidly enumerate relevant settings in AD Group Policy, and to identify exploitable misconfigurations.</description>
     <dependencies>
