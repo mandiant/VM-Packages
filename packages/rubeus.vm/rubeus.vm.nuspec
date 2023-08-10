@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>rubeus.vm</id>
-    <version>2.2.1</version>
+    <version>2.2.3</version>
     <authors>harmj0y</authors>
     <description>Rubeus is a C# toolset for raw Kerberos interaction and abuses.</description>
     <dependencies>
