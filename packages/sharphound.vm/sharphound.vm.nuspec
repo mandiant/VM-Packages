@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sharphound.vm</id>
-    <version>1.1.1.20230713</version>
+    <version>2.0.0</version>
     <authors>specterops</authors>
     <description>SharpHound is an Active Directory ingester tool for BloodHound.</description>
     <dependencies>
