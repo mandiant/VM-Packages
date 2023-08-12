@@ -4,7 +4,7 @@
     <id>vbdec.vm</id>
     <version>2.22.23</version>
     <authors>vbGamer45, David Zimmer</authors>
-    <description>VBDec is a VB6 disassembler and PCode debugger</description>
+    <description>VBDec is a VB6 disassembler and PCode debugger.</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
