@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>dotdumper.vm</id>
+    <version>1.1</version>
+    <authors>ThisIsLibra</authors>
+    <description>An automatic unpacker and logger for DotNet Framework targeting files</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
