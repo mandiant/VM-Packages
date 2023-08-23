@@ -7,7 +7,6 @@
     <description>The Cyber Swiss Army Knife - a web app for encryption, encoding, compression, data analysis, and more.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="googlechrome" version="[116.0.5845.97]" />
     </dependencies>
   </metadata>
 </package>
