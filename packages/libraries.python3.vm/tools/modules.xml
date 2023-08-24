@@ -20,7 +20,7 @@
     <module name="psutil"/>
     <module name="requests"/>
     <!-- Restrict stringsifter dependencies https://github.com/mandiant/stringsifter/issues/30 -->
-    <module name="stringsifter" url ="https://github.com/Ana06/stringsifter/archive/refs/heads/master.zip"/>
+    <!-- <module name="stringsifter" url ="https://github.com/Ana06/stringsifter/archive/refs/heads/master.zip"/> -->
     <module name="uncompyle6"/>
     <module name="unpy2exe"/>
     <module name="unicorn"/>
