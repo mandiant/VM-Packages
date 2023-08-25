@@ -17,6 +17,7 @@
     <module name="pycryptodome"/>
     <module name="pyftpdlib"/>
     <module name="pyreadline"/>
+    <module name="pythonnet"/>
     <module name="pyOpenSSL"/>
     <module name="psutil"/>
     <module name="requests"/>
