@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>putty.vm</id>
-    <version>0.78.0</version>
+    <version>0.79.0</version>
     <authors>Simon Tatham</authors>
     <description>PuTTY is a free implementation of SSH and Telnet for Windows and Unix platforms, along with an xterm terminal emulator.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="putty" version="[0.78.0]" />
+      <dependency id="putty" version="[0.79.0]" />
     </dependencies>
   </metadata>
 </package>
