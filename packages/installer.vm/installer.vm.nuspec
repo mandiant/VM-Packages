@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>installer.vm</id>
+    <version>0.0.0.20230904</version>
+    <title>Mandiant VM Installer</title>
+    <authors>Mandiant</authors>
+    <description>Generic installer for Mandiant's custom virtual machines.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
+
