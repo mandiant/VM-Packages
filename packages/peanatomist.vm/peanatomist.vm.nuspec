@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>sqlrecon.vm</id>
-    <version>3.3</version>
-    <authors>Sanjiv Kawa, Rasta Mouse</authors>
-    <description>MSSQL toolkit for reconnaissance and post-exploitation</description>
+    <id>peanatomist.vm</id>
+    <version>0.2.11931.20230824</version>
+    <authors>RamMerLabs</authors>
+    <description>PE Analysis tool providing detailed information</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
