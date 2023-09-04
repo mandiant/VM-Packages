@@ -89,7 +89,7 @@ Write-Host -ForegroundColor Green "[+] PSModulePath set to:" $prevPath
 $envVarName = "TOOL_LIST_DIR"
 $toolListDir = [Environment]::GetEnvironmentVariable($envVarName, 2)
 if (-Not (Test-Path env:\$envVarName) -Or ($toolListDir -eq $null)) {
-    $toolListDir = Join-Path ${Env:ProgramData} "Microsoft\Windows\Start Menu\Programs\Tools"
+    $toolListDir = Join-Path ${Env:USERPROFILE} "Desktop\Tools"
     if (-Not (Test-Path $toolListDir) ) {
         New-Item -Path $toolListDir -ItemType directory -Force | Out-Null
     }
@@ -105,31 +105,6 @@ if (-Not (Test-Path $toolListDir)) {
     New-Item -Path $toolListDir -ItemType directory -Force | Out-Null
     Write-Host -ForegroundColor Green "[+] Created folder:" $toolListDir
 }
-
-
-# ################################################################################################ #
-# Setup the default tool list directory shortcut and env var if it doesn't exist
-# ################################################################################################ #
-$envVarName = "TOOL_LIST_SHORTCUT"
-$toolListDirShortcut = [Environment]::GetEnvironmentVariable($envVarName, 2)
-if ((-Not (Test-Path env:\$envVarName)) -Or ($toolListDirShortcut -eq $null)) {
-    $toolListDirShortcut = Join-Path ${Env:UserProfile} "Desktop\Tools.lnk"
-    if (-Not (Test-Path $toolListDirShortcut)) {
-        Install-ChocolateyShortcut -ShortcutFilePath $toolListDirShortcut -TargetPath $toolListDir
-    }
-
-    Install-ChocolateyEnvironmentVariable -VariableName $envVarName -VariableValue $toolListDirShortcut -VariableType 'Machine'
-    Set-Item "Env:$envVarName" $toolListDirShortcut -Force
-}
-Write-Host -ForegroundColor Green "[+] TOOL_LIST_SHORTCUT set to:" $toolListDirShortcut
-
-# If the user set the env var but the .lnk file doesn't exist, create it with Choco
-$toolListDirShortcut = [Environment]::ExpandEnvironmentVariables("%$envVarName%")
-if (-Not (Test-Path $toolListDirShortcut)) {
-    Install-ChocolateyShortcut -ShortcutFilePath $toolListDirShortcut -TargetPath $toolListDir
-    Write-Host -ForegroundColor Green "[+] Created shortcut:" $toolListDirShortcut
-}
-
 
 # ################################################################################################ #
 # Set up the default raw tools directory and env var if it doesn't exist

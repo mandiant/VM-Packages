@@ -1105,7 +1105,7 @@ function VM-Configure-Prompts {
     # $Env:MandiantVM must be set in the install script
     $psprompt = @"
         function prompt {
-            Write-Host (`$Env:MandiantVM + `$(Get-Date)) -ForegroundColor Green
+            Write-Host (`$Env:MandiantVM + " " + `$(Get-Date)) -ForegroundColor Green
             Write-Host ("PS " + `$(Get-Location) + " >") -NoNewLine -ForegroundColor White
             return " "
         }
@@ -1119,7 +1119,8 @@ function VM-Configure-Prompts {
 
     # Add timestamp to cmd prompt
     ## Configure the command
-    $command = "cmd /c 'setx PROMPT $Env:MandiantVM`$S`$d`$s`$t`$_`$p$+`$g'"
+    $mandiantVM = $Env:MandiantVM -replace ' ', '' # setx command cannot have spaces
+    $command = "cmd /c 'setx PROMPT $mandiantVM`$S`$d`$s`$t`$_`$p$+`$g'"
     ## Convert to base64
     $base64 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
     ## Run command
@@ -1242,10 +1243,22 @@ function VM-Get-WindowsVersion {
     elseif ($version -match "11" -and $osArchitecture -eq "64-bit") {
         return "Win11"
     }
-    elseif ($version -match "11" -and $osArchitecture -eq "ARM64") {
+    elseif ($version -match "11" -and $osArchitecture -match "ARM") {
         return "Win11ARM"
     }
     else {
         return "Unknown"
+    }
+}
+
+function VM-Get-InstalledPackages {
+    if (Get-Command choco -ErrorAction:SilentlyContinue) {
+        powershell.exe "choco list -r" | ForEach-Object {
+            $Name, $Version = $_ -split '\|'
+            New-Object -TypeName psobject -Property @{
+                'Name' = $Name
+                'Version' = $Version
+            }
+        }
     }
 }
