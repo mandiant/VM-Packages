@@ -16,6 +16,7 @@ try {
     }
 
     VM-Apply-Configurations $config
+    VM-Write-Log "INFO" "Debloating and performance modifications for $osVersion done"
 
 } catch {
     VM-Write-Log-Exception $_

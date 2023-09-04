@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>common.vm</id>
+    <id>debloat.vm</id>
     <version>0.0.0.20230904</version>
     <description>Debloat and performance configurations for Mandiant VMs</description>
     <authors>Mandiant</authors>
