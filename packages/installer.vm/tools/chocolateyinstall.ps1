@@ -2,22 +2,10 @@ $ErrorActionPreference = 'Continue'
 $global:VerbosePreference = "SilentlyContinue"
 Import-Module vm.common -Force -DisableNameChecking
 
-function Get-InstalledPackages {
-    if (Get-Command choco -ErrorAction:SilentlyContinue) {
-        powershell.exe "choco list -r" | ForEach-Object {
-            $Name, $Version = $_ -split '\|'
-            New-Object -TypeName psobject -Property @{
-                'Name' = $Name
-                'Version' = $Version
-            }
-        }
-    }
-}
-
 try {
     # Gather packages to install
-    $installedPackages = (Get-InstalledPackages).Name
-    $configPath = Join-Path ${Env:VM_COMMON_DIR} "config.xml" -Resolve
+    $installedPackages = (VM-Get-InstalledPackages).Name
+    $configPath = Join-Path ${Env:VM_COMMON_DIR} "packages.xml" -Resolve
     $configXml = [xml](Get-Content $configPath)
     $packagesToInstall = $configXml.config.packages.package.name | Where-Object { $installedPackages -notcontains $_ }
 
@@ -29,19 +17,72 @@ try {
     Start-Sleep 1
 
     # Install the packages
-    foreach ($package in $packagesToInstall) {
-        Write-Host "[+] Installing: $package" -ForegroundColor Cyan
-        choco install "$package" -y
+    try {
+        foreach ($package in $packagesToInstall) {
+            Write-Host "[+] Installing: $package" -ForegroundColor Cyan
+            choco install "$package" -y
+            VM-Write-Log "INFO" "Package $package has been installed"
+        }
+    } catch {
+        VM-Write-Log-Exception $_
     }
-    Write-Host "[+] Installation complete" -ForegroundColor Green
+    VM-Write-Log "INFO" "[+] All packages complete"
+
+    # Set Profile/Version specific configurations
+    VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
+    VM-Apply-Configurations $(Join-Path $Env:VM_COMMON_DIR "config.xml")
+
+    # Configure PowerShell and cmd prompts
+    VM-Configure-Prompts
+
+    # Configure PowerShell Logging
+    VM-Configure-PS-Logging
+
+    # Configure Desktop\Tools folder with a Mandiant VM icon
+    $folderPath = $Env:TOOL_LIST_DIR  
+    $iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico"
+
+    # Set the icon
+    if (Test-Path -Path $folderPath -PathType Container) {
+        # Full path to the desktop.ini file inside the folder
+        $desktopIniPath = Join-Path -Path $folderPath -ChildPath 'desktop.ini'
+        
+        # Check if desktop.ini already exists
+        if (-Not (Test-Path -Path $desktopIniPath)) {
+            # Create an empty desktop.ini if it doesn't exist
+            Set-Content -Path $desktopIniPath -Value ''
+        }
+
+        # Make the folder "system" to enable custom settings like icon change
+        attrib +s $folderPath
+
+        # Write the needed settings into desktop.ini
+        Add-Content -Path $desktopIniPath -Value "[.ShellClassInfo]"
+        Add-Content -Path $desktopIniPath -Value ("IconResource=$iconPath,0")
+
+        # Make the desktop.ini file hidden and system
+        attrib +h +s $desktopIniPath
+    }
+    # Refresh the desktop
+    Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+
+public class Shell {
+    [DllImport("Shell32.dll")]
+    public static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
+}
+"@
+    $SHCNE_ASSOCCHANGED = 0x08000000
+    $SHCNF_IDLIST = 0
+    [void][Shell]::SHChangeNotify($SHCNE_ASSOCCHANGED, $SHCNF_IDLIST, [IntPtr]::Zero, [IntPtr]::Zero)
 
     # Remove Chocolatey cache
     $cache = "${Env:LocalAppData}\ChocoCache"
     Remove-Item $cache -Recurse -Force
 
     # Construct failed packages file path
-    $desktopPath = [Environment]::GetFolderPath("Desktop")
-    $failedPackages = Join-Path $desktopPath "failed_packages.txt"
+    $failedPackages = Join-Path $Env:VM_COMMON_DIR "failed_packages.txt"
     $failures = @{}
 
     # Check and list failed packages from "lib-bad"
@@ -53,16 +94,18 @@ try {
     }
 
     # Cross-compare packages to install versus installed packages to find failed packages
-    $installedPackages = (Get-InstalledPackages).Name
+    $installedPackages = VM-Get-InstalledPackages
     foreach ($package in $packagesToInstall) {
-        if ($installedPackages -notcontains $package) {
+        if ($installedPackages.Name -notcontains $package) {
             $failures[$package] = $true
         }
     }
 
-    $installedPackages = choco list -r | Out-String
-    VM-Write-Log "INFO" "Packages installed:`n$installedPackages"
-
+    # Write installed packages to log file
+    foreach ($package in $installedPackages){
+        VM-Write-Log "INFO" "Packages installed:  $($package.Name) | $($package.Version)"
+    }
+    
     # Write each failed package to failure file
     foreach ($package in $failures.Keys) {
         VM-Write-Log "ERROR" "Failed to install: $package"
@@ -86,16 +129,15 @@ try {
         Write-Host "`t[-] $logPath" -ForegroundColor Yellow
         Write-Host "`t[-] %PROGRAMDATA%\chocolatey\logs\chocolatey.log" -ForegroundColor Yellow
         Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
-        Start-Sleep 5
-        & notepad.exe $logPath
     }
 
     # Let users know installation is complete by setting background, playing win sound, and display message box
+    # Set background
     Set-ItemProperty 'HKCU:\Control Panel\Colors' -Name Background -Value "0 0 0" -Force | Out-Null
     $backgroundImage = "${Env:VM_COMMON_DIR}\background.png"
     if ((Test-Path $backgroundImage)) {
         # Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
-        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 6 -Force | Out-Null
+        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 0 -Force | Out-Null
         New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force | Out-Null
         Add-Type -TypeDefinition @"
 using System;
@@ -113,16 +155,67 @@ public class VMBackground
         [VMBackground]::SetSysColors(1, @(1), @(0x000000))
     }
 
+    # Play sound
     $playWav = New-Object System.Media.SoundPlayer
     $playWav.SoundLocation = 'https://www.winhistory.de/more/winstart/down/owin31.wav'
     $playWav.PlaySync()
 
-    Add-Type -AssemblyName PresentationCore,PresentationFramework
-    $msgBody = "Install complete!`nPlease review %VM_COMMON_DIR%\log.txt for any errors.`nThank you"
-    $msgTitle = "VM Installation Complete"
-    $msgButton = 'OK'
-    $msgImage = 'Asterisk'
-    [System.Windows.MessageBox]::Show($msgBody,$msgTitle,$msgButton,$msgImage)
+    # Show dialog that install has been complete
+    Add-Type -AssemblyName System.Windows.Forms
+    Add-Type -AssemblyName System.Drawing
+
+    # Create form
+    $form = New-Object System.Windows.Forms.Form
+    $form.Text = "$Env:MandiantVM Installation Complete"
+    $form.TopMost = $true
+    $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
+    $form.Icon = New-Object System.Drawing.Icon(Join-Path $Env:VM_COMMON_DIR "vm.ico")
+
+    # Create a FlowLayoutPanel
+    $flowLayout = New-Object System.Windows.Forms.FlowLayoutPanel
+    $flowLayout.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
+    $flowLayout.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $flowLayout.AutoSize = $true
+
+    # Create label
+    $label = New-Object System.Windows.Forms.Label
+    $label.Text = @"
+Install Complete!
+
+Please review %VM_COMMON_DIR%\log.txt for any errors.
+
+For any package related issues, please submit to github.com/mandiant/vm-packages
+
+For any install related issues, please submit to the VM repo
+
+Thank you!
+"@
+    $label.AutoSize = $true
+    $label.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10, [System.Drawing.FontStyle]::Regular)
+
+    # Create button
+    $button = New-Object System.Windows.Forms.Button
+    $button.Text = "Finish"
+    $button.DialogResult = [System.Windows.Forms.DialogResult]::OK
+    $button.AutoSize = $true
+    $button.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10, [System.Drawing.FontStyle]::Regular)
+    $button.Anchor = [System.Windows.Forms.AnchorStyles]::None
+
+    # Add controls to the FlowLayoutPanel
+    $flowLayout.Controls.Add($label)
+    $flowLayout.Controls.Add($button)
+
+    # Add the FlowLayoutPanel to the form
+    $form.Controls.Add($flowLayout)
+
+    # Auto-size form to fit content
+    $form.AutoSize = $true
+    $form.AutoSizeMode = [System.Windows.Forms.AutoSizeMode]::GrowAndShrink
+
+    # Show dialog
+    $form.ShowDialog()
+
+    
 } catch {
     VM-Write-Log-Exception $_
 }
