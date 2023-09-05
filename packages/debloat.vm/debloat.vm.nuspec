@@ -5,5 +5,8 @@
     <version>0.0.0.20230904</version>
     <description>Debloat and performance configurations for Mandiant VMs</description>
     <authors>Mandiant</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
   </metadata>
 </package>

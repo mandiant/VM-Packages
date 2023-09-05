@@ -1,4 +1,6 @@
 $ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
 $packageToolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
 try {
