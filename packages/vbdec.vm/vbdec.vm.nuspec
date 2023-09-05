@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vbdec.vm</id>
-    <version>12.7.22</version>
+    <version>1.0.917</version>
     <authors>vbGamer45, David Zimmer</authors>
-    <description>VBDec is a VB6 disassembler and PCode debugger</description>
+    <description>VBDec works as a VB6 disassembler, PCode debugger, structure viewer for all vb6 executables, and can generate IDA scripts to integrate structures and named function offsets.</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
