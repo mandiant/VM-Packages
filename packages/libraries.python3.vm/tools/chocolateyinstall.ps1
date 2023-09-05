@@ -9,9 +9,8 @@ try {
     # Create output file to log python module installation details
     $outputFile = VM-New-Install-Log $toolDir
 
-    # Fix pip version, stringsifter doesn't install with pip 23:
-    # https://github.com/mandiant/stringsifter/issues/29
-    Invoke-Expression "py -3.9 -m pip install pip==20.1 >> $outputFile"
+    # Fix pip version
+    Invoke-Expression "py -3.9 -m pip install pip~=23.2.1 >> $outputFile"
 
     $failures = @()
     $modules = $modulesXml.modules.module
