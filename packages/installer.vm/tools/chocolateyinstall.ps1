@@ -19,7 +19,7 @@ try {
     # Install the packages
     try {
         foreach ($package in $packagesToInstall) {
-            Write-Host "[+] Installing: $package" -ForegroundColor Cyan
+            VM-Write-Host "INFO" "Installing: $package" -ForegroundColor Cyan
             choco install "$package" -y
             VM-Write-Log "INFO" "$package has been installed"
         }
@@ -54,14 +54,14 @@ try {
                 }
 
                 # Make the folder "system" to enable custom settings like icon change
-                Start-Process "attrib +s $folderPath" -Wait
+                Start-Process "attrib" -ArgumentList "+s $folderPath" -Wait
 
                 # Write the needed settings into desktop.ini
                 Add-Content -Path $desktopIniPath -Value "[.ShellClassInfo]"
                 Add-Content -Path $desktopIniPath -Value ("IconResource=$iconPath,0")
 
                 # Make the desktop.ini file hidden and system
-                Start-Process "attrib +h +s $desktopIniPath" -Wait
+                Start-Process "attrib" -ArgumentList " +h +s $desktopIniPath" -Wait
             }
     }
     # Refresh the desktop
