@@ -896,40 +896,37 @@ function VM-Remove-Appx-Package {
 
     try {
         # Check if the app is installed
-        $installedPackage = Get-AppxPackage -Name $appName -ErrorAction SilentlyContinue
-        
+        $installedPackage = Get-AppxPackage -Name $appName
+        VM-Write-Log "INFO" "Removing $appName package"
         if ($installedPackage) {
-            $packageFullName = $installedPackage.PackageFullName
-            $result = Remove-AppxPackage -Package $packageFullName -ErrorAction Stop
-
-            if ($null -eq $result) {
-                VM-Write-Log "INFO" "[+] Installed $appName has been successfully removed."
-            } else {
-                VM-Write-Log "ERROR" "[+] Failed to remove installed app $appName."
+            try {
+                $packageFullName = $installedPackage.PackageFullName
+                Remove-AppxPackage -Package $packageFullName -ErrorAction SilentlyContinue
+                VM-Write-Log "INFO" "$packageFullName removed"
             }
-        }
-        else {
+            catch {
+                VM-Write-Log-Exception $_
+            }           
+        } else {
             VM-Write-Log "WARN" "[+] Installed $appName not found on the system."
         }
         # Check if the app is provisioned
         $provisionedPackage = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -eq $appName } -ErrorAction SilentlyContinue
         if ($provisionedPackage) {
-            $result = Remove-AppxProvisionedPackage -PackageName $provisionedPackage.PackageName -Online  
-
-            if ($result) {
-                VM-Write-Log "INFO" "[+] Provisioned $appName has been successfully removed."
-            } else {
-                VM-Write-Log "ERROR" "[+] Failed to remove porvisioned app $appName."
+            try {
+                Remove-AppxProvisionedPackage -PackageName $provisionedPackage.PackageName -Online -ErrorAction SilentlyContinue
+                VM-Write-Log "INFO" $("Provisioned package " + $provisionedPackage.PackageName + " removed")
             }
+            catch {
+                VM-Write-Log-Exception $_
+            } 
         } else {
             VM-Write-Log "WARN" "[+] Provisioned $appName not found on the system."
         }
-    } 
-    catch {
-        VM-Write-Log "ERROR" "An error occurred while removing the app or provisioned package. Error: $_"
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while removing the $appName package. Error: $_"
     }
 }
-
 
 function VM-Set-Service-Manual-Start {
 # Function for setting Services to manual startup
@@ -940,16 +937,15 @@ function VM-Set-Service-Manual-Start {
     )
 
     try {
-        $service = Get-Service -Name $serviceName -ErrorAction Stop
+        $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
 
         if ($service) {
-            $service | Set-Service -StartupType Manual -ErrorAction Stop
+            Set-Service -Name $service.Name -StartupType Manual
             VM-Write-Log "INFO" "[+] Service $serviceName has been disabled."
         } else {
             VM-Write-Log "WARN" "[+] Service $serviceName not found."
         }
-    }
-    catch {
+    } catch {
         VM-Write-Log "ERROR" "An error occurred while setting the service startup type. Error: $_"
     }
 }
@@ -970,13 +966,11 @@ function VM-Disable-Scheduled-Task {
         $output = Disable-ScheduledTask -TaskName $value -ErrorAction SilentlyContinue
         if ($output){
             VM-Write-Log "INFO" "[+] Scheduled task '$name' has been disabled."
-        }
-        else{
+        } else {
             VM-Write-Log "ERROR" "[+] Scheduled task '$name' not found."
         }
     
-    }
-    catch {
+    } catch {
         VM-Write-Log "ERROR" "An error occurred while disabling the '$name' scheduled task. Error: $_"
     }
 }
@@ -1009,12 +1003,10 @@ function VM-Update-Registry-Value {
         # Validate the value based on the type parameter
         if ($type -eq "DWord" -or $type -eq "QWord") {
             $validatedData = [int64]::Parse($data)
-        }
-        elseif ($type -eq "Binary") {
+        } elseif ($type -eq "Binary") {
             $validatedData = [byte[]]::new(($data -split '(.{2})' | Where-Object { $_ -match '..' } | ForEach-Object { [convert]::ToByte($_, 16) }))
 
-        }
-        else {
+        } else {
             $validatedData = $data
         }
 
@@ -1023,15 +1015,13 @@ function VM-Update-Registry-Value {
             # Create the registry key
             New-Item -Path $path -Force | Out-Null
             VM-Write-Log "INFO" "`t[+] Registry key created: $path"
-        }
-        else {
+        } else {
             VM-Write-Log "WARN" "`t[+] Registry key already exists: $path"
         }
 
         Set-ItemProperty -Path $path -Name $value -Value $validatedData -Type $type -Force | Out-Null
         VM-Write-Log "INFO" "[+] $name has been successful"
-    }
-    catch {
+    } catch {
         VM-Write-Log "ERROR" "Failed to update the registry value. Error: $_"
     }
 }
@@ -1060,8 +1050,7 @@ function VM-Remove-Path {
             } else {
                 VM-Write-Log "WARN" "[+] $path does not exist."
             }
-        }
-        elseif ($type -eq "dir") {
+        } elseif ($type -eq "dir") {
             if (Test-Path -Path $path -PathType Container) {
                 Remove-Item -Path $path -Recurse -Force
                 VM-Write-Log "INFO" "[+] $name has been successfully removed."
@@ -1069,8 +1058,7 @@ function VM-Remove-Path {
                 VM-Write-Log "WARN" "[+] $path does not exist."
             }
         }
-    }
-    catch {
+    } catch {
         VM-Write-Log "ERROR" "An error occurred while removing the $type $path. Error: $_"
     }
 }
@@ -1088,70 +1076,77 @@ function VM-Execute-Custom-Command{
     )
 
     try {
-        Write-Output "[+] Executing commands for '$name':"
+        VM-Write-Log "INFO" "Executing commands for '$name':"
         foreach ($cmd in $cmds) {
-            Write-Output "`t[+] Executing command: $cmd"
-            start-process powershell -ArgumentList "-WindowStyle","Hidden","-Command",$cmd -Wait
-            Write-Host "`t[+] Process completed. Moving to next."
+            Start-Process powershell -ArgumentList "-WindowStyle","Hidden","-Command",$cmd -Wait
         }
-        Write-Output "[+] All commands for '$name' have been executed successfully."
-    }
-    catch {
+        VM-Write-Log "[+] All commands for '$name' have been executed successfully."
+    } catch {
         VM-Write-Log "ERROR" "An error occurred while executing commands for '$name'. Error: $_"
     }
 }
 
 function VM-Configure-Prompts {
     # $Env:MandiantVM must be set in the install script
-    $psprompt = @"
+    try {
+        # Set PowerShell prompt
+        $psprompt = @"
         function prompt {
             Write-Host (`$Env:MandiantVM + " " + `$(Get-Date)) -ForegroundColor Green
             Write-Host ("PS " + `$(Get-Location) + " >") -NoNewLine -ForegroundColor White
             return " "
         }
 "@
+        
+        # Ensure profile file exists and append new content to it, not overwriting old content
+        if (!(Test-Path $profile)) {
+            New-Item -ItemType File -Path $profile -Force | Out-Null
+        }
+        Add-Content -Path $profile -Value $psprompt
 
-    # Ensure profile file exists and append new content to it, not overwriting old content
-    if (!(Test-Path $profile)) {
-        New-Item -ItemType File -Path $profile -Force | Out-Null
+        # Set cmd prompt
+        ## Configure the command
+        $mandiantVM = $Env:MandiantVM -replace ' ', '' # setx command cannot have spaces
+        $command = "cmd /c 'setx PROMPT $mandiantVM`$S`$d`$s`$t`$_`$p$+`$g'"
+        ## Convert to base64
+        $base64 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
+        ## Run command
+        Invoke-Expression ([System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($base64))) | Out-Null
+
+        VM-Write-Log "INFO" "Timestamps added to cmd prompt and PowerShell"
+    } catch {
+        VM-Write-Log-Exception $_
     }
-    Add-Content -Path $profile -Value $psprompt
-
-    # Add timestamp to cmd prompt
-    ## Configure the command
-    $mandiantVM = $Env:MandiantVM -replace ' ', '' # setx command cannot have spaces
-    $command = "cmd /c 'setx PROMPT $mandiantVM`$S`$d`$s`$t`$_`$p$+`$g'"
-    ## Convert to base64
-    $base64 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
-    ## Run command
-    Invoke-Expression ([System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($base64))) | Out-Null
-
-    Write-Host "[+] Timestamps added to cmd prompt and PowerShell" -ForegroundColor Green
+    
 }
 
 function VM-Configure-PS-Logging {
     if ($PSVersionTable -And $PSVersionTable.PSVersion.Major -ge 5) {
-        Write-Host "[+] Enabling PowerShell Script Block Logging" -ForegroundColor Green
+        try { 
+            VM-Write-Log "INFO" "Enabling PowerShell Script Block Logging"
 
-        $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell'
-        if (-Not (Test-Path $psLoggingPath)) {
-            New-Item -Path $psLoggingPath -Force | Out-Null
-        }
+            $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell'
+            if (-Not (Test-Path $psLoggingPath)) {
+                New-Item -Path $psLoggingPath -Force | Out-Null
+            }
 
-        $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription'
-        if (-Not (Test-Path $psLoggingPath)) {
-            New-Item -Path $psLoggingPath -Force | Out-Null
-        }
-        New-ItemProperty -Path $psLoggingPath -Name "EnableInvocationHeader" -Value 1 -PropertyType DWORD -Force | Out-Null
-        New-ItemProperty -Path $psLoggingPath -Name "EnableTranscripting" -Value 1 -PropertyType DWORD -Force | Out-Null
-        New-ItemProperty -Path $psLoggingPath -Name "OutputDirectory" -Value (Join-Path ${Env:UserProfile} "Desktop\PS_Transcripts") -PropertyType String -Force | Out-Null
+            $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription'
+            if (-Not (Test-Path $psLoggingPath)) {
+                New-Item -Path $psLoggingPath -Force | Out-Null
+            }
+            New-ItemProperty -Path $psLoggingPath -Name "EnableInvocationHeader" -Value 1 -PropertyType DWORD -Force | Out-Null
+            New-ItemProperty -Path $psLoggingPath -Name "EnableTranscripting" -Value 1 -PropertyType DWORD -Force | Out-Null
+            New-ItemProperty -Path $psLoggingPath -Name "OutputDirectory" -Value (Join-Path ${Env:UserProfile} "Desktop\PS_Transcripts") -PropertyType String -Force | Out-Null
 
-        $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging'
-        if (-Not (Test-Path $psLoggingPath)) {
-            New-Item -Path $psLoggingPath -Force | Out-Null
+            $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging'
+            if (-Not (Test-Path $psLoggingPath)) {
+                New-Item -Path $psLoggingPath -Force | Out-Null
+            }
+            New-ItemProperty -Path $psLoggingPath -Name "EnableScriptBlockLogging" -Value 1 -PropertyType DWORD -Force | Out-Null
+            VM-Write-Log "INFO" "PowerShell transcripts will be saved to the desktop."
+        } catch {
+            VM-Write-Log-Exception $_
         }
-        New-ItemProperty -Path $psLoggingPath -Name "EnableScriptBlockLogging" -Value 1 -PropertyType DWORD -Force | Out-Null
-        Write-Host "`t[i] PowerShell transcripts will be saved to the desktop." -ForegroundColor Green
     }
 }
 
@@ -1165,6 +1160,7 @@ function VM-Apply-Configurations {
 
     try {
         # Load and parse the XML config file
+        VM-Assert-Path $configFile
         $config = [xml](Get-Content $configFile)
 
         # Process the apps
@@ -1174,7 +1170,6 @@ function VM-Apply-Configurations {
                 VM-Remove-Appx-Package -appName $appName
             }
         }
-
 
         # Process the services
         if ($config.config.services.service) {
@@ -1223,8 +1218,7 @@ function VM-Apply-Configurations {
                 VM-Execute-Custom-Command -name $name -cmds $cmds
             }
         }
-    }
-    catch {
+    } catch {
         VM-Write-Log "ERROR" "An error occurred while applying config. Error: $_"
     }
 }
@@ -1260,5 +1254,24 @@ function VM-Get-InstalledPackages {
                 'Version' = $Version
             }
         }
+    }
+}
+
+function VM-Refresh-Desktop {
+    try {
+        Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+
+public class Shell {
+    [DllImport("Shell32.dll")]
+    public static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
+}
+"@
+        $SHCNE_ASSOCCHANGED = 0x08000000
+        $SHCNF_IDLIST = 0
+        [void][Shell]::SHChangeNotify($SHCNE_ASSOCCHANGED, $SHCNF_IDLIST, [IntPtr]::Zero, [IntPtr]::Zero)
+    } catch {
+        VM-Write-Log-Exception $_
     }
 }
