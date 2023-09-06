@@ -21,7 +21,7 @@ try {
         foreach ($package in $packagesToInstall) {
             Write-Host "[+] Installing: $package" -ForegroundColor Cyan
             choco install "$package" -y
-            VM-Write-Log "INFO" "Package $package has been installed"
+            VM-Write-Log "INFO" "$package has been installed"
         }
     } catch {
         VM-Write-Log-Exception $_
@@ -30,7 +30,8 @@ try {
 
     # Set Profile/Version specific configurations
     VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
-    VM-Apply-Configurations $(Join-Path $Env:VM_COMMON_DIR "config.xml")
+    $configFile = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
+    VM-Apply-Configurations $configFile
 
     # Configure PowerShell and cmd prompts
     VM-Configure-Prompts
@@ -38,44 +39,33 @@ try {
     # Configure PowerShell Logging
     VM-Configure-PS-Logging
 
-    # Configure Desktop\Tools folder with a Mandiant VM icon
-    $folderPath = $Env:TOOL_LIST_DIR  
-    $iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico"
+    # Configure Desktop\Tools folder with a custom icon
+    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve) {
+        $folderPath = $Env:TOOL_LIST_DIR 
+        # Set the icon
+        if (Test-Path -Path $folderPath -PathType Container) {
+            # Full path to the desktop.ini file inside the folder
+            $desktopIniPath = Join-Path -Path $folderPath -ChildPath 'desktop.ini'
+            
+            # Check if desktop.ini already exists
+            if (-Not (Test-Path -Path $desktopIniPath)) {
+                    # Create an empty desktop.ini if it doesn't exist
+                    Set-Content -Path $desktopIniPath -Value ''
+                }
 
-    # Set the icon
-    if (Test-Path -Path $folderPath -PathType Container) {
-        # Full path to the desktop.ini file inside the folder
-        $desktopIniPath = Join-Path -Path $folderPath -ChildPath 'desktop.ini'
-        
-        # Check if desktop.ini already exists
-        if (-Not (Test-Path -Path $desktopIniPath)) {
-            # Create an empty desktop.ini if it doesn't exist
-            Set-Content -Path $desktopIniPath -Value ''
-        }
+                # Make the folder "system" to enable custom settings like icon change
+                Start-Process "attrib +s $folderPath" -Wait
 
-        # Make the folder "system" to enable custom settings like icon change
-        attrib +s $folderPath
+                # Write the needed settings into desktop.ini
+                Add-Content -Path $desktopIniPath -Value "[.ShellClassInfo]"
+                Add-Content -Path $desktopIniPath -Value ("IconResource=$iconPath,0")
 
-        # Write the needed settings into desktop.ini
-        Add-Content -Path $desktopIniPath -Value "[.ShellClassInfo]"
-        Add-Content -Path $desktopIniPath -Value ("IconResource=$iconPath,0")
-
-        # Make the desktop.ini file hidden and system
-        attrib +h +s $desktopIniPath
+                # Make the desktop.ini file hidden and system
+                Start-Process "attrib +h +s $desktopIniPath" -Wait
+            }
     }
     # Refresh the desktop
-    Add-Type -TypeDefinition @"
-using System;
-using System.Runtime.InteropServices;
-
-public class Shell {
-    [DllImport("Shell32.dll")]
-    public static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
-}
-"@
-    $SHCNE_ASSOCCHANGED = 0x08000000
-    $SHCNF_IDLIST = 0
-    [void][Shell]::SHChangeNotify($SHCNE_ASSOCCHANGED, $SHCNF_IDLIST, [IntPtr]::Zero, [IntPtr]::Zero)
+    VM-Refresh-Desktop
 
     # Remove Chocolatey cache
     $cache = "${Env:LocalAppData}\ChocoCache"
@@ -156,27 +146,30 @@ public class VMBackground
     }
 
     # Play sound
-    $playWav = New-Object System.Media.SoundPlayer
-    $playWav.SoundLocation = 'https://www.winhistory.de/more/winstart/down/owin31.wav'
-    $playWav.PlaySync()
+    try {
+        $playWav = New-Object System.Media.SoundPlayer
+        $playWav.SoundLocation = 'https://www.winhistory.de/more/winstart/down/owin31.wav'
+        $playWav.PlaySync()
+    } catch {
+        VM-Write-Log-Exception $_
+    }
 
     # Show dialog that install has been complete
     Add-Type -AssemblyName System.Windows.Forms
     Add-Type -AssemblyName System.Drawing
-
     # Create form
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "$Env:MandiantVM Installation Complete"
     $form.TopMost = $true
     $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
-    $form.Icon = New-Object System.Drawing.Icon(Join-Path $Env:VM_COMMON_DIR "vm.ico")
-
+    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve){
+        $form.Icon = New-Object System.Drawing.Icon($iconPath)
+    }
     # Create a FlowLayoutPanel
     $flowLayout = New-Object System.Windows.Forms.FlowLayoutPanel
     $flowLayout.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
     $flowLayout.Dock = [System.Windows.Forms.DockStyle]::Fill
     $flowLayout.AutoSize = $true
-
     # Create label
     $label = New-Object System.Windows.Forms.Label
     $label.Text = @"
@@ -192,7 +185,6 @@ Thank you!
 "@
     $label.AutoSize = $true
     $label.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10, [System.Drawing.FontStyle]::Regular)
-
     # Create button
     $button = New-Object System.Windows.Forms.Button
     $button.Text = "Finish"
@@ -200,22 +192,17 @@ Thank you!
     $button.AutoSize = $true
     $button.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10, [System.Drawing.FontStyle]::Regular)
     $button.Anchor = [System.Windows.Forms.AnchorStyles]::None
-
     # Add controls to the FlowLayoutPanel
     $flowLayout.Controls.Add($label)
     $flowLayout.Controls.Add($button)
-
     # Add the FlowLayoutPanel to the form
     $form.Controls.Add($flowLayout)
-
     # Auto-size form to fit content
     $form.AutoSize = $true
     $form.AutoSizeMode = [System.Windows.Forms.AutoSizeMode]::GrowAndShrink
-
     # Show dialog
     $form.ShowDialog()
 
-    
 } catch {
     VM-Write-Log-Exception $_
 }
