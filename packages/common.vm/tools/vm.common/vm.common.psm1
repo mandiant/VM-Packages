@@ -1080,7 +1080,7 @@ function VM-Execute-Custom-Command{
         foreach ($cmd in $cmds) {
             Start-Process powershell -ArgumentList "-WindowStyle","Hidden","-Command",$cmd -Wait
         }
-        VM-Write-Log "[+] All commands for '$name' have been executed successfully."
+        VM-Write-Log "INFO" "[+] All commands for '$name' have been executed successfully."
     } catch {
         VM-Write-Log "ERROR" "An error occurred while executing commands for '$name'. Error: $_"
     }
