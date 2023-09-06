@@ -19,7 +19,7 @@ try {
     # Install the packages
     try {
         foreach ($package in $packagesToInstall) {
-            VM-Write-Host "INFO" "Installing: $package" -ForegroundColor Cyan
+            VM-Write-Log "INFO" "Installing: $package" -ForegroundColor Cyan
             choco install "$package" -y
             VM-Write-Log "INFO" "$package has been installed"
         }
