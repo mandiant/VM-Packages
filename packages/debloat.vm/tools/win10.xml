@@ -2,6 +2,10 @@
 <config> 
     <apps>
         <!--
+        INFO:
+        Removes installed AppX packages. Try:
+        $packages = Get-AppxPackage
+        $packages.Name
         FORMAT: 
         <app name="APP_NAME"/>
         -->
@@ -42,6 +46,10 @@
     </apps>
     <services>
         <!--
+        INFO:
+        Sets Services to "Manual" startup type. Try:
+        $services = Get-WmiObject -Query "SELECT * FROM Win32_Service WHERE StartMode='Auto'" | Get-Service
+        $services.Name
         FORMAT: 
         <service name="SERVICE_NAME"/>
         -->
@@ -68,6 +76,10 @@
     </services>
     <tasks>
         <!--
+        INFO:
+        Disables Scheduled Tasks. Try:
+        $tasks = Get-ScheduledTask
+        $tasks.TaskName
         FORMAT: 
         <task name="DESCRIPTIVE_NAME" value="TASK_NAME"/> 
         -->
@@ -80,6 +92,8 @@
     </tasks>
     <registry-items>
         <!--
+        INFO:
+        Makes custom edits to the registry
         FORMAT: 
         <registry-item name="DESCRIPTIVE_NAME" path="REG_PATH" value="REG_VALUE" type="TYPE" data="NEW_DATA"/> 
         -->
@@ -131,12 +145,17 @@
 
     <path-items>
         <!--
+        INFO:
+        Removes files and folders from the system
         FORMAT: 
         <path-item name="DESCRIPTIVE_NAME" type="dir/file" path="DIR_PATH/FILE_PATH"/>
         -->
     </path-items>
     <custom-items>
-        <!--FORMAT: 
+        <!--
+        INFO:
+        Performs custom commands
+        FORMAT: 
         <custom-item name="DESCRIPTIVE_NAME"> <cmd value="PS_COMMAND"/> ... </custom-item>
         -->
         <custom-item name="Remove OneDrive">
