@@ -165,6 +165,9 @@
             <cmd value='Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name "Favorites" -Type Binary -Value ([byte[]](255))'/>
             <cmd value='Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name "FavoritesResolve" -ErrorAction SilentlyContinue'/>
         </custom-item>
+        <custom-item name="Unpin all Start Menu Tiles">
+            <cmd value="$key = Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\*start.tilegrid$windows.data.curatedtilecollection.tilecollection\Current'; $data = $key.Data[0..25] + ([byte[]](202,50,0,226,44,1,1,0,0)); Set-ItemProperty -Path $key.PSPath -Name 'Data' -Type Binary -Value $data; Stop-Process -Name 'ShellExperienceHost' -Force -ErrorAction SilentlyContinue" />
+        </custom-item>
         <custom-item name="Remove Desktop Links">
             <cmd value="del $(Join-Path $env:USERPROFILE 'Desktop\*.lnk')" />
             <cmd value="del $(Join-Path $env:PUBLIC 'Desktop\*.lnk')" />
