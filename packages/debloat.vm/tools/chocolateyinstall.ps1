@@ -11,8 +11,8 @@ try {
         "Win10" { $config = Join-Path $packageToolsDir "win10.xml" }
         "Win11" { $config = Join-Path $packageToolsDir "win11.xml" }
         "Win11ARM" { $config = Join-Path $packageToolsDir "win11arm.xml"}
-        default { 
-            VM-Write-Log "WARN" "Debloater unable to determine debloat config, applying win10.xml" 
+        default {
+            VM-Write-Log "WARN" "Debloater unable to determine debloat config, applying win10.xml"
             $config = Join-Path $packageToolsDir "win10.xml"
         }
     }

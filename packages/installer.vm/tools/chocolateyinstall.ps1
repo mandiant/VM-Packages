@@ -41,12 +41,12 @@ try {
 
     # Configure Desktop\Tools folder with a custom icon
     if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve) {
-        $folderPath = $Env:TOOL_LIST_DIR 
+        $folderPath = $Env:TOOL_LIST_DIR
         # Set the icon
         if (Test-Path -Path $folderPath -PathType Container) {
             # Full path to the desktop.ini file inside the folder
             $desktopIniPath = Join-Path -Path $folderPath -ChildPath 'desktop.ini'
-            
+
             # Check if desktop.ini already exists
             if (-Not (Test-Path -Path $desktopIniPath)) {
                     # Create an empty desktop.ini if it doesn't exist
@@ -95,7 +95,7 @@ try {
     foreach ($package in $installedPackages){
         VM-Write-Log "INFO" "Packages installed:  $($package.Name) | $($package.Version)"
     }
-    
+
     # Write each failed package to failure file
     foreach ($package in $failures.Keys) {
         VM-Write-Log "ERROR" "Failed to install: $package"

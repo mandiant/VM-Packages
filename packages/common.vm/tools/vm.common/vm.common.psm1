@@ -906,7 +906,7 @@ function VM-Remove-Appx-Package {
             }
             catch {
                 VM-Write-Log-Exception $_
-            }           
+            }
         } else {
             VM-Write-Log "WARN" "[+] Installed $appName not found on the system."
         }
@@ -919,7 +919,7 @@ function VM-Remove-Appx-Package {
             }
             catch {
                 VM-Write-Log-Exception $_
-            } 
+            }
         } else {
             VM-Write-Log "WARN" "[+] Provisioned $appName not found on the system."
         }
@@ -969,7 +969,7 @@ function VM-Disable-Scheduled-Task {
         } else {
             VM-Write-Log "ERROR" "[+] Scheduled task '$name' not found."
         }
-    
+
     } catch {
         VM-Write-Log "ERROR" "An error occurred while disabling the '$name' scheduled task. Error: $_"
     }
@@ -1097,7 +1097,7 @@ function VM-Configure-Prompts {
             return " "
         }
 "@
-        
+
         # Ensure profile file exists and append new content to it, not overwriting old content
         if (!(Test-Path $profile)) {
             New-Item -ItemType File -Path $profile -Force | Out-Null
@@ -1117,12 +1117,12 @@ function VM-Configure-Prompts {
     } catch {
         VM-Write-Log-Exception $_
     }
-    
+
 }
 
 function VM-Configure-PS-Logging {
     if ($PSVersionTable -And $PSVersionTable.PSVersion.Major -ge 5) {
-        try { 
+        try {
             VM-Write-Log "INFO" "Enabling PowerShell Script Block Logging"
 
             $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell'
