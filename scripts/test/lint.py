@@ -287,7 +287,7 @@ class MissesImportCommonVm(Lint):
 
 
 class FirstLineDoesNotSetErrorAction(Lint):
-    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm", "flarevm.installer.vm"]
+    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm", "flarevm.installer.vm", "installer.vm"]
     FIRST_LINE = "$ErrorActionPreference = 'Stop'"
     name = "first line must set error handling to stop"
     recommendation = f"add `{FIRST_LINE}` to the file"
