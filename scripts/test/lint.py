@@ -316,6 +316,8 @@ class UsesInvalidCategory(Lint):
         ".ollydumpex.vm",
         ".scyllahide.vm",
         "x64dbgpy.vm",
+        "installer.vm",
+        "debloat.vm"
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
