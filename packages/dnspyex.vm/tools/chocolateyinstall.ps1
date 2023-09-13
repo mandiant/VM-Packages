@@ -5,8 +5,8 @@ try {
   $toolName = 'dnSpy'
   $category = 'dotNet'
 
-  $zipUrl = "https://github.com/dnSpyEx/dnSpy/releases/download/v6.4.0/dnSpy-netframework.zip"
-  $zipSha256 = "103233b20688839046221bd1d0bd145c820e6a145e39a2c6c63a1ca360f230b8"
+  $zipUrl = "https://github.com/dnSpyEx/dnSpy/releases/download/v6.4.1/dnSpy-netframework.zip"
+  $zipSha256 = "d3d8aefb7c5c4ef15d077c13f88c13b0f1403fb71e73610dc68975a62e4230cb"
   $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256)[0]
 
   $toolNameX86 = "$toolName-x86"
