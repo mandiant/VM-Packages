@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ghidra.vm</id>
-    <version>10.3.3</version>
+    <version>10.3.3.20230920</version>
     <authors>National Security Agency</authors>
     <description>A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission.</description>
     <dependencies>
       <dependency id="common.vm" />
       <dependency id="ghidra" version="[10.3.3]" />
-      <dependency id="openjdk" version="[20.0.2]" />
+      <dependency id="openjdk" version="[21.0.0]" />
     </dependencies>
   </metadata>
 </package>
