@@ -1177,7 +1177,7 @@ function VM-Apply-Configurations {
             }
         }
 
-        # Process the services
+        # Process the tasks
         if ($config.config.tasks.task) {
             $config.config.tasks.task | ForEach-Object {
                 $descName = $_.name
