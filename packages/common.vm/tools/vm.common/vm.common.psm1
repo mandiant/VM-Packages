@@ -1004,7 +1004,6 @@ function VM-Update-Registry-Value {
             $validatedData = [int64]::Parse($data)
         } elseif ($type -eq "Binary") {
             $validatedData = [byte[]]::new(($data -split '(.{2})' | Where-Object { $_ -match '..' } | ForEach-Object { [convert]::ToByte($_, 16) }))
-
         } else {
             $validatedData = $data
         }
@@ -1086,12 +1085,12 @@ function VM-Execute-Custom-Command{
 }
 
 function VM-Configure-Prompts {
-    # $Env:MandiantVM must be set in the install script
+    # $Env:VMname must be set in the install script
     try {
         # Set PowerShell prompt
         $psprompt = @"
         function prompt {
-            Write-Host (`$Env:MandiantVM + " " + `$(Get-Date)) -ForegroundColor Green
+            Write-Host (`$Env:VMname + " " + `$(Get-Date)) -ForegroundColor Green
             Write-Host ("PS " + `$(Get-Location) + " >") -NoNewLine -ForegroundColor White
             return " "
         }
@@ -1105,7 +1104,7 @@ function VM-Configure-Prompts {
 
         # Set cmd prompt
         ## Configure the command
-        $mandiantVM = $Env:MandiantVM -replace ' ', '' # setx command cannot have spaces
+        $mandiantVM = $Env:VMname -replace ' ', '' # setx command cannot have spaces
         $command = "cmd /c 'setx PROMPT $mandiantVM`$S`$d`$s`$t`$_`$p$+`$g'"
         ## Convert to base64
         $base64 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))

@@ -159,7 +159,7 @@ public class VMBackground
     Add-Type -AssemblyName System.Drawing
     # Create form
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = "$Env:MandiantVM Installation Complete"
+    $form.Text = "$Env:VMname Installation Complete"
     $form.TopMost = $true
     $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
     if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve){
