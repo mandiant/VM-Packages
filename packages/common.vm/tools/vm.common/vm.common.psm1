@@ -879,7 +879,6 @@ SignatureStatus: $([SignatureStatus]([UInt32]$avInfo.productState -band [Product
     $envVars = @"
 VM_COMMON_DIR: ${Env:VM_COMMON_DIR}
 TOOL_LIST_DIR: ${Env:TOOL_LIST_DIR}
-TOOL_LIST_SHORTCUT: ${Env:TOOL_LIST_SHORTCUT}
 RAW_TOOLS_DIR: ${Env:RAW_TOOLS_DIR}
 "@
 
