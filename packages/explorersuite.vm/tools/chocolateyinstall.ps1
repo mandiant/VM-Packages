@@ -31,7 +31,7 @@ try {
   # "Open with CFF Explorer" is added to the registry for several extensions,
   # add it for all extension with same key to avoid duplication.
   # Use same label and no icon to make it look the same for all extensions.
-  VM-Add-To-Right-Click-Menu 'Open with CFF Explorer' 'Open with CFF Explorer' "`"$cffExplorerExecutablePath`" %1" "file"
+  VM-Add-To-Right-Click-Menu 'Open with CFF Explorer' 'Open with CFF Explorer' "`"$cffExplorerExecutablePath`" %1"
 } catch {
   VM-Write-Log-Exception $_
 }

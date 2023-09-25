@@ -13,7 +13,7 @@ try {
     $scriptPath = Join-Path $executableDir "leave_file_open.bat"
     [IO.File]::WriteAllLines($scriptPath, $("`"$executablePath`" %1", "PAUSE"))
 
-    VM-Add-To-Right-Click-Menu $toolName "file type" "`"$scriptPath`" `"%1`"" "file"
+    VM-Add-To-Right-Click-Menu $toolName "file type" "`"$scriptPath`" `"%1`""
 } catch {
     VM-Write-Log-Exception $_
 }
