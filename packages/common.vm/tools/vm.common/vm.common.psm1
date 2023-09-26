@@ -1104,8 +1104,8 @@ function VM-Configure-Prompts {
 
         # Set cmd prompt
         ## Configure the command
-        $mandiantVM = $Env:VMname -replace ' ', '' # setx command cannot have spaces
-        $command = "cmd /c 'setx PROMPT $mandiantVM`$S`$d`$s`$t`$_`$p$+`$g'"
+        $VMname = $Env:VMname -replace ' ', '' # setx command cannot have spaces
+        $command = "cmd /c 'setx PROMPT $VMname`$S`$d`$s`$t`$_`$p$+`$g'"
         ## Convert to base64
         $base64 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
         ## Run command
