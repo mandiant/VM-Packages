@@ -698,14 +698,20 @@ function VM-Add-To-Right-Click-Menu {
         [string] $menuIcon,
         [Parameter(Mandatory=$false)]
         [ValidateSet("file", "directory")]
-        [string] $type="file"
+        [string] $type="file",
+        [Parameter(Mandatory=$false)]
+        [string] $extension
     )
     try {
-        # Determine if file or directory should show item in right-click menu
-        if ($type -eq "file") {
-            $key = "*"
+        if ($extension) {
+          $key = "SystemFileAssociations\$extension"
         } else {
-            $key = "directory"
+          # Determine if file or directory should show item in right-click menu
+          if ($type -eq "file") {
+              $key = "*"
+          } else {
+              $key = "directory"
+          }
         }
         $key_path = "HKCR:\$key\shell\$menuKey"
 
@@ -716,7 +722,7 @@ function VM-Add-To-Right-Click-Menu {
 
         # Add right-click menu display name
         if (-NOT (Test-Path -LiteralPath $key_path)) {
-            New-Item -Path $key_path | Out-Null
+            New-Item -Path $key_path -Force | Out-Null
         }
         Set-ItemProperty -LiteralPath $key_path -Name '(Default)' -Value "$menuLabel" -Type String
         if ($menuIcon) {
@@ -740,14 +746,20 @@ function VM-Remove-From-Right-Click-Menu {
         [String] $menuKey, # name of registry key
         [Parameter(Mandatory=$false)]
         [ValidateSet("file", "directory")]
-        [string] $type="file"
+        [string] $type="file",
+        [Parameter(Mandatory=$false)]
+        [string] $extension
     )
     try {
-        # Determine if file or directory should show item in right-click menu
-        if ($type -eq "file") {
-            $key = "*"
+        if ($extension) {
+          $key = "SystemFileAssociations\$extension"
         } else {
-            $key = "directory"
+          # Determine if file or directory should show item in right-click menu
+          if ($type -eq "file") {
+              $key = "*"
+          } else {
+              $key = "directory"
+          }
         }
         $key_path = "HKCR:\$key\shell\$menuKey"
 
