@@ -694,18 +694,24 @@ function VM-Add-To-Right-Click-Menu {
         [string] $menuLabel, # value displayed in right-click menu
         [Parameter(Mandatory=$true, Position=2)]
         [string] $command,
-        [Parameter(Mandatory=$true, Position=3)]
+        [Parameter(Mandatory=$false, Position=3)]
+        [string] $menuIcon,
+        [Parameter(Mandatory=$false)]
         [ValidateSet("file", "directory")]
-        [string] $type,
-        [Parameter(Mandatory=$false, Position=4)]
-        [string] $menuIcon
+        [string] $type="file",
+        [Parameter(Mandatory=$false)]
+        [string] $extension
     )
     try {
-        # Determine if file or directory should show item in right-click menu
-        if ($type -eq "file") {
-            $key = "*"
+        if ($extension) {
+          $key = "SystemFileAssociations\$extension"
         } else {
-            $key = "directory"
+          # Determine if file or directory should show item in right-click menu
+          if ($type -eq "file") {
+              $key = "*"
+          } else {
+              $key = "directory"
+          }
         }
         $key_path = "HKCR:\$key\shell\$menuKey"
 
@@ -716,7 +722,7 @@ function VM-Add-To-Right-Click-Menu {
 
         # Add right-click menu display name
         if (-NOT (Test-Path -LiteralPath $key_path)) {
-            New-Item -Path $key_path | Out-Null
+            New-Item -Path $key_path -Force | Out-Null
         }
         Set-ItemProperty -LiteralPath $key_path -Name '(Default)' -Value "$menuLabel" -Type String
         if ($menuIcon) {
@@ -738,16 +744,22 @@ function VM-Remove-From-Right-Click-Menu {
     (
         [Parameter(Mandatory=$true, Position=0)]
         [String] $menuKey, # name of registry key
-        [Parameter(Mandatory=$true, Position=1)]
+        [Parameter(Mandatory=$false)]
         [ValidateSet("file", "directory")]
-        [string] $type
+        [string] $type="file",
+        [Parameter(Mandatory=$false)]
+        [string] $extension
     )
     try {
-        # Determine if file or directory should show item in right-click menu
-        if ($type -eq "file") {
-            $key = "*"
+        if ($extension) {
+          $key = "SystemFileAssociations\$extension"
         } else {
-            $key = "directory"
+          # Determine if file or directory should show item in right-click menu
+          if ($type -eq "file") {
+              $key = "*"
+          } else {
+              $key = "directory"
+          }
         }
         $key_path = "HKCR:\$key\shell\$menuKey"
 

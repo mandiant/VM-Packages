@@ -11,7 +11,7 @@ try {
   $zipSha256_64 = '3450169643be76484ac4bd5e1473f6f4745d9825c8a07255a3925a4a6e8bad7e'
 
   $executablePath = (VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -zipUrl_64 $zipUrl_64 -zipSha256_64 $zipSha256_64)[-1]
-  VM-Add-To-Right-Click-Menu $toolName "detect it easy (DIE)" "`"$executablePath`" `"%1`"" "file" "$executablePath"
+  VM-Add-To-Right-Click-Menu $toolName "detect it easy (DIE)" "`"$executablePath`" `"%1`"" "$executablePath"
 } catch {
   VM-Write-Log-Exception $_
 }
