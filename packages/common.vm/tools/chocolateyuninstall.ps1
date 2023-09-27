@@ -17,7 +17,7 @@ Set-Item "Env:$envVarName" $prevPath -Force
 
 # Remove the env vars and what they point to
 # NOTE: Purposefully NOT recursively deleting RAW_TOOLS_DIR as the user may have other items there
-$envVarNames = @("VM_CONFIG", "TOOL_LIST_DIR", "TOOL_LIST_SHORTCUT", "VM_COMMON_DIR")
+$envVarNames = @("VM_CONFIG", "TOOL_LIST_DIR", "VM_COMMON_DIR")
 foreach ($envVarName in $envVarNames) {
   if (Test-Path env:\$envVarName) {
     $envVarValue = [Environment]::GetEnvironmentVariable($envVarName, 'Machine')
