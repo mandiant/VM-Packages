@@ -10,13 +10,13 @@ try {
     packageName  = ${Env:ChocolateyPackageName}
     fileType     = 'exe'
     silentArgs   = '--mode unattended'
-    url          = 'https://out7.hex-rays.com/files/idafree76_windows.exe'
-    checksum     = '2ecc5b2f5329c4e7a4243634801180be38a397c31a330324c8abc605f5dffb9e'
+    url          = 'https://out7.hex-rays.com/files/idafree83_windows.exe'
+    checksum     = '10080a057704630578e697c6bb0b09968a54138075cacab175f62d60c71d0a1f'
     checksumType = 'sha256'
   }
   Install-ChocolateyPackage @packageArgs
 
-  $toolDir = Join-Path ${Env:ProgramFiles} "IDA Freeware 7.6" -Resolve
+  $toolDir = Join-Path ${Env:ProgramFiles} "IDA Freeware 8.3" -Resolve
   $executablePath = Join-Path $toolDir "ida64.exe" -Resolve
   $shortcut = Join-Path $shortcutDir "$toolname.lnk"
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
@@ -25,7 +25,7 @@ try {
   Install-BinFile -Name $toolname -Path $executablePath
 
   # Delete Desktop shortcut
-  $desktopShortcut = Join-Path ${Env:Public} "Desktop\IDA Freeware 7.6.lnk"
+  $desktopShortcut = Join-Path ${Env:Public} "Desktop\IDA Freeware 8.3.lnk"
   if (Test-Path $desktopShortcut) {
     Remove-Item $desktopShortcut -Force -ea 0
   }
