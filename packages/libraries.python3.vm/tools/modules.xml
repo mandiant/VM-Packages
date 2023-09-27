@@ -3,6 +3,7 @@
     <module name="acefile"/>
     <module name="art"/>
     <module name="binwalk" url="https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"/>
+    <module name="flare-capa"/>
     <module name="capstone-windows"/>
     <module name="dissect"/>
     <module name="dnfile"/>
