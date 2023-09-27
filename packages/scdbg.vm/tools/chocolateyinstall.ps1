@@ -5,8 +5,8 @@ try {
     $toolName = 'scdbg'
     $category = 'Debuggers'
 
-    $zipUrl = 'https://github.com/dzzie/VS_LIBEMU/releases/download/12.7.22/VS_LIBEMU_12_7_22.zip'
-    $zipSha256 = '521130E34CC0A30587FF99D030633B9D124CCAC779A213E15025535171B4113D'
+    $zipUrl = 'http://sandsprite.com/flare_vm/VS_LIBEMU_7.26.23__D7A7B407A0FB2288655247FF3EDD361E767075B15D2F0554EB9C87BC4476D996.zip'
+    $zipSha256 = 'D7A7B407A0FB2288655247FF3EDD361E767075B15D2F0554EB9C87BC4476D996'
 
     VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true
 
