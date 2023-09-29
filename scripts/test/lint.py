@@ -306,18 +306,19 @@ class FirstLineDoesNotSetErrorAction(Lint):
 class UsesInvalidCategory(Lint):
     # Some packages don't have a category (we don't create a link in the tools directory)
     EXCLUSIONS = [
+        ".ollydumpex.vm",
+        ".scyllahide.vm",
         "common.vm",
+        "debloat.vm",
         "flarevm.installer.vm",
+        "ida.plugin.capa.vm",
+        "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
         "notepadplusplus.vm",
         "notepadpp.plugin.",
         "npcap.vm",
-        ".ollydumpex.vm",
-        ".scyllahide.vm",
         "x64dbgpy.vm",
-        "installer.vm",
-        "debloat.vm"
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
