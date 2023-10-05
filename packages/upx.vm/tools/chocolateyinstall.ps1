@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'upx'
-$category = 'Utilities'
+$category = 'Packers'
 
 $zipUrl = "https://github.com/upx/upx/releases/download/v4.1.0/upx-4.1.0-win32.zip"
 $zipSha256 = "066c62993ce904f9f377ce849e85b77d1e2cf477d554c36c5ff89f6d3f0fa072"
