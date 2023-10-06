@@ -322,7 +322,7 @@ class UsesInvalidCategory(Lint):
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
-    categories_txt = f"{root_path}/categories.txt"
+    categories_txt = os.path.join(root_path, "categories.txt")
     with open(categories_txt) as file:
         CATEGORIES = [line.rstrip() for line in file]
         logger.debug(CATEGORIES)
