@@ -51,7 +51,6 @@ body:
       description: Which category should this tool be installed to?
       options:
         - Active Directory
-        - Android
         - Cloud
         - Command & Control
         - Credential Access
@@ -65,7 +64,7 @@ body:
         - Hex Editors
         - Information Gathering
         - InnoSetup
-        - Java
+        - Java/Android
         - Javascript
         - Lateral Movement
         - Networking
