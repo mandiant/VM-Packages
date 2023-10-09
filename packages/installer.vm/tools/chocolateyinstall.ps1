@@ -39,8 +39,9 @@ try {
     # Configure PowerShell Logging
     VM-Configure-PS-Logging
 
-    # Configure Desktop\Tools folder with a custom icon
-    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve) {
+    # Configure Desktop\Tools folder with a custom icon if it exists
+    $iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico"
+    if (Test-Path $iconPath) {
         $folderPath = $Env:TOOL_LIST_DIR
         # Set the icon
         if (Test-Path -Path $folderPath -PathType Container) {
