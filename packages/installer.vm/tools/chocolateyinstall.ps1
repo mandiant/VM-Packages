@@ -30,8 +30,8 @@ try {
 
     # Set Profile/Version specific configurations
     VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
-    $configFile = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
-    VM-Apply-Configurations $configFile
+    $configPath = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
+    VM-Apply-Configurations $configPath
 
     # Configure PowerShell and cmd prompts
     VM-Configure-Prompts
