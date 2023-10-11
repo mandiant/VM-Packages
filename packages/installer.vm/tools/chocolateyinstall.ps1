@@ -128,7 +128,9 @@ try {
     $backgroundImage = "${Env:VM_COMMON_DIR}\background.png"
     if ((Test-Path $backgroundImage)) {
         # Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
-        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 0 -Force | Out-Null
+        $img = [System.Drawing.Image]::FromFile($backgroundImage);
+        $wallpaperStyle = if ($img.Width/$img.Height -ge 16/9) { 0 } else { 6 }
+        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $wallpaperStyle -Force | Out-Null
         New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force | Out-Null
         Add-Type -TypeDefinition @"
 using System;
