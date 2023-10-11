@@ -122,8 +122,17 @@ try {
         Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
     }
 
-    # Let users know installation is complete by setting background, playing win sound, and display message box
-    # Set background
+    # Let users know installation is complete by setting lock screen & wallpaper background, playing win sound, and display message box
+
+    # Set lock screen image
+    $lockScreenImage = "${Env:VM_COMMON_DIR}\lockscreen.png"
+    if ((Test-Path $lockScreenImage)) {
+        New-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP" -Force | Out-Null
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP" -Name LockScreenImagePath -PropertyType String -Value $lockScreenImage -Force | Out-Null
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP" -Name LockScreenImageStatus -PropertyType DWord -Value 1 -Force | Out-Null
+    }
+
+    # Set wallpaper
     Set-ItemProperty 'HKCU:\Control Panel\Colors' -Name Background -Value "0 0 0" -Force | Out-Null
     $backgroundImage = "${Env:VM_COMMON_DIR}\background.png"
     if ((Test-Path $backgroundImage)) {
