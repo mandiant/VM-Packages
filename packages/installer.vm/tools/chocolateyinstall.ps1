@@ -30,8 +30,8 @@ try {
 
     # Set Profile/Version specific configurations
     VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
-    $configFile = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
-    VM-Apply-Configurations $configFile
+    $configPath = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
+    VM-Apply-Configurations $configPath
 
     # Configure PowerShell and cmd prompts
     VM-Configure-Prompts
@@ -39,8 +39,9 @@ try {
     # Configure PowerShell Logging
     VM-Configure-PS-Logging
 
-    # Configure Desktop\Tools folder with a custom icon
-    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve) {
+    # Configure Desktop\Tools folder with a custom icon if it exists
+    $iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico"
+    if (Test-Path $iconPath) {
         $folderPath = $Env:TOOL_LIST_DIR
         # Set the icon
         if (Test-Path -Path $folderPath -PathType Container) {
@@ -121,13 +122,24 @@ try {
         Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
     }
 
-    # Let users know installation is complete by setting background, playing win sound, and display message box
-    # Set background
+    # Let users know installation is complete by setting lock screen & wallpaper background, playing win sound, and display message box
+
+    # Set lock screen image
+    $lockScreenImage = "${Env:VM_COMMON_DIR}\lockscreen.png"
+    if ((Test-Path $lockScreenImage)) {
+        New-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP" -Force | Out-Null
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP" -Name LockScreenImagePath -PropertyType String -Value $lockScreenImage -Force | Out-Null
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP" -Name LockScreenImageStatus -PropertyType DWord -Value 1 -Force | Out-Null
+    }
+
+    # Set wallpaper
     Set-ItemProperty 'HKCU:\Control Panel\Colors' -Name Background -Value "0 0 0" -Force | Out-Null
     $backgroundImage = "${Env:VM_COMMON_DIR}\background.png"
     if ((Test-Path $backgroundImage)) {
         # Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
-        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value 0 -Force | Out-Null
+        $img = [System.Drawing.Image]::FromFile($backgroundImage);
+        $wallpaperStyle = if ($img.Width/$img.Height -ge 16/9) { 0 } else { 6 }
+        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $wallpaperStyle -Force | Out-Null
         New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force | Out-Null
         Add-Type -TypeDefinition @"
 using System;
