@@ -1,5 +1,4 @@
 Active Directory
-Android
 Cloud
 Command & Control
 Credential Access
@@ -13,7 +12,7 @@ Forensic
 Hex Editors
 Information Gathering
 InnoSetup
-Java
+Java/Android
 Javascript
 Lateral Movement
 Networking
