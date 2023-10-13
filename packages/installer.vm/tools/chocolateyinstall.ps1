@@ -30,10 +30,10 @@ try {
     } catch {
         VM-Write-Log-Exception $_
     }
-    VM-Write-Log "INFO" "[+] Packages installation complete"
+    VM-Write-Log "INFO" "Packages installation complete"
 
     # Set Profile/Version specific configurations
-    VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
+    VM-Write-Log "INFO" "Beginning Windows OS VM profile configuration changes"
     $configPath = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
     VM-Apply-Configurations $configPath
 
