@@ -124,6 +124,8 @@ try {
         Write-Host "`t[-] $logPath" -ForegroundColor Yellow
         Write-Host "`t[-] %PROGRAMDATA%\chocolatey\logs\chocolatey.log" -ForegroundColor Yellow
         Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
+        Start-Sleep 5
+        & notepad.exe $logPath
     }
 
     # Let users know installation is complete by setting lock screen & wallpaper background, playing win sound, and display message box
