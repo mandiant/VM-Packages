@@ -175,7 +175,8 @@ public class VMBackground
     $form.Text = "$Env:VMname Installation Complete"
     $form.TopMost = $true
     $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
-    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve){
+    $iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico"
+    if (Test-Path $iconPath) {
         $form.Icon = New-Object System.Drawing.Icon($iconPath)
     }
     # Create a FlowLayoutPanel
