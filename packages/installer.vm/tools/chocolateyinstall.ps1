@@ -21,12 +21,16 @@ try {
         foreach ($package in $packagesToInstall) {
             VM-Write-Log "INFO" "Installing: $package"
             choco install "$package" -y
-            VM-Write-Log "INFO" "$package has been installed"
+            if ($LASTEXITCODE) {
+              VM-Write-Log "INFO" "`t$package has been installed"
+            } else {
+              VM-Write-Log "ERROR" "`t$package has not been installed"
+            }
         }
     } catch {
         VM-Write-Log-Exception $_
     }
-    VM-Write-Log "INFO" "[+] All packages complete"
+    VM-Write-Log "INFO" "[+] Packages installation complete"
 
     # Set Profile/Version specific configurations
     VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
