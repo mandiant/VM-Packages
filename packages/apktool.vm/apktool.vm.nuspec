@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>apktool.vm</id>
-    <version>2.8.1.20231006</version>
+    <version>2.9.0</version>
     <authors>Connor Tumbleson, Ryszard Wisniewski</authors>
     <description>A tool for reverse engineering 3rd party, closed, binary Android apps.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="apktool" version="[2.8.1]" />
+      <dependency id="apktool" version="[2.9.0]" />
     </dependencies>
   </metadata>
 </package>
