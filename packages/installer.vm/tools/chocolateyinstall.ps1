@@ -166,55 +166,13 @@ public class VMBackground
         VM-Write-Log-Exception $_
     }
 
-    # Show dialog that install has been complete
-    Add-Type -AssemblyName System.Windows.Forms
-    Add-Type -AssemblyName System.Drawing
-    # Create form
-    $form = New-Object System.Windows.Forms.Form
-    $form.Text = "$Env:VMname Installation Complete"
-    $form.TopMost = $true
-    $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
-    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve){
-        $form.Icon = New-Object System.Drawing.Icon($iconPath)
-    }
-    # Create a FlowLayoutPanel
-    $flowLayout = New-Object System.Windows.Forms.FlowLayoutPanel
-    $flowLayout.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
-    $flowLayout.Dock = [System.Windows.Forms.DockStyle]::Fill
-    $flowLayout.AutoSize = $true
-    # Create label
-    $label = New-Object System.Windows.Forms.Label
-    $label.Text = @"
-Install Complete!
-
-Please review %VM_COMMON_DIR%\log.txt for any errors.
-
-For any package related issues, please submit to github.com/mandiant/vm-packages
-
-For any install related issues, please submit to the VM repo
-
-Thank you!
-"@
-    $label.AutoSize = $true
-    $label.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10, [System.Drawing.FontStyle]::Regular)
-    # Create button
-    $button = New-Object System.Windows.Forms.Button
-    $button.Text = "Finish"
-    $button.DialogResult = [System.Windows.Forms.DialogResult]::OK
-    $button.AutoSize = $true
-    $button.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10, [System.Drawing.FontStyle]::Regular)
-    $button.Anchor = [System.Windows.Forms.AnchorStyles]::None
-    # Add controls to the FlowLayoutPanel
-    $flowLayout.Controls.Add($label)
-    $flowLayout.Controls.Add($button)
-    # Add the FlowLayoutPanel to the form
-    $form.Controls.Add($flowLayout)
-    # Auto-size form to fit content
-    $form.AutoSize = $true
-    $form.AutoSizeMode = [System.Windows.Forms.AutoSizeMode]::GrowAndShrink
-    # Show dialog
-    $form.ShowDialog()
-
+    # Show dialog to inform the user that installation has been complete
+    Add-Type -AssemblyName PresentationCore,PresentationFramework
+    $vmRepo = $Env:VMname.Replace(" ", "-").ToLower()
+    $msgBody = " Review %VM_COMMON_DIR%\log.txt for any errors`n Report installer issues to github.com/mandiant/$vmRepo`n Report package related issues to github.com/mandiant/VM-Packages`n`n Have fun!"
+    $msgTitle = "VM Installation Complete!"
+    $msgButton = 'OK'
+    [System.Windows.MessageBox]::Show($msgBody,$msgTitle,$msgButton)
 } catch {
     VM-Write-Log-Exception $_
 }
