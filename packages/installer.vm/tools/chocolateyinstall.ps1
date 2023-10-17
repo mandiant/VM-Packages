@@ -136,7 +136,8 @@ try {
     Set-ItemProperty 'HKCU:\Control Panel\Colors' -Name Background -Value "0 0 0" -Force | Out-Null
     $backgroundImage = "${Env:VM_COMMON_DIR}\background.png"
     if ((Test-Path $backgroundImage)) {
-        # Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
+        # WallpaperStyle - Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
+        Add-Type -AssemblyName System.Drawing
         $img = [System.Drawing.Image]::FromFile($backgroundImage);
         $wallpaperStyle = if ($img.Width/$img.Height -ge 16/9) { 0 } else { 6 }
         New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $wallpaperStyle -Force | Out-Null
