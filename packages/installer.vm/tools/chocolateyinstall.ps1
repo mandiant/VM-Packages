@@ -145,7 +145,7 @@ try {
         # WallpaperStyle - Center: 0, Stretch: 2, Fit:6, Fill: 10, Span: 22
         Add-Type -AssemblyName System.Drawing
         $img = [System.Drawing.Image]::FromFile($backgroundImage);
-        $wallpaperStyle = if ($img.Width/$img.Height -ge 16/9) { 0 } else { 6 }
+        $wallpaperStyle = if ($img.Width/$img.Height -ge 16/9) { 6 } else { 0 }
         New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $wallpaperStyle -Force | Out-Null
         New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force | Out-Null
         Add-Type -TypeDefinition @"
