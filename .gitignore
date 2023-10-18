@@ -20,3 +20,4 @@ venv.bak/
 
 # Test logs for Update package workflow
 test_logs/
+success_failure.json
