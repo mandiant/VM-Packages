@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>imhex.vm</id>
+    <version>1.31.0</version>
+    <authors>WerWolv</authors>
+    <description>A Hex Editor for Reverse Engineers, Programmers and people who value their retinas when working at 3 AM.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="imhex" version="[1.31.0]" />
+    </dependencies>
+  </metadata>
+</package>
