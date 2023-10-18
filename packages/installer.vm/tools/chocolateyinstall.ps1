@@ -21,15 +21,19 @@ try {
         foreach ($package in $packagesToInstall) {
             VM-Write-Log "INFO" "Installing: $package"
             choco install "$package" -y
-            VM-Write-Log "INFO" "$package has been installed"
+            if ($LASTEXITCODE) {
+              VM-Write-Log "INFO" "`t$package has been installed"
+            } else {
+              VM-Write-Log "ERROR" "`t$package has not been installed"
+            }
         }
     } catch {
         VM-Write-Log-Exception $_
     }
-    VM-Write-Log "INFO" "[+] All packages complete"
+    VM-Write-Log "INFO" "Packages installation complete"
 
     # Set Profile/Version specific configurations
-    VM-Write-Log "INFO" "[+] Beginning Windows OS VM profile configuration changes"
+    VM-Write-Log "INFO" "Beginning Windows OS VM profile configuration changes"
     $configPath = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
     VM-Apply-Configurations $configPath
 
@@ -120,6 +124,8 @@ try {
         Write-Host "`t[-] $logPath" -ForegroundColor Yellow
         Write-Host "`t[-] %PROGRAMDATA%\chocolatey\logs\chocolatey.log" -ForegroundColor Yellow
         Write-Host "`t[-] %LOCALAPPDATA%\Boxstarter\boxstarter.log" -ForegroundColor Yellow
+        Start-Sleep 5
+        & notepad.exe $logPath
     }
 
     # Let users know installation is complete by setting lock screen & wallpaper background, playing win sound, and display message box
@@ -175,7 +181,8 @@ public class VMBackground
     $form.Text = "$Env:VMname Installation Complete"
     $form.TopMost = $true
     $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
-    if ($iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico" -Resolve){
+    $iconPath = Join-Path $Env:VM_COMMON_DIR "vm.ico"
+    if (Test-Path $iconPath) {
         $form.Icon = New-Object System.Drawing.Icon($iconPath)
     }
     # Create a FlowLayoutPanel

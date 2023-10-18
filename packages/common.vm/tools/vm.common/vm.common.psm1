@@ -157,7 +157,7 @@ function VM-Check-Reboot {
     )
     try {
         if (Test-PendingReboot){
-            VM-Write-Log "ERROR" "[Err] Host must be rebooted before continuing install of $package.`n"
+            VM-Write-Log "ERROR" "Host must be rebooted before continuing installation of $package.`n"
             Invoke-Reboot
             exit 1
         }
@@ -681,7 +681,7 @@ function VM-Write-Log-Exception {
     )
     $msg = $error_record.Exception.Message
     $position_msg = $error_record.InvocationInfo.PositionMessage
-    VM-Write-Log "ERROR" "[ERR] $msg`r`n$position_msg"
+    VM-Write-Log "ERROR" "$msg`r`n$position_msg"
     throw $error_record
 }
 
@@ -919,23 +919,23 @@ function VM-Remove-Appx-Package {
                 VM-Write-Log-Exception $_
             }
         } else {
-            VM-Write-Log "WARN" "[+] Installed $appName not found on the system."
+            VM-Write-Log "WARN" "`tInstalled $appName not found on the system."
         }
         # Check if the app is provisioned
         $provisionedPackage = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -eq $appName } -ErrorAction SilentlyContinue
         if ($provisionedPackage) {
             try {
                 Remove-AppxProvisionedPackage -PackageName $provisionedPackage.PackageName -Online -ErrorAction SilentlyContinue
-                VM-Write-Log "INFO" $("Provisioned package " + $provisionedPackage.PackageName + " removed")
+                VM-Write-Log "INFO" $("`tProvisioned package " + $provisionedPackage.PackageName + " removed")
             }
             catch {
                 VM-Write-Log-Exception $_
             }
         } else {
-            VM-Write-Log "WARN" "[+] Provisioned $appName not found on the system."
+            VM-Write-Log "WARN" "`tProvisioned $appName not found on the system."
         }
     } catch {
-        VM-Write-Log "ERROR" "An error occurred while removing the $appName package. Error: $_"
+        VM-Write-Log "ERROR" "`tAn error occurred while removing the $appName package. Error: $_"
     }
 }
 
@@ -952,9 +952,9 @@ function VM-Set-Service-Manual-Start {
 
         if ($service) {
             Set-Service -Name $service.Name -StartupType Manual
-            VM-Write-Log "INFO" "[+] Service $serviceName has been disabled."
+            VM-Write-Log "INFO" "Service $serviceName has been disabled."
         } else {
-            VM-Write-Log "WARN" "[+] Service $serviceName not found."
+            VM-Write-Log "WARN" "Service $serviceName not found."
         }
     } catch {
         VM-Write-Log "ERROR" "An error occurred while setting the service startup type. Error: $_"
@@ -976,9 +976,9 @@ function VM-Disable-Scheduled-Task {
     try {
         $output = Disable-ScheduledTask -TaskName $value -ErrorAction SilentlyContinue
         if ($output){
-            VM-Write-Log "INFO" "[+] Scheduled task '$name' has been disabled."
+            VM-Write-Log "INFO" "Scheduled task '$name' has been disabled."
         } else {
-            VM-Write-Log "ERROR" "[+] Scheduled task '$name' not found."
+            VM-Write-Log "ERROR" "Scheduled task '$name' not found."
         }
 
     } catch {
@@ -1024,13 +1024,13 @@ function VM-Update-Registry-Value {
         if (!(Test-Path -Path $path)) {
             # Create the registry key
             New-Item -Path $path -Force | Out-Null
-            VM-Write-Log "INFO" "`t[+] Registry key created: $path"
+            VM-Write-Log "INFO" "Registry key created: $path"
         } else {
-            VM-Write-Log "WARN" "`t[+] Registry key already exists: $path"
+            VM-Write-Log "WARN" "Registry key already exists: $path"
         }
 
         Set-ItemProperty -Path $path -Name $value -Value $validatedData -Type $type -Force | Out-Null
-        VM-Write-Log "INFO" "[+] $name has been successful"
+        VM-Write-Log "INFO" "$name has been successful"
     } catch {
         VM-Write-Log "ERROR" "Failed to update the registry value. Error: $_"
     }
@@ -1056,16 +1056,16 @@ function VM-Remove-Path {
         if ($type -eq "file") {
             if (Test-Path -Path $path -PathType Leaf) {
                 Remove-Item -Path $path -Force
-                VM-Write-Log "INFO" "[+] $name has been successfully removed."
+                VM-Write-Log "INFO" "$name has been successfully removed."
             } else {
-                VM-Write-Log "WARN" "[+] $path does not exist."
+                VM-Write-Log "WARN" "$path does not exist."
             }
         } elseif ($type -eq "dir") {
             if (Test-Path -Path $path -PathType Container) {
                 Remove-Item -Path $path -Recurse -Force
-                VM-Write-Log "INFO" "[+] $name has been successfully removed."
+                VM-Write-Log "INFO" "$name has been successfully removed."
             } else {
-                VM-Write-Log "WARN" "[+] $path does not exist."
+                VM-Write-Log "WARN" "$path does not exist."
             }
         }
     } catch {
@@ -1090,9 +1090,9 @@ function VM-Execute-Custom-Command{
         foreach ($cmd in $cmds) {
             Start-Process powershell -ArgumentList "-WindowStyle","Hidden","-Command",$cmd -Wait
         }
-        VM-Write-Log "INFO" "[+] All commands for '$name' have been executed successfully."
+        VM-Write-Log "INFO" "`tAll commands for '$name' have been executed successfully."
     } catch {
-        VM-Write-Log "ERROR" "An error occurred while executing commands for '$name'. Error: $_"
+        VM-Write-Log "ERROR" "`tAn error occurred while executing commands for '$name'. Error: $_"
     }
 }
 
