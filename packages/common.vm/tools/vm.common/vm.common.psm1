@@ -157,7 +157,7 @@ function VM-Check-Reboot {
     )
     try {
         if (Test-PendingReboot){
-            VM-Write-Log "ERROR" "Host must be rebooted before continuing install of $package.`n"
+            VM-Write-Log "ERROR" "Host must be rebooted before continuing installation of $package.`n"
             Invoke-Reboot
             exit 1
         }
