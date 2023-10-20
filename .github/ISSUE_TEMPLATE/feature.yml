@@ -1,0 +1,17 @@
+name: 💡 Feature proposal
+description: Propose a new feature or improvement.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improving VM-Packages. Before submitting your issue:
+        - **If you  want to propose a new tool/package, use the [NEW PACKAGE](https://github.com/mandiant/VM-Packages/issues/new?labels=%3Anew%3A+package&template=new_package.yml&title=Package+proposal%3A+%3Cpackage_name%3E.vm) or [NEW METAPACKAGE](https://github.com/mandiant/VM-Packages/issues/new?labels=%3Anew%3A+package&template=new_metapackage.yml&title=Metapackage+proposal%3A+%3Cpackage_name%3E.vm) template instead and provide all the information requested there.** This help us tracking proposals and speeds up the package creation process.
+        - If you  want to report a bug, use the [bug issue type](https://github.com/mandiant/VM-Packages/issues/new?labels=%3Abug%3A+bug&template=bug.yml) instead and provide all the information requested there. Otherwise we won't be able to help.
+        - Check the [open issues](https://github.com/mandiant/VM-Packages/issues) and ensure there is not already a similar issue. If there is already a similar issue, please add more details there instead of opening a new one.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Details
+      description: The more details, the better!
+    validations:
+      required: true

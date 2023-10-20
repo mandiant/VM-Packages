@@ -7,7 +7,6 @@
 This repository contains the source code for packages supporting the following analysis environment projects:
 * [FLARE VM](https://github.com/mandiant/flare-vm)
 * [CommandoVM](https://github.com/mandiant/commando-vm)
-* [ThreatPursuit VM](https://github.com/mandiant/ThreatPursuit-VM)
 
 > Packages do not contain actual software distributions. Packages are PowerShell scripts that only contain instructions for obtaining and configuring tools. See [Chocolatey legal information](https://docs.chocolatey.org/en-us/information/legal) for more details.
 
@@ -17,7 +16,8 @@ The packages stored in this repository are automatically built and pushed to a p
 The installation of packages relies on [Chocolatey](https://chocolatey.org/).
 
 # Contributing
-To report problems or to suggest new tools please open a new [Issue](https://github.com/mandiant/VM-Packages/issues).
+To propose new tools, to report problems, and to suggest improvements please open a new [issue](https://github.com/mandiant/VM-Packages/issues).
+Ensure you select the correct issue type and provide all the requested information.
 
 Please see the [Wiki](https://github.com/mandiant/VM-Packages/wiki) for documentation on how to create a package using our established best practices.
 
@@ -25,4 +25,4 @@ Please see the [Wiki](https://github.com/mandiant/VM-Packages/wiki) for document
 Open sourcing the installation packages allows the community to not only suggest new tools, improvements, and report bugs, but to help implement them. It's now very transparent how and what gets installed. Moreover, we can use GitHub Actions (free for open-source repositories) for testing and automations. This reduces manual maintenance and simplifies contributions.
 
 ## Automation
-Once a package is submitted, our pull request automations test the package to see if it builds and installs correctly. Additionally, we use GitHub Actions to build and test each package on a daily basis to check for any errors. Simply being aware of broken packages should quickly solve a lot of problems VM users faced in the past.
+Once a package is submitted, our pull request automations test the package to see if it builds and installs correctly. Additionally, we use GitHub Actions to build and test each package on a daily basis to check for any errors (see [Daily Failures Wiki page](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures)). Simply being aware of broken packages should quickly solve a lot of problems VM users faced in the past.
