@@ -16,12 +16,12 @@ try {
     $modules = $modulesXml.modules.module
     foreach ($module in $modules) {
         Write-Host "[+] Attempting to install Python3 module: $($module.name)"
-        $intallValue = $module.name
+        $installValue = $module.name
         if ($module.url) {
-            $intallValue = $module.url
+            $installValue = $module.url
         }
 
-        Invoke-Expression "py -3.10 -m pip install $intallValue 2>&1 >> $outputFile"
+        Invoke-Expression "py -3.10 -m pip install $installValue 2>&1 >> $outputFile"
 
         if ($LastExitCode -eq 0) {
             Write-Host "`t[+] Installed Python 3.10 module: $($module.name)" -ForegroundColor Green

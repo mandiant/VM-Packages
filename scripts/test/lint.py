@@ -318,6 +318,7 @@ class UsesInvalidCategory(Lint):
         "notepadplusplus.vm",
         "notepadpp.plugin.",
         "npcap.vm",
+        "python3.vm",
         "x64dbgpy.vm",
     ]
 
