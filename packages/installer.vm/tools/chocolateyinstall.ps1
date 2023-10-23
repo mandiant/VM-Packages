@@ -22,9 +22,9 @@ try {
             VM-Write-Log "INFO" "Installing: $package"
             choco install "$package" -y
             if ($LASTEXITCODE) {
-              VM-Write-Log "INFO" "`t$package has been installed"
-            } else {
               VM-Write-Log "ERROR" "`t$package has not been installed"
+            } else {
+              VM-Write-Log "INFO" "`t$package has been installed"
             }
         }
     } catch {
@@ -98,7 +98,7 @@ try {
 
     # Write installed packages to log file
     foreach ($package in $installedPackages){
-        VM-Write-Log "INFO" "Packages installed:  $($package.Name) | $($package.Version)"
+        VM-Write-Log "INFO" "Package installed:  $($package.Name) | $($package.Version)"
     }
 
     # Write each failed package to failure file
