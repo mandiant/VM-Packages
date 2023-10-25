@@ -136,6 +136,13 @@ body:
       label: Download SHA256 Hash
       description: SHA256 hash of the `.zip` file downloaded from the download url introduced in the previous field. The hash is used for verification purposes.
       placeholder: ex. 62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95
+  - type: input
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: |
+        The dependencies (tools/libraries that need to be installed) needed for installing or using this tool.
+      placeholder: ex. openjdk.vm, vcredist140, nodejs >= 5
   - type: textarea
     id: why
     attributes:
