@@ -329,17 +329,10 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [string] $executableName, # Executable name, needed if different from "$toolName.exe"
         [Parameter(Mandatory=$false)]
-        [switch] $withoutBinFile, # Tool should not be installed as a bin file
-        [Parameter(Mandatory=$false)]
-        [string] $unzipLocation
+        [switch] $withoutBinFile # Tool should not be installed as a bin file
     )
     try {
-        if ($unzipLocation) {
-            $toolDir = Join-Path $unzipLocation $toolName
-        } else {
-            $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-            $unzipLocation = $toolDir
-        }
+        $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
@@ -353,7 +346,7 @@ function VM-Install-From-Zip {
         # Download and unzip
         $packageArgs = @{
             packageName    = ${Env:ChocolateyPackageName}
-            unzipLocation  = $unzipLocation
+            unzipLocation  = $toolDir
             url            = $zipUrl
             checksum       = $zipSha256
             checksumType   = 'sha256'
