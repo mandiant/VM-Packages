@@ -207,46 +207,22 @@ function VM-Install-Raw-GitHub-Repo {
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
-        # Create a temp directory to download zip
-        $tempDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "temp_$([guid]::NewGuid())"
-
         # Download and unzip
         $packageArgs = @{
             packageName    = ${Env:ChocolateyPackageName}
-            unzipLocation  = $tempDownloadDir
+            unzipLocation  = $toolDir
             url            = $zipUrl
             checksum       = $zipSha256
             checksumType   = 'sha256'
         }
         Install-ChocolateyZipPackage @packageArgs | Out-Null
-        VM-Assert-Path $tempDownloadDir
+        VM-Assert-Path $toolDir
 
-        # Make sure our tool directory exists
-        if (-Not (Test-Path $toolDir)) {
-            New-Item -Path $toolDir -ItemType Directory -Force | Out-Null
+        # GitHub ZIP files typically unzip to a single folder that contains the tools.
+        $dirList = Get-ChildItem $toolDir -Directory
+        if ($dirList.Count -eq 1) {
+            $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
         }
-
-        # Get the unzipped directory
-        $unzippedDir = (Get-ChildItem -Directory $tempDownloadDir | Where-Object {$_.PSIsContainer} | Select-Object -f 1).FullName
-
-        # Copy all the items in the unzipped directory to their correct directory
-        Get-ChildItem -Path $unzippedDir | Move-Item -Destination $toolDir -Force -ea 0
-
-        # Sleep to help prevent file system race conditions
-        Start-Sleep -Milliseconds 500
-
-        # Rename all entries in to where the files were actually copied
-        $zip_name = Join-Path ${Env:chocolateyPackageFolder} ((Split-Path $unzippedDir -Leaf) + ".zip.txt")
-        (Get-Content $zip_name) | Foreach-Object {$_.Replace($unzippedDir, $toolDir)} | Set-Content $zip_name
-
-        # Remove first line of *.zip.txt file so we don't delete the entire directory on upgrade
-        (Get-Content $zip_name | Select-Object -Skip 1) | Set-Content $zip_name
-
-        # Sleep to help prevent file system race conditions
-        Start-Sleep -Milliseconds 500
-
-        # Attempt to remove temporary directory
-        Remove-Item $tempDownloadDir -Recurse -Force -ea 0
 
         if ($powershellCommand) {
             $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command $powershellCommand"
@@ -337,12 +313,6 @@ function VM-Install-From-Zip {
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
-        # Snapshot all folders in $toolDir
-        $oldDirList = @()
-        if (Test-Path $toolDir) {
-            $oldDirList = @(Get-ChildItem $toolDir | Where-Object {$_.PSIsContainer})
-        }
-
         # Download and unzip
         $packageArgs = @{
             packageName    = ${Env:ChocolateyPackageName}
@@ -356,23 +326,12 @@ function VM-Install-From-Zip {
         Install-ChocolateyZipPackage @packageArgs
         VM-Assert-Path $toolDir
 
-        # Diff and find new folders in $toolDir
-        $newDirList = @(Get-ChildItem $toolDir | Where-Object {$_.PSIsContainer})
-        $diffDirs = Compare-Object -ReferenceObject $oldDirList -DifferenceObject $newDirList -PassThru
 
-        # If $innerFolder is set to $true, after unzipping only a single folder should be new.
+        # If $innerFolder is set to $true, after unzipping there should be only one folder
         # GitHub ZIP files typically unzip to a single folder that contains the tools.
         if ($innerFolder) {
-            # First time install, use the single resulting folder name from Install-ChocolateyZipPackage.
-            if ($diffDirs.Count -eq 1) {
-                # Save the "new tool directory" to assist with upgrading.
-                $newToolDir = Join-Path $toolDir $diffDirs[0].Name -Resolve
-                Set-Content (Join-Path ${Env:chocolateyPackageFolder} "innerFolder.txt") $newToolDir
-                $toolDir = $newToolDir
-            } else {
-                # On upgrade there may be no new directory, in this case retrieve previous "new tool directory" from saved file.
-                $toolDir = Get-Content (Join-Path ${Env:chocolateyPackageFolder} "innerFolder.txt")
-            }
+            $dirList = Get-ChildItem $toolDir -Directory
+            $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
         }
 
         if (-Not $executableName) { $executableName = "$toolName.exe" }
