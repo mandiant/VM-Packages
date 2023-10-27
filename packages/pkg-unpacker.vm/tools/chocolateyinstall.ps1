@@ -9,11 +9,13 @@ try {
     $powershellCommand = "Write-Output '> node unpack.js'; node unpack.js"
 
     $toolDir = VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -powershellCommand $powershellCommand
-
-    # Get absolute path as npm is not in path until Powershell is restarted
-    $npmPath = Join-Path ${Env:ProgramFiles} "\nodejs\npm.cmd" -Resolve
-    # Install tool dependencies with npm
-    Set-Location $toolDir; & "$npmPath" install | Out-Null
 } catch {
   VM-Write-Log-Exception $_
 }
+
+# Prevent npm warn/notice to fail the package
+$ErrorActionPreference = 'Continue'
+# Get absolute path as npm is not in path until Powershell is restarted
+$npmPath = Join-Path ${Env:ProgramFiles} "\nodejs\npm.cmd" -Resolve
+# Install tool dependencies with npm
+Set-Location $toolDir; & "$npmPath" install | Out-Null
