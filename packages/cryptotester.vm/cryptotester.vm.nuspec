@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>cryptotester.vm</id>
-    <version>1.7.0.20230907</version>
+    <version>1.7.1</version>
     <authors>Michael Gillespie (@demonslay335)</authors>
     <description>Utility tool for performing cryptanalysis with a focus on ransomware cryptography</description>
     <dependencies>
