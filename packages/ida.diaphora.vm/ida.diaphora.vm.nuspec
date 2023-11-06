@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.diaphora.vm</id>
-    <version>3.1</version>
+    <version>3.1.1</version>
     <authors>joxeankoret</authors>
     <description>Diaphora is a program diffing tool that works as an IDA plugin.</description>
     <dependencies>
