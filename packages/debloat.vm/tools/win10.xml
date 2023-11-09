@@ -26,7 +26,6 @@
         <app name="Microsoft.Wallet"/>
         <app name="Microsoft.Windows.Photos"/>
         <app name="Microsoft.WindowsAlarms"/>
-        <app name="Microsoft.WindowsCalculator"/>
         <app name="Microsoft.WindowsCamera"/>
         <app name="microsoft.windowscommunicationsapps"/>
         <app name="Microsoft.WindowsFeedbackHub"/>
