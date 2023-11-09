@@ -114,7 +114,7 @@ body:
       required: true
     attributes:
       label: Shim path
-      description: Installed Chocolatey packages automatically create "shims" (i.e., executable proxies) to the installed applications. The default Chocolatey shim location is `%PROGRAMDATA%\chocolatey\bin`. Please provide the path for the Chocolatey "shimmed" executable (e.g., `%PROGRAMDATA%\chocolatey\bin\ollydbg.exe`).
+      description: Installed Chocolatey packages automatically create "shims" (i.e., executable proxies) to the installed applications. The default Chocolatey shim location is `%PROGRAMDATA%\chocolatey\bin`. Provide the path for the Chocolatey "shimmed" executable relative to the `$Env:ChocolateyInstall` path (i.e., `%PROGRAMDATA%\chocolatey`). For example, provide a path like `bin\ollydbg.exe`.
   - type: textarea
     id: why
     attributes:
