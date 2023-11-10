@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>resourcehacker.vm</id>
-    <version>5.1.8</version>
+    <version>0.0.0.20240423</version>
     <authors>Angus Johnson</authors>
     <description>Resource Hacker is a resource editor for 32bit and 64bit Windows applications.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="resourcehacker.portable" version="[5.1.8]" />
+      <dependency id="resourcehacker.portable" version="[5.2.7]" />
     </dependencies>
   </metadata>
 </package>
