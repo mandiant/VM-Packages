@@ -60,6 +60,7 @@ body:
     attributes:
       label: Detected by test suite
       description: Check the [Daily Failures Wiki page](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures) to see if the package failed to install in the latest daily run. **Do not report bugs that are detected by our test suite as we are already aware of them.**
+      options:
         - "No"
         - "Yes"
     validations:
