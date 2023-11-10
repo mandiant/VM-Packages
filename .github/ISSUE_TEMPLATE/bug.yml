@@ -59,10 +59,8 @@ body:
     id: ci
     attributes:
       label: Detected by test suite
-      description: Check if this bug is cached by our [test suite](https://github.com/mandiant/VM-packages/actions?query=workflow%3Adaily+branch%3Amain). If the last daily run is failing, check its log to see if the failure is the same as you are reporting.
-      options:
-        - "Yes"
+      description: Check the [Daily Failures Wiki page](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures) to see if the package failed to install in the latest daily run. **Do not report bugs that are detected by our test suite as we are already aware of them.**
         - "No"
-        - "I don't know"
+        - "Yes"
     validations:
       required: true
