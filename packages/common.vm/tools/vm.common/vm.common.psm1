@@ -1244,3 +1244,92 @@ public class Shell {
         VM-Write-Log-Exception $_
     }
 }
+
+
+# Usage example:
+# VM-Remove-DesktopFiles -excludeFolders "PS_Transcripts", ${Env:TOOL_LIST_DIR}, "fakenet_logs" -excludeFiles "example.txt", "important.doc"
+# The function is run against both the Current User and 'Public' desktops due to some cases where desktop icons showing on
+# Current user Desktop that are only located in Public/Desktop.
+function VM-Remove-DesktopFiles {
+    param (
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFolders,
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFiles
+    )
+    # Ensure that the "PS_Transcripts" and "fakenet_logs" folders, as well as the Tools Folder (if located on the desktop) are not to be deleted.
+    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR}, "fakenet_logs")
+    $defaultExcludedFiles = @("MICROSOFT Windows 10 License Terms.txt")
+    $excludeFolders = $excludeFolders + $defaultExcludedFolders
+    $excludeFiles = $excludeFiles  + $defaultExcludedFiles
+    $userAccounts = @(
+        [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop), # Current user's desktop
+        [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::CommonDesktopDirectory) # Public desktop
+    )
+    foreach ($userDesktopPath in $userAccounts) {
+        Get-ChildItem -Path $userDesktopPath | ForEach-Object {
+            $item = $_
+            try{
+                if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
+                    VM-Write-Log "INFO" "Deleting folder: $($item.FullName)"
+                    Remove-Item -Path $item.FullName -Recurse -Force
+                }
+                elseif ($item.PSIsContainer -eq $false -and ($item.Name -notin $excludeFiles -and $item.FullName -notin $excludeFiles)) {
+                    VM-Write-Log "INFO" "Deleting file: $($item.FullName)"
+                    Remove-Item -Path $item.FullName -Force
+                }
+            } catch {
+                VM-Write-Log-Exception $_
+            }
+        }
+    }
+}
+
+function VM-Clear-TempAndCache {
+    $temp = [System.IO.Path]::GetTempPath()
+    $chocolatey = Join-Path $temp 'chocolatey'
+    $localAppDataPath = [System.Environment]::GetFolderPath('LocalApplicationData')
+    $commonAppDataPath = [System.Environment]::GetFolderPath('CommonApplicationData')
+    $nugetCache = Join-Path $localAppDataPath 'NuGet\cache'
+    $packageCache1 = Join-Path $localAppDataPath 'Package` Cache'
+    $packageCache2 = Join-Path $commonAppDataPath 'Package` Cache'
+
+    $command1 = 'cmd /c del /Q /S ' + $temp
+    $command2 = 'cmd /c rmdir /Q /S ' + $chocolatey + ' ' + $nugetCache + ' ' + $packageCache1 + ' ' + $packageCache2
+
+    Invoke-Expression $command1
+    Invoke-Expression $command2
+}
+
+# SDelete can take a bit of time (~2+ mins) and requires sysinternals to be installed
+function VM-Clear-FreeSpace {
+    VM-Write-Log "INFO" "Performing SDelete to optimize disk."
+    $sdeletePath = Get-Command -Name "sdelete.exe" -ErrorAction SilentlyContinue
+    if ($sdeletePath) {
+        Invoke-Expression 'cmd /c sdelete -accepteula -nobanner -z C:'
+    }
+    else {
+        VM-Write-Log "WARN" "SDelete not found. Ensure sysinternals.vm is installed and SDelete is in the system's PATH before running VM-Clear-FreeSpace to free space."
+    }
+}
+
+function VM-Clean-Up {
+    param (
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFolders,
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFiles
+    )
+    Write-Host "[+] Removing Desktop Files..." -ForegroundColor Green
+    VM-Remove-DesktopFiles -excludeFolders $excludeFolders -excludeFiles $excludeFiles
+
+    Write-Host "[+] Clearing Temp and Cache..." -ForegroundColor Green
+    VM-Clear-TempAndCache
+
+    Write-Host "[+] Running Disk Cleanup..." -ForegroundColor Green
+    VM-Write-Log "INFO" "Performing Disk Cleanup."
+    Invoke-Expression 'cmd /c cleanmgr.exe /AUTOCLEAN'
+
+    Write-Host "[+] Clearing up free space. This may take a few minutes..." -ForegroundColor Green
+    VM-Clear-FreeSpace
+}
