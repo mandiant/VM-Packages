@@ -32,6 +32,25 @@ try {
     }
     VM-Write-Log "INFO" "Packages installation complete"
 
+    ## Configure taskbar with custom Start Layout if it exists.
+    $customLayout = Join-Path ${Env:VM_COMMON_DIR} "CustomStartLayout.xml"
+    if (Test-Path $customLayout) {
+        # Create an Admin Command Prompt shortcut and it to pin to taskbar (analogous to how the Windows Dev VM does this).
+        $toolName = 'Admin Command Prompt'
+
+        $executablePath = Join-Path ${Env:SystemRoot} 'system32\cmd.exe'
+        $shortcutDir = ${Env:RAW_TOOLS_DIR}
+        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+
+        Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
+        VM-Assert-Path $shortcut
+
+        Import-StartLayout -LayoutPath $customLayout -MountPath "C:\"
+        Stop-Process -Name explorer -Force  # This restarts the explorer process so that the new taskbar is displayed.
+    } else {
+        VM-Write-Log "WARN" "CustomStartLayout.xml missing. No items will be pinned to the taskbar."
+    }
+
     # Set Profile/Version specific configurations
     VM-Write-Log "INFO" "Beginning Windows OS VM profile configuration changes"
     $configPath = Join-Path $Env:VM_COMMON_DIR "config.xml" -Resolve
