@@ -1247,7 +1247,7 @@ public class Shell {
 
 
 # Usage example:
-# VM-Remove-DesktopFiles -excludeFolders "PS_Transcripts", ${Env:TOOL_LIST_DIR}, "fakenet_logs" -excludeFiles "example.txt", "important.doc"
+# VM-Remove-DesktopFiles -excludeFolders ${Env:TOOL_LIST_DIR}, "fakenet_logs" -excludeFiles "example.txt", "important.doc"
 # The function is run against both the Current User and 'Public' desktops due to some cases where desktop icons showing on
 # Current user Desktop that are only located in Public/Desktop.
 function VM-Remove-DesktopFiles {
@@ -1257,8 +1257,8 @@ function VM-Remove-DesktopFiles {
         [Parameter(Mandatory=$false)]
         [string[]]$excludeFiles
     )
-    # Ensure that the "PS_Transcripts" and "fakenet_logs" folders, as well as the Tools Folder (if located on the desktop) are not to be deleted.
-    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR}, "fakenet_logs")
+    # Ensure that the "fakenet_logs" folders, as well as the Tools Folder (if located on the desktop) are not to be deleted.
+    $defaultExcludedFolders = @(${Env:TOOL_LIST_DIR}, "fakenet_logs")
     $defaultExcludedFiles = @("MICROSOFT Windows 10 License Terms.txt")
     $excludeFolders = $excludeFolders + $defaultExcludedFolders
     $excludeFiles = $excludeFiles  + $defaultExcludedFiles
@@ -1267,7 +1267,8 @@ function VM-Remove-DesktopFiles {
         [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::CommonDesktopDirectory) # Public desktop
     )
     foreach ($userDesktopPath in $userAccounts) {
-        Get-ChildItem -Path $userDesktopPath | ForEach-Object {
+        # Use -Force to get hidden files (such as desktop.ini)
+        Get-ChildItem -Path $userDesktopPath -Force | ForEach-Object {
             $item = $_
             try{
                 if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
