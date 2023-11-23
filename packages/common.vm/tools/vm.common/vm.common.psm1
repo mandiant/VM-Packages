@@ -1267,7 +1267,8 @@ function VM-Remove-DesktopFiles {
         [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::CommonDesktopDirectory) # Public desktop
     )
     foreach ($userDesktopPath in $userAccounts) {
-        Get-ChildItem -Path $userDesktopPath | ForEach-Object {
+        # Use -Force to get hidden files (such as desktop.ini)
+        Get-ChildItem -Path $userDesktopPath -Force | ForEach-Object {
             $item = $_
             try{
                 if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
