@@ -1273,11 +1273,11 @@ function VM-Remove-DesktopFiles {
             try{
                 if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
                     VM-Write-Log "INFO" "Deleting folder: $($item.FullName)"
-                    Remove-Item -Path $item.FullName -Recurse -Force
+                    Remove-Item -Path $item.FullName -Recurse -Force -ErrorAction Continue
                 }
                 elseif ($item.PSIsContainer -eq $false -and ($item.Name -notin $excludeFiles -and $item.FullName -notin $excludeFiles)) {
                     VM-Write-Log "INFO" "Deleting file: $($item.FullName)"
-                    Remove-Item -Path $item.FullName -Force
+                    Remove-Item -Path $item.FullName -Force -ErrorAction Continue
                 }
             } catch {
                 VM-Write-Log-Exception $_
