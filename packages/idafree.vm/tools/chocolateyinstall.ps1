@@ -18,9 +18,6 @@ try {
 
   $toolDir = Join-Path ${Env:ProgramFiles} "IDA Freeware 8.3" -Resolve
   $executablePath = Join-Path $toolDir "ida64.exe" -Resolve
-  $shortcut = Join-Path $shortcutDir "$toolname.lnk"
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-  VM-Assert-Path $shortcut
 
   Install-BinFile -Name $toolname -Path $executablePath
 
@@ -30,16 +27,24 @@ try {
     Remove-Item $desktopShortcut -Force -ea 0
   }
 
+  # Download ida_launcher.exe to assist with taskbar and right click option and store it in %RAW_TOOLS_DIR%
+  # ida_launcher.exe is a custom binary that searches for the latest ida64.exe and executes it
+  $launcherName = 'ida_launcher'
+  $launcherSource = 'https://raw.githubusercontent.com/mandiant/VM-Packages/773649e54aaea62f270c8416cb480020d6475065/ida_launcher/ida_launcher.exe'
+  $launcherPath = Join-Path ${Env:RAW_TOOLS_DIR} "$launcherName.exe"
+  $launcherChecksum = "ebebf8cf01253aab0562b42128f08fdb9b4452f1f49847c51673e5610063a8b5"
+  Write-Host "[+] Downloading '$launcherSource'"
+  Get-ChocolateyWebFile -PackageName $launcherName -FileFullPath $launcherPath -Url $launcherSource -Checksum $launcherChecksum -ChecksumType "sha256"
+
+  VM-Assert-Path $launcherPath
+
+  $launcherShortcut = Join-Path $shortcutDir "ida.lnk"
   $menuIcon = Join-Path $toolDir "ida.ico" -Resolve
-  # Run a Powershell script to open with last IDA Pro version which is likely installed after the IDA free package.
-  # It takes slightly longer than using an static path but it works after installing IDA Pro and every time you update it.
-  # The "-WindowStyle hidden" still shows the Powershell Window briefly: https://github.com/PowerShell/PowerShell/issues/3028
-  # We could use the run-hidden wrapper, which won't display the Window but is likely slightly slower.
-  $script = "`$idaExecutable = Get-Item '$Env:programfiles\IDA Pro *\ida.exe' | Select-Object -Last 1; if (!`$idaExecutable) { `$idaExecutable = '$executablePath' }; & `$idaExecutable '%1'"
-  VM-Add-To-Right-Click-Menu $toolName 'Open with IDA' "powershell.exe -WindowStyle hidden `"$script`"" "$menuIcon"
-  # Repeat for x64
-  $script = "`$idaExecutable = Get-Item '$Env:programfiles\IDA Pro *\ida64.exe' | Select-Object -Last 1; if (!`$idaExecutable) { `$idaExecutable = '$executablePath' }; & `$idaExecutable '%1'"
-  VM-Add-To-Right-Click-Menu $toolName-64 'Open with IDA (x64)' "powershell.exe -WindowStyle hidden `"$script`"" "$executablePath"
+
+  Install-ChocolateyShortcut -shortcutFilePath $launcherShortcut -targetPath $launcherPath -IconLocation $menuIcon
+
+  # ida64.exe supports both 32 bit and 64 bit in IDA >= 8.2
+  VM-Add-To-Right-Click-Menu $launcherName 'Open with IDA' "`"$launcherPath`" `"%1`"" "$menuIcon"
 } catch {
   VM-Write-Log-Exception $_
 }

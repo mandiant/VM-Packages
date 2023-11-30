@@ -321,6 +321,7 @@ class UsesInvalidCategory(Lint):
         "openjdk.vm",
         "python3.vm",
         "x64dbgpy.vm",
+        "idafree.vm",
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
