@@ -82,7 +82,7 @@ $category = '{category}'
 $zipUrl = '{target_url}'
 $zipSha256 = '{target_hash}'
 
-VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp ${console_app}
+VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp ${console_app} -innerFolder ${inner_folder}
 """
 
 """
@@ -210,6 +210,7 @@ def create_zip_exe_template(packages_path, **kwargs):
         target_url=kwargs.get("target_url"),
         target_hash=kwargs.get("target_hash"),
         console_app=kwargs.get("console_app"),
+        inner_folder=kwargs.get("inner_folder"),
     )
 
 
@@ -277,6 +278,7 @@ def create_template(
     shim_path="",
     dependency="",
     console_app="",
+    inner_folder="",
 ):
     pkg_path = os.path.join(packages_path, f"{pkg_name}.vm")
     try:
@@ -311,6 +313,7 @@ def create_template(
                 target_hash=target_hash,
                 shim_path=shim_path,
                 console_app=console_app,
+                inner_folder=inner_folder
             )
         )
 
@@ -473,6 +476,7 @@ def main(argv=None):
     parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
     parser.add_argument("--console_app", type=str, default="false", choices=["false", "true"],  help="The tool is a console application, the shortcut should run it with `cmd /K $toolPath --help` to be able to see the output.")
+    parser.add_argument("--inner_folder", type=str, default="false", choices=["false", "true"],  help="The ZIP file unzip to a single folder that contains all the tools.")
     args = parser.parse_args(args=argv)
 
     if args.type is None:
