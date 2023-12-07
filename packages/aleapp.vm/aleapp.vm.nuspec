@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>aleapp.vm</id>
+    <version>3.1.9</version>
+    <authors>Alexis Brignoni</authors>
+    <description>Android Logs Events And Protobuf Parser.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
