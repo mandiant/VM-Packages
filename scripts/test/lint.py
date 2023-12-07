@@ -310,6 +310,7 @@ class UsesInvalidCategory(Lint):
         ".scyllahide.vm",
         "common.vm",
         "debloat.vm",
+        "dokan.vm",
         "flarevm.installer.vm",
         "ida.plugin.capa.vm",
         "installer.vm",
