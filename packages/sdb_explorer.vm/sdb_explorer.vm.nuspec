@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>sdb_explorer.vm</id>
+    <version>2.0.0.20231208</version>
+    <authors>Eric Zimmerman</authors>
+    <description>Shim database GUI</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="dotnet-6.vm" />
+    </dependencies>
+  </metadata>
+</package>
