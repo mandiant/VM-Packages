@@ -201,12 +201,16 @@ function Remove-FTA {
     try {
       Add-Type -TypeDefinition $code
     }
-    catch {}
+    catch {
+      VM-Write-Log-Exception $_
+    }
 
     try {
       [Registry.Utils]::DeleteKey($Key)
     }
-    catch {}
+    catch {
+      VM-Write-Log-Exception $_
+    }
   }
 
   function local:Update-Registry {
@@ -221,12 +225,16 @@ function Remove-FTA {
     try {
       Add-Type -MemberDefinition $code -Namespace SHChange -Name Notify
     }
-    catch {}
+    catch {
+      VM-Write-Log-Exception $_
+    }
 
     try {
       [SHChange.Notify]::Refresh()
     }
-    catch {}
+    catch {
+      VM-Write-Log-Exception $_
+    }
   }
 
   if (Test-Path -Path $ProgramPath) {
@@ -358,12 +366,16 @@ function Set-FTA {
     try {
       Add-Type -MemberDefinition $code -Namespace SHChange -Name Notify
     }
-    catch {}
+    catch {
+      VM-Write-Log-Exception $_
+    }
 
     try {
       [SHChange.Notify]::Refresh()
     }
-    catch {}
+    catch {
+      VM-Write-Log-Exception $_
+    }
   }
 
 
@@ -438,12 +450,16 @@ function Set-FTA {
       try {
         Add-Type -TypeDefinition $code
       }
-      catch {}
+      catch {
+        VM-Write-Log-Exception $_
+      }
 
       try {
         [Registry.Utils]::DeleteKey($Key)
       }
-      catch {}
+      catch {
+        VM-Write-Log-Exception $_
+      }
     }
 
 
