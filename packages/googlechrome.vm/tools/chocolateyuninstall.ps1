@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Chrome'
-$category = 'Web Application'
+$category = 'Utilities'
 
 VM-Remove-Tool-Shortcut $toolName $category

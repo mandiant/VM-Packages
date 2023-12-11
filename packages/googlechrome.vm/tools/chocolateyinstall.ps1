@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolsPath = Split-Path $MyInvocation.MyCommand.Definition
-. $toolsPath\SFTA.ps1
+. $toolsPath\sfta.ps1
 . $toolsPath\helpers.ps1
 
 $downloadDir = Get-PackageCacheLocation
@@ -26,6 +26,9 @@ $sigValid = (Get-AuthenticodeSignature -FilePath $packageArgs['file']).Status -e
 
 try {
     if ($sigValid) {
+        $toolName = 'Google Chrome'
+        $category = 'Utilities'
+
         VM-Write-Log "INFO" "`tSignature valid ... installing"
         Install-ChocolateyInstallPackage @packageArgs
 
@@ -37,6 +40,12 @@ try {
 
         VM-Write-Log "INFO" "`tDisable update settings"
         Disable-Chrome-Updates
+
+        # Delete Desktop shortcut
+        $desktopShortcut = Join-Path ${Env:Public} "Desktop\$toolName.lnk"
+        if (Test-Path $desktopShortcut) {
+            Remove-Item $desktopShortcut -Force -ea 0
+        }
     } else {
         $file = $packageArgs['file']
         VM-Write-Log "WARN" "`tSignature for downloaded $file is not valid"
