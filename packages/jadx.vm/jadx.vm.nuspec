@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>jadx.vm</id>
+    <version>1.4.7</version>
+    <authors>skylot</authors>
+    <description>Command line and GUI tools for producing Java source code from Android Dex and Apk files</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="openjdk.vm" />
+    </dependencies>
+  </metadata>
+</package>
