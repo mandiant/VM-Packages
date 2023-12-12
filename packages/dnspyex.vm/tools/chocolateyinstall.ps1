@@ -16,7 +16,7 @@ try {
 
   $toolNameConsole = "$toolName.Console"
   $executablePathConsole = Join-Path $toolDir "$toolNameConsole.exe" -Resolve
-  VM-Install-Shortcut $toolNameConsole $category $executablePathConsole -consoleApp $true -arguments $null
+  VM-Install-Shortcut $toolNameConsole $category $executablePathConsole -consoleApp $true
   Install-BinFile -Name $toolNameConsole -Path $executablePathConsole
 } catch {
   VM-Write-Log-Exception $_

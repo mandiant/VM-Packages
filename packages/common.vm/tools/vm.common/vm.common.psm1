@@ -258,7 +258,7 @@ function VM-Install-Shortcut{
         [Parameter(Mandatory=$false)]
         [string] $executableDir,
         [Parameter(Mandatory=$false)]
-        [string] $arguments = "--help"
+        [string] $arguments = ""
     )
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $shortcut = Join-Path $shortcutDir "$toolName.lnk"
@@ -301,7 +301,7 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [bool] $innerFolder=$false, # Subfolder in zip with the app files
         [Parameter(Mandatory=$false)]
-        [string] $arguments = "--help",
+        [string] $arguments = "",
         [Parameter(Mandatory=$false)]
         [string] $executableName, # Executable name, needed if different from "$toolName.exe"
         [Parameter(Mandatory=$false)]
@@ -364,7 +364,7 @@ function VM-Install-Single-Exe {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [string] $arguments = "--help"
+        [string] $arguments = ""
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -520,7 +520,7 @@ function VM-Install-With-Installer {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [string] $arguments = "--help"
+        [string] $arguments = ""
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName

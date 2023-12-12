@@ -20,7 +20,7 @@ try {
     # Add shortcut for commonly used PDF tools
     ForEach ($toolName in @('pdfid', 'pdf-parser')) {
       $executablePath = Join-Path $toolDir "$toolName.py"
-      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true
+      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments "--help"
     }
 } catch {
   VM-Write-Log-Exception $_
