@@ -48,7 +48,8 @@ try {
         }
     } else {
         $file = $packageArgs['file']
-        VM-Write-Log "WARN" "`tSignature for downloaded $file is not valid"
+        VM-Write-Log "ERROR" "Signature for downloaded $file is not valid"
+        exit 1
     }
 } catch {
     VM-Write-Log-Exception $_
