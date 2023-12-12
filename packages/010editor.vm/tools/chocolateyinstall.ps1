@@ -18,7 +18,7 @@ try {
     checksumType  = 'sha256'
     checksum      = $checksum
     checksum64    = $checksum64
-    silentArgs    = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /NOICONS'
+    silentArgs    = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /NOICONS /MERGETASKS="!desktopicon"'
   }
   Install-ChocolateyPackage @packageArgs
 
@@ -32,12 +32,6 @@ try {
   VM-Assert-Path $shortcut
 
   Install-BinFile -Name $toolName -Path $executablePath
-
-  # Delete Desktop shortcut
-  $shortcut_desktop = Join-Path ${Env:UserProfile} "Desktop\010 Editor.lnk"
-  if (Test-Path $shortcut_desktop) {
-    Remove-Item $shortcut_desktop -Force -ea 0 | Out-Null
-  }
 } catch {
   VM-Write-Log-Exception $_
 }
