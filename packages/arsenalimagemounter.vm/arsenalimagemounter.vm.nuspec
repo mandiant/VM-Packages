@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>arsenalimagemounter.vm</id>
+    <version>3.10.262</version>
+    <authors>Arsenal Recon</authors>
+    <description>Mounts the contents of disk images as complete disks in Windows.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="dotnet-6.0-desktopruntime" version="[6.0.25]" />
+      <dependency id="arsenalimagemounter" version="[3.10.262]" />
+    </dependencies>
+  </metadata>
+</package>
