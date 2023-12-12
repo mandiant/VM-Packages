@@ -33,3 +33,19 @@ function Disable-Chrome-Updates {
     }
 
 }
+
+# https://github.com/chocolatey-community/chocolatey-packages/blob/master/extensions/chocolatey-core.extension/extensions/Get-PackageCacheLocation.ps1
+function Get-PackageCacheLocation {
+    $name = $Env:ChocolateyPackageName
+    $ver  = $Env:ChocolateyPackageVersion
+
+    if (!$name) { VM-Write-Log 'WARN' 'Environment variable $Env:ChocolateyPackageName is not set' }
+
+    $res = Join-Path $Env:TEMP $Name
+
+    if (!$ver) { VM-Write-Log 'WARN' 'Environment variable $Env:ChocolateyPackageVersion is not set' }
+
+    $res = Join-Path $res $ver
+
+    $res
+}

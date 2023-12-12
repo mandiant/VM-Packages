@@ -6,7 +6,6 @@
     <authors>Mandiant</authors>
     <description>Chrome is a fast, simple, and secure web browser, built for the modern web.</description>
     <dependencies>
-      <dependency id="chocolatey-core.extension" />
       <dependency id="common.vm" />
     </dependencies>
   </metadata>
