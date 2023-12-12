@@ -1,44 +1,42 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolsPath = Split-Path $MyInvocation.MyCommand.Definition
-. $toolsPath\sfta.ps1
-. $toolsPath\helpers.ps1
-
-$downloadDir = Get-PackageCacheLocation
-$installer          = 'googlechromeinstaller.msi'
-$packageArgs        = @{
-    packageName     = $env:ChocolateyPackageName
-    file            = Join-Path $downloadDir $installer
-    url             = 'https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise.msi'
-    url64bit        = 'https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi'
-    fileType        = 'MSI'
-    silentArgs      = "/quiet /norestart /l*v `"$($env:TEMP)\$($env:chocolateyPackageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
-    validExitCodes  = @(0)
-}
-
-# Download the installer
-$packageArgs['file'] = Get-ChocolateyWebFile @packageArgs
-
-Start-Sleep 2
-
-$sigValid = (Get-AuthenticodeSignature -FilePath $packageArgs['file']).Status -eq 'Valid'
-
 try {
+    $toolsPath = Split-Path $MyInvocation.MyCommand.Definition
+    . $toolsPath\sfta.ps1
+    . $toolsPath\helpers.ps1
+
+    $downloadDir = Get-PackageCacheLocation
+    $installer          = 'googlechromeinstaller.msi'
+    $packageArgs        = @{
+        packageName     = $env:ChocolateyPackageName
+        file            = Join-Path $downloadDir $installer
+        url             = 'https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise.msi'
+        url64bit        = 'https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi'
+        fileType        = 'MSI'
+        silentArgs      = "/quiet /norestart /l*v `"$($env:TEMP)\$($env:chocolateyPackageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
+        validExitCodes  = @(0)
+    }
+
+    # Download the installer
+    $packageArgs['file'] = Get-ChocolateyWebFile @packageArgs
+
+    $sigValid = (Get-AuthenticodeSignature -FilePath $packageArgs['file']).Status -eq 'Valid'
+
     if ($sigValid) {
         $toolName = 'Google Chrome'
         $category = 'Utilities'
 
-        VM-Write-Log "INFO" "Signature valid ... installing $category"
+        VM-Write-Log "INFO" "Signature valid ... installing as $category" # for lint check
         Install-ChocolateyInstallPackage @packageArgs
 
-        VM-Write-Log "INFO" "`tSetup associations"
+        VM-Write-Log "INFO" "Setup associations"
         Set-PTA ChromeHTML http
         Set-PTA ChromeHTML https
         Set-FTA ChromeHTML .htm
         Set-FTA ChromeHTML .html
 
-        VM-Write-Log "INFO" "`tDisable update settings"
+        VM-Write-Log "INFO" "Disable update settings"
         Disable-Chrome-Updates
 
         # Delete Desktop shortcut
