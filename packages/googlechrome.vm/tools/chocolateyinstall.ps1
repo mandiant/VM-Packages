@@ -29,7 +29,7 @@ try {
         $toolName = 'Google Chrome'
         $category = 'Utilities'
 
-        VM-Write-Log "INFO" "`tSignature valid ... installing $category"
+        VM-Write-Log "INFO" "Signature valid ... installing $category"
         Install-ChocolateyInstallPackage @packageArgs
 
         VM-Write-Log "INFO" "`tSetup associations"
