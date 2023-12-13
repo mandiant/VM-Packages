@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'SharpHound'
 $category = 'Reconnaissance'
 
-$zipUrl = 'https://github.com/BloodHoundAD/SharpHound/releases/download/v2.0.1/SharpHound-v2.0.1.zip'
-$zipSha256 = 'a6f73c1a75d14322aa4993fe498299ab55866ba74440f8a52d4dffe85594de2f'
+$zipUrl = 'https://github.com/BloodHoundAD/SharpHound/releases/download/v2.3.0/SharpHound-v2.3.0.zip'
+$zipSha256 = 'dd6e426856acc656cadd4587fa002d4fe50f3370915932256887fa3d9d016687'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
