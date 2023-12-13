@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>hayabusa.vm</id>
+    <version>2.11.0</version>
+    <authors>Yamato Security</authors>
+    <description>Windows event log fast forensics timeline generator and threat hunting tool</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
