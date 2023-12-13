@@ -22,6 +22,10 @@ try {
       $executablePath = Join-Path $toolDir "$toolName.py"
       VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments "--help"
     }
+
+    # Add tools to Path
+    $path = [Environment]::GetEnvironmentVariable("Path", "Machine") + [IO.Path]::PathSeparator + $toolDir
+    [Environment]::SetEnvironmentVariable("Path", $path, "Machine")
 } catch {
   VM-Write-Log-Exception $_
 }
