@@ -1257,9 +1257,10 @@ function VM-Remove-DesktopFiles {
         [Parameter(Mandatory=$false)]
         [string[]]$excludeFiles
     )
-    # Ensure that the "PS_Transcripts" and "fakenet_logs" folders, as well as the Tools Folder (if located on the desktop) are not to be deleted.
-    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR}, "fakenet_logs")
-    $defaultExcludedFiles = @("MICROSOFT Windows 10 License Terms.txt")
+    # Ensure that the "PS_Transcripts" folder and the Tools folder (if located on the desktop) are not deleted.
+    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR})
+    # Ensure that the "fakenet_logs" shortcut and the "MICROSOFT Windows 10 License Terms.txt" file are not deleted.
+    $defaultExcludedFiles = @("fakenet_logs.lnk", "MICROSOFT Windows 10 License Terms.txt")
     $excludeFolders = $excludeFolders + $defaultExcludedFolders
     $excludeFiles = $excludeFiles  + $defaultExcludedFiles
     $userAccounts = @(
