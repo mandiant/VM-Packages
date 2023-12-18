@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>rpcview.vm</id>
-    <version>0.3.1.20231115</version>
+    <version>0.3.1.20231218</version>
     <authors>silverf0x</authors>
     <description>RpcView is an open-source tool to explore and decompile all RPC functionalities present on a Microsoft system</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="vcredist140" version="[14.38.33130]" />
+      <dependency id="vcredist140.vm" />
     </dependencies>
   </metadata>
 </package>
