@@ -1247,7 +1247,7 @@ public class Shell {
 
 
 # Usage example:
-# VM-Remove-DesktopFiles -excludeFolders "PS_Transcripts", ${Env:TOOL_LIST_DIR}, "fakenet_logs" -excludeFiles "example.txt", "important.doc"
+# VM-Remove-DesktopFiles -excludeFolders "Labs", "Demos" -excludeFiles "MICROSOFT Windows 10 License Terms.txt", "Labs.zip"
 # The function is run against both the Current User and 'Public' desktops due to some cases where desktop icons showing on
 # Current user Desktop that are only located in Public/Desktop.
 function VM-Remove-DesktopFiles {
@@ -1259,8 +1259,8 @@ function VM-Remove-DesktopFiles {
     )
     # Ensure that the "PS_Transcripts" folder and the Tools folder (if located on the desktop) are not deleted.
     $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR})
-    # Ensure that the "fakenet_logs" shortcut and the "MICROSOFT Windows 10 License Terms.txt" file are not deleted.
-    $defaultExcludedFiles = @("fakenet_logs.lnk", "MICROSOFT Windows 10 License Terms.txt")
+    # Ensure that the "fakenet_logs" shortcut is not deleted.
+    $defaultExcludedFiles = @("fakenet_logs.lnk")
     $excludeFolders = $excludeFolders + $defaultExcludedFolders
     $excludeFiles = $excludeFiles  + $defaultExcludedFiles
     $userAccounts = @(
