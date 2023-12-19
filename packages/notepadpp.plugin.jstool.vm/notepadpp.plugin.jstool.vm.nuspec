@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>notepadpp.plugin.jstool.vm</id>
+    <version>1.2312.0</version>
+    <description>A JavaScript (JSON) tool for Notepad++ (formerly JSMinNpp)</description>
+    <authors>Sun Junwen</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="notepadplusplus.vm" />
+    </dependencies>
+  </metadata>
+</package>
