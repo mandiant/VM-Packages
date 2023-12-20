@@ -28,5 +28,6 @@
     <module name="unpy2exe"/>
     <module name="unicorn"/>
     <module name="vivisect"/>
+    <module name="XLMMacroDeobfuscator"/>
     <module name="yara-python"/>
 </modules>
