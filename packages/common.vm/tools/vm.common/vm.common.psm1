@@ -1335,3 +1335,54 @@ function VM-Clean-Up {
     Write-Host "[+] Clearing up free space. This may take a few minutes..." -ForegroundColor Green
     VM-Clear-FreeSpace
 }
+
+function VM-Add-To-Path {
+    param (
+        [string]$pathToAdd
+    )
+
+    # Function to normalize a path and handle exceptions
+    function NormalizePath {
+        param (
+            [string]$path
+        )
+        try {
+            return [System.IO.Path]::GetFullPath($path)
+        }
+        catch {
+            return $null
+        }
+    }
+
+    # Ensure the path to add is not null or empty
+    if ([string]::IsNullOrWhiteSpace($pathToAdd)) {
+        VM-Write-Log "ERROR" "Tried to add empty path to the Path"
+        return
+    }
+
+    # Get the Machine Path environment variable and split it into an array
+    $currentPaths = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine) -split [IO.Path]::PathSeparator
+
+    # Normalize the input path
+    $normalizedPathToAdd = NormalizePath $pathToAdd
+    if (-not $normalizedPathToAdd) {
+        VM-Write-Log "ERROR" "Tried to add invalid path to the Path: $pathToAdd"
+        return
+    }
+
+    # Check if the path already exists in the array
+    $pathExists = $false
+    foreach ($path in $currentPaths) {
+        $normalizedPath = NormalizePath $path
+        if ($normalizedPath -and $normalizedPath -eq $normalizedPathToAdd) {
+            $pathExists = $true
+            break
+        }
+    }
+
+    # Add the new path if it doesn't exist
+    if (-not $pathExists) {
+        $newPath = ($currentPaths + $pathToAdd) -join [IO.Path]::PathSeparator
+        [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+    }
+}
