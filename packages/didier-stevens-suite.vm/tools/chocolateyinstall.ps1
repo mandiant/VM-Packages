@@ -24,8 +24,7 @@ try {
     }
 
     # Add tools to Path
-    $path = [Environment]::GetEnvironmentVariable("Path", "Machine") + [IO.Path]::PathSeparator + $toolDir
-    [Environment]::SetEnvironmentVariable("Path", $path, "Machine")
+    VM-Add-To-Path $toolDir
 } catch {
   VM-Write-Log-Exception $_
 }
