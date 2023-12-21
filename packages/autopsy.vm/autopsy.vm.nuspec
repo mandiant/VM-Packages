@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>autopsy.vm</id>
+    <version>4.21.0</version>
+    <authors>The Sleuth Kit</authors>
+    <description>Autopsy is a graphical interface to The Sleuth Kit and other open source digital forensics tools.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
