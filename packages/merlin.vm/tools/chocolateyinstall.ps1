@@ -5,8 +5,8 @@ $toolName = 'Merlin'
 $category = 'Command & Control'
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
-$zipUrl = 'https://github.com/Ne0nd0g/merlin/releases/download/v2.0.0/merlinServer-Windows-x64.7z'
-$zipSha256 = '82acd8c7cc4035b70c94e3fd3160a02438f7166ce92079168c8c9a809030f30b'
+$zipUrl = 'https://github.com/Ne0nd0g/merlin/releases/download/v2.1.0/merlinServer-Windows-x64.7z'
+$zipSha256 = 'fffd751dcc7e802a1e89e8462639af30a5f7ea5a1f703f1182e79467cfc8f67d'
 $zipPassword = 'merlin'
 $fileName = 'merlinServer-Windows-x64'
 
