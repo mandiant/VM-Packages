@@ -307,6 +307,7 @@ class UsesInvalidCategory(Lint):
     # Some packages don't have a category (we don't create a link in the tools directory)
     EXCLUSIONS = [
         "common.vm",
+        "dotnet-6",
         "flarevm.installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
