@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modules>
     <module name="acefile"/>
+    <module name="art"/>
     <module name="binwalk" url="https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"/>
+    <module name="flare-capa"/>
     <module name="capstone-windows"/>
     <module name="dissect"/>
+    <module name="dnfile"/>
+    <module name="dncil"/>
     <module name="hexdump"/>
     <module name="ldapdomaindump"/>
     <module name="mkyara"/>
@@ -14,14 +18,16 @@
     <module name="pyasn1"/>
     <module name="pycryptodome"/>
     <module name="pyftpdlib"/>
-    <module name="pyreadline"/>
+    <module name="pyreadline3"/>
+    <module name="pythonnet"/>
     <module name="pyOpenSSL"/>
+    <module name="psutil"/>
     <module name="requests"/>
-    <!-- Having issues manually installing as well... -->
-    <!-- <module name="stringsifter"/> -->
+    <module name="stringsifter"/>
     <module name="uncompyle6"/>
     <module name="unpy2exe"/>
     <module name="unicorn"/>
     <module name="vivisect"/>
+    <module name="XLMMacroDeobfuscator"/>
     <module name="yara-python"/>
 </modules>

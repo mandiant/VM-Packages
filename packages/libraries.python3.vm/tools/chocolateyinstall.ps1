@@ -9,36 +9,38 @@ try {
     # Create output file to log python module installation details
     $outputFile = VM-New-Install-Log $toolDir
 
-    # Upgrade pip
-    Invoke-Expression "py -3 -m pip install -qq --no-cache-dir --upgrade pip 2>&1 >> $outputFile"
+    # Fix pip version
+    Invoke-Expression "py -3.10 -m pip install pip~=23.2.1 >> $outputFile"
 
-    $failures = @{}
+    $failures = @()
     $modules = $modulesXml.modules.module
     foreach ($module in $modules) {
         Write-Host "[+] Attempting to install Python3 module: $($module.name)"
-        $intallValue = $module.name
+        $installValue = $module.name
         if ($module.url) {
-            $intallValue = $module.url
+            $installValue = $module.url
         }
 
-        Invoke-Expression "py -3 -m pip install $intallValue 2>&1 >> $outputFile"
+        Invoke-Expression "py -3.10 -m pip install $installValue 2>&1 >> $outputFile"
 
         if ($LastExitCode -eq 0) {
-            Write-Host "`t[+] Installed Python3 module: $($module.name)" -ForegroundColor Green
+            Write-Host "`t[+] Installed Python 3.10 module: $($module.name)" -ForegroundColor Green
         } else {
-            Write-Host "`t[!] Failed to install Python3 module: $($module.name)" -ForegroundColor Red
-            $failures[$module.Name] = $true
+            Write-Host "`t[!] Failed to install Python 3.10 module: $($module.name)" -ForegroundColor Red
+            $failures += $module.Name
         }
     }
 
-    if ($failures.Keys.Count -gt 0) {
-        foreach ($module in $failures.Keys) {
-            VM-Write-Log "ERROR" "Failed to install Python3 module: $module"
+    if ($failures.Count -gt 0) {
+        foreach ($module in $failures) {
+            VM-Write-Log "ERROR" "Failed to install Python 3.10 module: $module"
         }
         $outputFile = $outputFile.replace('lib\', 'lib-bad\')
         VM-Write-Log "ERROR" "Check $outputFile for more information"
         exit 1
     }
+    # Avoid WARNINGs to fail the package install
+    exit 0
 } catch {
     VM-Write-Log-Exception $_
 }

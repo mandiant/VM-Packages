@@ -15,14 +15,9 @@ The environment variables below are configurable by the user:
     - VM common directory containing anything related to VM-packages (e.g., shared module, log file, saved config file, etc...)
 - `TOOL_LIST_DIR`
   - Default Path:
-    - *`%PROGRAMDATA%`*`\Microsoft\Windows\Start Menu\Programs\Tools`
+    - *`%USERPROFILE%`*`\Desktop\Tools`
   - Use:
     - Path to a directory containing tool shortcuts
-- `TOOL_LIST_SHORTCUT`
-  - Default Path:
-    - *`%USERPROFILE%`*`\Desktop\Tools.lnk`
-  - Use:
-    - Path to a shortcut file (`.lnk`) that points to *`%TOOL_LIST_DIR%`*
 - `RAW_TOOLS_DIR`
   - Default Path:
     - *`%SYSTEMDRIVE%`*`\Tools`

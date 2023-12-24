@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>event-log-explorer.vm</id>
+    <version>5.4.1.20231207</version>
+    <authors>FSPro Labs</authors>
+    <description>Software solution for viewing, analyzing and monitoring events recorded in Microsoft Windows event logs.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

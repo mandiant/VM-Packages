@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>logfileparser.vm</id>
+    <version>2.0.0.20231204</version>
+    <authors>Joakim Schicht</authors>
+    <description>Decode and dump lots of transaction information from the $LogFile on NTFS.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

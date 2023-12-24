@@ -32,16 +32,28 @@ body:
       label: Package type
       description: |
         This is needed to know how to send the automatic PR.
-        ZIP_EXE - An executable tool distributed in a ZIP file
-        SINGLE_EXE - An executable tool distributed via direct/raw download
-        SINGLE_PS1 - A PowerShell script distributed via direct/raw download
-        GITHUB_REPO - Download a GitHub repository based on a specific commit hash
+        `ZIP_EXE` - An executable tool distributed in a ZIP file
+        `SINGLE_EXE` - An executable tool distributed via direct/raw download
+        `SINGLE_PS1` - A PowerShell script distributed via direct/raw download
+        `GITHUB_REPO` - Download a GitHub repository based on a specific commit hash
       options:
         - ZIP_EXE
         - SINGLE_EXE
         - SINGLE_PS1
         - GITHUB_REPO
         - OTHER/UNKNOWN
+  - type: dropdown
+    id: console_app
+    validations:
+      required: true
+    attributes:
+      label: Is the tool a console application?
+      description: |
+        The tool is a console application, the shortcut should run it with `cmd /K $toolPath --help` to be able to see the output.
+        Only supported by package types `ZIP_EXE` and `SINGLE_EXE`.
+      options:
+        - 'false'
+        - 'true'
   - type: input
     id: version
     attributes:
@@ -57,31 +69,38 @@ body:
       label: Category
       description: Which category should this tool be installed to?
       options:
-        - Android
+        - Active Directory
         - Cloud
+        - Command & Control
+        - Credential Access
         - Debuggers
         - Delphi
         - Disassemblers
         - dotNet
+        - Evasion
+        - Exploitation
         - Forensic
         - Hex Editors
-        - Java
+        - Information Gathering
+        - InnoSetup
+        - Java & Android
         - Javascript
+        - Lateral Movement
         - Networking
         - Office
+        - Packers
+        - Password Attacks
+        - Payload Development
         - PDF
         - PE
+        - Persistence
         - PowerShell
+        - Privilege Escalation
         - Python
+        - Reconnaissance
         - Text Editors
         - Utilities
         - VB
-        - Active Directory
-        - Command & Control
-        - Evasion
-        - Exploitation
-        - Information Gathering
-        - Password Attacks
         - Vulnerability Analysis
         - Web Application
         - Wordlists
@@ -117,6 +136,13 @@ body:
       label: Download SHA256 Hash
       description: SHA256 hash of the `.zip` file downloaded from the download url introduced in the previous field. The hash is used for verification purposes.
       placeholder: ex. 62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95
+  - type: input
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: |
+        The dependencies (tools/libraries that need to be installed) needed for installing or using this tool.
+      placeholder: ex. openjdk.vm, vcredist140, nodejs >= 5
   - type: textarea
     id: why
     attributes:

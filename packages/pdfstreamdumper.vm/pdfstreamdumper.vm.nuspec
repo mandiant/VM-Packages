@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>pdfstreamdumper.vm</id>
+    <version>0.9.634</version>
+    <authors>David Zimmer</authors>
+    <description>PDFStreamDumper is a free, open source tool to analyze malicious PDF documents.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

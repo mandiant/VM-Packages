@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ida.diaphora.vm</id>
+    <version>3.1.1</version>
+    <authors>joxeankoret</authors>
+    <description>Diaphora is a program diffing tool that works as an IDA plugin.</description>
+    <dependencies>
+      <!-- This package uses new arguments of VM-Install-From-Zip introduced in common.vm version 0.0.0.20230615 -->
+      <dependency id="common.vm" version="0.0.0.20230615" />
+    </dependencies>
+  </metadata>
+</package>

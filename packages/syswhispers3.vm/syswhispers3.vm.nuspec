@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>syswhispers3.vm</id>
+    <version>0.0.0.20230713</version>
+    <authors>klezVirus</authors>
+    <description>SysWhispers helps with evasion by generating header/ASM files implants can use to make direct system calls.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

@@ -50,31 +50,38 @@ body:
       label: Category
       description: Which category should this tool be installed to?
       options:
-        - Android
+        - Active Directory
         - Cloud
+        - Command & Control
+        - Credential Access
         - Debuggers
         - Delphi
         - Disassemblers
         - dotNet
+        - Evasion
+        - Exploitation
         - Forensic
         - Hex Editors
-        - Java
+        - Information Gathering
+        - InnoSetup
+        - Java & Android
         - Javascript
+        - Lateral Movement
         - Networking
         - Office
+        - Packers
+        - Password Attacks
+        - Payload Development
         - PDF
         - PE
+        - Persistence
         - PowerShell
+        - Privilege Escalation
         - Python
+        - Reconnaissance
         - Text Editors
         - Utilities
         - VB
-        - Active Directory
-        - Command & Control
-        - Evasion
-        - Exploitation
-        - Information Gathering
-        - Password Attacks
         - Vulnerability Analysis
         - Web Application
         - Wordlists
@@ -107,7 +114,7 @@ body:
       required: true
     attributes:
       label: Shim path
-      description: Installed Chocolatey packages automatically create "shims" (i.e., executable proxies) to the installed applications. The default Chocolatey shim location is `%PROGRAMDATA%\chocolatey\bin`. Please provide the path for the Chocolatey "shimmed" executable (e.g., `%PROGRAMDATA%\chocolatey\bin\ollydbg.exe`).
+      description: Installed Chocolatey packages automatically create "shims" (i.e., executable proxies) to the installed applications. The default Chocolatey shim location is `%PROGRAMDATA%\chocolatey\bin`. Provide the path for the Chocolatey "shimmed" executable relative to the `$Env:ChocolateyInstall` path (i.e., `%PROGRAMDATA%\chocolatey`). For example, provide a path like `bin\ollydbg.exe`.
   - type: textarea
     id: why
     attributes:

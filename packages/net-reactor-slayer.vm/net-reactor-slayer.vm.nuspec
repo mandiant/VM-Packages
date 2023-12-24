@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>net-reactor-slayer.vm</id>
+    <version>6.4.0.20230621</version>
+    <authors>SychicBoy</authors>
+    <description>NETReactorSlayer is an open source (GPLv3) deobfuscator and unpacker for Eziriz .NET Reactor.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="net-reactor-slayer" version="[6.4.0]" />
+    </dependencies>
+  </metadata>
+</package>

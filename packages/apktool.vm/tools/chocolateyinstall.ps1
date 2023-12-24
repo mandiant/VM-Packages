@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'apktool'
-  $category = 'Android'
+  $category = 'Java & Android'
   $shimPath = 'bin\apktool.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

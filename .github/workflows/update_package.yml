@@ -27,13 +27,13 @@ jobs:
             $package = $packagePath.Name
             $newVersion = 0
             # Test indepdendly every type of update and commit what works
-            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL')) {
+            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL', 'VERSION_URL')) {
               $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
               $updated = $?
               echo "$package $version"
               if ($updated -and $version) {
                 # Test package before committing
-                scripts\test\test_install.ps1 $package | out-null
+                scripts\test\test_install.ps1 -max_tries 1 $package | out-null
                 $tested = $?
                 cd $root
                 if ($tested) {
@@ -41,6 +41,7 @@ jobs:
                   $newVersion = $version
                 } else {
                   echo "$package $version FAILED"
+                  git diff
                 }
               }
               # Clean changes and built packages

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sqlrecon.vm</id>
-    <version>2.2.2.20230418</version>
+    <version>3.3</version>
     <authors>Sanjiv Kawa, Rasta Mouse</authors>
     <description>MSSQL toolkit for reconnaissance and post-exploitation</description>
     <dependencies>

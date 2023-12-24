@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>merlin.vm</id>
+    <version>2.1.0</version>
+    <authors>Ne0nd0g</authors>
+    <description>Merlin is a cross-platform post-exploitation Command and Control server and agent written in Go.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="7zip.install" />
+    </dependencies>
+  </metadata>
+</package>

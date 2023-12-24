@@ -157,7 +157,7 @@ function VM-Check-Reboot {
     )
     try {
         if (Test-PendingReboot){
-            VM-Write-Log "ERROR" "[Err] Host must be rebooted before continuing install of $package.`n"
+            VM-Write-Log "ERROR" "Host must be rebooted before continuing installation of $package.`n"
             Invoke-Reboot
             exit 1
         }
@@ -181,7 +181,7 @@ function VM-New-Install-Log {
     return $outputFile
 }
 
-# This functions returns $executablePath and $toolDir (outputed by Install-ChocolateyZipPackage)
+# This functions returns $toolDir
 function VM-Install-Raw-GitHub-Repo {
     [CmdletBinding()]
     Param
@@ -207,46 +207,22 @@ function VM-Install-Raw-GitHub-Repo {
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
-        # Create a temp directory to download zip
-        $tempDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "temp_$([guid]::NewGuid())"
-
         # Download and unzip
         $packageArgs = @{
             packageName    = ${Env:ChocolateyPackageName}
-            unzipLocation  = $tempDownloadDir
+            unzipLocation  = $toolDir
             url            = $zipUrl
             checksum       = $zipSha256
             checksumType   = 'sha256'
         }
         Install-ChocolateyZipPackage @packageArgs | Out-Null
-        VM-Assert-Path $tempDownloadDir
+        VM-Assert-Path $toolDir
 
-        # Make sure our tool directory exists
-        if (-Not (Test-Path $toolDir)) {
-            New-Item -Path $toolDir -ItemType Directory -Force | Out-Null
+        # GitHub ZIP files typically unzip to a single folder that contains the tools.
+        $dirList = Get-ChildItem $toolDir -Directory
+        if ($dirList.Count -eq 1) {
+            $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
         }
-
-        # Get the unzipped directory
-        $unzippedDir = (Get-ChildItem -Directory $tempDownloadDir | Where-Object {$_.PSIsContainer} | Select-Object -f 1).FullName
-
-        # Copy all the items in the unzipped directory to their correct directory
-        Get-ChildItem -Path $unzippedDir | Move-Item -Destination $toolDir -Force -ea 0
-
-        # Sleep to help prevent file system race conditions
-        Start-Sleep -Milliseconds 500
-
-        # Rename all entries in to where the files were actually copied
-        $zip_name = Join-Path ${Env:chocolateyPackageFolder} ((Split-Path $unzippedDir -Leaf) + ".zip.txt")
-        (Get-Content $zip_name) | Foreach-Object {$_.Replace($unzippedDir, $toolDir)} | Set-Content $zip_name
-
-        # Remove first line of *.zip.txt file so we don't delete the entire directory on upgrade
-        (Get-Content $zip_name | Select-Object -Skip 1) | Set-Content $zip_name
-
-        # Sleep to help prevent file system race conditions
-        Start-Sleep -Milliseconds 500
-
-        # Attempt to remove temporary directory
-        Remove-Item $tempDownloadDir -Recurse -Force -ea 0
 
         if ($powershellCommand) {
             $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command $powershellCommand"
@@ -265,7 +241,45 @@ function VM-Install-Raw-GitHub-Repo {
     }
 }
 
-# This functions returns $executablePath and $toolDir (outputed by Install-ChocolateyZipPackage)
+function VM-Install-Shortcut{
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
+        [Parameter(Mandatory=$true, Position=2)]
+        [string] $executablePath,
+        [Parameter(Mandatory=$false)]
+        [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [switch] $runAsAdmin=$false,
+        [Parameter(Mandatory=$false)]
+        [string] $executableDir,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = ""
+    )
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+    $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+
+    if ($consoleApp) {
+        if (!$executableDir) {
+            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
+        }
+        VM-Assert-Path $executableDir
+
+        $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+        # Change to executable dir, print command to execute, and execute command
+        $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
+        Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath -RunAsAdmin $runAsAdmin
+    } else {
+        Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executablePath -RunAsAdmin $runAsAdmin
+    }
+    VM-Assert-Path $shortcut
+}
+
+# This functions returns $toolDir (outputed by Install-ChocolateyZipPackage) and $executablePath
 function VM-Install-From-Zip {
     [CmdletBinding()]
     Param
@@ -285,20 +299,19 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [bool] $innerFolder=$false # subfolder in zip with the app files
+        [bool] $innerFolder=$false, # Subfolder in zip with the app files
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = "",
+        [Parameter(Mandatory=$false)]
+        [string] $executableName, # Executable name, needed if different from "$toolName.exe"
+        [Parameter(Mandatory=$false)]
+        [switch] $withoutBinFile # Tool should not be installed as a bin file
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
-
-        # Snapshot all folders in $toolDir
-        $oldDirList = @()
-        if (Test-Path $toolDir) {
-            $oldDirList = @(Get-ChildItem $toolDir | Where-Object {$_.PSIsContainer})
-        }
 
         # Download and unzip
         $packageArgs = @{
@@ -313,39 +326,18 @@ function VM-Install-From-Zip {
         Install-ChocolateyZipPackage @packageArgs
         VM-Assert-Path $toolDir
 
-        # Diff and find new folders in $toolDir
-        $newDirList = @(Get-ChildItem $toolDir | Where-Object {$_.PSIsContainer})
-        $diffDirs = Compare-Object -ReferenceObject $oldDirList -DifferenceObject $newDirList -PassThru
 
-        # If $innerFolder is set to $true, after unzipping only a single folder should be new.
+        # If $innerFolder is set to $true, after unzipping there should be only one folder
         # GitHub ZIP files typically unzip to a single folder that contains the tools.
         if ($innerFolder) {
-            # First time install, use the single resulting folder name from Install-ChocolateyZipPackage.
-            if ($diffDirs.Count -eq 1) {
-                # Save the "new tool directory" to assist with upgrading.
-                $newToolDir = Join-Path $toolDir $diffDirs[0].Name -Resolve
-                Set-Content (Join-Path ${Env:chocolateyPackageFolder} "innerFolder.txt") $newToolDir
-                $toolDir = $newToolDir
-            } else {
-                # On upgrade there may be no new directory, in this case retrieve previous "new tool directory" from saved file.
-                $toolDir = Get-Content (Join-Path ${Env:chocolateyPackageFolder} "innerFolder.txt")
-            }
+            $dirList = Get-ChildItem $toolDir -Directory
+            $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
         }
 
-        $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-
-        if ($consoleApp) {
-            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
-            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
-        } else {
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        }
-        VM-Assert-Path $shortcut
-
-        Install-BinFile -Name $toolName -Path $executablePath
+        if (-Not $executableName) { $executableName = "$toolName.exe" }
+        $executablePath = Join-Path $toolDir $executableName -Resolve
+        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
+        if (-Not $withoutBinFile) { Install-BinFile -Name $toolName -Path $executablePath }
         return $executablePath
     } catch {
         VM-Write-Log-Exception $_
@@ -370,11 +362,12 @@ function VM-Install-Single-Exe {
         [Parameter(Mandatory=$false)]
         [string] $exeSha256_64,
         [Parameter(Mandatory=$false)]
-        [bool] $consoleApp=$false
+        [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = ""
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
         # Get the file extension from the URL
         $ext = (Split-Path -Path $exeUrl -Leaf).Split(".")[-1]
@@ -394,18 +387,7 @@ function VM-Install-Single-Exe {
         Get-ChocolateyWebFile @packageArgs
         VM-Assert-Path $executablePath
 
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-
-        if ($consoleApp) {
-            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop" -Resolve
-            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
-        } else {
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        }
-        VM-Assert-Path $shortcut
-
+        VM-Install-Shortcut -toolName $toolName -category $category -executableDir $toolDir -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         Install-BinFile -Name $toolName -Path $executablePath
         return $executablePath
     } catch {
@@ -452,7 +434,7 @@ function VM-Install-Single-Ps1 {
         Get-ChocolateyWebFile @packageArgs
         VM-Assert-Path $scriptPath
 
-        $shortcut = Join-Path $shortcutDir "$toolName.ps1.lnk"
+        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
         $targetCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
 
         if ($ps1Cmd) {
@@ -536,7 +518,9 @@ function VM-Install-With-Installer {
         [Parameter(Mandatory=$false)]
         [array] $validExitCodes= @(0, 3010, 1605, 1614, 1641),
         [Parameter(Mandatory=$false)]
-        [bool] $consoleApp=$false
+        [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = ""
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -589,18 +573,7 @@ function VM-Install-With-Installer {
         Install-ChocolateyInstallPackage @packageArgs
         VM-Assert-Path $executablePath
 
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-        if ($consoleApp) {
-            $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
-            $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`" --help`""
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath
-        } else {
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        }
-        VM-Assert-Path $shortcut
-
+        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         Install-BinFile -Name $toolName -Path $executablePath
     } catch {
         VM-Write-Log-Exception $_
@@ -667,7 +640,7 @@ function VM-Write-Log-Exception {
     )
     $msg = $error_record.Exception.Message
     $position_msg = $error_record.InvocationInfo.PositionMessage
-    VM-Write-Log "ERROR" "[ERR] $msg`r`n$position_msg"
+    VM-Write-Log "ERROR" "$msg`r`n$position_msg"
     throw $error_record
 }
 
@@ -680,17 +653,26 @@ function VM-Add-To-Right-Click-Menu {
         [string] $menuLabel, # value displayed in right-click menu
         [Parameter(Mandatory=$true, Position=2)]
         [string] $command,
-        [Parameter(Mandatory=$true, Position=3)]
+        [Parameter(Mandatory=$false, Position=3)]
+        [string] $menuIcon,
+        [Parameter(Mandatory=$false)]
         [ValidateSet("file", "directory")]
-        [string] $type
+        [string] $type="file",
+        [Parameter(Mandatory=$false)]
+        [string] $extension
     )
     try {
-        # Determine if file or directory should show item in right-click menu
-        if ($type -eq "file") {
-            $key = "*"
+        if ($extension) {
+          $key = "SystemFileAssociations\$extension"
         } else {
-            $key = "directory"
+          # Determine if file or directory should show item in right-click menu
+          if ($type -eq "file") {
+              $key = "*"
+          } else {
+              $key = "directory"
+          }
         }
+        $key_path = "HKCR:\$key\shell\$menuKey"
 
         # Check and map "HKCR" to correct drive
         if (-NOT (Test-Path -path 'HKCR:')) {
@@ -698,16 +680,19 @@ function VM-Add-To-Right-Click-Menu {
         }
 
         # Add right-click menu display name
-        if (-NOT (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey")) {
-            New-Item -Path "HKCR:\$key\shell\$menuKey" | Out-Null
+        if (-NOT (Test-Path -LiteralPath $key_path)) {
+            New-Item -Path $key_path -Force | Out-Null
         }
-        Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey" -Name '(Default)' -Value "$menuLabel" -Type String
+        Set-ItemProperty -LiteralPath $key_path -Name '(Default)' -Value "$menuLabel" -Type String
+        if ($menuIcon) {
+          Set-ItemProperty -LiteralPath $key_path -Name 'Icon' -Value "$menuIcon" -Type String
+        }
 
         # Add command to run when executed from right-click menu
-        if(-NOT (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey\command")) {
-            New-Item -Path "HKCR:\$key\shell\$menuKey\command" | Out-Null
+        if(-NOT (Test-Path -LiteralPath "$key_path\command")) {
+            New-Item -Path "$key_path\command" | Out-Null
         }
-        Set-ItemProperty -LiteralPath "HKCR:\$key\shell\$menuKey\command" -Name '(Default)' -Value $command -Type String
+        Set-ItemProperty -LiteralPath "$key_path\command" -Name '(Default)' -Value $command -Type String
     } catch {
         VM-Write-Log "ERROR" "Failed to add $menuKey to right-click menu"
     }
@@ -718,17 +703,24 @@ function VM-Remove-From-Right-Click-Menu {
     (
         [Parameter(Mandatory=$true, Position=0)]
         [String] $menuKey, # name of registry key
-        [Parameter(Mandatory=$true, Position=1)]
+        [Parameter(Mandatory=$false)]
         [ValidateSet("file", "directory")]
-        [string] $type
+        [string] $type="file",
+        [Parameter(Mandatory=$false)]
+        [string] $extension
     )
     try {
-        # Determine if file or directory should show item in right-click menu
-        if ($type -eq "file") {
-            $key = "*"
+        if ($extension) {
+          $key = "SystemFileAssociations\$extension"
         } else {
-            $key = "directory"
+          # Determine if file or directory should show item in right-click menu
+          if ($type -eq "file") {
+              $key = "*"
+          } else {
+              $key = "directory"
+          }
         }
+        $key_path = "HKCR:\$key\shell\$menuKey"
 
         # Check and map "HKCR" to correct drive
         if (-NOT (Test-Path -path 'HKCR:')) {
@@ -736,8 +728,8 @@ function VM-Remove-From-Right-Click-Menu {
         }
 
         # Remove right-click menu settings from registry
-        if (Test-Path -LiteralPath "HKCR:\$key\shell\$menuKey") {
-            Remove-Item -LiteralPath "HKCR:\$key\shell\$menuKey" -Recurse
+        if (Test-Path -LiteralPath $key_path) {
+            Remove-Item -LiteralPath $key_path -Recurse
         }
     } catch {
         VM-Write-Log "ERROR" "Failed to remove $menuKey from right-click menu"
@@ -824,8 +816,8 @@ Common Environment Variables
     $diskInfo = Get-CimInstance -ClassName Win32_LogicalDisk | Out-String
     $psInfo = $PSVersionTable.PSVersion
     $psInfoClr = $PSVersionTable.CLRVersion
-    $chocoInfo = chocolatey --version
-    $installedPackages = chocolatey list -l -r -all
+    $chocoInfo = choco --version
+    $installedPackages = choco list -r
     $boxstarerInfo = $installedPackages | Select-String -Pattern "Boxstarter" | Out-String
     $installedPackages = $installedPackages | Out-String
 
@@ -858,10 +850,539 @@ SignatureStatus: $([SignatureStatus]([UInt32]$avInfo.productState -band [Product
     $envVars = @"
 VM_COMMON_DIR: ${Env:VM_COMMON_DIR}
 TOOL_LIST_DIR: ${Env:TOOL_LIST_DIR}
-TOOL_LIST_SHORTCUT: ${Env:TOOL_LIST_SHORTCUT}
 RAW_TOOLS_DIR: ${Env:RAW_TOOLS_DIR}
 "@
 
     VM-Write-Log "INFO" "$($survey -f $osInfo, $memInfo, $diskInfo, $avInfoFormatted, $psInfo, $psInfoClr, $chocoInfo, $boxstarerInfo, $installedPackages, $envVars)"
 }
 
+function VM-Remove-Appx-Package {
+# Function for removing Apps
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$appName
+    )
+
+    try {
+        # Check if the app is installed
+        $installedPackage = Get-AppxPackage -Name $appName
+        VM-Write-Log "INFO" "Removing $appName package"
+        if ($installedPackage) {
+            try {
+                $packageFullName = $installedPackage.PackageFullName
+                Remove-AppxPackage -Package $packageFullName -ErrorAction SilentlyContinue
+                VM-Write-Log "INFO" "$packageFullName removed"
+            }
+            catch {
+                VM-Write-Log-Exception $_
+            }
+        } else {
+            VM-Write-Log "WARN" "`tInstalled $appName not found on the system."
+        }
+        # Check if the app is provisioned
+        $provisionedPackage = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -eq $appName } -ErrorAction SilentlyContinue
+        if ($provisionedPackage) {
+            try {
+                Remove-AppxProvisionedPackage -PackageName $provisionedPackage.PackageName -Online -ErrorAction SilentlyContinue
+                VM-Write-Log "INFO" $("`tProvisioned package " + $provisionedPackage.PackageName + " removed")
+            }
+            catch {
+                VM-Write-Log-Exception $_
+            }
+        } else {
+            VM-Write-Log "WARN" "`tProvisioned $appName not found on the system."
+        }
+    } catch {
+        VM-Write-Log "ERROR" "`tAn error occurred while removing the $appName package. Error: $_"
+    }
+}
+
+function VM-Set-Service-Manual-Start {
+# Function for setting Services to manual startup
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$serviceName
+    )
+
+    try {
+        $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
+
+        if ($service) {
+            Set-Service -Name $service.Name -StartupType Manual
+            VM-Write-Log "INFO" "Service $serviceName has been disabled."
+        } else {
+            VM-Write-Log "WARN" "Service $serviceName not found."
+        }
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while setting the service startup type. Error: $_"
+    }
+}
+
+function VM-Disable-Scheduled-Task {
+# Function for disabling scheduled tasks
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$name,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$value
+    )
+
+    try {
+        $output = Disable-ScheduledTask -TaskName $value -ErrorAction SilentlyContinue
+        if ($output){
+            VM-Write-Log "INFO" "Scheduled task '$name' has been disabled."
+        } else {
+            VM-Write-Log "ERROR" "Scheduled task '$name' not found."
+        }
+
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while disabling the '$name' scheduled task. Error: $_"
+    }
+}
+
+function VM-Update-Registry-Value {
+# Function for setting Registry items
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $name,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $path,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $value,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("String", "ExpandString", "Binary", "DWord", "QWord", "MultiString", "Unknown")]
+        [string] $type,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $data
+    )
+
+    try {
+        # Validate the value based on the type parameter
+        if ($type -eq "DWord" -or $type -eq "QWord") {
+            $validatedData = [int64]::Parse($data)
+        } elseif ($type -eq "Binary") {
+            $validatedData = [byte[]]::new(($data -split '(.{2})' | Where-Object { $_ -match '..' } | ForEach-Object { [convert]::ToByte($_, 16) }))
+        } else {
+            $validatedData = $data
+        }
+
+        # check if path exists. If not, create the path for the registry value
+        if (!(Test-Path -Path $path)) {
+            # Create the registry key
+            New-Item -Path $path -Force | Out-Null
+            VM-Write-Log "INFO" "Registry key created: $path"
+        } else {
+            VM-Write-Log "WARN" "Registry key already exists: $path"
+        }
+
+        Set-ItemProperty -Path $path -Name $value -Value $validatedData -Type $type -Force | Out-Null
+        VM-Write-Log "INFO" "$name has been successful"
+    } catch {
+        VM-Write-Log "ERROR" "Failed to update the registry value. Error: $_"
+    }
+}
+
+function VM-Remove-Path {
+# Function for removing Paths/Programs
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$name,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("file", "dir")]
+        [string]$type,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$path
+    )
+
+    try {
+        if ($type -eq "file") {
+            if (Test-Path -Path $path -PathType Leaf) {
+                Remove-Item -Path $path -Force
+                VM-Write-Log "INFO" "$name has been successfully removed."
+            } else {
+                VM-Write-Log "WARN" "$path does not exist."
+            }
+        } elseif ($type -eq "dir") {
+            if (Test-Path -Path $path -PathType Container) {
+                Remove-Item -Path $path -Recurse -Force
+                VM-Write-Log "INFO" "$name has been successfully removed."
+            } else {
+                VM-Write-Log "WARN" "$path does not exist."
+            }
+        }
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while removing the $type $path. Error: $_"
+    }
+}
+
+function VM-Execute-Custom-Command{
+# Function for removing items in need of custom code.
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$name,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string[]]$cmds
+    )
+
+    try {
+        VM-Write-Log "INFO" "Executing commands for '$name':"
+        foreach ($cmd in $cmds) {
+            Start-Process powershell -ArgumentList "-WindowStyle","Hidden","-Command",$cmd -Wait
+        }
+        VM-Write-Log "INFO" "`tAll commands for '$name' have been executed successfully."
+    } catch {
+        VM-Write-Log "ERROR" "`tAn error occurred while executing commands for '$name'. Error: $_"
+    }
+}
+
+function VM-Configure-Prompts {
+    # $Env:VMname must be set in the install script
+    try {
+        # Set PowerShell prompt
+        $psprompt = @"
+        function prompt {
+            Write-Host (`$Env:VMname + " " + `$(Get-Date)) -ForegroundColor Green
+            Write-Host ("PS " + `$(Get-Location) + " >") -NoNewLine -ForegroundColor White
+            return " "
+        }
+"@
+
+        # Ensure profile file exists and append new content to it, not overwriting old content
+        if (!(Test-Path $profile)) {
+            New-Item -ItemType File -Path $profile -Force | Out-Null
+        }
+        Add-Content -Path $profile -Value $psprompt
+
+        # Set cmd prompt
+        ## Configure the command
+        $VMname = $Env:VMname -replace ' ', '' # setx command cannot have spaces
+        $command = "cmd /c 'setx PROMPT $VMname`$S`$d`$s`$t`$_`$p$+`$g'"
+        ## Convert to base64
+        $base64 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
+        ## Run command
+        Invoke-Expression ([System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($base64))) | Out-Null
+
+        VM-Write-Log "INFO" "Timestamps added to cmd prompt and PowerShell"
+    } catch {
+        VM-Write-Log-Exception $_
+    }
+
+}
+
+function VM-Configure-PS-Logging {
+    if ($PSVersionTable -And $PSVersionTable.PSVersion.Major -ge 5) {
+        try {
+            VM-Write-Log "INFO" "Enabling PowerShell Script Block Logging"
+
+            $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell'
+            if (-Not (Test-Path $psLoggingPath)) {
+                New-Item -Path $psLoggingPath -Force | Out-Null
+            }
+
+            $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription'
+            if (-Not (Test-Path $psLoggingPath)) {
+                New-Item -Path $psLoggingPath -Force | Out-Null
+            }
+            New-ItemProperty -Path $psLoggingPath -Name "EnableInvocationHeader" -Value 1 -PropertyType DWORD -Force | Out-Null
+            New-ItemProperty -Path $psLoggingPath -Name "EnableTranscripting" -Value 1 -PropertyType DWORD -Force | Out-Null
+            New-ItemProperty -Path $psLoggingPath -Name "OutputDirectory" -Value (Join-Path ${Env:UserProfile} "Desktop\PS_Transcripts") -PropertyType String -Force | Out-Null
+
+            $psLoggingPath = 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging'
+            if (-Not (Test-Path $psLoggingPath)) {
+                New-Item -Path $psLoggingPath -Force | Out-Null
+            }
+            New-ItemProperty -Path $psLoggingPath -Name "EnableScriptBlockLogging" -Value 1 -PropertyType DWORD -Force | Out-Null
+            VM-Write-Log "INFO" "PowerShell transcripts will be saved to the desktop."
+        } catch {
+            VM-Write-Log-Exception $_
+        }
+    }
+}
+
+# Main function for debloater and configuration changes
+# Expects an XML file
+function VM-Apply-Configurations {
+    param(
+        [Parameter(Position = 0)]
+        [string]$configFile
+    )
+
+    try {
+        # Load and parse the XML config file
+        VM-Assert-Path $configFile
+        $config = [xml](Get-Content $configFile)
+
+        # Process the apps
+        if ($config.config.apps.app) {
+            $config.config.apps.app | ForEach-Object {
+                $appName = $_.name
+                VM-Remove-Appx-Package -appName $appName
+            }
+        }
+
+        # Process the services
+        if ($config.config.services.service) {
+            $config.config.services.service | ForEach-Object {
+                $serviceName = $_.name
+                VM-Set-Service-Manual-Start -serviceName $serviceName
+            }
+        }
+
+        # Process the tasks
+        if ($config.config.tasks.task) {
+            $config.config.tasks.task | ForEach-Object {
+                $descName = $_.name
+                $taskName = $_.value
+                VM-Disable-Scheduled-Task -name $descName -value $taskName
+            }
+        }
+
+        # Process the registry items
+        if ($config.config."registry-items"."registry-item") {
+            $config.config."registry-items"."registry-item" | ForEach-Object {
+                $name = $_.name
+                $path = $_.path
+                $value = $_.value
+                $type = $_.type
+                $data = $_.data
+                VM-Update-Registry-Value -name $name -path $path -value $value -type $type -data $data
+            }
+        }
+
+        # Process the path items
+        if ($config.config."path-items"."path-item") {
+            $config.config."path-items"."path-item" | ForEach-Object {
+                $name = $_.name
+                $type = $_.type
+                $path = $_.path
+                VM-Remove-Path -name $name -type $type -path $path
+            }
+        }
+
+        # Process the custom items
+        if ($config.config."custom-items"."custom-item") {
+            $config.config."custom-items"."custom-item" | ForEach-Object {
+                $name = $_.name
+                $cmds = @($_.cmd | ForEach-Object { $_.value })
+                VM-Execute-Custom-Command -name $name -cmds $cmds
+            }
+        }
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while applying config. Error: $_"
+    }
+}
+
+# This function returns a string of "Win10", "Win11", or "Win11ARM"
+function VM-Get-WindowsVersion {
+    $osInfo = Get-ComputerInfo
+
+    # Extract the version number and other details
+    $version = $osInfo.OsName
+    $osArchitecture = $osInfo.OSArchitecture
+
+    if ($version -match "10") {
+        return "Win10"
+    }
+    elseif ($version -match "11" -and $osArchitecture -eq "64-bit") {
+        return "Win11"
+    }
+    elseif ($version -match "11" -and $osArchitecture -match "ARM") {
+        return "Win11ARM"
+    }
+    else {
+        return "Unknown"
+    }
+}
+
+function VM-Get-InstalledPackages {
+    if (Get-Command choco -ErrorAction:SilentlyContinue) {
+        powershell.exe "choco list -r" | ForEach-Object {
+            $Name, $Version = $_ -split '\|'
+            New-Object -TypeName psobject -Property @{
+                'Name' = $Name
+                'Version' = $Version
+            }
+        }
+    }
+}
+
+function VM-Refresh-Desktop {
+    try {
+        Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+
+public class Shell {
+    [DllImport("Shell32.dll")]
+    public static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
+}
+"@
+        $SHCNE_ASSOCCHANGED = 0x08000000
+        $SHCNF_IDLIST = 0
+        [void][Shell]::SHChangeNotify($SHCNE_ASSOCCHANGED, $SHCNF_IDLIST, [IntPtr]::Zero, [IntPtr]::Zero)
+    } catch {
+        VM-Write-Log-Exception $_
+    }
+}
+
+
+# Usage example:
+# VM-Remove-DesktopFiles -excludeFolders "Labs", "Demos" -excludeFiles "MICROSOFT Windows 10 License Terms.txt", "Labs.zip"
+# The function is run against both the Current User and 'Public' desktops due to some cases where desktop icons showing on
+# Current user Desktop that are only located in Public/Desktop.
+function VM-Remove-DesktopFiles {
+    param (
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFolders,
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFiles
+    )
+    # Ensure that the "PS_Transcripts" folder and the Tools folder (if located on the desktop) are not deleted.
+    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR})
+    # Ensure that the "fakenet_logs" shortcut is not deleted.
+    $defaultExcludedFiles = @("fakenet_logs.lnk")
+    $excludeFolders = $excludeFolders + $defaultExcludedFolders
+    $excludeFiles = $excludeFiles  + $defaultExcludedFiles
+    $userAccounts = @(
+        [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop), # Current user's desktop
+        [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::CommonDesktopDirectory) # Public desktop
+    )
+    foreach ($userDesktopPath in $userAccounts) {
+        # Use -Force to get hidden files (such as desktop.ini)
+        Get-ChildItem -Path $userDesktopPath -Force | ForEach-Object {
+            $item = $_
+            try{
+                if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
+                    VM-Write-Log "INFO" "Deleting folder: $($item.FullName)"
+                    Remove-Item -Path $item.FullName -Recurse -Force -ErrorAction Continue
+                }
+                elseif ($item.PSIsContainer -eq $false -and ($item.Name -notin $excludeFiles -and $item.FullName -notin $excludeFiles)) {
+                    VM-Write-Log "INFO" "Deleting file: $($item.FullName)"
+                    Remove-Item -Path $item.FullName -Force -ErrorAction Continue
+                }
+            } catch {
+                VM-Write-Log-Exception $_
+            }
+        }
+    }
+}
+
+function VM-Clear-TempAndCache {
+    $temp = [System.IO.Path]::GetTempPath()
+    $chocolatey = Join-Path $temp 'chocolatey'
+    $localAppDataPath = [System.Environment]::GetFolderPath('LocalApplicationData')
+    $commonAppDataPath = [System.Environment]::GetFolderPath('CommonApplicationData')
+    $nugetCache = Join-Path $localAppDataPath 'NuGet\cache'
+    $packageCache1 = Join-Path $localAppDataPath 'Package` Cache'
+    $packageCache2 = Join-Path $commonAppDataPath 'Package` Cache'
+
+    $command1 = 'cmd /c del /Q /S ' + $temp
+    $command2 = 'cmd /c rmdir /Q /S ' + $chocolatey + ' ' + $nugetCache + ' ' + $packageCache1 + ' ' + $packageCache2
+
+    Invoke-Expression $command1
+    Invoke-Expression $command2
+}
+
+# SDelete can take a bit of time (~2+ mins) and requires sysinternals to be installed
+function VM-Clear-FreeSpace {
+    VM-Write-Log "INFO" "Performing SDelete to optimize disk."
+    $sdeletePath = Get-Command -Name "sdelete.exe" -ErrorAction SilentlyContinue
+    if ($sdeletePath) {
+        Invoke-Expression 'cmd /c sdelete -accepteula -nobanner -z C:'
+    }
+    else {
+        VM-Write-Log "WARN" "SDelete not found. Ensure sysinternals.vm is installed and SDelete is in the system's PATH before running VM-Clear-FreeSpace to free space."
+    }
+}
+
+function VM-Clean-Up {
+    param (
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFolders,
+        [Parameter(Mandatory=$false)]
+        [string[]]$excludeFiles
+    )
+    Write-Host "[+] Removing Desktop Files..." -ForegroundColor Green
+    VM-Remove-DesktopFiles -excludeFolders $excludeFolders -excludeFiles $excludeFiles
+
+    Write-Host "[+] Clearing Temp and Cache..." -ForegroundColor Green
+    VM-Clear-TempAndCache
+
+    Write-Host "[+] Running Disk Cleanup..." -ForegroundColor Green
+    VM-Write-Log "INFO" "Performing Disk Cleanup."
+    Invoke-Expression 'cmd /c cleanmgr.exe /AUTOCLEAN'
+
+    Write-Host "[+] Clearing up free space. This may take a few minutes..." -ForegroundColor Green
+    VM-Clear-FreeSpace
+}
+
+function VM-Add-To-Path {
+    param (
+        [string]$pathToAdd
+    )
+
+    # Function to normalize a path and handle exceptions
+    function NormalizePath {
+        param (
+            [string]$path
+        )
+        try {
+            return [System.IO.Path]::GetFullPath($path)
+        }
+        catch {
+            return $null
+        }
+    }
+
+    # Ensure the path to add is not null or empty
+    if ([string]::IsNullOrWhiteSpace($pathToAdd)) {
+        VM-Write-Log "ERROR" "Tried to add empty path to the Path"
+        return
+    }
+
+    # Get the Machine Path environment variable and split it into an array
+    $currentPaths = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine) -split [IO.Path]::PathSeparator
+
+    # Normalize the input path
+    $normalizedPathToAdd = NormalizePath $pathToAdd
+    if (-not $normalizedPathToAdd) {
+        VM-Write-Log "ERROR" "Tried to add invalid path to the Path: $pathToAdd"
+        return
+    }
+
+    # Check if the path already exists in the array
+    $pathExists = $false
+    foreach ($path in $currentPaths) {
+        $normalizedPath = NormalizePath $path
+        if ($normalizedPath -and $normalizedPath -eq $normalizedPathToAdd) {
+            $pathExists = $true
+            break
+        }
+    }
+
+    # Add the new path if it doesn't exist
+    if (-not $pathExists) {
+        $newPath = ($currentPaths + $pathToAdd) -join [IO.Path]::PathSeparator
+        [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+    }
+}
