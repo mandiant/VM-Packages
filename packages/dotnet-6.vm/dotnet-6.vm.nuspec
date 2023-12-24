@@ -6,6 +6,7 @@
     <authors>Microsoft</authors>
     <description>Metapackage for .NET6 to ensure all packages use the same version.</description>
     <dependencies>
+      <dependency id="common.vm" />
       <dependency id="dotnet-6.0-desktopruntime" version="[6.0.25]" />
       <dependency id="dotnet-6.0-runtime" version="[6.0.25]" />
     </dependencies>
