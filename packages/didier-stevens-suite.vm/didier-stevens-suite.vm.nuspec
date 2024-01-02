@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>didier-stevens-suite.vm</id>
-    <version>0.0.0.20231213</version>
+    <version>0.0.0.20231221</version>
     <authors>Didier Stevens</authors>
     <description>Tools collection by Didier Stevens</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20231221" />
       <dependency id="python3.vm" />
     </dependencies>
   </metadata>
