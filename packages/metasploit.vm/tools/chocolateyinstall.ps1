@@ -6,7 +6,7 @@ try {
     $category = 'Command & Control'
 
     $exeUrl = 'https://windows.metasploit.com/metasploitframework-latest.msi'
-    $exeSha256 = '470039711E182C4551169A776AFC8C10B4BAEA1600334449998894B2D725D49A'
+    $exeSha256 = 'D3650531A63A473C0AE0D272A6ABC8EFF7D9AD22F971B21D2ED99199344904E7'
     # can't install to specified path.
     $toolDir = Join-Path ${Env:SystemDrive} "metasploit-framework"
     $binDir = Join-Path $toolDir "bin"
