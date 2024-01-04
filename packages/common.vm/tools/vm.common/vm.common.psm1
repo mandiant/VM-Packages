@@ -1245,6 +1245,19 @@ public class Shell {
     }
 }
 
+# Remove a directory and if not possible as many of its subfolder and files as possible
+function VM-Remove-Dir {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string[]]$item
+    )
+    Remove-Item -Path $item -Recurse -Force -ErrorAction Continue
+    if (!$? -and $item.PSIsContainer) {
+        Get-ChildItem -Path $item -Force | ForEach-Object {
+            VM-Remove-Dir $item
+        }
+    }
+}
 
 # Usage example:
 # VM-Remove-DesktopFiles -excludeFolders "Labs", "Demos" -excludeFiles "MICROSOFT Windows 10 License Terms.txt", "Labs.zip"
@@ -1257,8 +1270,9 @@ function VM-Remove-DesktopFiles {
         [Parameter(Mandatory=$false)]
         [string[]]$excludeFiles
     )
-    # Ensure that the "PS_Transcripts" folder and the Tools folder (if located on the desktop) are not deleted.
-    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR})
+    # Ensure that the "Recycle Bin" folder, the "PS_Transcripts" folder,
+    # and the Tools folder (if located on the desktop) are not deleted.
+    $defaultExcludedFolders = @("Recycle Bin", "PS_Transcripts", ${Env:TOOL_LIST_DIR})
     # Ensure that the "fakenet_logs" shortcut is not deleted.
     $defaultExcludedFiles = @("fakenet_logs.lnk")
     $excludeFolders = $excludeFolders + $defaultExcludedFolders
@@ -1285,6 +1299,9 @@ function VM-Remove-DesktopFiles {
             }
         }
     }
+
+    # Remove as much of PS_Transcripts as possible
+    VM-Remove-Dir "PS_Transcripts"
 }
 
 function VM-Clear-TempAndCache {
@@ -1328,12 +1345,18 @@ function VM-Clean-Up {
     Write-Host "[+] Clearing Temp and Cache..." -ForegroundColor Green
     VM-Clear-TempAndCache
 
+    Write-Host "[+] Clearing Recycle Bin" -ForegroundColor Green
+    Clear-RecycleBin -Force
+
     Write-Host "[+] Running Disk Cleanup..." -ForegroundColor Green
     VM-Write-Log "INFO" "Performing Disk Cleanup."
     Invoke-Expression 'cmd /c cleanmgr.exe /AUTOCLEAN'
 
     Write-Host "[+] Clearing up free space. This may take a few minutes..." -ForegroundColor Green
     VM-Clear-FreeSpace
+
+    Write-Host "[+] Clear PowerShell History" -ForegroundColor Green
+    Remove-Item (Get-PSReadlineOption).HistorySavePath -Force -ea 0
 }
 
 function VM-Add-To-Path {
