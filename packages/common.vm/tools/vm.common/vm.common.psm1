@@ -1245,6 +1245,19 @@ public class Shell {
     }
 }
 
+# Remove a directory and if not possible as many of its subfolder and files as possible
+function VM-Remove-Dir {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string[]]$item
+    )
+    Remove-Item -Path $item -Recurse -Force -ErrorAction Continue
+    if (!$? -and $item.PSIsContainer) {
+        Get-ChildItem -Path $item -Force | ForEach-Object {
+            VM-Remove-Dir $item
+        }
+    }
+}
 
 # Usage example:
 # VM-Remove-DesktopFiles -excludeFolders "Labs", "Demos" -excludeFiles "MICROSOFT Windows 10 License Terms.txt", "Labs.zip"
@@ -1286,6 +1299,9 @@ function VM-Remove-DesktopFiles {
             }
         }
     }
+
+    # Remove as much of PS_Transcripts as possible
+    VM-Remove-Dir "PS_Transcripts"
 }
 
 function VM-Clear-TempAndCache {
