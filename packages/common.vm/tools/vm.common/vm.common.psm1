@@ -1338,6 +1338,9 @@ function VM-Clean-Up {
 
     Write-Host "[+] Clearing up free space. This may take a few minutes..." -ForegroundColor Green
     VM-Clear-FreeSpace
+
+    Write-Host "[+] Clear PowerShell History" -ForegroundColor Green
+    Remove-Item (Get-PSReadlineOption).HistorySavePath -Force -ea 0
 }
 
 function VM-Add-To-Path {
