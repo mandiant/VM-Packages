@@ -1257,8 +1257,9 @@ function VM-Remove-DesktopFiles {
         [Parameter(Mandatory=$false)]
         [string[]]$excludeFiles
     )
-    # Ensure that the "PS_Transcripts" folder and the Tools folder (if located on the desktop) are not deleted.
-    $defaultExcludedFolders = @("PS_Transcripts", ${Env:TOOL_LIST_DIR})
+    # Ensure that the "Recycle Bin" folder, the "PS_Transcripts" folder,
+    # and the Tools folder (if located on the desktop) are not deleted.
+    $defaultExcludedFolders = @("Recycle Bin", "PS_Transcripts", ${Env:TOOL_LIST_DIR})
     # Ensure that the "fakenet_logs" shortcut is not deleted.
     $defaultExcludedFiles = @("fakenet_logs.lnk")
     $excludeFolders = $excludeFolders + $defaultExcludedFolders
@@ -1327,6 +1328,9 @@ function VM-Clean-Up {
 
     Write-Host "[+] Clearing Temp and Cache..." -ForegroundColor Green
     VM-Clear-TempAndCache
+
+    Write-Host "[+] Clearing Recycle Bin" -ForegroundColor Green
+    Clear-RecycleBin -Force
 
     Write-Host "[+] Running Disk Cleanup..." -ForegroundColor Green
     VM-Write-Log "INFO" "Performing Disk Cleanup."
