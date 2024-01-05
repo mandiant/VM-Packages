@@ -1346,7 +1346,7 @@ function VM-Clean-Up {
     VM-Clear-TempAndCache
 
     Write-Host "[+] Clearing Recycle Bin" -ForegroundColor Green
-    Clear-RecycleBin -Force
+    Clear-RecycleBin -Force -ErrorAction Continue
 
     Write-Host "[+] Running Disk Cleanup..." -ForegroundColor Green
     VM-Write-Log "INFO" "Performing Disk Cleanup."
