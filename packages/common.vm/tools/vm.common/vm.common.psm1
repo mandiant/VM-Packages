@@ -1245,20 +1245,6 @@ public class Shell {
     }
 }
 
-# Remove a directory and if not possible as many of its subfolder and files as possible
-function VM-Remove-Dir {
-    param (
-        [Parameter(Mandatory=$true)]
-        [string[]]$item
-    )
-    Remove-Item -Path $item -Recurse -Force -ErrorAction Continue
-    if (!$? -and $item.PSIsContainer) {
-        Get-ChildItem -Path $item -Force | ForEach-Object {
-            VM-Remove-Dir $item
-        }
-    }
-}
-
 # Usage example:
 # VM-Remove-DesktopFiles -excludeFolders "Labs", "Demos" -excludeFiles "MICROSOFT Windows 10 License Terms.txt", "Labs.zip"
 # The function is run against both the Current User and 'Public' desktops due to some cases where desktop icons showing on
@@ -1285,23 +1271,19 @@ function VM-Remove-DesktopFiles {
         # Use -Force to get hidden files (such as desktop.ini)
         Get-ChildItem -Path $userDesktopPath -Force | ForEach-Object {
             $item = $_
-            try{
-                if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
-                    VM-Write-Log "INFO" "Deleting folder: $($item.FullName)"
-                    Remove-Item -Path $item.FullName -Recurse -Force -ErrorAction Continue
-                }
-                elseif ($item.PSIsContainer -eq $false -and ($item.Name -notin $excludeFiles -and $item.FullName -notin $excludeFiles)) {
-                    VM-Write-Log "INFO" "Deleting file: $($item.FullName)"
-                    Remove-Item -Path $item.FullName -Force -ErrorAction Continue
-                }
-            } catch {
-                VM-Write-Log-Exception $_
+            if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
+                VM-Write-Log "INFO" "Deleting folder: $($item.FullName)"
+                Remove-Item -Path $item.FullName -Recurse -Force -ErrorAction SilentlyContinue
+            }
+            elseif ($item.PSIsContainer -eq $false -and ($item.Name -notin $excludeFiles -and $item.FullName -notin $excludeFiles)) {
+                VM-Write-Log "INFO" "Deleting file: $($item.FullName)"
+                Remove-Item -Path $item.FullName -Force -ErrorAction SilentlyContinue
+            }
+            if(!$?){
+                VM-Write-Log "ERROR" "`tFailed to delete"
             }
         }
     }
-
-    # Remove as much of PS_Transcripts as possible
-    VM-Remove-Dir "PS_Transcripts"
 }
 
 function VM-Clear-TempAndCache {
