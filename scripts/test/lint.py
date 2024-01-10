@@ -308,10 +308,12 @@ class UsesInvalidCategory(Lint):
     EXCLUSIONS = [
         ".ollydumpex.vm",
         ".scyllahide.vm",
+        "7zip-15-05.vm",
         "common.vm",
         "debloat.vm",
         "flarevm.installer.vm",
         "ida.plugin.capa.vm",
+        "idafree.vm",
         "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
@@ -321,7 +323,6 @@ class UsesInvalidCategory(Lint):
         "openjdk.vm",
         "python3.vm",
         "x64dbgpy.vm",
-        "idafree.vm",
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
