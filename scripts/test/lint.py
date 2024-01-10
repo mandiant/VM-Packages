@@ -311,6 +311,7 @@ class UsesInvalidCategory(Lint):
         "7zip-15-05.vm",
         "common.vm",
         "debloat.vm",
+        "dokan.vm",
         "flarevm.installer.vm",
         "ida.plugin.capa.vm",
         "idafree.vm",

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>memprocfs.vm</id>
+    <version>5.8.17</version>
+    <authors>Ulf Frisk</authors>
+    <description>MemProcFS is an easy and convenient way of viewing physical memory as files in a virtual file system.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="dokan.vm" />
+    </dependencies>
+  </metadata>
+</package>
