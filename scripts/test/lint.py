@@ -312,6 +312,7 @@ class UsesInvalidCategory(Lint):
         "common.vm",
         "debloat.vm",
         "flarevm.installer.vm",
+        "googlechrome.vm",
         "ida.plugin.capa.vm",
         "idafree.vm",
         "installer.vm",
