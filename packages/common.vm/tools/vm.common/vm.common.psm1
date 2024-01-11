@@ -128,6 +128,23 @@ function VM-Assert-Path {
     }
 }
 
+# Raise an exception if the Signature of $file_path is invalid
+function VM-Assert-Signature {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory=$true)]
+        [String] $file_path
+    )
+    $signature_status = (Get-AuthenticodeSignature -FilePath $file_path).Status
+    if ($signature_status -eq 'Valid') {
+        VM-Write-Log "INFO" "Valid signature: $file_path"
+    } else {
+        $err_msg = "Invalid signature: $file_path"
+        VM-Write-Log "ERROR" $err_msg
+        throw $err_msg
+    }
+}
+
 function VM-Get-DiskSize {
     $diskdrive = "${Env:SystemDrive}"
     $driveName = $diskdrive.substring(0, $diskdrive.length-1)
