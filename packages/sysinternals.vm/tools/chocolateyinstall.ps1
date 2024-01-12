@@ -1,60 +1,76 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-# Note: This package depends on the package 'sysinternals' that installs multiple tools.
-#       We're moving these tools to a centeralized location and linking them under
-#       multiple different categories: Utilities, Active Directory Tools
+$toolName = 'sysinternals'
+$category = 'Utilities'
+$toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
 try {
-  # Create directory to store tools
-  $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} 'sysinternals'
-  if (-Not (Test-Path -Path $toolDir) ) {
-    New-Item -Path $toolDir -ItemType Directory -Force | Out-Null
-  }
+    # Download zip
+    $packageArgs      = @{
+      packageName     = $env:ChocolateyPackageName
+      file            = Join-Path ${Env:TEMP} $toolName
+      url             = 'https://download.sysinternals.com/files/SysinternalsSuite.zip'
+    }
+    $filePath = Get-ChocolateyWebFile @packageArgs
 
-  # Location of dependency's tools (all sysinternal tools)
-  $chocoToolDir = Join-Path ${Env:ChocolateyInstall} 'lib\sysinternals\tools' -Resolve
+    # Extract zip
+    Get-ChocolateyUnzip -FileFullPath $filePath -Destination $toolDir
 
-  # Remove previous shims
-  Get-ChildItem -Path "$chocoToolDir\*" -Include '*.exe' | ForEach-Object { Uninstall-BinFile -Name $([System.IO.Path]::GetFileNameWithoutExtension($_)) -ea 0 }
-
-  # Move items to new location
-  Get-ChildItem -Path "$chocoToolDir\*" -Exclude '*.ps1' | Move-Item -Destination $toolDir -Force -ea 0
-
-  # Re-shim moved items
-  Get-ChildItem -Path "$toolDir\*" -Include '*.exe' | ForEach-Object { Install-BinFile -Name $([System.IO.Path]::GetFileNameWithoutExtension($_)) -Path $_.FullName -ea 0 }
-
-  ###
-  # First category
-  $category = 'Utilities'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-
-  # Add shortcut to sysinternals folder
-  $shortcut = Join-Path $shortcutDir 'sysinternals.lnk'
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $toolDir
-  VM-Assert-Path $shortcut
-
-  # Add shortcut for commonly used tool (procexp)
-  $executablePath = Join-Path $toolDir 'procexp.exe' -Resolve
-  $shortcut = Join-Path $shortcutDir 'procexp.lnk'
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
-  VM-Assert-Path $shortcut
-
-  # Add shortcut for commonly used tool (procmon)
-  $executablePath = Join-Path $toolDir 'procmon.exe'
-  $shortcut = Join-Path $shortcutDir 'procmon.lnk'
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
-  VM-Assert-Path $shortcut
-
-  ###
-  # Second category
-  $category = 'Reconnaissance'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-
-  $executablePath = Join-Path $toolDir 'ADExplorer.exe' -Resolve
-  $shortcut = Join-Path $shortcutDir 'ADExplorer.lnk'
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
-  VM-Assert-Path $shortcut
+    # Check signature of all unzip files
+    Get-ChildItem -Path "$toolDir\*.exe" | ForEach-Object {
+        VM-Assert-Signature $_.FullName
+    }
 } catch {
   VM-Write-Log-Exception $_
+  # Remove files with invalid signature
+  Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+}
+
+try {
+    # Add shortcut to sysinternals folder
+    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+    $shortcut = Join-Path $shortcutDir 'sysinternals.lnk'
+    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $toolDir
+    VM-Assert-Path $shortcut
+
+    # Add shortcut for commonly used tools
+    $tools = @{
+        'Utilities' = @('procexp', 'procmon')
+        'Reconnaissance' = @('ADExplorer')
+    }
+    ForEach ($tool in $tools.GetEnumerator()) {
+        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $tool.key
+        ForEach ($toolName in $tool.value) {
+            $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
+            $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
+            VM-Assert-Path $shortcut
+        }
+    }
+
+    # Accept EULA
+    # https://github.com/chocolatey-community/chocolatey-packages/blob/d1241fd3b34e398a2f12c1232fbf616f364997ea/automatic/sysinternals/tools/helpers.ps1#L3C2-L3C2
+    $tools = `
+    "AccessChk",        "Active Directory Explorer", "ADInsight",  "Autologon",       "AutoRuns",
+    "BGInfo",           "CacheSet",                  "ClockRes",   "Coreinfo",        "Ctrl2cap",
+    "DbgView",          "Desktops",                  "Disk2Vhd",   "Diskmon",         "DiskView",
+    "Du",               "EFSDump",                   "FindLinks",  "Handle",          "Hex2Dec",
+    "Junction",         "LdmDump",                   "ListDLLs",   "LoadOrder",       "Movefile",
+    "PageDefrag",       "PendMove",                  "PipeList",   "Portmon",         "ProcDump",
+    "Process Explorer", "Process Monitor",           "PsExec",     "psfile",          "PsGetSid",
+    "PsInfo",           "PsKill",                    "PsList",     "PsLoggedon",      "PsLoglist",
+    "PsPasswd",         "PsService",                 "PsShutdown", "PsSuspend",       "RamMap",
+    "RegDelNull",       "Regjump",                   "Regsize",    "RootkitRevealer", "Share Enum",
+    "ShellRunas - Sysinternals: www.sysinternals.com",
+    "EulaAccepted",       "SigCheck",                "Streams",    "Strings",         "Sync",
+    "System Monitor",   "TCPView",                   "VMMap",      "VolumeID",        "Whois",
+    "Winobj",           "ZoomIt"
+    foreach($tool in $tools) {
+        $registryKey = "HKCU:\SOFTWARE\Sysinternals\$tool"
+        New-Item -Path $registryKey -Force | Out-Null
+        New-ItemProperty -Path $registryKey -Name EulaAccepted -Value 1 -Force | Out-Null
+    }
+} catch {
+    VM-Write-Log-Exception $_
 }
