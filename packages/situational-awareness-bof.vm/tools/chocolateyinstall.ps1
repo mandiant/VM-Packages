@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Situational Awareness BOF'
 $category = 'Reconnaissance'
 
-$zipUrl = 'https://github.com/trustedsec/CS-Situational-Awareness-BOF/archive/refs/heads/master.zip'
-$zipSha256 = 'e3673d7e41ad6d36ca7d6d44821f68238aae9968e062acb6d96fc7663c87bbdb'
+$zipUrl = 'https://codeload.github.com/trustedsec/CS-Situational-Awareness-BOF/zip/9a813b8f31cd397d7b05211e1d5b378c07fd1b8b'
+$zipSha256 = 'b461e5a0dde271ee29c2105f8b064e6c3d38f4996c09478c16bb1f071cee00c1'
 
 VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256
