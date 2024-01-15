@@ -23,7 +23,7 @@ def main():
 
     cmd_args = list()
     for k, v in pkg.items():
-        if k == "why":
+        if k in ("why", "dependencies"):
             continue
         cmd_args.append(f"--{k}")
         cmd_args.append(f"{v}")
