@@ -271,7 +271,7 @@ function VM-Install-Shortcut{
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [switch] $runAsAdmin=$false,
+        [switch] $runAsAdmin,
         [Parameter(Mandatory=$false)]
         [string] $executableDir,
         [Parameter(Mandatory=$false)]
@@ -289,9 +289,30 @@ function VM-Install-Shortcut{
         $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
         # Change to executable dir, print command to execute, and execute command
         $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
-        Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath -RunAsAdmin $runAsAdmin
+
+        $shortcutArgs = @{
+            ShortcutFilePath = $shortcut
+            TargetPath       = $executableCmd
+            Arguments        = $executableArgs
+            WorkingDirectory = $executableDir
+            IconLocation     = $executablePath
+        }
+        if ($runAsAdmin) {
+            $packageArgs.RunAsAdmin = $true
+        }
+
+        Install-ChocolateyShortcut @shortcutArgs
+
     } else {
-        Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executablePath -RunAsAdmin $runAsAdmin
+        $shortcutArgs = @{
+            ShortcutFilePath = $shortcut
+            TargetPath       = $executablePath
+        }
+        if ($runAsAdmin) {
+            $shortcutArgs.RunAsAdmin = $true
+        }
+
+        Install-ChocolateyShortcut @shortcutArgs
     }
     VM-Assert-Path $shortcut
 }
