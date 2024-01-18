@@ -5,8 +5,9 @@ try {
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
   $category = 'Utilities'
+  $toolName = 'CyberChef'
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-  $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} 'cyberchef'
+  $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
@@ -18,9 +19,16 @@ try {
   Install-ChocolateyZipPackage @packageArgs
   VM-Assert-Path $toolDir
 
+  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+  $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+  $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
   $htmlPath = Join-Path $toolDir "CyberChef_v10.5.2.html" -Resolve
-  $shortcut = Join-Path $shortcutDir "CyberChef.lnk"
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $htmlPath
+  $arguments = "start chrome $htmlPath && exit"
+  $executableArgs = "/C $arguments"
+  $iconLocation = "%ProgramFiles%\Google\Chrome\Application\chrome.exe"
+
+  Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $toolDir -WindowStyle 7 -IconLocation $iconLocation
+
   VM-Assert-Path $shortcut
 } catch {
   VM-Write-Log-Exception $_
