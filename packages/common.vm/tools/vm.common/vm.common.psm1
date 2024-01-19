@@ -275,10 +275,14 @@ function VM-Install-Shortcut{
         [Parameter(Mandatory=$false)]
         [string] $executableDir,
         [Parameter(Mandatory=$false)]
-        [string] $arguments = ""
+        [string] $arguments = "",
+        [Parameter(Mandatory=$false)]
+        [string] $iconLocation
     )
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+
+    if (-Not $iconLocation) {$iconLocation = $executablePath}
 
     if ($consoleApp) {
         if (!$executableDir) {
@@ -295,7 +299,7 @@ function VM-Install-Shortcut{
             TargetPath       = $executableCmd
             Arguments        = $executableArgs
             WorkingDirectory = $executableDir
-            IconLocation     = $executablePath
+            IconLocation     = $iconLocation
         }
         if ($runAsAdmin) {
             $packageArgs.RunAsAdmin = $true
