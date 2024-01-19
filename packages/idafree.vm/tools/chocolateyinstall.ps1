@@ -4,7 +4,6 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'idafree'
   $category = 'Disassemblers'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   $packageArgs = @{
     packageName  = ${Env:ChocolateyPackageName}
@@ -38,10 +37,9 @@ try {
 
   VM-Assert-Path $launcherPath
 
-  $launcherShortcut = Join-Path $shortcutDir "ida.lnk"
   $menuIcon = Join-Path $toolDir "ida.ico" -Resolve
 
-  Install-ChocolateyShortcut -shortcutFilePath $launcherShortcut -targetPath $launcherPath -IconLocation $menuIcon
+  VM-Install-Shortcut -toolName "ida" -category $category -executablePath $launcherPath -IconLocation $menuIcon
 
   # ida64.exe supports both 32 bit and 64 bit in IDA >= 8.2
   VM-Add-To-Right-Click-Menu $launcherName 'Open with IDA' "`"$launcherPath`" `"%1`"" "$menuIcon"
