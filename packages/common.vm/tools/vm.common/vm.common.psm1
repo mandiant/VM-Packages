@@ -311,6 +311,7 @@ function VM-Install-Shortcut{
         $shortcutArgs = @{
             ShortcutFilePath = $shortcut
             TargetPath       = $executablePath
+            IconLocation     = $iconLocation
         }
         if ($runAsAdmin) {
             $shortcutArgs.RunAsAdmin = $true
