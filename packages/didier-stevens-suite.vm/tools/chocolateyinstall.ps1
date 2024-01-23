@@ -17,10 +17,12 @@ try {
     $toolDir = Get-Item "${Env:RAW_TOOLS_DIR}\DidierStevensSuite-*"
     VM-Assert-Path $toolDir
 
-    # Add shortcut for commonly used PDF tools
+    # Add shortcut for commonly used python PDF tools
     ForEach ($toolName in @('pdfid', 'pdf-parser')) {
-      $executablePath = Join-Path $toolDir "$toolName.py"
-      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments "--help"
+      $executablePath = (Get-Command python).Source
+      $filePath = Join-Path $toolDir "$toolName.py"
+      $arguments = $filePath + " --help"
+      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
     }
 
     # Add tools to Path
