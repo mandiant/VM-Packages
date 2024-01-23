@@ -9,8 +9,8 @@ try {
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
-    url           = 'https://github.com/x64dbg/x64dbgpy/releases/download/b275005/x64dbgpy_b275005.zip'
-    checksum      = '62ffbbcf0218c3b833bcb36c2a10671c4501007759a84164b63f09e9f2ce9bfc'
+    url           = 'https://github.com/x64dbg/x64dbgpy/releases/download/8c0538a/x64dbgpy_8c0538a.zip'
+    checksum      = 'e8184fb4e7bf36f33a3727b6ec76088464f7b745c9b44ef65f82be4bff8e6d19'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs

@@ -8,13 +8,13 @@ try {
   $category = 'Debuggers'
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-  $snapshotDate = '2021-05-08_14-17'
+  $snapshotDate = '2024-01-06_21-29'
 
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
     url           = "https://sourceforge.net/projects/x64dbg/files/snapshots/snapshot_$snapshotDate.zip"
-    checksum      = '441fa73605fcf0c2bbea9285bcd2b999fb02177a394c7e40464d74008d1793f9'
+    checksum      = '467e41d68e489aad288cb0d868ea37ceb9dcda3757d9badc6314964d847e26b4'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs
