@@ -142,7 +142,7 @@
         <registry-item name="Disable Windows Update Automatic Restart" path="HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" value="Debugger" type="String" data="cmd.exe" />
         <registry-item name="Disable Microsoft Connectivity Test (msftconnecttest.com)" path="HKLM:\SYSTEM\CurrentControlSet\services\NlaSvc\Parameters\Internet" value="EnableActiveProbing" type="DWord" data="0" />
         <registry-item name="Enable opening cmd from context menu - Default" path="Registry::HKEY_CLASSES_ROOT\Directory\Background\shell\ctx_cmd" value="(Default)" type="String" data="Cmd Here" />
-        <registry-item name="Enable opening cmd from context menu - Command" path="Registry::HKEY_CLASSES_ROOT\Directory\Background\shell\ctx_cmd\command" value="(Default)" type="String" data="cmd.exe /s /k pushd &quot;%V&quot;" />
+        <registry-item name="Enable opening cmd from context menu - Command" path="Registry::HKEY_CLASSES_ROOT\Directory\Background\shell\ctx_cmd\command" value="(Default)" type="String" data="&quot;cmd.exe&quot; &quot;pushd &quot;%V&quot;&quot;" />
     </registry-items>
     <path-items>
         <!--
