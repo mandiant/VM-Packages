@@ -292,7 +292,7 @@ function VM-Install-Shortcut{
 
         $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
         # Change to executable dir, print command to execute, and execute command
-        $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
+        $executableArgs = "/K `"echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
 
         $shortcutArgs = @{
             ShortcutFilePath = $shortcut
