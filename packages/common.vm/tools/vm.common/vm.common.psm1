@@ -219,7 +219,6 @@ function VM-Install-Raw-GitHub-Repo {
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
@@ -242,15 +241,10 @@ function VM-Install-Raw-GitHub-Repo {
         }
 
         if ($powershellCommand) {
-            $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command $powershellCommand"
-            $powershellPath = Join-Path "${Env:WinDir}\system32\WindowsPowerShell\v1.0" "powershell.exe" -Resolve
-            $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $powershellPath -Arguments $executableArgs -WorkingDirectory $toolDir -IconLocation $powershell
+            VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $toolDir -powershell
         } else {
-            $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-            Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $toolDir
+            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $toolDir
         }
-        VM-Assert-Path $shortcut
 
         return $toolDir
     } catch {
@@ -266,10 +260,12 @@ function VM-Install-Shortcut{
         [string] $toolName,
         [Parameter(Mandatory=$true, Position=1)]
         [string] $category,
-        [Parameter(Mandatory=$true, Position=2)]
+        [Parameter(Mandatory=$false, Position=2)]
         [string] $executablePath,
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
+        [Parameter(Mandatory=$false)]
+        [switch] $powershell,
         [Parameter(Mandatory=$false)]
         [switch] $runAsAdmin,
         [Parameter(Mandatory=$false)]
@@ -285,15 +281,21 @@ function VM-Install-Shortcut{
     # Set the default icon to be the executable's icon
     if (-Not $iconLocation) {$iconLocation = $executablePath}
 
-    if ($consoleApp) {
-        if (!$executableDir) {
-            $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
+    if ($consoleApp -or $powershell) {
+        if (-not $executableDir) {
+            $executableDir = Join-Path ${Env:UserProfile} "Desktop"
         }
         VM-Assert-Path $executableDir
 
-        $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-        # Change to executable dir, print command to execute, and execute command
-        $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
+        if ($consoleApp) {
+            $executableCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+            # Change to executable dir, print command to execute, and execute command
+            $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
+        } else {
+            $executableCmd = Join-Path "${PSHome}" "powershell.exe" -Resolve
+            $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command `"`$cmd = '$arguments'; Write-Host `$cmd; Invoke-Expression `$cmd`""
+            $iconLocation = $executableCmd
+        }
 
         $shortcutArgs = @{
             ShortcutFilePath = $shortcut
@@ -474,7 +476,6 @@ function VM-Install-Single-Ps1 {
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-        $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
         # Download and install
         $scriptPath = Join-Path $toolDir "$toolName.ps1"
@@ -491,18 +492,8 @@ function VM-Install-Single-Ps1 {
         Get-ChocolateyWebFile @packageArgs
         VM-Assert-Path $scriptPath
 
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-        $targetCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+        VM-Install-Shortcut -toolName $toolName -category $category -executableDir $toolDir -arguments $ps1Cmd -powershell
 
-        if ($ps1Cmd) {
-            $targetArgs = "/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command `"cd '$toolDir'; $ps1Cmd`""
-        } else {
-            $targetArgs = "/K powershell.exe -ExecutionPolicy Bypass -NoExit -Command `"cd '$toolDir'`""
-        }
-        $targetIcon = Join-Path (Join-Path ${Env:WinDir} "system32\WindowsPowerShell\v1.0") "powershell.exe" -Resolve
-
-        Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $targetCmd -arguments $targetArgs -workingDirectory $toolDir -iconLocation $targetIcon
-        VM-Assert-Path $shortcut
         return $scriptPath
     } catch {
         VM-Write-Log-Exception $_
