@@ -38,10 +38,9 @@
         <app name="Microsoft.XboxIdentityProvider"/>
         <app name="Microsoft.XboxSpeechToTextOverlay"/>
         <app name="Microsoft.YourPhone"/>
-        <app name="Microsoft.ZuneMusic"/>
-        <app name="Microsoft.ZuneVideo"/>
-        <app name="SpotifyAB.SpotifyMusic"/>
-        <app name="Disney.37853FC22B2CE"/>
+        <app name="*Zune*"/>
+        <app name="*Spotify*"/>
+        <app name="*Disney*"/>
     </apps>
     <services>
         <!--
