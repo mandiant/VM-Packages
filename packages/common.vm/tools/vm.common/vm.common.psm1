@@ -302,7 +302,7 @@ function VM-Install-Shortcut{
             IconLocation     = $iconLocation
         }
         if ($runAsAdmin) {
-            $packageArgs.RunAsAdmin = $true
+            $shortcutArgs.RunAsAdmin = $true
         }
 
         Install-ChocolateyShortcut @shortcutArgs
