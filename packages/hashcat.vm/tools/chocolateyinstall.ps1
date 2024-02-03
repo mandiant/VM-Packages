@@ -16,16 +16,6 @@ try {
     # Get the processor information
     $processor = Get-CimInstance Win32_Processor
 
-
-    # Check if the manufacturer is Intel
-    if ($processor.Manufacturer -eq "GenuineIntel") {
-        Write-Output "Intel processor detected for hashcat."
-    } else {
-        Write-Output "Non-Intel processor detected. Hashcat will not work"
-        throw "Non-Intel processor detected."
-    }
-
-
     # Download the zip file
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
