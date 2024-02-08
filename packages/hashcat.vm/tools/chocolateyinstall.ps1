@@ -12,10 +12,6 @@ $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "$toolName"
 $workingDir = Join-Path "$toolDir" "$zipname"
 
 try {
-
-    # Get the processor information
-    $processor = Get-CimInstance Win32_Processor
-
     # Download the zip file
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
