@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>x64dbg.vm</id>
-    <version>2021.05.08.20230418</version>
+    <version>2024.01.06.20240123</version>
     <description>An open-source x64/x32 debugger for Windows.</description>
     <authors>mrexodia</authors>
     <dependencies>
