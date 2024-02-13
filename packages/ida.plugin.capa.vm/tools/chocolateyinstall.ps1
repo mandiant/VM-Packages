@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     # Install plugin
-    $pluginUrl = "https://raw.githubusercontent.com/mandiant/capa/v6.1.0/capa/ida/plugin/capa_explorer.py"
+    $pluginUrl = "https://raw.githubusercontent.com/mandiant/capa/v7.0.0/capa/ida/plugin/capa_explorer.py"
     $pluginSha256 = "a9a60d9066c170c4e18366eb442f215009433bcfe277d3c6d0c4c9860824a7d3"
     $pluginsDir = New-Item "$Env:APPDATA\Hex-Rays\IDA Pro\plugins" -ItemType "directory" -Force
     $pluginPath = Join-Path $pluginsDir "capa_explorer.py"
@@ -19,8 +19,8 @@ try {
     VM-Assert-Path $pluginPath
 
     # Download capa rules
-    $rulesUrl = "https://github.com/mandiant/capa-rules/archive/refs/tags/v6.1.0.zip"
-    $rulesSha256 = "d87240475b2989e919f65381556f28b455a2f7d6cd35d95acdbbbe9f04f86c84"
+    $rulesUrl = "https://github.com/mandiant/capa-rules/archive/refs/tags/v7.0.0.zip"
+    $rulesSha256 = "4dd27227e68ba419dd8cbe66ba6b09d2b55836e832a97170c9e8b6398caf15fb"
     $packageArgs = @{
         packageName    = ${Env:ChocolateyPackageName}
         unzipLocation  = $pluginsDir
@@ -29,7 +29,7 @@ try {
         checksumType   = 'sha256'
     }
     Install-ChocolateyZipPackage @packageArgs
-    $rulesDir = Join-Path $pluginsDir "capa-rules-6.1.0" -Resolve
+    $rulesDir = Join-Path $pluginsDir "capa-rules-7.0.0" -Resolve
 
     # Set capa rules in the capa plugin
     $registryPath = 'HKCU:\SOFTWARE\IDAPython\IDA-Settings\capa'
