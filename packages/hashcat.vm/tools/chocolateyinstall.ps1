@@ -12,20 +12,6 @@ $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "$toolName"
 $workingDir = Join-Path "$toolDir" "$zipname"
 
 try {
-
-    # Get the processor information
-    $processor = Get-CimInstance Win32_Processor
-
-
-    # Check if the manufacturer is Intel
-    if ($processor.Manufacturer -eq "GenuineIntel") {
-        Write-Output "Intel processor detected for hashcat."
-    } else {
-        Write-Output "Non-Intel processor detected. Hashcat will not work"
-        throw "Non-Intel processor detected."
-    }
-
-
     # Download the zip file
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
@@ -38,7 +24,7 @@ try {
     $zipPath = $packageArgs.fileFullPath
     VM-Assert-Path $zipPath
 
-    7zip x $zipPath -o"$toolDir" -y
+    7z x $zipPath -o"$toolDir" -y
     # Create a shortcut
     $executablePath = Join-Path "$workingDir" "$toolName.exe" -Resolve
     VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -executableDir $workingDir
