@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>bochs.vm</id>
+    <version>2.7</version>
+    <authors>Donald Becker, Greg Alexander, Christophe Bothamy, Volker Ruppert, Bryce Denney, Stanislav Shwartsman</authors>
+    <description>Bochs is a portable x86 PC emulation software package that emulates enough of the x86 CPU, related AT hardware, and BIOS to run Windows, Linux, *BSD, Minix, and other OS's, all on your workstation. Used as debugger in IDA Pro (Local Bochs debugger)</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
