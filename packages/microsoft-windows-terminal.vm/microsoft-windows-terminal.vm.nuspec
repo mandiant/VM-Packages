@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>microsoft-windows-terminal.vm</id>
-    <version>1.18.3181</version>
+    <version>1.19.10302</version>
     <authors>Microsoft</authors>
     <description>Windows Terminal is a new, modern, feature-rich, productive terminal application for command-line users.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="microsoft-windows-terminal" version="[1.18.3181]" />
+      <dependency id="microsoft-windows-terminal" version="[1.19.10302]" />
     </dependencies>
   </metadata>
 </package>
