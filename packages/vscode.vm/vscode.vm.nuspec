@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>vscode.vm</id>
+    <version>1.85.2</version>
+    <authors>Microsoft</authors>
+    <description>VSCode is a modern, open-source code editor.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="vscode.install" version="[1.85.2]" />
+    </dependencies>
+  </metadata>
+</package>
