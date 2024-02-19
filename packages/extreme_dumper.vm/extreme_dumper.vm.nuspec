@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>extreme_dumper.vm</id>
+    <version>4.0.0.20240219</version>
+    <authors>wwh1004</authors>
+    <description>.NET Assembly Dumper from memory of processes.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
