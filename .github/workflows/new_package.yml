@@ -6,7 +6,7 @@ on:
 
 jobs:
   create-package:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     if: github.event.label.name == 'send PR'
     steps:
       - name: Remove 'send PR' label
@@ -22,19 +22,24 @@ jobs:
           template-path: .github/ISSUE_TEMPLATE/new_package.yml
       - name: Write issue JSON string to tmp file
         run: |
-          echo $JSON_STRING > pkg.json
+          echo $env:JSON_STRING > pkg.json
           cat pkg.json
         env:
           JSON_STRING: ${{ steps.issue-parser.outputs.jsonString }}
-      - name: Create and commit package
+      - name: Create package
         run: |
-          # The Python script prints the package name so that we can easily
-          # echo it to $GITHUB_ENV. Alternatively we could parse if with a
-          # regular string from the JSON string
-          pkg_name=$(./scripts/utils/create_package_template_from_json.py --json_file pkg.json)
-          echo "pkg_name=$pkg_name" >> $GITHUB_ENV
+          # The Python script prints the package name so that we can add it to GITHUB_ENV
+          $pkg_name = $(python scripts/utils/create_package_template_from_json.py --json_file pkg.json)
+          echo "pkg_name=$pkg_name" >> $env:GITHUB_ENV
+      - name: Build and test new package
+        id: test
+        run: scripts/test/test_install.ps1 "$env:pkg_name.vm"
+      - name: Upload logs to artifacts
+        uses: ./.github/actions/upload-logs
+        if: always()
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+        if: steps.test.outcome == 'success'
         with:
           title: ':robot: Add ${{env.pkg_name}}.vm'
           body: 'Automated PR from ${{github.event.issue.html_url}} :rocket:'
