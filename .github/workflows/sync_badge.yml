@@ -1,0 +1,26 @@
+name: Updates packages number badge on README
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  update_badge:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Update packages number badge in README
+        run: |
+          # Counts all packages in /packages including installer.vm
+          num_packages=$(ls packages | wc -l)
+          sed -i "s/badge\/packages-[0-9]*-blue\.svg/badge\/packages-$num_packages-blue.svg/" README.md
+      - name: Commit changes
+        run: |
+          git config user.email 'vm-packages@mandiant.com'
+          git config user.name 'vm-packages'
+          # Do not fail the action if packages number doesn't change
+          git add -A
+          git diff-index --quiet HEAD || git commit -am '[README] Update package number badge'
+      - name: Push changes
+        uses: ad-m/github-push-action@master

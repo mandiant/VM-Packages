@@ -1,4 +1,4 @@
-[![Packages](https://img.shields.io/badge/packages->100-blue.svg)](packages)
+[![Packages](https://img.shields.io/badge/packages-212-blue.svg)](packages)
 [![CI](https://github.com/mandiant/VM-packages/workflows/CI/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3ACI+branch%3Amain)
 [![Daily run](https://github.com/mandiant/VM-packages/workflows/daily/badge.svg)](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures)
 
