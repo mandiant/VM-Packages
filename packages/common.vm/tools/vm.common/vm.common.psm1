@@ -1288,6 +1288,16 @@ public class Shell {
     }
 }
 
+# Sort Desktop icons by item type using WScript.Shell to replicate the manual steps
+function VM-Sort-Desktop-Icons {
+    VM-Write-Log "INFO" "Sorting Desktop icons"
+    (New-Object -ComObject Shell.Application).toggleDesktop();
+    Start-Sleep -Milliseconds 100;
+    $objShell = New-Object -ComObject WScript.Shell;
+    $objShell.SendKeys("^a {F5}+{F10}oi");
+    Start-Sleep -Milliseconds 100;
+}
+
 # Usage example:
 # VM-Remove-DesktopFiles -excludeFolders "Labs", "Demos" -excludeFiles "MICROSOFT Windows 10 License Terms.txt", "Labs.zip"
 # The function is run against both the Current User and 'Public' desktops due to some cases where desktop icons showing on
@@ -1327,6 +1337,8 @@ function VM-Remove-DesktopFiles {
             }
         }
     }
+
+    VM-Sort-Desktop-Icons
 }
 
 function VM-Clear-TempAndCache {
