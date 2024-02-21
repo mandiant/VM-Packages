@@ -24,3 +24,5 @@ jobs:
           git diff-index --quiet HEAD || git commit -am '[README] Update package number badge'
       - name: Push changes
         uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_TOKEN }}
