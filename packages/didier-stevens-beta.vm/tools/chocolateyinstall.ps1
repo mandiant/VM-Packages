@@ -17,15 +17,16 @@ try {
     $toolDir = Get-Item "${Env:RAW_TOOLS_DIR}\Beta-*"
     VM-Assert-Path $toolDir
 
-    # Add shortcut for commonly used office tools
+    # Add shortcut for commonly used office python tools
     ForEach ($toolName in @('onedump')) {
-      $executablePath = Join-Path $toolDir "$toolName.py"
-      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments "--help"
+      $executablePath = (Get-Command python).Source
+      $filePath = Join-Path $toolDir "$toolName.py"
+      $arguments = $filePath + " --help"
+      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
     }
 
     # Add tools to Path
-    $path = [Environment]::GetEnvironmentVariable("Path", "Machine") + [IO.Path]::PathSeparator + $toolDir
-    [Environment]::SetEnvironmentVariable("Path", $path, "Machine")
+    VM-Add-To-Path $toolDir
 } catch {
   VM-Write-Log-Exception $_
 }
