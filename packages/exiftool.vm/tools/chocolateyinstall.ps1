@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'exiftool'
-    $category = 'Utilities'
+    $category = 'File Information'
     $shimPath = 'bin\exiftool.exe'
 
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

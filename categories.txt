@@ -1,35 +1,31 @@
-Active Directory
-Cloud
 Command & Control
 Credential Access
 Debuggers
 Delphi
 Disassemblers
+Documents
 dotNet
-Evasion
 Exploitation
+File Information
 Forensic
 Hex Editors
-Information Gathering
 InnoSetup
 Java & Android
 Javascript
 Lateral Movement
+Memory
 Networking
-Office
 Packers
-Password Attacks
 Payload Development
-PDF
 PE
 Persistence
 PowerShell
 Privilege Escalation
-Python
+Productivity Tools
 Reconnaissance
-Text Editors
+Registry
+Shellcode
 Utilities
-VB
-Vulnerability Analysis
+Visual Basic
 Web Application
 Wordlists

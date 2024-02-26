@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'FLOSS'
-$category = 'Utilities'
+$category = 'File Information'
 
 VM-Uninstall $toolName $category

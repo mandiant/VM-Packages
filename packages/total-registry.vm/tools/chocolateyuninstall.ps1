@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'TotalReg'
-$category = 'Utilities'
+$category = 'Registry'
 
 VM-Uninstall $toolName $category

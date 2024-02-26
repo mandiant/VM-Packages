@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 # Remove shortcuts
-$category = 'Office'
+$category = 'Documents'
 ForEach ($toolName in @('onedump')) {
   VM-Remove-Tool-Shortcut $toolName $category
 }

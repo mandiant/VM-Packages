@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
 
     $toolName = 'OneNoteAnalyzer'
-    $category = 'Office'
+    $category = 'Documents'
 
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
     $zipUrl = 'https://github.com/knight0x07/OneNoteAnalyzer/releases/download/OneNoteAnalyzer/OneNoteAnalyzer-withPass.zip'

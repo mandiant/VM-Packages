@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>arsenalimagemounter.vm</id>
-    <version>3.11.279.20240222</version>
+    <version>3.11.279.20240226</version>
     <authors>Arsenal Recon</authors>
     <description>Mounts the contents of disk images as complete disks in Windows.</description>
     <dependencies>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>isd.vm</id>
-    <version>1.5</version>
+    <version>1.5.0.20240217</version>
     <authors>VDisAsm</authors>
     <description>Inno Setup Decompiler</description>
     <dependencies>

@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'RegistryExplorer'
-$category = 'Forensic'
+$category = 'Registry'
 
 VM-Uninstall $toolName $category

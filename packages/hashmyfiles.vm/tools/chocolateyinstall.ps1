@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'hashmyfiles'
-  $category = 'Utilities'
+  $category = 'File Information'
 
   $zipUrl = "https://www.nirsoft.net/utils/hashmyfiles.zip"
   $zipUrl_64 = "https://www.nirsoft.net/utils/hashmyfiles-x64.zip"

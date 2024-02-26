@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>total-registry.vm</id>
-    <version>0.9.7.20240227</version>
+    <version>0.9.7.20240228</version>
     <authors>Pavel Yosifovich</authors>
     <description>Replacement for the Windows built-in Regedit.exe tool with improved features.</description>
     <dependencies>

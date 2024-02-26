@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'OffVis'
-$category = 'Office'
+$category = 'Documents'
 
 VM-Uninstall $toolName $category
