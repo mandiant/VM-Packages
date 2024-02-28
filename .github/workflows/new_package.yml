@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Parse issue
-        uses: stefanbuck/github-issue-parser@v2
+        uses: stefanbuck/github-issue-parser@1e5bdee70d4b3e066a33aa0669ab782943825f94 # v3.1.0
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/new_package.yml
