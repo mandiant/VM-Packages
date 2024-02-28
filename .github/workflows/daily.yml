@@ -23,7 +23,7 @@ jobs:
             os_name: Win19
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Build and test all packages
         run: scripts/test/test_install.ps1 -all -max_tries 3
       - name: Upload logs to artifacts
@@ -31,7 +31,7 @@ jobs:
         if: always()
       - name: Checkout wiki code
         if: always()
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki
