@@ -10,7 +10,7 @@ jobs:
     if: github.event.label.name == 'send PR'
     steps:
       - name: Remove 'send PR' label
-        uses: actions-ecosystem/action-remove-labels@v1
+        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1.3.0
         with:
           labels: send PR
       - name: Checkout code
