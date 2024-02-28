@@ -60,7 +60,7 @@ jobs:
           echo "message=$message" >> $env:GITHUB_ENV
       - name: Update dynamic badge gist
         if: always()
-        uses: schneegans/dynamic-badges-action@v1.7.0
+        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483 # v1.7.0
         with:
           auth: ${{ secrets.REPO_TOKEN }}
           gistID: 7d6b2592948d916eb5529350308f01d1

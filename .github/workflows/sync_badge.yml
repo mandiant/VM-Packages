@@ -16,7 +16,7 @@ jobs:
           num_packages=$(ls packages | wc -l)
           echo "num_packages=$num_packages" >> $GITHUB_ENV
       - name: Update dynamic badge gist
-        uses: schneegans/dynamic-badges-action@v1.7.0
+        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483 # v1.7.0
         with:
           auth: ${{ secrets.REPO_TOKEN }}
           gistID: 0e28118f551692f3401ac669e1d6761d
