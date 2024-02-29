@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sclauncher64.vm</id>
-    <version>0.0.4</version>
+    <version>0.0.4.20240217</version>
     <authors>Josh Stroschein</authors>
     <description>A small program to load 64-bit shellcode and allow for execution or debugging. Can also output PE files from shellcode.</description>
     <dependencies>

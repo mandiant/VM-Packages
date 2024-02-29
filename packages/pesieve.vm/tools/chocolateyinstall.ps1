@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'pe-sieve'
-  $category = 'Utilities'
+  $category = 'Memory'
   $shimPath = 'bin\pe-sieve.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

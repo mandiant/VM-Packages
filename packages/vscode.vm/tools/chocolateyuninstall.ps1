@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'VSCode'
-$category = 'Text Editors'
+$category = 'Productivity Tools'
 
 VM-Remove-Tool-Shortcut $toolName $category

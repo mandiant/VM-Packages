@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>exiftool.vm</id>
-    <version>12.77.0</version>
+    <version>12.77.0.20240217</version>
     <authors>Phil Harvey</authors>
     <description>A tool for reeding and writing file metadata</description>
     <dependencies>

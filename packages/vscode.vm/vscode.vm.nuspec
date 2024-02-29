@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vscode.vm</id>
-    <version>1.85.2.20240223</version>
+    <version>1.85.2.20240226</version>
     <authors>Microsoft</authors>
     <description>VSCode is a modern, open-source code editor.</description>
     <dependencies>

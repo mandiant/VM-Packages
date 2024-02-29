@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>reg_export.vm</id>
-    <version>1.3</version>
+    <version>1.3.0.20240217</version>
     <authors>Adam Kramer</authors>
     <description>A CLI that exports the raw content of a registry value to a file</description>
     <dependencies>

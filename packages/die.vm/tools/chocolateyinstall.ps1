@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'die'
-  $category = 'Utilities'
+  $category = 'File Information'
 
   $zipUrl = 'https://github.com/horsicq/DIE-engine/releases/download/3.07/die_win32_portable_3.07.zip'
   $zipSha256 = 'c7f16841df475d6f09d37cf745804c866c823876c4605b5958376402cbb64eca'
