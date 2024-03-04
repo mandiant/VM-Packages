@@ -10,13 +10,13 @@ jobs:
     if: github.event.label.name == 'send PR'
     steps:
       - name: Remove 'send PR' label
-        uses: actions-ecosystem/action-remove-labels@v1
+        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1.3.0
         with:
           labels: send PR
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Parse issue
-        uses: stefanbuck/github-issue-parser@v2
+        uses: stefanbuck/github-issue-parser@1e5bdee70d4b3e066a33aa0669ab782943825f94 # v3.1.0
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/new_package.yml
@@ -38,7 +38,7 @@ jobs:
         uses: ./.github/actions/upload-logs
         if: always()
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc # v6.0.1
         if: steps.test.outcome == 'success'
         with:
           title: ':robot: Add ${{env.pkg_name}}.vm'

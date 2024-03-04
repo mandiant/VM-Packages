@@ -23,7 +23,7 @@ jobs:
             os_name: Win19
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Build and test all packages
         run: scripts/test/test_install.ps1 -all -max_tries 3
       - name: Upload logs to artifacts
@@ -31,7 +31,7 @@ jobs:
         if: always()
       - name: Checkout wiki code
         if: always()
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki
@@ -60,7 +60,7 @@ jobs:
           echo "message=$message" >> $env:GITHUB_ENV
       - name: Update dynamic badge gist
         if: always()
-        uses: schneegans/dynamic-badges-action@v1.7.0
+        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483 # v1.7.0
         with:
           auth: ${{ secrets.REPO_TOKEN }}
           gistID: 7d6b2592948d916eb5529350308f01d1
