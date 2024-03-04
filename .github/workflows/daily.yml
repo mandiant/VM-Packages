@@ -42,7 +42,7 @@ jobs:
         if: always()
         working-directory: wiki
         run: |
-          git config user.email 'vm-packages@mandiant.com'
+          git config user.email 'vm-packages@google.com'
           git config user.name 'vm-packages'
           git commit -am 'Add daily results'
           git push

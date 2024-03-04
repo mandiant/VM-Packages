@@ -49,8 +49,8 @@ jobs:
             
             Closes ${{github.event.issue.html_url}}.
           branch: package-${{env.pkg_name}}
-          committer: vm-packages <vm-packages@mandiant.com>
-          author: vm-packages <vm-packages@mandiant.com>
+          committer: vm-packages <vm-packages@google.com>
+          author: vm-packages <vm-packages@google.com>
           labels: ":new: package"
           # GH actions can not trigger other GH actions,
           # use a Personal Access Token to trigger the CI workflow in the created PR
