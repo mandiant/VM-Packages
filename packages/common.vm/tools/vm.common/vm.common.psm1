@@ -282,6 +282,7 @@ function VM-Install-Shortcut{
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $shortcut = Join-Path $shortcutDir "$toolName.lnk"
 
+    # Set the default icon to be the executable's icon
     if (-Not $iconLocation) {$iconLocation = $executablePath}
 
     if ($consoleApp) {
@@ -320,6 +321,19 @@ function VM-Install-Shortcut{
         Install-ChocolateyShortcut @shortcutArgs
     }
     VM-Assert-Path $shortcut
+
+    # If the targets is a .bat file, change the shortcut icon to Windows default
+    $extension = [System.IO.Path]::GetExtension($executablePath)
+    if ($extension -eq ".bat") {
+        $Shell = New-Object -ComObject ("WScript.Shell")
+        $Shortcut = $Shell.CreateShortcut($shortcut)
+
+        $IconArrayIndex = -68 # This is the specific icon that Windows uses for .bat files by default
+        $IconLocation = "C:\WINDOWS\system32\imageres.dll"
+        $Shortcut.IconLocation = "$IconLocation,$IconArrayIndex"
+
+        $Shortcut.Save()
+    }
 }
 
 # This functions returns $toolDir (outputed by Install-ChocolateyZipPackage) and $executablePath
