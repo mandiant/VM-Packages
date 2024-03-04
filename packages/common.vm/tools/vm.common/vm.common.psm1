@@ -1451,3 +1451,13 @@ function VM-Add-To-Path {
         [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
     }
 }
+
+function VM-Pip-Install {
+    param (
+        [string]$package
+    )
+    # Create output file to log python module installation details
+    $outputFile = VM-New-Install-Log ${Env:VM_COMMON_DIR}
+
+    Invoke-Expression "py -3.10 -m pip install $package --disable-pip-version-check 2>&1 >> $outputFile"
+}
