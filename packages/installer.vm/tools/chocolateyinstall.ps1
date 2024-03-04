@@ -42,7 +42,7 @@ try {
         $shortcutDir = ${Env:RAW_TOOLS_DIR}
         $shortcut = Join-Path $shortcutDir "$toolName.lnk"
         $workingDir  = Join-Path ${Env:UserProfile} "Desktop"
-        $target = "$executablePath /k `"$workingDir`""
+        $target = "$executablePath /k `"cd $workingDir`""
 
         Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $target -RunAsAdmin
         VM-Assert-Path $shortcut
