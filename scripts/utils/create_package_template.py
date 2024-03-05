@@ -113,11 +113,8 @@ try {{
   $category = '{category}'
   $shimPath = '{shim_path}'
 
-  $shortcutDir = Join-Path ${{Env:TOOL_LIST_DIR}} $category
-  $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executablePath = Join-Path ${{Env:ChocolateyInstall}} $shimPath -Resolve
   VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -runAsAdmin
-  VM-Assert-Path $shortcut
 }} catch {{
   VM-Write-Log-Exception $_
 }}
