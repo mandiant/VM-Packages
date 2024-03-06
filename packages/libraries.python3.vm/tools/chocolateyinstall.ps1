@@ -6,11 +6,8 @@ try {
     $modulesPath = Join-Path $toolDir "modules.xml" -Resolve
     $modulesXml = [xml](Get-Content $modulesPath)
 
-    # Create output file to log python module installation details
-    $outputFile = VM-New-Install-Log $toolDir
-
     # Fix pip version
-    Invoke-Expression "py -3.10 -m pip install pip~=23.2.1 >> $outputFile"
+    VM-Pip-Install "pip~=23.2.1"
 
     $failures = @()
     $modules = $modulesXml.modules.module
@@ -21,7 +18,7 @@ try {
             $installValue = $module.url
         }
 
-        Invoke-Expression "py -3.10 -m pip install $installValue 2>&1 >> $outputFile"
+        VM-Pip-Install $installValue
 
         if ($LastExitCode -eq 0) {
             Write-Host "`t[+] Installed Python 3.10 module: $($module.name)" -ForegroundColor Green
@@ -44,4 +41,3 @@ try {
 } catch {
     VM-Write-Log-Exception $_
 }
-
