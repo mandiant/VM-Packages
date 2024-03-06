@@ -22,9 +22,9 @@ try {
         VM-Assert-Signature $_.FullName
     }
 } catch {
-  VM-Write-Log-Exception $_
-  # Remove files with invalid signature
-  Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+    # Remove files with invalid signature
+    Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+    VM-Write-Log-Exception $_
 }
 
 try {
