@@ -22,12 +22,14 @@ try {
         VM-Assert-Signature $_.FullName
     }
 } catch {
-  VM-Write-Log-Exception $_
-  # Remove files with invalid signature
-  Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+    # Remove files with invalid signature
+    Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+    VM-Write-Log-Exception $_
 }
 
 try {
+    # Add sysinternals tools to path
+    Install-ChocolateyPath $toolDir
     # Add shortcut to sysinternals folder
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $shortcut = Join-Path $shortcutDir 'sysinternals.lnk'
