@@ -2,13 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>npcap.vm</id>
-    <version>1.73</version>
-    <authors>Nmap Project</authors>
-    <description>Npcap is an architecture for packet capture and network analysis for Windows operating systems, consisting of a software library and a network driver.</description>
+    <version>1.79</version>
+    <authors>NMap</authors>
+    <description>Npcap is the Nmap Project's packet capture (and sending) library for Microsoft Windows</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="autohotkey" version="[1.1.37.1]" />
     </dependencies>
   </metadata>
 </package>
-
