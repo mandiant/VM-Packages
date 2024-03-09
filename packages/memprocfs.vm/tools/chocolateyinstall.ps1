@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'MemProcFS'
 $category = 'Forensic'
 
-$zipUrl = 'https://github.com/ufrisk/MemProcFS/releases/download/v5_archive/MemProcFS_files_and_binaries_v5.8.17-win_x64-20231128.zip'
-$zipSha256 = '22196c8fdd09db229ed8ee649e56b406a5f8dd43f7728cfe13cd1618aaef7085'
+$zipUrl = 'https://github.com/ufrisk/MemProcFS/releases/download/v5_archive/MemProcFS_files_and_binaries_v5.9.4-win_x64-20240318.zip'
+$zipSha256 = 'd63b2e3ee2b67abf9e119bd912bb2e595ddba96abf4f8b19255157c889c516ac'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
