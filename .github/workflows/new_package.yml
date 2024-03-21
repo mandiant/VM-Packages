@@ -6,35 +6,40 @@ on:
 
 jobs:
   create-package:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     if: github.event.label.name == 'send PR'
     steps:
       - name: Remove 'send PR' label
-        uses: actions-ecosystem/action-remove-labels@v1
+        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1.3.0
         with:
           labels: send PR
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Parse issue
-        uses: stefanbuck/github-issue-parser@v2
+        uses: stefanbuck/github-issue-parser@1e5bdee70d4b3e066a33aa0669ab782943825f94 # v3.1.0
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/new_package.yml
       - name: Write issue JSON string to tmp file
         run: |
-          echo $JSON_STRING > pkg.json
+          echo $env:JSON_STRING > pkg.json
           cat pkg.json
         env:
           JSON_STRING: ${{ steps.issue-parser.outputs.jsonString }}
-      - name: Create and commit package
+      - name: Create package
         run: |
-          # The Python script prints the package name so that we can easily
-          # echo it to $GITHUB_ENV. Alternatively we could parse if with a
-          # regular string from the JSON string
-          pkg_name=$(./scripts/utils/create_package_template_from_json.py --json_file pkg.json)
-          echo "pkg_name=$pkg_name" >> $GITHUB_ENV
+          # The Python script prints the package name so that we can add it to GITHUB_ENV
+          $pkg_name = $(python scripts/utils/create_package_template_from_json.py --json_file pkg.json)
+          echo "pkg_name=$pkg_name" >> $env:GITHUB_ENV
+      - name: Build and test new package
+        id: test
+        run: scripts/test/test_install.ps1 "$env:pkg_name.vm"
+      - name: Upload logs to artifacts
+        uses: ./.github/actions/upload-logs
+        if: always()
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc # v6.0.1
+        if: steps.test.outcome == 'success'
         with:
           title: ':robot: Add ${{env.pkg_name}}.vm'
           body: 'Automated PR from ${{github.event.issue.html_url}} :rocket:'
@@ -44,8 +49,8 @@ jobs:
             
             Closes ${{github.event.issue.html_url}}.
           branch: package-${{env.pkg_name}}
-          committer: vm-packages <vm-packages@mandiant.com>
-          author: vm-packages <vm-packages@mandiant.com>
+          committer: vm-packages <vm-packages@google.com>
+          author: vm-packages <vm-packages@google.com>
           labels: ":new: package"
           # GH actions can not trigger other GH actions,
           # use a Personal Access Token to trigger the CI workflow in the created PR

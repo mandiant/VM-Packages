@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'scdbg'
-    $category = 'Debuggers'
+    $category = 'Shellcode'
 
     $zipUrl = 'http://sandsprite.com/flare_vm/VS_LIBEMU_7.26.23__D7A7B407A0FB2288655247FF3EDD361E767075B15D2F0554EB9C87BC4476D996.zip'
     $zipSha256 = 'D7A7B407A0FB2288655247FF3EDD361E767075B15D2F0554EB9C87BC4476D996'

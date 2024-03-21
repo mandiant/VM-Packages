@@ -80,7 +80,6 @@ def run_cmd(cmd):
 
 
 class IncludesRequiredFieldsOnly(Lint):
-    EXCLUSIONS = ["flarevm.installer.vm"]
     name = "file lists non-required fields"
     allowed_fields = [
         "id",
@@ -92,9 +91,6 @@ class IncludesRequiredFieldsOnly(Lint):
     recommendation = f"Only include required fields: {', '.join(allowed_fields)}"
 
     def check(self, path):
-        if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
-            return False
-
         dom = minidom.parse(str(path))
         metadata = dom.getElementsByTagName("metadata")[0]
 
@@ -287,7 +283,7 @@ class MissesImportCommonVm(Lint):
 
 
 class FirstLineDoesNotSetErrorAction(Lint):
-    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm", "flarevm.installer.vm", "installer.vm"]
+    EXCLUSIONS = ["libraries.python2.vm", "libraries.python3.vm", "installer.vm"]
     FIRST_LINE = "$ErrorActionPreference = 'Stop'"
     name = "first line must set error handling to stop"
     recommendation = f"add `{FIRST_LINE}` to the file"
@@ -312,13 +308,13 @@ class UsesInvalidCategory(Lint):
         "common.vm",
         "debloat.vm",
         "dokan.vm",
-        "flarevm.installer.vm",
         "googlechrome.vm",
         "ida.plugin.capa.vm",
         "idafree.vm",
         "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
+        "microsoft-windows-terminal.vm",
         "notepadplusplus.vm",
         "notepadpp.plugin.",
         "npcap.vm",

@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'blobrunner64'
-$category = 'Utilities'
+$category = 'Shellcode'
 
 VM-Uninstall $toolName $category

@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Sliver'
 $category = 'Command & Control'
 
-$exeUrl = 'https://github.com/BishopFox/sliver/releases/download/v1.5.41/sliver-client_windows.exe'
-$exeSha256 = '85474d2a885a2dbe2dfd334d9d25fbf1079c1d88c857428e2e1cf3e59f2c0a9b'
+$exeUrl = 'https://github.com/BishopFox/sliver/releases/download/v1.5.42/sliver-client_windows.exe'
+$exeSha256 = 'b7f9eb0a95f3523aee8363c59e26a88bcf30d2160db862d4d167945ad342d777'
 
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp $true -arguments "--help"

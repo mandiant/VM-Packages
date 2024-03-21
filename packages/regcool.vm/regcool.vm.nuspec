@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>regcool.vm</id>
+    <version>1.361.0.20240228</version>
+    <authors>Kurt Zimmermann</authors>
+    <description>In addition to all the features that you can find in RegEdit and RegEdt32, RegCool adds many powerful features that allow you to work faster and more efficiently with registry related tasks</description>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>

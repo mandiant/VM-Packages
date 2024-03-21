@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 # Remove shortcuts
-$category = 'PDF'
+$category = 'Documents'
 ForEach ($toolName in @('pdfid', 'pdf-parser')) {
   VM-Remove-Tool-Shortcut $toolName $category
 }

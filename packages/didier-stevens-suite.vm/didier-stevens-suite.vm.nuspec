@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>didier-stevens-suite.vm</id>
-    <version>0.0.0.20231221</version>
+    <version>0.0.0.20240226</version>
     <authors>Didier Stevens</authors>
     <description>Tools collection by Didier Stevens</description>
     <dependencies>

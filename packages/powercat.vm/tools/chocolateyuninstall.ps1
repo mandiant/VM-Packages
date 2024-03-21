@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'PowerCat'
-$category = 'Utilities'
+$category = 'Networking'
 
 VM-Uninstall $toolName $category

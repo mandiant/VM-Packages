@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'cmder'
-  $category = 'Utilities'
+  $category = 'Productivity Tools'
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName -Resolve

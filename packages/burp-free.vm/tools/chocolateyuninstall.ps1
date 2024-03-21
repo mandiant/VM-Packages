@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'BurpSuiteCommunity'
-$category = 'Utilities'
+$category = 'Web Application'
 
 VM-Remove-Tool-Shortcut $toolName $category

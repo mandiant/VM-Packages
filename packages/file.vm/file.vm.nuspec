@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>file.vm</id>
-    <version>0.0.0.20230925</version>
+    <version>0.0.0.20240217</version>
     <description>A Windows port of the Linux `file` utility for checking header magics</description>
     <authors>Nolen Scaiffe</authors>
     <dependencies>

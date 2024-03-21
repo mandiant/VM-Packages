@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>openjdk.vm</id>
-    <version>21.0.1</version>
+    <version>0.0.0.20240202</version>
     <authors>Oracle</authors>
     <description>Metapackage for OpenJDK to ensure all packages use the same OpenJDK version.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="openjdk" version="[21.0.1]" />
+      <dependency id="openjdk" version="(21.0.0, 21.0.1]" />
     </dependencies>
   </metadata>
 </package>

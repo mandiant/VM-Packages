@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $toolName = 'wireshark'
+  $toolName = 'Wireshark'
   $category = 'Networking'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

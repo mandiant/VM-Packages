@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-    $category = 'Office'
+    $category = 'Documents'
     $zipUrl = 'https://github.com/DidierStevens/Beta/archive/cbb1d5c32d02b4e07128a197c8b8fb6ea597916a.zip'
     $zipSha256 = 'e9d83063f45f8e2791d33de194a46850bd7f1921e755bd4651c769cbcdbd5052'
 
@@ -17,15 +17,16 @@ try {
     $toolDir = Get-Item "${Env:RAW_TOOLS_DIR}\Beta-*"
     VM-Assert-Path $toolDir
 
-    # Add shortcut for commonly used office tools
+    # Add shortcut for commonly used office python tools
     ForEach ($toolName in @('onedump')) {
-      $executablePath = Join-Path $toolDir "$toolName.py"
-      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments "--help"
+      $executablePath = (Get-Command python).Source
+      $filePath = Join-Path $toolDir "$toolName.py"
+      $arguments = $filePath + " --help"
+      VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
     }
 
     # Add tools to Path
-    $path = [Environment]::GetEnvironmentVariable("Path", "Machine") + [IO.Path]::PathSeparator + $toolDir
-    [Environment]::SetEnvironmentVariable("Path", $path, "Machine")
+    VM-Add-To-Path $toolDir
 } catch {
   VM-Write-Log-Exception $_
 }

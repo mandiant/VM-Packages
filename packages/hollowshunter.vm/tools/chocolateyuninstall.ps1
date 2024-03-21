@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'hollows_hunter'
-$category = 'PE'
+$category = 'Memory'
 
 VM-Uninstall $toolName $category

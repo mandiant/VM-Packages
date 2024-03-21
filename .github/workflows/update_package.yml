@@ -12,12 +12,12 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Install python dependency 'requests'
         run: pip install requests
       - name: Set git up
         run: |
-          git config user.email 'vm-packages@mandiant.com'
+          git config user.email 'vm-packages@google.com'
           git config user.name 'vm-packages'
       - name: Update packages
         run: |
@@ -57,12 +57,12 @@ jobs:
         uses: ./.github/actions/upload-logs
         if: always()
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc # v6.0.1
         with:
           title: ':robot: Package update'
           body: 'Automated package update'
           branch: package-update
-          author: vm-packages <vm-packages@mandiant.com>
+          author: vm-packages <vm-packages@google.com>
           add-paths: packages/*
           # GH actions can not trigger other GH actions,
           # use a Personal Access Token to trigger the CI workflow in the created PR

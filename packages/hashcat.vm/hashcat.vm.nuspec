@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>hashcat.vm</id>
-    <version>6.2.6</version>
+    <version>6.2.6.20240208</version>
     <authors>Jens Steube (jsteube)</authors>
     <description>Hashcat is a fast password recovery utility.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="7zip-15-05.vm"/>
+      <dependency id="7zip-15-05.vm" version="15.05.0.20231220"/>
     </dependencies>
   </metadata>
 </package>

@@ -16,18 +16,22 @@ jobs:
       max-parallel: 1
       matrix:
         os: [windows-2019, windows-2022]
+        include:
+          - os: windows-2022
+            os_name: Win22
+          - os: windows-2019
+            os_name: Win19
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Build and test all packages
-        id: test
         run: scripts/test/test_install.ps1 -all -max_tries 3
       - name: Upload logs to artifacts
         uses: ./.github/actions/upload-logs
         if: always()
       - name: Checkout wiki code
         if: always()
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki
@@ -36,9 +40,35 @@ jobs:
         run: python scripts/utils/generate_daily_results.py ${{ github.repository }} ${{ github.sha }} ${{ github.run_number }} ${{ github.run_id }} ${{ matrix.os }}
       - name: Commit changes
         if: always()
+        working-directory: wiki
         run: |
-          cd wiki
-          git config user.email 'vm-packages@mandiant.com'
+          git config user.email 'vm-packages@google.com'
           git config user.name 'vm-packages'
           git commit -am 'Add daily results'
           git push
+      - name: Get badge info
+        if: always()
+        run: |
+          pwd
+          $json = Get-Content -Raw "success_failure.json" | ConvertFrom-Json
+          $failure = $json.failure
+          $total = $json.total
+          $message = "$failure/$total"
+          # Celebrate that there are not failures
+          if (-not $failure) { $message += " 🎉" }
+          echo "failure=$failure" >> $env:GITHUB_ENV
+          echo "message=$message" >> $env:GITHUB_ENV
+      - name: Update dynamic badge gist
+        if: always()
+        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483 # v1.7.0
+        with:
+          auth: ${{ secrets.REPO_TOKEN }}
+          gistID: 7d6b2592948d916eb5529350308f01d1
+          filename: ${{ matrix.os }}_daily_badge.svg
+          label: "failures ${{ matrix.os_name }}"
+          message: "${{ env.message }}"
+          # Use orange if only 1 package fails and red if more than 1 fail
+          maxColorRange: 1.25
+          minColorRange: 0
+          invertColorRange: true
+          valColorRange: ${{ env.failure }}
