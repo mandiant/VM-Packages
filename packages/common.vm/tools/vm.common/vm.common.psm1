@@ -905,7 +905,7 @@ RAW_TOOLS_DIR: ${Env:RAW_TOOLS_DIR}
 }
 
 function VM-Remove-Appx-Package {
-# Function for removing Apps
+# Function for removing Appx Packages
     param(
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
@@ -913,36 +913,42 @@ function VM-Remove-Appx-Package {
     )
 
     try {
-        # Check if the app is installed
-        $installedPackage = Get-AppxPackage -Name $appName
-        VM-Write-Log "INFO" "Removing $appName package"
-        if ($installedPackage) {
-            try {
-                $packageFullName = $installedPackage.PackageFullName
-                Remove-AppxPackage -Package $packageFullName -ErrorAction SilentlyContinue
-                VM-Write-Log "INFO" "$packageFullName removed"
-            }
-            catch {
-                VM-Write-Log-Exception $_
+        # Check if the app is installed using wildcard pattern
+        $installedPackages = Get-AppxPackage | Where-Object { $_.Name -like $appName }
+
+        if ($installedPackages) {
+            foreach ($installedPackage in $installedPackages) {
+                try {
+                    $packageFullName = $installedPackage.PackageFullName
+                    Remove-AppxPackage -Package $packageFullName -ErrorAction SilentlyContinue
+                    VM-Write-Log "INFO" "$packageFullName removed"
+                }
+                catch {
+                    VM-Write-Log-Exception $_
+                }
             }
         } else {
-            VM-Write-Log "WARN" "`tInstalled $appName not found on the system."
+            VM-Write-Log "WARN" "`tInstalled packages matching pattern '$appName' not found on the system."
         }
-        # Check if the app is provisioned
-        $provisionedPackage = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -eq $appName } -ErrorAction SilentlyContinue
-        if ($provisionedPackage) {
-            try {
-                Remove-AppxProvisionedPackage -PackageName $provisionedPackage.PackageName -Online -ErrorAction SilentlyContinue
-                VM-Write-Log "INFO" $("`tProvisioned package " + $provisionedPackage.PackageName + " removed")
-            }
-            catch {
-                VM-Write-Log-Exception $_
+
+        # Check if the app is provisioned using wildcard pattern
+        $provisionedPackages = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -like $appName } -ErrorAction SilentlyContinue
+
+        if ($provisionedPackages) {
+            foreach ($provisionedPackage in $provisionedPackages) {
+                try {
+                    Remove-AppxProvisionedPackage -PackageName $provisionedPackage.PackageName -Online -ErrorAction SilentlyContinue
+                    VM-Write-Log "INFO" $("`tProvisioned package " + $provisionedPackage.PackageName + " removed")
+                }
+                catch {
+                    VM-Write-Log-Exception $_
+                }
             }
         } else {
-            VM-Write-Log "WARN" "`tProvisioned $appName not found on the system."
+            VM-Write-Log "WARN" "`tProvisioned packages matching pattern '$appName' not found on the system."
         }
     } catch {
-        VM-Write-Log "ERROR" "`tAn error occurred while removing the $appName package. Error: $_"
+        VM-Write-Log "ERROR" "`tAn error occurred while removing packages matching pattern '$appName'. Error: $_"
     }
 }
 
