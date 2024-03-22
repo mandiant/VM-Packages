@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ida.plugin.sigmaker.vm</id>
+    <version>1.0.0</version>
+    <description>Signature Maker Plugin for IDA Pro 8.3.</description>
+    <authors>A200K</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+  </metadata>
+</package>
