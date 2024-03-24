@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ida.plugin.lighthouse.vm</id>
+    <version>0.9.3</version>
+    <description>Lighthouse is a powerful code coverage explorer for IDA Pro and Binary Ninja, providing software researchers with uniquely interactive controls to study execution maps for native applications without requiring symbols or source.</description>
+    <authors>gaasedelen</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="libraries.python3.vm" version="0.0.0.20230927" />
+    </dependencies>
+  </metadata>
+</package>
