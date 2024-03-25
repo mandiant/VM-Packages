@@ -211,6 +211,12 @@ function VM-Install-Raw-GitHub-Repo {
         [string] $zipUrl,
         [Parameter(Mandatory=$true, Position=3)]
         [string] $zipSha256,
+        [Parameter(Mandatory=$false)]
+        [bool] $innerFolder=$false, # Subfolder in zip with the app files
+        [Parameter(Mandatory=$false)]
+        [string] $executableName = "", # Executable name, needed if different from "$toolName.exe"
+        [Parameter(Mandatory=$false)]
+        [switch] $withoutBinFile, # Tool should not be installed as a bin file
         # Examples:
         # $powershellCommand = "Get-Content README.md"
         # $powershellCommand = "Import-Module module.ps1; Get-Help Main-Function"
@@ -218,35 +224,11 @@ function VM-Install-Raw-GitHub-Repo {
         [string] $powershellCommand
     )
     try {
-        $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-
-        # Remove files from previous zips for upgrade
-        VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
-
-        # Download and unzip
-        $packageArgs = @{
-            packageName    = ${Env:ChocolateyPackageName}
-            unzipLocation  = $toolDir
-            url            = $zipUrl
-            checksum       = $zipSha256
-            checksumType   = 'sha256'
-        }
-        Install-ChocolateyZipPackage @packageArgs | Out-Null
-        VM-Assert-Path $toolDir
-
-        # GitHub ZIP files typically unzip to a single folder that contains the tools.
-        $dirList = Get-ChildItem $toolDir -Directory
-        if ($dirList.Count -eq 1) {
-            $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
-        }
-
-        if ($powershellCommand) {
-            VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $toolDir -powershell
+        if ($withoutBinFile) {
+            VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -withoutBinFile -powershellCommand $powershellCommand
         } else {
-            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $toolDir
+            VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -powershellCommand $powershellCommand
         }
-
-        return $toolDir
     } catch {
         VM-Write-Log-Exception $_
     }
@@ -349,7 +331,7 @@ function VM-Install-From-Zip {
         [string] $category,
         [Parameter(Mandatory=$true, Position=2)]
         [string] $zipUrl,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory=$true, Position=3)]
         [string] $zipSha256,
         [Parameter(Mandatory=$false)]
         [string] $zipUrl_64,
@@ -364,7 +346,12 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [string] $executableName, # Executable name, needed if different from "$toolName.exe"
         [Parameter(Mandatory=$false)]
-        [switch] $withoutBinFile # Tool should not be installed as a bin file
+        [switch] $withoutBinFile, # Tool should not be installed as a bin file
+        # Examples:
+        # $powershellCommand = "Get-Content README.md"
+        # $powershellCommand = "Import-Module module.ps1; Get-Help Main-Function"
+        [Parameter(Mandatory=$false)]
+        [string] $powershellCommand
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -382,9 +369,8 @@ function VM-Install-From-Zip {
             url64bit       = $zipUrl_64
             checksum64     = $zipSha256_64
         }
-        Install-ChocolateyZipPackage @packageArgs
+        Install-ChocolateyZipPackage @packageArgs | Out-Null
         VM-Assert-Path $toolDir
-
 
         # If $innerFolder is set to $true, after unzipping there should be only one folder
         # GitHub ZIP files typically unzip to a single folder that contains the tools.
@@ -393,10 +379,24 @@ function VM-Install-From-Zip {
             $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
         }
 
-        if (-Not $executableName) { $executableName = "$toolName.exe" }
-        $executablePath = Join-Path $toolDir $executableName -Resolve
-        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
-        if (-Not $withoutBinFile) { Install-BinFile -Name $toolName -Path $executablePath }
+        if ($powershellCommand) {
+            $executablePath = $toolDir
+            VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $executablePath -powershell
+        }
+        elseif ($withoutBinFile) { # Used when tool does not have an associated executable
+            if (-Not $executableName) { # Tool is located in $toolDir (c3.vm for example)
+                $executablePath = $toolDir
+            } else { # Tool is in a specific directory (pma-labs.vm for example)
+                $executablePath = Join-Path $toolDir $executableName -Resolve
+            }
+            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath
+        }
+        else {
+            if (-Not $executableName) { $executableName = "$toolName.exe" }
+            $executablePath = Join-Path $toolDir $executableName -Resolve
+            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
+            Install-BinFile -Name $toolName -Path $executablePath
+        }
         return $executablePath
     } catch {
         VM-Write-Log-Exception $_

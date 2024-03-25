@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>bloodhound-custom-queries.vm</id>
-    <version>0.0.0.20230713</version>
+    <version>0.0.0.20240323</version>
     <authors>hausec</authors>
     <description>Custom Query list for the Bloodhound GUI based off my cheatsheet</description>
     <dependencies>

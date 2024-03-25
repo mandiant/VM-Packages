@@ -9,4 +9,4 @@ $zipSha256 = '76e82df57013980cd6f3dd5b125e405e4ab3308368f2372121581a6a1e4a5a22'
 
 $powershellCommand = 'Import-Module Az, .\PowerZure.psm1; Invoke-PowerZure -h'
 
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -powershellCommand $powershellCommand
+VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand
