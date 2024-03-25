@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>powermad.vm</id>
-    <version>0.0.0.20230711</version>
+    <version>0.0.0.20240323</version>
     <authors>Kevin-Robertson</authors>
     <description>Powermad includes a set of functions for exploiting ms-DS-MachineAccountQuota without attaching an actual system to AD</description>
     <dependencies>

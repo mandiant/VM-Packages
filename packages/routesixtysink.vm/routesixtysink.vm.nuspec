@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>routesixtysink.vm</id>
-    <version>0.0.0.20230714</version>
+    <version>0.0.0.20240323</version>
     <authors>Dillon Franke, Michael Maturi</authors>
     <description>Route Sixty-Sink is an open source tool that enables defenders and security researchers alike to quickly identify vulnerabilities in any .NET assembly using automated source-to-sink analysis.</description>
     <dependencies>
