@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>powersploit.vm</id>
-    <version>0.0.0.20230713</version>
+    <version>0.0.0.20240323</version>
     <authors>HarmJ0y, 0xe7</authors>
     <description>PowerSploit is a collection of Microsoft PowerShell modules that can be used to aid penetration testers during all phases of an assessment.</description>
     <dependencies>

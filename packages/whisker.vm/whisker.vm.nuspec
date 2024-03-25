@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>whisker.vm</id>
-    <version>0.0.0.20230714</version>
+    <version>0.0.0.20240323</version>
     <authors>Elad Shamir</authors>
     <description>Whisker is a C# tool for taking over Active Directory user and computer accounts by manipulating their msDS-KeyCredentialLink attribute, effectively adding "Shadow Credentials" to the target account.</description>
     <dependencies>
