@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'aleappGUI'
 $category = 'Forensic'
 
-$exeUrl = 'https://github.com/abrignoni/ALEAPP/releases/download/v3.1.9/aleappGUI.exe'
-$exeSha256 = 'a5a516bfab416e78b951a8175347916c6c362325d6616c4029af164f420cf5a4'
+$exeUrl = 'https://github.com/abrignoni/ALEAPP/releases/download/v3.2.1/aleappGUI.exe'
+$exeSha256 = '39d7a90c74ec49dbbc18051ae70798972f0934c9c1f6f97cf8c0c6cd701c665a'
 
 VM-Install-Single-Exe $toolName -category $category -exeUrl $exeUrl -exeSha256 $exeSha256 -consoleApp $false
