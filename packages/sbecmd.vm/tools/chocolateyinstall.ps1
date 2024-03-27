@@ -5,6 +5,6 @@ $toolName = 'SBECmd'
 $category = 'Forensic'
 
 $zipUrl = 'https://f001.backblazeb2.com/file/EricZimmermanTools/net6/SBECmd.zip'
-$zipSha256 = '640caf1592daf5a62c4984f50d684f96e69c98c67611742a172f5fd35572ced0'
+$zipSha256 = '76e68ea696cb94f3a26c5c05e01467bdd8e18503fabd55ce4065448251071595'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
