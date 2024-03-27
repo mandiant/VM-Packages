@@ -31,4 +31,6 @@
     <module name="vivisect"/>
     <module name="XLMMacroDeobfuscator"/>
     <module name="yara-python"/>
+    <module name="frida"/>
+    <module name="frida-tools"/>
 </modules>
