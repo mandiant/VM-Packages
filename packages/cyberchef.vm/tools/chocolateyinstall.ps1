@@ -12,8 +12,8 @@ try {
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
-    url           = 'https://github.com/gchq/CyberChef/releases/download/v10.8.2/CyberChef_v10.8.2.zip'
-    checksum      = '123b72659d2994b834f1d777e09f8a431653b0982c536c8cc4c156e1dc882c11'
+    url           = 'https://github.com/gchq/CyberChef/releases/download/v10.10.0/CyberChef_v10.10.0.zip'
+    checksum      = 'a7f9d2ca67136fb592cd37936a9b136320ff0561acc2acbdf3289e4cabffd4fd'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs
@@ -22,7 +22,7 @@ try {
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-  $htmlPath = Join-Path $toolDir "CyberChef_v10.8.2.html" -Resolve
+  $htmlPath = Join-Path $toolDir "CyberChef_v10.10.0.html" -Resolve
   $arguments = "start chrome $htmlPath && exit"
   $executableArgs = "/C $arguments"
   $iconLocation = "%ProgramFiles%\Google\Chrome\Application\chrome.exe"
