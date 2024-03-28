@@ -28,9 +28,10 @@ try {
   # GitHub ZIP files typically unzip to a single folder that contains the tools.
   $dirList = Get-ChildItem $toolDir -Directory
   $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
-
+  $workingDir = Join-Path ${Env:UserProfile} "Desktop"
+  $arguments = "-p `"Command Prompt`" -d `"$workingDir`""   # Working directory doesn't work for admin shortcuts, so use -d flag for it.
   $executablePath = Join-Path $toolDir $executableName -Resolve
-  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -runAsAdmin
+  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -arguments $arguments -runAsAdmin
 } catch {
   VM-Write-Log-Exception $_
 }
