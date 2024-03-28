@@ -307,19 +307,22 @@ function VM-Install-Shortcut{
         if ($runAsAdmin) {
             $shortcutArgs.RunAsAdmin = $true
         }
-
         Install-ChocolateyShortcut @shortcutArgs
 
     } else {
+        if (-not $executableDir) {
+            $executableDir = Join-Path ${Env:UserProfile} "Desktop"
+        }
         $shortcutArgs = @{
             ShortcutFilePath = $shortcut
             TargetPath       = $executablePath
+            Arguments        = $arguments
+            WorkingDirectory = $executableDir
             IconLocation     = $iconLocation
         }
         if ($runAsAdmin) {
             $shortcutArgs.RunAsAdmin = $true
         }
-
         Install-ChocolateyShortcut @shortcutArgs
     }
     VM-Assert-Path $shortcut
