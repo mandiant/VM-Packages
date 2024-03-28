@@ -35,18 +35,6 @@ try {
     ## Configure taskbar with custom Start Layout if it exists.
     $customLayout = Join-Path ${Env:VM_COMMON_DIR} "CustomStartLayout.xml"
     if (Test-Path $customLayout) {
-        # Create an Admin Command Prompt shortcut and it to pin to taskbar (analogous to how the Windows Dev VM does this).
-        $toolName = 'Admin Command Prompt'
-
-        $executablePath = Join-Path ${Env:SystemRoot} 'system32\cmd.exe'
-        $shortcutDir = ${Env:RAW_TOOLS_DIR}
-        $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-        $workingDir  = Join-Path ${Env:UserProfile} "Desktop"
-        $arguments = "/k `"cd `"$workingDir`"`""
-
-        Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -Arguments $arguments -RunAsAdmin
-        VM-Assert-Path $shortcut
-
         Import-StartLayout -LayoutPath $customLayout -MountPath "C:\"
         Stop-Process -Name explorer -Force  # This restarts the explorer process so that the new taskbar is displayed.
     } else {
