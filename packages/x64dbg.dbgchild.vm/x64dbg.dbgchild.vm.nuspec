@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>x64dbg.dbgchild.vm</id>
+    <version>10</version>
+    <description>DbgChild is an x64dbg plugin to automatically attach to spawned child processes.</description>
+    <authors>Dreg (David Reguera Garcia)</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="x64dbg.vm" />
+    </dependencies>
+  </metadata>
+</package>
