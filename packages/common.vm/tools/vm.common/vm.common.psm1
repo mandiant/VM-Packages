@@ -568,7 +568,9 @@ function VM-Install-With-Installer {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
-        [string] $arguments = ""
+        [string] $arguments = "",
+        [Parameter(Mandatory=$false)]
+        [string] $iconLocation
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -621,7 +623,27 @@ function VM-Install-With-Installer {
         Install-ChocolateyInstallPackage @packageArgs
         VM-Assert-Path $executablePath
 
-        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
+        # if no icon path provided, set the shortcut icon to be the executable's icon. For MSI files, attempt to get executable icon from the installer first.
+        if (-Not $iconLocation) {
+            if ($fileType -eq 'MSI') {
+                $iconPath = VM-Get-MSIInstallerPathByProductName $toolName
+                if ($iconPath) {
+                    $files = Get-ChildItem -Path $iconPath -Filter "*.ico"
+                    if ($files.Count -gt 0) {
+                        $iconLocation = Join-Path $iconPath $files[0]
+                    }
+                }
+                # If no icon found from MSI installation, fallback to using executablePath for iconLocation
+                if (-Not $iconLocation) {
+                    $iconLocation = $executablePath
+                }
+            }
+        } else {
+            # Not an MSI file, use executablePath for iconLocation
+            $iconLocation = $executablePath
+        }
+
+        VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments -iconLocation $iconLocation
         Install-BinFile -Name $toolName -Path $executablePath
     } catch {
         VM-Write-Log-Exception $_
@@ -633,7 +655,9 @@ function VM-Uninstall-With-Uninstaller {
     Param
     (
         [Parameter(Mandatory=$true, Position=0)]
-        [string] $softwareName,
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
         [Parameter(Mandatory=$true, Position=1)]
         [ValidateSet("EXE", "MSI")]
         [string] $fileType,
@@ -652,9 +676,16 @@ function VM-Uninstall-With-Uninstaller {
         [Parameter(Mandatory=$false)]
         [array] $validExitCodes= @(0, 3010, 1605, 1614, 1641)
     )
+    # Remove tool shortcut
+    VM-Remove-Tool-Shortcut $toolName $category
+
+    # Remove tool files
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+
     # Attempt to find and execute the uninstaller, may need to use wildcards
     # See: https://docs.chocolatey.org/en-us/create/functions/get-uninstallregistrykey
-    [array]$key = Get-UninstallRegistryKey -SoftwareName $softwareName
+    [array]$key = Get-UninstallRegistryKey -SoftwareName $toolName
     if ($key.Count -eq 1) {
         $packageArgs = @{
             packageName    = ${Env:ChocolateyPackageName}
@@ -1455,5 +1486,41 @@ function VM-Add-To-Path {
     if (-not $pathExists) {
         $newPath = ($currentPaths + $pathToAdd) -join [IO.Path]::PathSeparator
         [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+    }
+}
+
+# Useful for getting icons for tools installed from an MSI file
+function VM-Get-MSIInstallerPathByProductName {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory)]
+        [string]$ProductName    # Name of the installed program
+    )
+
+    try {
+        # Get a list of all installed MSI products
+        $installedProducts = Get-CimInstance -Class Win32_Product | Where-Object { $_.Name -like $ProductName }
+
+        if (-not $installedProducts) {
+            VM-Write-Log "WARN" "No product found with name like '$ProductName'"
+            return
+        }
+
+        foreach ($product in $installedProducts) {
+            # Retrieve the GUID of the installer
+            $productCode = $product.IdentifyingNumber
+
+            # Construct the likely path to the installer cache
+            $installerPath = Join-Path -Path 'C:\Windows\Installer' -ChildPath $productCode
+
+            # Check if the constructed path exists
+            if (Test-Path -Path $installerPath) {
+                return $installerPath
+            } else {
+                VM-Write-Log "WARN" "Installer cache folder not found for product '$ProductName'"
+            }
+        }
+    } catch {
+        VM-Write-Log-Exception $_ "An error occurred: $_"
     }
 }
