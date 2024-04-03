@@ -1,6 +1,9 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
+$toolName = 'notepad++'
+$category = 'Productivity Tools'
+
 try {
     # Path to Notepad++'s configuration file
     $configFile = Join-Path ${Env:APPDATA} "Notepad++\config.xml"
@@ -40,7 +43,9 @@ try {
         # Update the config file and disable auto-updates
         (Get-Content -Path $configFile) -Replace '("noUpdate".*?">)no', '$1yes' | Set-Content -Path $configFile -Force | Out-Null
     }
+
+    $executablePath = Join-Path ${Env:ProgramFiles} "Notepad++\${toolName}.exe" -Resolve
+    VM-Install-Shortcut $toolName $category $executablePath
 } catch {
     VM-Write-Log-Exception $_
 }
-
