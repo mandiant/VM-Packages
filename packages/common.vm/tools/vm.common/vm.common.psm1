@@ -281,12 +281,12 @@ function VM-Install-Shortcut{
     # Set the default icon to be the executable's icon
     if (-Not $iconLocation) {$iconLocation = $executablePath}
 
-    if ($consoleApp -or $powershell) {
-        if (-not $executableDir) {
-            $executableDir = Join-Path ${Env:UserProfile} "Desktop"
-        }
-        VM-Assert-Path $executableDir
+    if (-not $executableDir) {
+        $executableDir = Join-Path ${Env:UserProfile} "Desktop"
+    }
+    VM-Assert-Path $executableDir
 
+    if ($consoleApp -or $powershell) {
         if ($consoleApp) {
             $executableCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
             # Change to executable dir, print command to execute, and execute command
@@ -307,19 +307,19 @@ function VM-Install-Shortcut{
         if ($runAsAdmin) {
             $shortcutArgs.RunAsAdmin = $true
         }
-
         Install-ChocolateyShortcut @shortcutArgs
 
     } else {
         $shortcutArgs = @{
             ShortcutFilePath = $shortcut
             TargetPath       = $executablePath
+            Arguments        = $arguments
+            WorkingDirectory = $executableDir
             IconLocation     = $iconLocation
         }
         if ($runAsAdmin) {
             $shortcutArgs.RunAsAdmin = $true
         }
-
         Install-ChocolateyShortcut @shortcutArgs
     }
     VM-Assert-Path $shortcut
@@ -707,7 +707,9 @@ function VM-Add-To-Right-Click-Menu {
         [ValidateSet("file", "directory")]
         [string] $type="file",
         [Parameter(Mandatory=$false)]
-        [string] $extension
+        [string] $extension,
+        [Parameter(Mandatory=$false)]
+        [switch] $background
     )
     try {
         if ($extension) {
@@ -717,7 +719,10 @@ function VM-Add-To-Right-Click-Menu {
           if ($type -eq "file") {
               $key = "*"
           } else {
-              $key = "directory"
+              $key = "Directory"
+              if ($background) {
+                $key += "\Background"
+              }
           }
         }
         $key_path = "HKCR:\$key\shell\$menuKey"
@@ -755,7 +760,9 @@ function VM-Remove-From-Right-Click-Menu {
         [ValidateSet("file", "directory")]
         [string] $type="file",
         [Parameter(Mandatory=$false)]
-        [string] $extension
+        [string] $extension,
+        [Parameter(Mandatory=$false)]
+        [switch] $background
     )
     try {
         if ($extension) {
@@ -765,7 +772,10 @@ function VM-Remove-From-Right-Click-Menu {
           if ($type -eq "file") {
               $key = "*"
           } else {
-              $key = "directory"
+              $key = "Directory"
+              if ($background) {
+                $key += "\Background"
+              }
           }
         }
         $key_path = "HKCR:\$key\shell\$menuKey"
