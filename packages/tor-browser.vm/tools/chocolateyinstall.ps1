@@ -12,11 +12,7 @@ try {
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
   VM-Assert-Path $shortcut
 
-  # Delete Desktop shortcut
-  $desktopShortcut = Join-Path ${Env:Public} "Desktop\$toolName.lnk"
-  if (Test-Path $desktopShortcut) {
-    Remove-Item $desktopShortcut -Force -ea 0
-  }
+  VM-Remove-Desktop-Shortcut $toolName
 } catch {
   VM-Write-Log-Exception $_
 }

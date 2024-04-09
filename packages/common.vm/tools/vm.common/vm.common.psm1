@@ -533,6 +533,22 @@ function VM-Remove-Tool-Shortcut {
     Remove-Item $shortcut -Force -ea 0 | Out-Null
 }
 
+# Delete Desktop shortcuts
+function VM-Remove-Desktop-Shortcut {
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName
+    )
+    # Some shortcuts exist in Public and/or User profiles.
+    ForEach ($location in @(${Env:Public}, ${Env:UserProfile})) {
+        $desktopShortcut = Join-Path $location "Desktop\$toolName.lnk"
+        if (Test-Path $desktopShortcut) {
+            Remove-Item $desktopShortcut -Force -ea 0
+        }
+    }
+}
+
 function VM-Install-With-Installer {
     [CmdletBinding()]
     Param
