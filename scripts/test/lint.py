@@ -304,6 +304,7 @@ class UsesInvalidCategory(Lint):
     EXCLUSIONS = [
         ".ollydumpex.vm",
         ".scyllahide.vm",
+        ".dbgchild.vm",
         "common.vm",
         "debloat.vm",
         "dokan.vm",
