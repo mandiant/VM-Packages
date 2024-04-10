@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sharpview.vm</id>
-    <version>0.0.0.20230713</version>
+    <version>0.0.0.20240323</version>
     <authors>tevora</authors>
     <description>.NET port of PowerView used for information gathering within Active Directory</description>
     <dependencies>

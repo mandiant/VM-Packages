@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sharpsecdump.vm</id>
-    <version>0.0.0.20230711</version>
+    <version>0.0.0.20240323</version>
     <authors>G0ldenGunSec</authors>
     <description>.Net port of the remote SAM + LSA Secrets dumping functionality of impacket's secretsdump.py</description>
     <dependencies>

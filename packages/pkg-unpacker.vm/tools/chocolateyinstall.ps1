@@ -8,7 +8,7 @@ try {
     $zipSha256 = '6eed1d492d37ca3934a3bc838c2256719a3e78ccf72ce1b1ca07684519ace16c'
     $powershellCommand = "npm install; node unpack.js"
 
-    $toolDir = VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -powershellCommand $powershellCommand
+    $toolDir = VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand
 } catch {
   VM-Write-Log-Exception $_
 }
