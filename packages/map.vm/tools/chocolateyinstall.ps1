@@ -28,3 +28,13 @@ try {
 } catch {
   VM-Write-Log-Exception $_
 }
+
+# Try to remove right click registry keys, but do not fail the package if it fails.
+$ErrorActionPreference = 'Continue'
+
+$cmdHereRegistryPath1 = "HKLM:\SOFTWARE\Classes\Directory\background\shell\ctx_cmd"
+$cmdHereRegistryPath2 = "HKLM:\SOFTWARE\Classes\Folder\shell\Cmd Here"
+
+ForEach ($regKey in @($cmdHereRegistryPath1, $cmdHereRegistryPath2)) {
+  Remove-Item -Path $regKey -Recurse -Force
+}
