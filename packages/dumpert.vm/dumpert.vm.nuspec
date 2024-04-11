@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dumpert.vm</id>
-    <version>0.0.0.20240323</version>
+    <version>0.0.0.20240411</version>
     <authors>outflank</authors>
     <description>This tool demonstrates the use of direct System Calls and API unhooking and combines these techniques in a proof of concept code which can be used to create a LSASS memory dump using Cobalt Strike.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240411" />
     </dependencies>
   </metadata>
 </package>

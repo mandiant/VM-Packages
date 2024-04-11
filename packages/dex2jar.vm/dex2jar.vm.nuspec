@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dex2jar.vm</id>
-    <version>2.3.0.20231025</version>
+    <version>2.3.0.20240411</version>
     <authors>@pxb1988</authors>
     <description>Tools to work with android .dex and java .class files.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240411" />
       <dependency id="openjdk.vm" />
     </dependencies>
   </metadata>

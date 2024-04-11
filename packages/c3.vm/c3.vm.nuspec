@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>c3.vm</id>
-    <version>0.0.0.20240323</version>
+    <version>0.0.0.20240411</version>
     <authors>WithSecureLabs</authors>
     <description>C3 (Custom Command and Control) is a tool that allows Red Teams to rapidly develop and utilise esoteric command and control channels (C2). It's a framework that extends other red team tooling, such as the commercial Cobalt Strike (CS) product via ExternalC2.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240411" />
     </dependencies>
   </metadata>
 </package>
