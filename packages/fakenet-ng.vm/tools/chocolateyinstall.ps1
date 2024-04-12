@@ -2,46 +2,42 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $toolName = 'FakeNet-NG'
+  # We do not use the VM-Install-From-Zip because the shortcut executable has to be run from the tools dir:
+  # https://github.com/mandiant/flare-fakenet-ng/issues/180
+  $toolName = 'fakenet'
   $category = 'Networking'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
+
+  $zipUrl = "https://github.com/mandiant/flare-fakenet-ng/releases/download/v3.2-alpha/fakenet3.2-alpha.zip"
+  $zipSha256 = "5941a0401830c2310226f0cd2d640e091f1c8bf1b93c5288e6626eecebf20bff"
+
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
   # Remove files from previous zips for upgrade
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
   # Download and unzip
-  $url = "https://github.com/mandiant/flare-fakenet-ng/releases/download/v1.4.11/fakenet1.4.11.zip"
-  $checksum = "62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95"
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
-    url           = $url
-    checksum      = $checksum
+    url           = $zipUrl
+    checksum      = $zipSha256
     checksumType  = 'sha256'
   }
-  Install-ChocolateyZipPackage @packageArgs
+  Install-ChocolateyZipPackage @packageArgs | Out-Null
+  VM-Assert-Path $toolDir
 
-  $executablePath = Join-Path $toolDir "fakenet1.4.11\fakenet.exe" -Resolve
+  # There is an inner folder in the zip whose name changes as it includes the version
+  $dirList = Get-ChildItem $toolDir -Directory
+  $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
 
-  # Create shortcut file
-  $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-  $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
-  $executableDir = Join-Path $toolDir "fakenet1.4.11"
-  $executableArgs = "/K `"cd `"$executableDir`" && `"$executablePath`"`""
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -IconLocation $executablePath -RunAsAdmin
-  VM-Assert-Path $shortcut
+  $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
+  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -executableDir $toolDir
+  Install-BinFile -Name $toolName -Path $executablePath
 
-  # Install shim the hard way until this is fixed: https://github.com/chocolatey/choco/issues/1273
-  $launcher = Join-Path ${Env:ChocolateyInstall} "bin\fakenet.exe"
-  $sg = Join-Path ${Env:ChocolateyInstall} 'tools\shimgen.exe' -Resolve
-  & $sg -o $launcher -p $ExecutableCmd -c "/K 'cd `"$executableDir`" && `"$executablePath`"'" | Out-Null
-  VM-Assert-Path $launcher
-
-  # Create shortcut to actual tools dir
-  $logDir  = Join-Path ${Env:UserProfile} "Desktop\fakenet_logs.lnk"
-  Install-ChocolateyShortcut -shortcutFilePath $logDir -targetPath $executableDir
-  VM-Assert-Path $logDir
+  # Create shortcut in Desktop to FakeNet tool directory
+  $desktopShortcut  = Join-Path ${Env:UserProfile} "Desktop\fakenet_logs.lnk"
+  Install-ChocolateyShortcut -shortcutFilePath $desktopShortcut -targetPath $toolDir
+  VM-Assert-Path $desktopShortcut
 } catch {
   VM-Write-Log-Exception $_
 }
