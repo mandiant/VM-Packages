@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/hausec/Bloodhound-Custom-Queries/archive/7ef909966
 $zipSha256 = '78a71b9797506200b4c86bdad6799ba8c3519171353ce329dff5ff4fc703ddb0'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

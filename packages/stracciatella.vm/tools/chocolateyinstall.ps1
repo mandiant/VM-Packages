@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/mgeeky/Stracciatella/archive/acc83e21951049ab4998e
 $zipSha256 = 'd9299fca780945becf9907b052112e7149fb2a2d51e28f0e73e8326455f47a82'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

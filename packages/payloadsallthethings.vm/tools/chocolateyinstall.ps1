@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/swisskyrepo/PayloadsAllTheThings/archive/cd19bb940
 $zipSha256 = 'c2adbecb78e01e5d8987ab42b40a30b4a104ee6c2886d8143395645408f9f361'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

@@ -198,43 +198,6 @@ function VM-New-Install-Log {
     return $outputFile
 }
 
-# This functions returns $toolDir
-function VM-Install-Raw-GitHub-Repo {
-    [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
-        [string] $toolName,
-        [Parameter(Mandatory=$true, Position=1)]
-        [string] $category,
-        [Parameter(Mandatory=$true, Position=2)]
-        [string] $zipUrl,
-        [Parameter(Mandatory=$true, Position=3)]
-        [string] $zipSha256,
-        [Parameter(Mandatory=$false)]
-        [bool] $innerFolder=$false, # Subfolder in zip with the app files
-        [Parameter(Mandatory=$false)]
-        [string] $executableName = "", # Executable name, needed if different from "$toolName.exe"
-        [Parameter(Mandatory=$false)]
-        [switch] $withoutBinFile, # Tool should not be installed as a bin file
-        # Examples:
-        # $powershellCommand = "Get-Content README.md"
-        # $powershellCommand = "Import-Module module.ps1; Get-Help Main-Function"
-        [Parameter(Mandatory=$false)]
-        [string] $powershellCommand
-    )
-    try {
-        if ($withoutBinFile) {
-            $toolDir = (VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -withoutBinFile -powershellCommand $powershellCommand)[0]
-        } else {
-            $toolDir = (VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -powershellCommand $powershellCommand)[0]
-        }
-        return $toolDir
-    } catch {
-        VM-Write-Log-Exception $_
-    }
-}
-
 function VM-Install-Shortcut{
     [CmdletBinding()]
     Param

@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/GhostPack/SharpWMI/archive/0600f57aeb4733ba6fec585
 $zipSha256 = '0dbdd04a8a62e16de40373ae416b732cd48fb642ac7b3ff243bb9580249058f5'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

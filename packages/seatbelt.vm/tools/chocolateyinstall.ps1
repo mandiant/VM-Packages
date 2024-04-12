@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/GhostPack/Seatbelt/archive/96bd958cf45e3d877d842ce
 $zipSha256 = '05f6da0d0b77adfae105f2030862882fc8790cf47d98ec053762b9ac99250184'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/tevora-threat/SharpView/archive/b60456286b41bb055e
 $zipSha256 = 'b5b2dd91fe22f56fb846d849052fc3205f177cbd067069e6d829e38eea0aca49'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

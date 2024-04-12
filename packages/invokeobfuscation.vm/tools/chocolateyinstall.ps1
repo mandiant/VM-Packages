@@ -9,4 +9,4 @@ $zipSha256 = '24149efe341b4bfc216dea22ece4918abcbe0655d3d1f3c07d1965fac5b4478e'
 
 $powershellCommand = 'Import-Module ./Invoke-Obfuscation.psd1; Invoke-Obfuscation'
 
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand

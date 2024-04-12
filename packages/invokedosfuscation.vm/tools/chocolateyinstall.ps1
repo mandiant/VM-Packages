@@ -9,4 +9,4 @@ $zipSha256 = '60b78094731fc8f54333193e840cb847ac4018c6ca1ccc36c107cda533016791'
 
 $powershellCommand = 'Import-Module .\Invoke-DOSfuscation.psd1; Invoke-DOSfuscation'
 
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand
