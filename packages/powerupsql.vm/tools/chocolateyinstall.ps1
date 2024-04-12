@@ -9,4 +9,4 @@ $zipSha256 = 'fffed1c3f480b40616070e7ebb5bf7e8093e0bb483ce1ef2400f586018439c85'
 
 $powershellCommand = 'Import-Module .\PowerUpSQL.psd1; Get-Command -Module PowerUpSQL'
 
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $true -powershellCommand $powershellCommand

@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/GhostPack/KeeThief/archive/04f3fbc0ba87dbcd9011ad4
 $zipSha256 = '2fe020645855564ce1d0236c3e83e8d66a09c91c00d95a40b88cbe9ffd5ca204'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

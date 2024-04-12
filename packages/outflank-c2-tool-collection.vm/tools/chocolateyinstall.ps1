@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/outflanknl/C2-Tool-Collection/archive/f02df22a206e
 $zipSha256 = '825e3372f6caf540ecbc20f31af6f4b9e711bd6ce64fb09d7d151cf4224de3d8'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true

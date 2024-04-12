@@ -8,4 +8,4 @@ $zipUrl = 'https://github.com/fox-it/adconnectdump/archive/3ff6ebe7afac83263dd41
 $zipSha256 = '6f36659f4d0ef7e20ddea0d7c17f36786c2fa8ca0728e6fd790f3234f408e0e9'
 
 # This tool does not have a `.exe` associated with it, so this links it to the directory
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
+VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -withoutBinFile -innerFolder $true
