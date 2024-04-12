@@ -225,10 +225,11 @@ function VM-Install-Raw-GitHub-Repo {
     )
     try {
         if ($withoutBinFile) {
-            VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -withoutBinFile -powershellCommand $powershellCommand
+            $toolDir = (VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -withoutBinFile -powershellCommand $powershellCommand)[0]
         } else {
-            VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -powershellCommand $powershellCommand
+            $toolDir = (VM-Install-From-Zip -toolName $toolName -category $category -zipUrl $zipUrl -zipSha256 $zipSha256 -innerFolder $innerFolder -executableName $executableName -powershellCommand $powershellCommand)[0]
         }
+        return $toolDir
     } catch {
         VM-Write-Log-Exception $_
     }
@@ -320,9 +321,10 @@ function VM-Install-Shortcut{
     }
 }
 
-# This functions returns $toolDir (outputed by Install-ChocolateyZipPackage) and $executablePath
+# This functions returns $toolDir and $executablePath
 function VM-Install-From-Zip {
     [CmdletBinding()]
+    [OutputType([System.Object[]])]
     Param
     (
         [Parameter(Mandatory=$true, Position=0)]
@@ -331,7 +333,7 @@ function VM-Install-From-Zip {
         [string] $category,
         [Parameter(Mandatory=$true, Position=2)]
         [string] $zipUrl,
-        [Parameter(Mandatory=$true, Position=3)]
+        [Parameter(Mandatory=$false, Position=3)]
         [string] $zipSha256,
         [Parameter(Mandatory=$false)]
         [string] $zipUrl_64,
@@ -397,7 +399,7 @@ function VM-Install-From-Zip {
             VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
             Install-BinFile -Name $toolName -Path $executablePath
         }
-        return $executablePath
+        return ,@($toolDir, $executablePath)
     } catch {
         VM-Write-Log-Exception $_
     }

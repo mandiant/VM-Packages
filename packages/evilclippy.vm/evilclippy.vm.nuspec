@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>evilclippy.vm</id>
-    <version>1.3.0.20240323</version>
+    <version>1.3.0.20240411</version>
     <authors>outflank</authors>
     <description>A cross-platform assistant for creating malicious MS Office documents. Can hide VBA macros, stomp VBA code (via P-Code) and confuse macro analysis tools.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240411" />
     </dependencies>
   </metadata>
 </package>

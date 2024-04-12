@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>invokedosfuscation.vm</id>
-    <version>1.0.0.20240312</version>
+    <version>1.0.0.20240411</version>
     <authors>danielbohannon</authors>
     <description>Invoke-DOSfuscation is a PowerShell v2.0+ compatible cmd.exe command obfuscation framework.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240411" />
     </dependencies>
   </metadata>
 </package>
