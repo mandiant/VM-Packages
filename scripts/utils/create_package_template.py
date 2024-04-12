@@ -87,22 +87,6 @@ VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleAp
 
 """
 Needs the following format strings:
-    tool_name="...", category="...", target_url="...", target_hash="..."
-"""
-GITHUB_REPO_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
-Import-Module vm.common -Force -DisableNameChecking
-
-$toolName = '{tool_name}'
-$category = '{category}'
-
-$zipUrl = '{target_url}'
-$zipSha256 = '{target_hash}'
-
-VM-Install-Raw-GitHub-Repo $toolName $category $zipUrl $zipSha256
-"""
-
-"""
-Needs the following format strings:
     tool_name="...", category="...", shim_path="..."
 """
 METAPACKAGE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
@@ -177,21 +161,6 @@ $category = '{category}'
 
 VM-Remove-Tool-Shortcut $toolName $category
 """
-
-
-def create_git_repo_template(packages_path, **kwargs):
-    create_template(
-        GITHUB_REPO_TEMPLATE,
-        packages_path=packages_path,
-        pkg_name=kwargs.get("pkg_name"),
-        version=kwargs.get("version"),
-        authors=kwargs.get("authors"),
-        description=kwargs.get("description"),
-        tool_name=kwargs.get("tool_name"),
-        category=kwargs.get("category"),
-        target_url=kwargs.get("target_url"),
-        target_hash=kwargs.get("target_hash"),
-    )
 
 
 def create_zip_exe_template(packages_path, **kwargs):
@@ -363,21 +332,6 @@ TYPES = {
         "cb": create_single_ps1_template,
         "doc": "A PowerShell script distributed via direct/raw download",
         "example": "<url>/script.ps1",
-        "arguments": [
-            "pkg_name",
-            "version",
-            "authors",
-            "description",
-            "tool_name",
-            "category",
-            "target_url",
-            "target_hash",
-        ],
-    },
-    "GITHUB_REPO": {
-        "cb": create_git_repo_template,
-        "doc": "Download a GitHub repository based on a specific commit hash",
-        "example": "https://github.com/sense-of-security/ADRecon/archive/38e4abae3e26d0fa87281c1d0c65cabd4d3c6ebd.zip",
         "arguments": [
             "pkg_name",
             "version",
