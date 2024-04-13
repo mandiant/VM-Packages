@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>netcat.vm</id>
-    <version>1.12.0</version>
+    <version>1.12</version>
     <authors>Hobbit</authors>
     <description>Netcat is a networking utility for reading from and writing to network connections using TCP or UDP.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="netcat" version="[1.12.0]" />
+      <dependency id="netcat" version="[1.12]" />
     </dependencies>
   </metadata>
 </package>
