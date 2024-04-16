@@ -8,4 +8,4 @@ $category = 'Utilities'
 VM-Remove-Tool-Shortcut $toolName $category
 
 # Manually silently uninstall
-VM-Uninstall-With-Uninstaller "Malcode Analyst Pack *" "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
+VM-Uninstall-With-Uninstaller "Malcode Analyst Pack *" "$category" "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
