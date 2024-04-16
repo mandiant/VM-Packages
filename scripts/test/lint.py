@@ -302,9 +302,9 @@ class FirstLineDoesNotSetErrorAction(Lint):
 class UsesInvalidCategory(Lint):
     # Some packages don't have a category (we don't create a link in the tools directory)
     EXCLUSIONS = [
+        ".dbgchild.vm",
         ".ollydumpex.vm",
         ".scyllahide.vm",
-        ".dbgchild.vm",
         "common.vm",
         "debloat.vm",
         "dokan.vm",
@@ -316,6 +316,7 @@ class UsesInvalidCategory(Lint):
         "notepadpp.plugin.",
         "npcap.vm",
         "openjdk.vm",
+        "pdbs.pdbresym.vm",
         "python3.vm",
         "x64dbgpy.vm",
     ]
