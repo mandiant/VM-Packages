@@ -8,6 +8,10 @@ try {
   & $executablePath cachesyms
   # The downloaded symbols are store into C:\symbols
   VM-Assert-Path "C:\symbols"
+
+  # Set _NT_SYMBOL_PATH to include the downloaded symbols
+  $symbolsPath = "srv*c:\symbols*https://msdl.microsoft.com/download/symbols"
+  [System.Environment]::SetEnvironmentVariable("_NT_SYMBOL_PATH", $symbolsPath, "Machine")
 } catch {
   VM-Write-Log-Exception $_
 }
