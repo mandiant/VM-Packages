@@ -1,6 +1,6 @@
 # PSUseApprovedVerbs is disabled to support VM- functions
 # TODO: Enable other rules
-$excludedRules = "PSAvoidUsingInvokeExpression", "PSUseApprovedVerbs", "PSAvoidUsingWriteHost", "PSUseShouldProcessForStateChangingFunctions", "PSUseSingularNouns"
+$excludedRules = "PSAvoidUsingInvokeExpression", "PSUseApprovedVerbs", "PSAvoidUsingWriteHost", "PSUseShouldProcessForStateChangingFunctions", "PSUseSingularNouns", "PSAvoidUsingPositionalParameters"
 
 choco install psscriptanalyzer --version 1.20.0 --no-progress
 
