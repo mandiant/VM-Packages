@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>nasm.vm</id>
-    <version>2.16.1.20240217</version>
+    <version>2.16.2</version>
     <authors>NASM Authors</authors>
     <description>Netwide Assembler</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="nasm" version="[2.16.1.20221231]" />
+      <dependency id="nasm" version="[2.16.2]" />
     </dependencies>
   </metadata>
 </package>

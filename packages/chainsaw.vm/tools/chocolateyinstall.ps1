@@ -4,8 +4,8 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'chainsaw'
 $category = 'Forensic'
 
-$zipUrl = 'https://github.com/WithSecureLabs/chainsaw/releases/download/v2.8.1/chainsaw_all_platforms+rules.zip'
-$zipSha256 = '10969d8f300680b2289808bef43fb254c0689c1052e625ec4cda198b6226d6f1'
+$zipUrl = 'https://github.com/WithSecureLabs/chainsaw/releases/download/v2.9.0/chainsaw_all_platforms+rules.zip'
+$zipSha256 = 'a48330a6c8c5905bf5f6e74fa01cb7ed87d36d1e799d6614c49f3e1ecdc44f41'
 
 $executableName = $toolName + "_x86_64-pc-windows-msvc.exe"
 
