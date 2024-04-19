@@ -639,10 +639,10 @@ function VM-Uninstall-With-Uninstaller {
         [string] $toolName,
         [Parameter(Mandatory=$true, Position=1)]
         [string] $category,
-        [Parameter(Mandatory=$true, Position=1)]
+        [Parameter(Mandatory=$true, Position=2)]
         [ValidateSet("EXE", "MSI")]
         [string] $fileType,
-        [Parameter(Mandatory=$true, Position=2)]
+        [Parameter(Mandatory=$true, Position=3)]
         # Some general silent args:
         # $silentArgs = '/qn /norestart' # MSI
         # $silentArgs = '/S'             # NSIS
