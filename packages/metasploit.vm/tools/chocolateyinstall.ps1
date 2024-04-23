@@ -2,17 +2,25 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-    $toolName = 'Metasploit'
-    $category = 'Command & Control'
+    # Download the installer
+    $packageArgs        = @{
+        packageName     = $env:ChocolateyPackageName
+        file            = Join-Path ${Env:TEMP} 'metasploitframework-latest.msi'
+        url             = 'https://windows.metasploit.com/metasploitframework-latest.msi'
+    }
 
-    $exeUrl = 'https://windows.metasploit.com/metasploitframework-latest.msi'
-    $exeSha256 = '470039711E182C4551169A776AFC8C10B4BAEA1600334449998894B2D725D49A'
-    # can't install to specified path.
-    $toolDir = Join-Path ${Env:SystemDrive} "metasploit-framework"
-    $binDir = Join-Path $toolDir "bin"
-    $executablePath = (Join-Path $binDir "msfconsole.bat")
-    VM-Install-With-Installer $toolName $category "MSI" "/q /norestart" $executablePath $exeUrl -sha256 $exeSha256
+    $filePath = Get-ChocolateyWebFile @packageArgs
+    VM-Assert-Path $filePath
+    VM-Assert-Signature $filePath
 
+    # Install the downloaded installer
+    $packageArgs        = @{
+        packageName     = $env:ChocolateyPackageName
+        file            = $filePath
+        fileType        = 'MSI'
+        silentArgs      = "/quiet /norestart /l*v `"$($env:TEMP)\$($env:chocolateyPackageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
+    }
+    Install-ChocolateyInstallPackage @packageArgs
 } catch {
     VM-Write-Log-Exception $_
 }
