@@ -368,6 +368,38 @@ function VM-Install-From-Zip {
     }
 }
 
+function VM-Install-Node-Tool-From-Zip {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
+        [Parameter(Mandatory=$true, Position=2)]
+        [string] $zipUrl,
+        [Parameter(Mandatory=$false, Position=3)]
+        [string] $zipSha256,
+        # node command such as "jailme.js -h -b list"
+        [Parameter(Mandatory=$true)]
+        [string] $command,
+        [Parameter(Mandatory=$false)]
+        [bool] $innerFolder=$true # Default to true as most node apps are GH repos (ZIP with inner folder)
+    )
+    # Install dependencies with npm when running shortcut as we ignore errors below
+    $powershellCommand = "npm install; node $command"
+
+    $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $innerFolder -powershellCommand $powershellCommand)[0]
+
+    # Prevent the following warning from failing the package: "npm WARN deprecated request@2.79.0"
+    $ErrorActionPreference = 'Continue'
+    # Get absolute path as npm may not be in PATH until Powershell is restarted
+    $npmPath = Join-Path ${Env:ProgramFiles} "\nodejs\npm.cmd" -Resolve
+    # Install tool dependencies with npm
+    Set-Location $toolDir; & "$npmPath" install | Out-Null
+}
+
 # This functions returns $executablePath
 function VM-Install-Single-Exe {
     [CmdletBinding()]
