@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>fiddlerclassic.vm</id>
-    <version>5.0.20211.20240417</version>
+    <id>fiddler.vm</id>
+    <version>5.0.20242</version>
     <authors>Telerik</authors>
     <description>Intercepts, decrypts, and analyzes HTTPS traffic</description>
     <dependencies>
