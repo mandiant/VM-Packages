@@ -284,6 +284,54 @@ function VM-Install-Shortcut{
     }
 }
 
+function VM-Get-IDA-Plugins-Dir {
+  return New-Item "$Env:APPDATA\Hex-Rays\IDA Pro\plugins" -ItemType "directory" -Force
+}
+
+# Downloads an IDA plugin file to the plugins directory
+function VM-Install-IDA-Plugin {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
+    Param
+    (
+        [Parameter(Mandatory=$true)]
+        [string] $pluginName, # Example: capa_explorer.py
+        [Parameter(Mandatory=$true)]
+        [string] $pluginUrl,
+        [Parameter(Mandatory=$true)]
+        [string] $pluginSha256
+    )
+    try {
+        $pluginsDir = VM-Get-IDA-Plugins-Dir
+        $pluginPath = Join-Path $pluginsDir $pluginName
+        $packageArgs = @{
+            packageName = ${Env:ChocolateyPackageName}
+            url = $pluginUrl
+            checksum = $pluginSha256
+            checksumType = "sha256"
+            fileFullPath = $pluginPath
+            forceDownload = $true
+        }
+        Get-ChocolateyWebFile @packageArgs
+        VM-Assert-Path $pluginPath
+    } catch {
+        VM-Write-Log-Exception $_
+    }
+}
+
+# Removes an IDA plugin file from the plugins directory
+function VM-Uninstall-IDA-Plugin {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
+    Param
+    (
+        [Parameter(Mandatory=$true)]
+        [string] $pluginName # Example: capa_explorer.py
+    )
+    $pluginPath = Join-Path VM-Get-IDA-Plugins-Dir $pluginName
+    Remove-Item $pluginPath
+}
+
 # This functions returns $toolDir and $executablePath
 function VM-Install-From-Zip {
     [CmdletBinding()]

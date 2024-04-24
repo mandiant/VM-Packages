@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.capa.vm</id>
-    <version>7.0.1</version>
+    <version>7.0.1.20240424</version>
     <description>capa explorer is an IDAPython plugin that integrates capa with IDA Pro.</description>
     <authors>@mike-hunhoff, @williballenthin, @mr-tz</authors>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240424" />
       <dependency id="libraries.python3.vm" version="0.0.0.20230927" />
     </dependencies>
   </metadata>
