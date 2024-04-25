@@ -31,7 +31,7 @@ try {
   $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
 
   $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
-  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -executableDir $toolDir
+  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -executableDir $toolDir -consoleApp $true
   Install-BinFile -Name $toolName -Path $executablePath
 
   # Create shortcut in Desktop to FakeNet tool directory
