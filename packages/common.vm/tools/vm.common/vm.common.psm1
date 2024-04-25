@@ -351,10 +351,17 @@ function VM-Install-From-Zip {
         elseif ($withoutBinFile) { # Used when tool does not have an associated executable
             if (-Not $executableName) { # Tool is located in $toolDir (c3.vm for example)
                 $executablePath = $toolDir
-            } else { # Tool is in a specific directory (pma-labs.vm for example)
-                $executablePath = Join-Path $toolDir $executableName -Resolve
+            } else { # Tool is in a specific directory (pma-labs.vm or ida.diaphora.vm for example)
+                if ([System.IO.Path]::GetExtension($executableName) -eq ".py") {
+                    $executablePath = (Get-Command python).Source
+                    $filePath = Join-Path $toolDir $executableName
+                    $arguments = $filePath + " $arguments"
+                    $consoleApp = $true
+                } else {
+                    $executablePath = Join-Path $toolDir $executableName -Resolve
+                }
             }
-            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath
+            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
         }
         else {
             if (-Not $executableName) { $executableName = "$toolName.exe" }
