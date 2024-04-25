@@ -28,7 +28,6 @@ try {
 
     # Make shortcut point to 7z File Manager so that it's more useful of a shortcut.
     $executablePath = Join-Path $toolDir "${toolName}FM.exe" -Resolve
-
     VM-Install-Shortcut $toolName $category $executablePath
 
     # Add 7z unzip with password "infected" to the right menu for the most common extensions.
@@ -36,6 +35,7 @@ try {
     $extensions = @(".7z", ".bzip2", ".gzip", ".tar", ".wim", ".xz", ".txz", ".zip", ".rar")
     foreach ($extension in $extensions) {
       VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' "`"$7zExecutablePath`" e -pinfected `"%1`"" "$executablePath" -extension $extension
+      VM-Set-Open-With-Association $executablePath $extension
     }
 } catch {
   VM-Write-Log-Exception $_
