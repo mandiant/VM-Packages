@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$pluginsDir = "$Env:APPDATA\Hex-Rays\IDA Pro\plugins"
+$pluginsDir = VM-Get-IDA-Plugins-Dir
 
 # Uninstall plugin
 $pluginPath = Join-Path $pluginsDir "capa_explorer.py"

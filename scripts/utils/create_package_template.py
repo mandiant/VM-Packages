@@ -44,7 +44,7 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240424" />
     </dependencies>
   </metadata>
 </package>
@@ -69,10 +69,6 @@ NUSPEC_TEMPLATE_METAPACKAGE = r"""<?xml version="1.0" encoding="utf-8"?>
 </package>
 """
 
-"""
-Needs the following format strings:
-    tool_name="...", category="...", target_url="...", target_hash="...", console_app="..."
-"""
 ZIP_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
@@ -138,6 +134,20 @@ VM-Install-Single-Ps1 $toolName $category $ps1Url -ps1Sha256 $ps1Sha256
 
 """
 Needs the following format strings:
+    tool_name="...", target_url="...", target_hash="..."
+"""
+IDA_PLUGIN_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$pluginName = '{tool_name}'
+$pluginUrl = '{target_url}'
+$pluginSha256 = '{target_hash}'
+
+VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha256 $pluginSha256
+"""
+
+"""
+Needs the following format strings:
     tool_name="...", category="..."
 """
 GENERIC_UNINSTALL_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
@@ -160,6 +170,18 @@ $toolName = '{tool_name}'
 $category = '{category}'
 
 VM-Remove-Tool-Shortcut $toolName $category
+"""
+
+"""
+Needs the following format strings:
+    tool_name="..."
+"""
+IDA_PLUGIN_UNINSTALL_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
+Import-Module vm.common -Force -DisableNameChecking
+
+$pluginName = '{tool_name}'
+VM-Uninstall-IDA-Plugin -pluginName $pluginName
+
 """
 
 
@@ -223,6 +245,21 @@ def create_single_ps1_template(packages_path, **kwargs):
         description=kwargs.get("description"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
+        target_url=kwargs.get("target_url"),
+        target_hash=kwargs.get("target_hash"),
+    )
+
+
+def create_ida_plugin_template(packages_path, **kwargs):
+    create_template(
+        IDA_PLUGIN_TEMPLATE,
+        uninstall_template=IDA_PLUGIN_UNINSTALL_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
         target_url=kwargs.get("target_url"),
         target_hash=kwargs.get("target_hash"),
     )
@@ -297,6 +334,20 @@ def get_script_directory():
 
 # dict[str, dict[str, any]]
 TYPES = {
+    "IDA_PLUGIN": {
+        "cb": create_ida_plugin_template,
+        "doc": "An .py or .dll file that is downloaded to the plugins directory to install it as an IDA plugin",
+        "example": "<url>/plugin_file.dll",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "target_url",
+            "target_hash",
+        ],
+    },
     "ZIP_EXE": {
         "cb": create_zip_exe_template,
         "doc": "An executable tool distributed in a ZIP file",
@@ -419,7 +470,7 @@ def main(argv=None):
     parser.add_argument("--pkg_name", type=str.lower, default="", help="Package name without suffix (i.e., no '.vm' needed)")
     parser.add_argument("--version", type=str, default="", help="Tool's version number")
     parser.add_argument("--authors", type=str, default="", help="Comma separated list of authors for tool")
-    parser.add_argument("--tool_name", type=str, default="", help="Name of tool (usually the file name with the '.exe')")
+    parser.add_argument("--tool_name", type=str, default="", help="Name of tool (usually the file name with the '.exe') or plugin (the .py or .dll plugin file)")
     parser.add_argument("--category", type=str, default="", choices=CATEGORIES, help="Category for tool")
     parser.add_argument("--description", type=str, default="", help="Description for tool")
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")

@@ -3,22 +3,14 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     # Install plugin
+    $pluginName = "capa_explorer.py"
     $pluginUrl = "https://raw.githubusercontent.com/mandiant/capa/v7.0.1/capa/ida/plugin/capa_explorer.py"
     $pluginSha256 = "a9a60d9066c170c4e18366eb442f215009433bcfe277d3c6d0c4c9860824a7d3"
-    $pluginsDir = New-Item "$Env:APPDATA\Hex-Rays\IDA Pro\plugins" -ItemType "directory" -Force
-    $pluginPath = Join-Path $pluginsDir "capa_explorer.py"
-    $packageArgs = @{
-        packageName = ${Env:ChocolateyPackageName}
-        url = $pluginUrl
-        checksum = $pluginSha256
-        checksumType = "sha256"
-        fileFullPath = $pluginPath
-        forceDownload = $true
-    }
-    Get-ChocolateyWebFile @packageArgs
-    VM-Assert-Path $pluginPath
+    VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha256 $pluginSha256
+
 
     # Download capa rules
+    $pluginsDir = VM-Get-IDA-Plugins-Dir
     $rulesUrl = "https://github.com/mandiant/capa-rules/archive/refs/tags/v7.0.1.zip"
     $rulesSha256 = "f4ed60bcf342007935215ea76175dddfbcbfb3f97d95387543858e0c1ecf8bcd"
     $packageArgs = @{

@@ -309,7 +309,7 @@ class UsesInvalidCategory(Lint):
         "debloat.vm",
         "dokan.vm",
         "googlechrome.vm",
-        "ida.plugin.capa.vm",
+        "ida.plugin",
         "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
