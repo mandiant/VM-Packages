@@ -2,6 +2,9 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
+    # Install dependency: capa Python library
+    VM-Pip-Install "flare-capa"
+
     # Install plugin
     $pluginName = "capa_explorer.py"
     $pluginUrl = "https://raw.githubusercontent.com/mandiant/capa/v7.0.1/capa/ida/plugin/capa_explorer.py"

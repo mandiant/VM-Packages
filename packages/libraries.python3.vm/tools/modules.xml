@@ -7,7 +7,6 @@
     <module name="dissect"/>
     <module name="dncil"/>
     <module name="dnfile"/>
-    <module name="flare-capa"/>
     <module name="hexdump"/>
     <module name="ldapdomaindump"/>
     <module name="lznt1"/>
