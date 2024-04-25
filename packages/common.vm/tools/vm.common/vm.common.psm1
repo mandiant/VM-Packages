@@ -128,20 +128,99 @@ function VM-Assert-Path {
     }
 }
 
-# Raise an exception if the Signature of $file_path is invalid
+# Raise an exception if the Signature of $filePath is invalid
 function VM-Assert-Signature {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
-        [String] $file_path
+        [String] $filePath,
+        [Parameter(Mandatory=$false)]
+        [String] $modulus,
+        [Parameter(Mandatory=$false)]
+        [System.Array] $publicExponent
     )
-    $signature_status = (Get-AuthenticodeSignature -FilePath $file_path).Status
+    $signature_status = (Get-AuthenticodeSignature -FilePath $filePath).Status
     if ($signature_status -eq 'Valid') {
-        VM-Write-Log "INFO" "Valid signature: $file_path"
+        VM-Write-Log "INFO" "Valid Signature: $filePath"
     } else {
-        $err_msg = "Invalid signature: $file_path"
-        VM-Write-Log "ERROR" $err_msg
-        throw $err_msg
+        if ($modulus -and $publicExponent) {
+            $pkParams = VM-Get-SignedFilePublicKey $filePath
+            if ($modulus -ne $pkParams.Modulus -or (Compare-Object $pkParams.PublicExponent $publicExponent).Length -ne 0) {
+                $err_msg = "Digital Certificate does not match expected values: $filePath"
+                VM-Write-Log "ERROR" $err_msg
+                VM-Write-Log "INFO" "Modulus: $pkParams.Modulus"
+                VM-Write-Log "INFO" "Public Exponent: $pkParams.PublicExponent"
+                throw $err_msg
+            } else {
+                VM-Write-Log "INFO" "Valid Digital Certificate: $filePath"
+            }
+        } else {
+            $err_msg = "Invalid Signature: $filePath"
+            VM-Write-Log "ERROR" $err_msg
+            throw $err_msg
+        }
+    }
+}
+
+# Gets Public Key from digitally signed binary
+function VM-Get-SignedFilePublicKey {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string] $filePath
+    )
+    try {
+        $signature = Get-AuthenticodeSignature $filePath
+        $cert = $signature.SignerCertificate
+        return VM-Get-Modulus-And-PublicExponent $cert
+    } catch {
+        VM-Write-Log "ERROR" "Error processing $filePath $($_.Exception.Message)"
+        return $null
+    }
+}
+
+# Gets Public Key from Windows Exported DER encoded binary X.509 (.cer) file
+function VM-Get-DerCertificatePublicKey {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string] $certPath
+    )
+    try {
+        $cert = Get-PfxCertificate -FilePath $certPath
+        return VM-Get-Modulus-And-PublicExponent $cert
+    } catch {
+        VM-Write-Log "ERROR" "Error processing $certPath $($_.Exception.Message)"
+        return $null
+    }
+}
+
+# Gets Modulus and Public Exponent components of Public Key
+function VM-Get-Modulus-And-PublicExponent {
+    param (
+        [Parameter(Mandatory = $true)]
+        [System.Security.Cryptography.X509Certificates.X509Certificate2] $cert
+    )
+    try {
+        $publicKey = $cert.PublicKey.Key
+        $params = $publicKey.ExportParameters($false)
+
+        $modulusBytes = $params.Modulus
+        $modulusHex = [System.BitConverter]::ToString($modulusBytes).Replace('-','')
+
+        $exponentBytes = $params.Exponent
+        $exponent = if ($exponentBytes.Length -eq 4) {
+            [System.BitConverter]::ToInt32($exponentBytes, 0)
+        } elseif ($exponentBytes.Length -eq 2) {
+            [System.BitConverter]::ToInt16($exponentBytes, 0)
+        } else {
+            $exponentBytes  # Return as byte array for unsupported lengths
+        }
+        return @{
+            Modulus = $modulusHex
+            PublicExponent = $exponent
+        }
+    } catch {
+        VM-Write-Log "ERROR" "Error processing $certPath $($_.Exception.Message)"
+        return $null
     }
 }
 
