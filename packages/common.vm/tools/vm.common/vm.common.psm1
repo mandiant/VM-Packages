@@ -1354,12 +1354,23 @@ public class Shell {
 }
 
 # Sort Desktop icons by item type using WScript.Shell to replicate the manual steps
+# This is written in a way to that ensures things will be sorted properly for multiple possible states.
 function VM-Sort-Desktop-Icons {
     VM-Write-Log "INFO" "Sorting Desktop icons"
+    # toggleDesktop sets the focus to the desktop for regular Powershell, but not fully for Windows-Terminal Powershell.
     (New-Object -ComObject Shell.Application).toggleDesktop();
     Start-Sleep -Milliseconds 100;
+    # Start Windows Run
+    # This + (Alt + F4) is needed to ensure focus is set to the desktop properly to perform the other actions; Needed for Windows-Terminal Powershell.
+    $shell = New-Object -ComObject Shell.Application;
+    $shell.FileRun();
+    Start-Sleep -Milliseconds 200;
     $objShell = New-Object -ComObject WScript.Shell;
-    $objShell.SendKeys("^a {F5}+{F10}oi");
+    # Close out of "Run" to get focus on desktop.
+    $objShell.SendKeys("%{F4}");    # Alt + F4
+    Start-Sleep -Milliseconds 100;
+    # Sort by Name then Sort by Item Type using a way that works for a variety of possible states that the desktop could be in.
+    $objShell.SendKeys("^a{F5}+{F10}on+{F10}oi");   # 'ctrl + a' -> 'F5' -> 'Shift + F10' -> 'o' -> 'n' -> 'Shift + F10' -> 'o' -> 'i'
     Start-Sleep -Milliseconds 100;
 }
 
@@ -1402,8 +1413,6 @@ function VM-Remove-DesktopFiles {
             }
         }
     }
-
-    VM-Sort-Desktop-Icons
 }
 
 function VM-Clear-TempAndCache {
@@ -1443,6 +1452,9 @@ function VM-Clean-Up {
     )
     Write-Host "[+] Removing Desktop Files..." -ForegroundColor Green
     VM-Remove-DesktopFiles -excludeFolders $excludeFolders -excludeFiles $excludeFiles
+
+    Write-Host "[+] Sorting Desktop Icons..." -ForegroundColor Green
+    VM-Sort-Desktop-Icons
 
     Write-Host "[+] Clearing Temp and Cache..." -ForegroundColor Green
     VM-Clear-TempAndCache
