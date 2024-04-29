@@ -288,7 +288,10 @@ function VM-Get-IDA-Plugins-Dir {
   return New-Item "$Env:APPDATA\Hex-Rays\IDA Pro\plugins" -ItemType "directory" -Force
 }
 
-# Downloads an IDA plugin file to the plugins directory
+# Downloads an IDA plugin file or ZIP containing a plugin (and supporting files/directories) to the plugins directory.
+# For ZIPs, we check if there is an inner folder (this is the case for GH ZIPs) and if there is a directory called 'plugins'.
+# We copy all files in this directory with the exception of the README and the LICENSE file (often present in GH repos).
+# The copied files must include $pluginName.
 function VM-Install-IDA-Plugin {
     [CmdletBinding()]
     [OutputType([System.Object[]])]
@@ -302,17 +305,52 @@ function VM-Install-IDA-Plugin {
         [string] $pluginSha256
     )
     try {
+        $pluginExtension = [System.IO.Path]::GetExtension($pluginUrl)
         $pluginsDir = VM-Get-IDA-Plugins-Dir
         $pluginPath = Join-Path $pluginsDir $pluginName
-        $packageArgs = @{
-            packageName = ${Env:ChocolateyPackageName}
-            url = $pluginUrl
-            checksum = $pluginSha256
-            checksumType = "sha256"
-            fileFullPath = $pluginPath
-            forceDownload = $true
+
+        if ($pluginExtension -eq ".zip") {
+            $tempDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "temp_$([guid]::NewGuid())"
+            # Download and unzip
+            $packageArgs = @{
+                packageName    = ${Env:ChocolateyPackageName}
+                unzipLocation  = $tempDownloadDir
+                url            = $pluginUrl
+                checksum       = $pluginSha256
+                checksumType   = 'sha256'
+            }
+            Install-ChocolateyZipPackage @packageArgs | Out-Null
+            VM-Assert-Path $tempDownloadDir
+
+            # Check if there is inner folder (for example for ZIPs downloaded from GH)
+            $childItems = Get-ChildItem $tempDownloadDir -ea 0
+            if (($childItems).Count -eq 1) {
+                $subDir = Join-Path $tempDownloadDir $childItems
+                if (Test-Path $subDir -PathType Container) {
+                    $tempDownloadDir = $subDir
+                }
+            }
+            # Look for the plugins directory
+            $pluginDir = Get-Item "$tempDownloadDir\plugins" -ea 0
+            if (!$pluginDir) { $pluginDir = $tempDownloadDir }
+
+            # Delete files we don't want to copy
+            Remove-Item "$pluginDir\README*" -Force -ea 0
+            Remove-Item "$pluginDir\LICENSE*" -Force -ea 0
+
+            Copy-Item "$pluginDir\*" $pluginsDir -Recurse
         }
-        Get-ChocolateyWebFile @packageArgs
+        else {
+            $packageArgs = @{
+                packageName = ${Env:ChocolateyPackageName}
+                url = $pluginUrl
+                checksum = $pluginSha256
+                checksumType = "sha256"
+                fileFullPath = $pluginPath
+                forceDownload = $true
+            }
+            Get-ChocolateyWebFile @packageArgs
+        }
         VM-Assert-Path $pluginPath
     } catch {
         VM-Write-Log-Exception $_
