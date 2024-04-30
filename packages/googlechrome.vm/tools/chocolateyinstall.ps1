@@ -22,13 +22,16 @@ try {
     }
     Install-ChocolateyInstallPackage @packageArgs -ErrorAction SilentlyContinue
 
-    VM-Assert-Path "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe"
+    $exePath = "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe"
+    VM-Assert-Path $exePath
 } catch {
     VM-Write-Log-Exception $_
 }
 
 # Try to set configuration, but do not fail the package if it fails
 $ErrorActionPreference = 'Continue'
+
+VM-Remove-Desktop-Shortcut "Google Chrome"
 
 # Expand the path to the Chrome User Data folder and create the "User Data" folder if it doesn't exist.
 $userDataPath = ${Env:LOCALAPPDATA} + "\Google\Chrome\User Data"
@@ -52,3 +55,11 @@ $contentOptions = @{
     Value = "`{`"privacy_sandbox`":{`"m1`":{`"row_notice_acknowledged`":true}}`}"
 }
 Set-Content @contentOptions
+
+# Remove Edge from being default for file extensions so Chrome can be the default
+ForEach ($hive in @("HKCU:", "HKLM:")) {
+    Remove-Item -Path "${hive}\SOFTWARE\Classes\MSEdgeHTM" -Recurse -ErrorAction SilentlyContinue
+}
+
+# Make Chrome the default for .html files
+VM-Set-Open-With-Association $exePath ".html"

@@ -886,6 +886,82 @@ function VM-Remove-From-Right-Click-Menu {
     }
 }
 
+# Add associations to the file extension key
+function VM-Set-Open-With-Association {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $executablePath,
+        [Parameter(Mandatory = $true)]
+        [string] $extension
+    )
+    try {
+        # Extract the executable name without path or extension
+        $exeName = [System.IO.Path]::GetFileNameWithoutExtension($executablePath)
+
+        ForEach ($hive in @("HKCU:", "HKLM:")) {
+            # Create the 'command' key and its default value
+            $commandKey = "${hive}\Software\Classes\${exeName}_auto_file\shell\open\command"
+            New-Item -Path $commandKey -Force
+            New-ItemProperty -Path $commandKey -Name '(Default)' -Value "`"$executablePath`" `"%1`""
+
+            # Create/update the file extension key
+            $extKey = "${hive}\Software\Classes\$extension"
+            New-Item -Path $extKey -Force
+            New-ItemProperty -Path $extKey -Name '(Default)' -Value "${exeName}_auto_file"
+
+            # Add to OpenWithProgids for visibility in "Open with..." menu
+            if (Get-ItemProperty -Path $extKey -Name 'OpenWithProgids' -ErrorAction Ignore) {
+                # If OpenWithProgids exists, update it
+                $existingProgIds = (Get-ItemProperty -Path $extKey -Name 'OpenWithProgids').OpenWithProgids
+                $newProgIds = "$existingProgIds ${exeName}_auto_file" | Select-Object -Unique # Ensure unique values
+                Set-ItemProperty -Path $extKey -Name 'OpenWithProgids' -Value $newProgIds -PropertyType ExpandString
+            } else {
+                # If OpenWithProgids doesn't exist, create it
+                New-ItemProperty -Path $extKey -Name 'OpenWithProgids' -Value "${exeName}_auto_file" -PropertyType ExpandString
+            }
+        }
+    } catch {
+        VM-Write-Log "ERROR" "Failed to add $exeName as file association. Error: $_"
+    }
+}
+
+# Remove associations from the file extension key
+function VM-Remove-Open-With-Association {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $exeName,
+        [Parameter(Mandatory = $true)]
+        [string] $extension
+    )
+    ForEach ($hive in @("HKCU:", "HKLM:")) {
+        $extKey = "${hive}\Software\Classes\$extension"
+
+        # Check if the key exists before attempting removal
+        if (Test-Path $extKey) {
+            $expectedDefault = "${exeName}_auto_file"
+
+            # Remove the default value if it matches
+            $currentDefault = Get-ItemPropertyValue -Path $extKey -Name '(Default)' -ErrorAction SilentlyContinue
+            if ($currentDefault -and $currentDefault -eq $expectedDefault) {
+                New-ItemProperty -Path $extKey -Name '(Default)' -Value "" | Out-Null
+            }
+
+            # Remove from OpenWithProgids if present
+            if ((Get-ItemProperty -Path $extKey -Name 'OpenWithProgids' -ErrorAction Ignore).OpenWithProgids -contains $expectedDefault) {
+                $newProgIds = (Get-ItemProperty -Path $extKey -Name 'OpenWithProgids').OpenWithProgids -split ' ' | Where-Object { $_ -ne $expectedDefault }
+                Set-ItemProperty -Path $extKey -Name 'OpenWithProgids' -Value ($newProgIds -join ' ')
+            }
+        }
+
+        # Remove the 'command' key and the auto_file key
+        $commandKey = "${hive}\Software\Classes\${exeName}_auto_file\shell\open\command"
+        $autoFileKey = "${hive}\Software\Classes\${exeName}_auto_file"
+        Remove-Item -Path $commandKey,$autoFileKey -Recurse -ErrorAction SilentlyContinue
+    }
+}
+
 function VM-Get-Host-Info {
     $survey = @"
 Host Information

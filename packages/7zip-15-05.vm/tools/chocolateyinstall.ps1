@@ -4,6 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = '7z'
   $category = 'Productivity Tools'
+
   $url = 'https://sourceforge.net/projects/sevenzip/files/7-Zip/15.05/7z1505.exe/download'
   $checksum = 'fa99d29283d9a6c501b70d2755cd06cf5bc3dd8e48acc73926b6e0f389885120'
   $url64 = 'https://sourceforge.net/projects/sevenzip/files/7-Zip/15.05/7z1505-x64.exe/download'
@@ -34,6 +35,7 @@ try {
   $extensions = @(".7z", ".bzip2", ".gzip", ".tar", ".wim", ".xz", ".txz", ".zip", ".rar")
   foreach ($extension in $extensions) {
     VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' "`"$7zExecutablePath`" e -pinfected `"%1`"" "$executablePath" -extension $extension
+    VM-Set-Open-With-Association $executablePath $extension
   }
 } catch {
   VM-Write-Log-Exception $_

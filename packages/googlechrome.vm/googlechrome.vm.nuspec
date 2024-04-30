@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>googlechrome.vm</id>
-    <version>0.0.0.20240405</version>
+    <version>0.0.0.20240425</version>
     <authors>Google LLC.</authors>
     <description>Chrome is a popular web browser.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240111" />
+      <dependency id="common.vm" version="0.0.0.20240425" />
     </dependencies>
   </metadata>
 </package>
