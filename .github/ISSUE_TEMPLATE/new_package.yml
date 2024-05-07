@@ -6,13 +6,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for contributing to [VM-Packages](https://github.com/mandiant/VM-Packages), your package proposal supports tools available for [FLARE-VM](https://github.com/mandiant/flare-vm), [Commando-VM](https://github.com/mandiant/commando-vm) and [ThreatPursuit-VM](https://github.com/mandiant/ThreatPursuit-VM)! :cupid: Please ensure that your suggested tool doesn't already exist within the set of [current packages](https://github.com/mandiant/VM-Packages/tree/main/packages) and that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) proposal already.
+        Thanks for contributing to [VM-Packages](https://github.com/mandiant/VM-Packages), your package proposal supports tools available for [FLARE-VM](https://github.com/mandiant/flare-vm) and [CommandoVM](https://github.com/mandiant/commando-vm)! :cupid: Please ensure that your suggested tool doesn't already exist within the set of [current packages](https://github.com/mandiant/VM-Packages/tree/main/packages) and that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) proposal already. If the tool is not related malware analysis, incident response, penetration testing and other security related tasking, consider using directly the [Chocolatey community package](https://community.chocolatey.org/packages) if there is one for the tool.
   - type: input
     id: pkg_name
     attributes:
       label: Package Name
       description: |
-        The convention is to use lowercase names with the following format: `toolname` or `tool-name`. For example `capa` and `fakenet-ng`. **Please add this name to the issue title as well.**
+        The convention is to use lowercase names with the following format: `toolname` or `tool-name` and without `.vm` appended. Example: `capa` and `fakenet-ng`. **Please add this name to the issue title as well** (keep the `.vm` in the title).
       placeholder: ex. fakenet-ng
     validations:
       required: true
@@ -20,7 +20,8 @@ body:
     id: tool_name
     attributes:
       label: Tool Name
-      description: The name of the tool being installed (usually the file name with the `.exe`), normally different from the package name. For example fakenet-ng (package name) vs FakeNet-NG (tool name).
+      description: |
+        The name of the tool being installed (usually the file name with the `.exe`), normally different from the package name. Example: `FakeNet-NG` (tool name) vs `fakenet-ng` (package name).
       placeholder: ex. FakeNet-NG
     validations:
       required: true
@@ -31,10 +32,10 @@ body:
     attributes:
       label: Package type
       description: |
-        This is needed to know how to send the automatic PR.
-        `ZIP_EXE` - An executable tool distributed in a ZIP file
-        `SINGLE_EXE` - An executable tool distributed via direct/raw download
-        `SINGLE_PS1` - A PowerShell script distributed via direct/raw download
+        - **`ZIP_EXE`** - An executable tool distributed in a ZIP file
+        - **`SINGLE_EXE`** - An executable tool distributed via direct/raw download
+        - **`SINGLE_PS1`** - A PowerShell script distributed via direct/raw download
+        - **`OTHER/UNKNOWN`** - A tool distributed in a different way than the ones described above. It is required that you provide details of how the tool is installed in the `Extra information` section. Note this type does not support automation, a PR would be appreciated!
       options:
         - ZIP_EXE
         - SINGLE_EXE
@@ -55,7 +56,9 @@ body:
   - type: input
     id: version
     attributes:
-      label: Tool's version number
+      label: Version
+      description: |
+        Tool's version number. Example: `1.4.11`.
       placeholder: ex. 1.4.11
     validations:
       required: true
@@ -101,7 +104,8 @@ body:
     id: authors
     attributes:
       label: Tool's authors
-      description: Comma separated list of authors for tool
+      description: |
+        Comma separated list of the tool's authors. Example: `Elmo, Bert, Grover, Cookie Monster`.
       placeholder: ex. Elmo, Bert, Grover, Cookie Monster
     validations:
       required: true
@@ -111,24 +115,24 @@ body:
       required: true
     attributes:
       label: Tool's description
-      description: The description should be short and not include version specific details or other information that is likely to change in a future version.
-      placeholder: ex. FakeNet-NG is a next generation dynamic network analysis tool for malware analysts and penetration testers.
+      description: |
+        The tool description should be short and not include version specific details or other information that is likely to change in a future version. Example: `FakeNet-NG is a dynamic network analysis tool.`
   - type: input
     id: target_url
     validations:
       required: true
     attributes:
       label: Download URL
-      description: URL to download the tool installer. Use a URL that is not likely to be deleted/unavailable and whose downloaded file is not likely to change as this will eventually break the package.
-      placeholder: ex. https://github.com/mandiant/flare-fakenet-ng/releases/download/v1.4.11/fakenet1.4.11.zip
+      description: |
+        URL to download the tool installer. Use a URL that is not likely to be deleted/unavailable and whose downloaded file is not likely to change as this will eventually break the package. Example: `https://github.com/mandiant/flare-fakenet-ng/releases/download/v1.4.11/fakenet1.4.11.zip`
   - type: input
     id: target_hash
     validations:
       required: true
     attributes:
       label: Download SHA256 Hash
-      description: SHA256 hash of the `.zip` file downloaded from the download url introduced in the previous field. The hash is used for verification purposes.
-      placeholder: ex. 62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95
+      description: |
+        SHA256 hash of the `.zip` file downloaded from the download url introduced in the previous field. The hash is used for verification purposes. Example: `62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95 `
   - type: input
     id: dependencies
     attributes:
@@ -140,9 +144,14 @@ body:
     id: why
     attributes:
       label: Why is this tool a good addition?
-      description: Tell us why you would like to have this package in FLARE-VM and how this tool is useful for malware analysis, incident response, penetration testing and other security related tasking. Adding new packages involves more maintenance work, tell us what is unique about this tool that can not be done with the current toolset.
+      description: Tell us why you would like to have this package in FLARE-VM/CommandoVM and how this tool is useful for malware analysis, incident response, penetration testing and other security related tasking. Adding new packages involves more maintenance work, tell us what is unique about this tool that can not be done with the current toolset.
     validations:
       required: true
+  - type: textarea
+    id: info
+    attributes:
+      label: Extra information
+      description: Tell us any other extra information that may be useful to create the package, such us how is the tool installed if it is not done in a standard way (if you selected type `OTHER/UNKNOWN`.).
   - type: markdown
     attributes:
       value: |

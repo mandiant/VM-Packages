@@ -1,0 +1,98 @@
+name: 🆕 NEW IDA PLUGIN
+description: Propose the addition of a new IDA plugin.
+title: "Package proposal: <ida_plugin_name>.vm"
+labels: [":new: package", ":curly_haired_woman: IDA", ":cyclone: FLARE-VM"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to [VM-Packages](https://github.com/mandiant/VM-Packages), your package proposal supports IDA plugins available for [FLARE-VM](https://github.com/mandiant/flare-vm)! :cupid: Please ensure that your suggested IDA plugin doesn't already exist within the set of [current packages](https://github.com/mandiant/VM-Packages/tree/main/packages) and that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) proposal already.
+  - type: input
+    id: pkg_name
+    attributes:
+      label: Package Name
+      description: |
+        The convention is to use lowercase names with the following format: `pluginname` or `plugin-name`, with `ida.plugin.` prepended and without the `.vm` appended. Example: `ida.plugin.capa` and `ida.plugin.sigmaker`. **Please add this name to the issue title as well** (keep the `.vm` in the title).
+      placeholder: ex. ida.plugin.capa
+    validations:
+      required: true
+  - type: input
+    id: tool_name
+    attributes:
+      label: Tool Name
+      description: |
+        The name of the plugin main file including the extension (`.py` or `.dll`) which is copied to the IDA plugins directory. Example: `capa-explorer.py` and `SigMaker64.dll`
+      placeholder: ex. capa-explorer.py
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    validations:
+      required: true
+    attributes:
+      label: Package type
+      description: |
+        - **`IDA_PLUGIN`** - IDA plugin distributed as a single file or ZIP containing a plugin (and supporting files/directories) that need to be copied to the IDA plugins directory. For ZIPs, we check if there is an inner folder (this is the case for GH ZIPs) and if there is a directory called `plugins`. We copy all files in this directory (the root directory, the inner folder or the `plugins` directory depending what is present) with the exception of the README and the LICENSE file (often present in GH repos). The copied files must include the file `plugin name` specified below.
+        - **`OTHER/UNKNOWN`** - An IDA plugin distributed in a different way than `IDA_PLUGIN`. It is required that you provide details of how the plugin is installed in the `Extra information` section. Note this type does not support automation, a PR would be appreciated!
+      options:
+        - IDA_PLUGIN
+        - OTHER/UNKNOWN
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: |
+        Plugin's version number. Example: `1.4.11`.
+      placeholder: ex. 1.4.11
+    validations:
+      required: true
+  - type: input
+    id: authors
+    attributes:
+      label: Tool's authors
+      description: |
+        Comma separated list of the plugin's authors. Example: `Elmo, Bert, Grover, Cookie Monster`.
+      placeholder: ex. Elmo, Bert, Grover, Cookie Monster
+    validations:
+      required: true
+  - type: input
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Tool's description
+      description: |
+        The plugin description should be short and not include version specific details or other information that is likely to change in a future version. Example: `capa explorer is an IDAPython plugin that integrates capa with IDA Pro.`
+  - type: input
+    id: target_url
+    validations:
+      required: true
+    attributes:
+      label: Download URL
+      description: |
+        URL to download the plugin file or ZIP containing the plugin. Use a URL that is not likely to be deleted/unavailable and whose downloaded file is not likely to change as this will eventually break the package. Example: `https://raw.githubusercontent.com/mandiant/capa/v7.0.1/capa/ida/plugin/capa_explorer.py`
+  - type: input
+    id: target_hash
+    validations:
+      required: true
+    attributes:
+      label: Download SHA256 Hash
+      description: |
+        SHA256 hash of the file or ZIP downloaded from the download url introduced in the previous field. The hash is used for verification purposes. Example: `62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95`
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is this tool a good addition?
+      description: Tell us why you would like to have this package in FLARE-VM and how this IDA plugin is useful for malware analysis. Adding new packages involves more maintenance work, tell us what is unique about this plugin that can not be done with the current toolset.
+    validations:
+      required: true
+  - type: textarea
+    id: info
+    attributes:
+      label: Extra information
+      description: Tell us any other extra information that may be useful to create the package, such us how is the plugin installed if it is not done in a standard way (if you selected type `OTHER/UNKNOWN`).
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        We really appreciate that you share your package idea with us and we will review your issue as soon as possible. Please understand that our time is limited and we may not be able to create a package for this plugin as fast as you may like. To speed up the process, please fill the issue accurately as this may allow our bot to send an automatic PR. Note that this may not work for all cases. You can check our [Contributing Wiki page](https://github.com/mandiant/VM-Packages/wiki/Contributing) and send a pull request with the new package. We encourage the community to help us create new packages and to maintain existing ones. Join us! :hugs:
