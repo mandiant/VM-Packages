@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dotnet-6.vm</id>
-    <version>0.0.0.20231224</version>
+    <version>0.0.0.20240507</version>
     <authors>Microsoft</authors>
     <description>Metapackage for .NET6 to ensure all packages use the same version.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="dotnet-6.0-desktopruntime" version="(6.0.14, 6.0.26]" />
-      <dependency id="dotnet-6.0-runtime" version="(6.0.14, 6.0.26]" />
+      <dependency id="dotnet-6.0-desktopruntime" version="[6.0.14, 6.1)" />
+      <dependency id="dotnet-6.0-runtime" version="[6.0.14, 6.1)" />
     </dependencies>
   </metadata>
 </package>

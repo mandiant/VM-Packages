@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>rla.vm</id>
-    <version>2.0.0.20240411</version>
+    <version>2.0.0.20240507</version>
     <authors>Eric Zimmerman</authors>
     <description>Replay transaction logs and update Registry hives so they are no longer dirty. Useful when tools do not know how to handle transaction logs</description>
     <dependencies>
