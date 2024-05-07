@@ -34,7 +34,7 @@ try {
   # 7z can unzip other file extensions like .docx but these don't likely use the infected password.
   $extensions = @(".7z", ".bzip2", ".gzip", ".tar", ".wim", ".xz", ".txz", ".zip", ".rar")
   foreach ($extension in $extensions) {
-    VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' "`"$7zExecutablePath`" e -pinfected `"%1`"" "$executablePath" -extension $extension
+    VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' "`"$7zExecutablePath`" x -pinfected `"%1`"" "$executablePath" -extension $extension
     VM-Set-Open-With-Association $executablePath $extension
   }
 } catch {
