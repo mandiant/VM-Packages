@@ -367,7 +367,7 @@ function VM-Uninstall-IDA-Plugin {
         [string] $pluginName # Example: capa_explorer.py
     )
     $pluginPath = Join-Path (VM-Get-IDA-Plugins-Dir) $pluginName
-    Remove-Item $pluginPath -Recuse -Force -ea 0
+    Remove-Item $pluginPath -Recurse -Force -ea 0
 }
 
 # This functions returns $toolDir and $executablePath
