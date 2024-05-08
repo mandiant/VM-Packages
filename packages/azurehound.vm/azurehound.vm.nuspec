@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>azurehound.vm</id>
-    <version>2.1.8.20240411</version>
+    <version>2.1.9</version>
     <authors>BloodHoundAD</authors>
     <description>AzureHound is the BloodHound data collector for Microsoft Azure.</description>
     <dependencies>
