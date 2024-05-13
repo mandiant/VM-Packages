@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>7zip-15-05.vm</id>
-    <version>15.05.0.20240425</version>
+    <version>15.05.0.20240507</version>
     <authors>Igor Pavlov</authors>
     <description>7-Zip file archiver. This version is able to extract NSIS scripts.</description>
     <dependencies>
