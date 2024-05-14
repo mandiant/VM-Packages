@@ -454,6 +454,26 @@ function VM-Install-From-Zip {
     }
 }
 
+function VM-Install-Node-Tool {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments
+    )
+    try {
+        npm install -g $toolName --no-update-notifier
+        VM-Install-Shortcut -toolName $toolName -category $category -arguments "$toolName $arguments" -powershell
+    } catch {
+      VM-Write-Log-Exception $_
+    }
+}
+
 function VM-Install-Node-Tool-From-Zip {
     [CmdletBinding()]
     [OutputType([System.Object[]])]
