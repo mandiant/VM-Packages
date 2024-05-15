@@ -27,6 +27,8 @@ $result_file = "success_failure.json"
 
 $root = Get-Location
 $built_pkgs_dir = New-Item -ItemType Directory -Force $built_pkgs_dir_name
+# Delete previously built packages to avoid testing old packages
+Remove-Item "$built_pkgs_dir\*" -Force -ea 0  | Out-Null
 
 $packages_dir = (Get-Item "$packages_dir_name*")[0]
 if ($packages_dir.Extension -eq ".lnk") {
