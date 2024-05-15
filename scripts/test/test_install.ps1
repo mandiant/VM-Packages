@@ -79,7 +79,7 @@ foreach ($package in $built_pkgs) {
 }
 
 # Restore the original location
-Set-Location -Path $root -PassThru | Out-Null
+Set-Location $root
 
 Write-Host -ForegroundColor Green "`nSUCCESS:$success"
 Write-Host -ForegroundColor Red "FAILURE:$failed"
