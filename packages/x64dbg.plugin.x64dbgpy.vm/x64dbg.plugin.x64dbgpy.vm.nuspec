@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>x64dbg.scyllahide.vm</id>
-    <version>1.4</version>
-    <description>ScyllaHide is an advanced open-source x64/x86 user mode Anti-Anti-Debug library.</description>
-    <authors>x64dbg</authors>
+    <id>x64dbg.plugin.x64dbgpy.vm</id>
+    <version>1.0.59.20240124</version>
+    <description>Automating x64dbg using Python.</description>
+    <authors>mrexodia, RealGame (Tomer Zait)</authors>
     <dependencies>
       <dependency id="common.vm" />
       <dependency id="x64dbg.vm" />
