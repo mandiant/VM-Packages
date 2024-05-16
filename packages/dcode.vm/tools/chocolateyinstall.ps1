@@ -5,7 +5,7 @@ $toolName = 'DCode'
 $category = 'Forensic'
 
 $url = 'https://www.digital-detective.net/download/download.php?downcode=ae2znu5994j1lforlh03'
-$sha256 = 'dbb23d6ea4f572fbaec017fb8acc2a8b62b74fafa81ea4a388966ec14087a9e4'
+$sha256 = '9ffe1106ee9d9f55b53d5707621d5990f493604e20f3dbdb0d22ec1b8ecb2458'
 
 $toolDir = Join-Path ${Env:ProgramFiles(x86)} "Digital Detective"
 $toolDir = Join-Path $toolDir "$toolName v5"
