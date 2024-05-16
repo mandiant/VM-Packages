@@ -454,6 +454,26 @@ function VM-Install-From-Zip {
     }
 }
 
+function VM-Install-Node-Tool {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string] $toolName,
+        [Parameter(Mandatory=$true, Position=1)]
+        [string] $category,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments
+    )
+    try {
+        npm install -g $toolName --no-update-notifier
+        VM-Install-Shortcut -toolName $toolName -category $category -arguments "$toolName $arguments" -powershell
+    } catch {
+      VM-Write-Log-Exception $_
+    }
+}
+
 function VM-Install-Node-Tool-From-Zip {
     [CmdletBinding()]
     [OutputType([System.Object[]])]
@@ -473,17 +493,10 @@ function VM-Install-Node-Tool-From-Zip {
         [Parameter(Mandatory=$false)]
         [bool] $innerFolder=$true # Default to true as most node apps are GH repos (ZIP with inner folder)
     )
-    # Install dependencies with npm when running shortcut as we ignore errors below
-    $powershellCommand = "npm install; node $command"
+    $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $innerFolder -powershellCommand "node $command")[0]
 
-    $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $innerFolder -powershellCommand $powershellCommand)[0]
-
-    # Prevent the following warning from failing the package: "npm WARN deprecated request@2.79.0"
-    $ErrorActionPreference = 'Continue'
-    # Get absolute path as npm may not be in PATH until Powershell is restarted
-    $npmPath = Join-Path ${Env:ProgramFiles} "\nodejs\npm.cmd" -Resolve
     # Install tool dependencies with npm
-    Set-Location $toolDir; & "$npmPath" install | Out-Null
+    Set-Location $toolDir; npm install --no-update-notifier
 }
 
 # This functions returns $executablePath
