@@ -1,6 +1,6 @@
-name: 🆕 NEW PACKAGE
+name: 🆕 NEW PACKAGE from URL
 description: Propose the addition of a new package/tool that is installed from a URL
-title: "Package proposal: <package_name>.vm"
+title: "URL package proposal: <package_name>.vm"
 labels: [":new: package"]
 body:
   - type: markdown
@@ -58,7 +58,7 @@ body:
     attributes:
       label: Version
       description: |
-        Tool's version number. Example: `1.4.11`.
+        Tool's version number. Example: `1.4.11`. See the [_Version_ documentation in our wiki](https://github.com/mandiant/VM-Packages/wiki/Package-Structure#version) for more details.
       placeholder: ex. 1.4.11
     validations:
       required: true
@@ -156,4 +156,4 @@ body:
     attributes:
       value: |
         ---
-        We really appreciate that you share your package idea with us and we will review your issue as soon as possible. Please understand that our time is limited and we may not be able to create a package for this tool as fast as you may like. To speed up the process, please fill the issue accurately as this may allow our bot to send an automatic PR. Note that this may not work for all cases. You can check our [Contributing Wiki page](https://github.com/mandiant/VM-Packages/wiki/Contributing) and send a pull request with the new package. We encourage the community to help us create new packages and to maintain existing ones. Join us! :hugs:
+        We really appreciate that you share your package idea with us and we will review your issue as soon as possible. Please understand that our time is limited and we may not be able to create a package for this tool as fast as you may like. To speed up the process, please select the correct issue template and fill the issue accurately as this may allow our bot to send an automatic PR. Note that this may not work for all cases. You can check our [Contributing Wiki page](https://github.com/mandiant/VM-Packages/wiki/Contributing) and send a pull request with the new package. We encourage the community to help us create new packages and to maintain existing ones. Join us! :hugs:

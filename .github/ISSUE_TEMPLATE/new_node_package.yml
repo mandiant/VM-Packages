@@ -1,0 +1,127 @@
+name: 🆕 NEW NPM PACKAGE
+description: Propose the addition of a new package/tool that is installed from the JavaScript Package Registry installed with npm
+title: "npm package proposal: <package_name>.vm"
+labels: [":new: package"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to [VM-Packages](https://github.com/mandiant/VM-Packages), your package proposal supports tools available for [FLARE-VM](https://github.com/mandiant/flare-vm) and [CommandoVM](https://github.com/mandiant/commando-vm)! :cupid: Please ensure that your suggested tool doesn't already exist within the set of [current packages](https://github.com/mandiant/VM-Packages/tree/main/packages) and that there is no [issue](https://github.com/mandiant/VM-Packages/issues?q=is%3Aopen+is%3Aissue+label%3A%22%3Anew%3A+package%22) proposal already. If the tool is not related malware analysis, incident response, penetration testing and other security related tasking, consider using directly the [Chocolatey community package](https://community.chocolatey.org/packages) if there is one for the tool.
+  - type: input
+    id: pkg_name
+    attributes:
+      label: Package Name
+      description: |
+        The convention is to use lowercase names with the following format: `toolname` or `tool-name` and without `.vm` appended. Example: `js-deobfuscator`. **Please add this name to the issue title as well** (keep the `.vm` in the title).
+      placeholder: ex. js-deobfuscator
+    validations:
+      required: true
+  - type: input
+    id: tool_name
+    attributes:
+      label: Tool Name
+      description: |
+        The name of the tool being installed with `npm install -g <tool_name>`, normally the same as the package name for tools installed with npm. Example: `js-deobfuscator`.
+      placeholder: ex. js-deobfuscator
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    validations:
+      required: true
+    attributes:
+      label: Package type
+      description: |
+        - **`NODE`** - A Node tool from the Javascript Package Registry installed with `npm install -g <tool_name>`.
+
+        For other types of tools, use a different issue template.
+      options:
+        - NODE
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: |
+        Use the following scheme and today's date, as we install the latest version with npm:  `0.0.0.YYYYMMDD`. Example: `0.0.0.20240513`. See the [_Version_ documentation in our wiki](https://github.com/mandiant/VM-Packages/wiki/Package-Structure#version) for more details.
+      placeholder: ex. 0.0.0.20240513
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    validations:
+      required: true
+    attributes:
+      label: Category
+      description: Which category should this tool be installed to?
+      options:
+        - Command & Control
+        - Credential Access
+        - Debuggers
+        - Delphi
+        - Disassemblers
+        - dotNet
+        - Documents
+        - Exploitation
+        - File Information
+        - Forensic
+        - Hex Editors
+        - InnoSetup
+        - Java & Android
+        - Javascript
+        - Lateral Movement
+        - Memory
+        - Networking
+        - Packers
+        - Payload Development
+        - PE
+        - Persistence
+        - Privilege Escalation
+        - Productivity Tools
+        - Reconnaissance
+        - Registry
+        - Shellcode
+        - Utilities
+        - Visual Basic
+        - Web Application
+        - Wordlists
+  - type: input
+    id: authors
+    attributes:
+      label: Tool's authors
+      description: |
+        Comma separated list of the tool's authors. Example: `Elmo, Bert, Grover, Cookie Monster`.
+      placeholder: ex. Elmo, Bert, Grover, Cookie Monster
+    validations:
+      required: true
+  - type: input
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Tool's description
+      description: |
+        The tool description should be short and not include version specific details or other information that is likely to change in a future version. Example: `Deobfuscator to remove common JS obfuscation techniques.`.
+  - type: input
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: |
+        The dependencies (tools/libraries that need to be installed) needed for installing or using this tool, for example if a concrete version of Node JS is needed.
+      placeholder: ex. nodejs >= 20.7
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is this tool a good addition?
+      description: Tell us why you would like to have this package in FLARE-VM/CommandoVM and how this tool is useful for malware analysis, incident response, penetration testing and other security related tasking. Adding new packages involves more maintenance work, tell us what is unique about this tool that can not be done with the current toolset.
+    validations:
+      required: true
+  - type: textarea
+    id: info
+    attributes:
+      label: Extra information
+      description: Tell us any other extra information that may be useful to create the package.
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        We really appreciate that you share your package idea with us and we will review your issue as soon as possible. Please understand that our time is limited and we may not be able to create a package for this tool as fast as you may like. To speed up the process, please select the correct issue template and fill the issue accurately as this may allow our bot to send an automatic PR. We encourage the community to help us create new packages and to maintain existing ones. Join us! :hugs:
