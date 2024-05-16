@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>ollydbg2.ollydumpex.vm</id>
+    <id>ollydbg.plugin.ollydumpex.vm</id>
     <version>1.80</version>
-    <description>This plugin is process memory dumper for OllyDbg2 and Immunity Debugger. OllyDumpEx = OllyDump + PE Dumper - obsoleted + useful features</description>
+    <description>This plugin is process memory dumper for OllyDbg and Immunity Debugger. OllyDumpEx = OllyDump + PE Dumper - obsoleted + useful features</description>
     <authors>low-priority</authors>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="ollydbg2.vm" />
+      <dependency id="ollydbg.vm" />
     </dependencies>
   </metadata>
 </package>
