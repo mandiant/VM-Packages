@@ -50,6 +50,21 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
 </package>
 """
 
+NUSPEC_TEMPLATE_NODE = r"""<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>{pkg_name}.vm</id>
+    <version>{version}</version>
+    <authors>{authors}</authors>
+    <description>{description}</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20240514" />
+      <dependency id="nodejs.vm" version="0.0.0.20240516" />
+    </dependencies>
+  </metadata>
+</package>
+"""
+
 """
 Needs the following format strings:
     pkg_name="...", version="...", authors="...", description="...", dependency="...", dependency_version="..."
@@ -79,6 +94,19 @@ $zipUrl = '{target_url}'
 $zipSha256 = '{target_hash}'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp ${console_app} -innerFolder ${inner_folder}
+"""
+
+"""
+Needs the following format strings:
+    tool_name="...", category="..."
+"""
+NODE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = '{category}'
+
+VM-Install-Node-Tool -toolName $toolName -category $category -arguments "--help"
 """
 
 """
@@ -199,6 +227,20 @@ def create_zip_exe_template(packages_path, **kwargs):
         target_hash=kwargs.get("target_hash"),
         console_app=kwargs.get("console_app"),
         inner_folder=kwargs.get("inner_folder"),
+    )
+
+
+def create_node_template(packages_path, **kwargs):
+    create_template(
+        NODE_TEMPLATE,
+        nuspec_template=NUSPEC_TEMPLATE_NODE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
     )
 
 
@@ -361,6 +403,19 @@ TYPES = {
             "category",
             "target_url",
             "target_hash",
+        ],
+    },
+    "NODE": {
+        "cb": create_node_template,
+        "doc": "An tool from the JavaScript Package Registry installed with npm",
+        "example": "npm install -g obfuscator-io-deobfuscator",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
         ],
     },
     "SINGLE_EXE": {
