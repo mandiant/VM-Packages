@@ -239,7 +239,7 @@ function VM-Install-Shortcut{
             $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
         } else {
             $executableCmd = Join-Path "${PSHome}" "powershell.exe" -Resolve
-            $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command `"`$cmd = '$arguments'; Write-Host `$cmd; Invoke-Expression `$cmd`""
+            $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command `"`$cmd = '$arguments'; Write-Host PS $executableDir ``> `$cmd; Invoke-Expression `$cmd`""
             $iconLocation = $executableCmd
         }
 
