@@ -1,6 +1,8 @@
-# Build the packages in the 'packages' directory given as argument (or all if none provided) into the 'built_pkgs'.
-# Install the built packages. If a package install fails and the $all switch is not provided,
-# the rest of the packages are not installed
+# Build the packages in the 'packages' directory (or lnk to directory) given as
+# argument (or all if none provided) into the 'built_pkgs'.
+# Install the built packages.
+# If a package install fails and the $all switch is not provided,
+# the rest of the packages are not installed.
 
 # Examples
 ## ./test_install
@@ -25,15 +27,23 @@ $result_file = "success_failure.json"
 
 $root = Get-Location
 $built_pkgs_dir = New-Item -ItemType Directory -Force $built_pkgs_dir_name
+# Delete previously built packages to avoid testing old packages
+Remove-Item "$built_pkgs_dir\*" -Force -ea 0  | Out-Null
+
+$packages_dir = (Get-Item "$packages_dir_name*")[0]
+if ($packages_dir.Extension -eq ".lnk") {
+    $shell = New-Object -ComObject WScript.Shell
+    $packages_dir = $shell.CreateShortcut($packages_dir).TargetPath
+}
 
 if ($package_names) {
     $packages = $package_names.Split(" ")
 } else {
-    $packages = Get-ChildItem -Path $packages_dir_name | Select-Object -ExpandProperty Name
+    $packages = Get-ChildItem -Path $packages_dir | Select-Object -ExpandProperty Name
 }
 
 foreach ($package in $packages) {
-    Set-Location "$root\$packages_dir_name\$package"
+    Set-Location "$packages_dir\$package"
     choco pack -y -out $built_pkgs_dir
     if ($LASTEXITCODE -ne 0) { Exit 1 } # Abort with the first failing build
 }
@@ -69,7 +79,7 @@ foreach ($package in $built_pkgs) {
 }
 
 # Restore the original location
-Set-Location -Path $root -PassThru | Out-Null
+Set-Location $root
 
 Write-Host -ForegroundColor Green "`nSUCCESS:$success"
 Write-Host -ForegroundColor Red "FAILURE:$failed"
