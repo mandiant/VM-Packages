@@ -8,8 +8,8 @@ try {
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
         unzipLocation = $toolSrcDir
-        url           = 'https://github.com/x64dbg/ScyllaHide/releases/download/snapshot-2021-08-23_13-27-50/ScyllaHide.7z'
-        checksum      = 'c51929341ff726d219e670928433a176e114ca9a4c36f416629aef50c98b8817'
+        url           = 'https://github.com/x64dbg/ScyllaHide/releases/download/v1.4/ScyllaHide_2023-03-24_13-03.zip'
+        checksum      = 'edeb0dd203fd1ef38e1404e8a1bd001e05c50b6096e49533f546d13ffdcb7404'
         checksumType  = 'sha256'
     }
     Install-ChocolateyZipPackage @packageArgs

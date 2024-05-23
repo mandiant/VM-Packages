@@ -4,9 +4,8 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'TestDisk'
 $category = 'Forensic'
 
-$version = '7.2-WIP'
-$zipUrl = "https://www.cgsecurity.org/testdisk-$version.win64.zip"
-$zipSha256 = '0d5a140f6e791d3b16aa9f43f724c665d61a41238cf81dbe815785f30e3dd4f3'
+$zipUrl = "https://www.cgsecurity.org/testdisk-7.2.win64.zip"
+$zipSha256 = 'e97e203ce77b6b1a3a37d01beccf069dc6c4632b579ffbb82ae739cdda229f38'
 
 try {
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName

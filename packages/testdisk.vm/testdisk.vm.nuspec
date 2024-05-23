@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>testdisk.vm</id>
-    <version>7.2</version>
+    <version>7.2.0.20240516</version>
     <authors>Christophe Grenier</authors>
     <description>A robust data recovery tool, TestDisk, specializes in restoring lost partitions across diverse filesystems and facilitates file undeletion within supported filesystems.</description>
     <dependencies>

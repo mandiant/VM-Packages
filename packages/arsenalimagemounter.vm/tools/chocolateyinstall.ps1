@@ -6,13 +6,13 @@ try {
   # Install of drivers dependencies #
   ###################################
   $zipCliUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/master/Command%20line%20applications/aim_ll.zip'
-  $zipCliSha256 = '9c2e6041df7d32093da8899e98462767ad8c8cbecaabe1ff6afefeba87f364f3'
+  $zipCliSha256 = '21c32aed320eca532969590b67dc8151bddd6aebe9699abd09cc3e026fd01a29'
   $tempCliDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "aim_ll"
   $toolCli = "aim_ll.exe"
 
-  $zipDriverUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/master/DriverSetup/DriverFiles.zip'
+  $zipDriverUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/63801fc2b51f899244e43f1bf5275d2ac92a2477/DriverSetup/DriverFiles.zip'
   $zipDriverSha256 = 'c5de8e5d5a2c0231baf2cdb74fb0b0f4047658c69105bcab28990734b3979ee3'
-  $tempDriverDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "temp_$([guid]::NewGuid())"
+  $tempDriverDownloadDir = Join-Path ${Env:TEMP} "temp_$([guid]::NewGuid())"
 
   $packageArgs = @{
       packageName    = ${Env:ChocolateyPackageName}
@@ -43,9 +43,6 @@ try {
   $toolCliPath = Join-Path $toolCliDir $toolCli
   # Install drivers messages displayed in stderr even on successful install, bypass by creating an external process
   Start-Process -FilePath $toolCliPath -ArgumentList "--install $tempDriverDownloadDir" -Wait
-
-  # Remove temp driver folder
-  VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
   ######################
   # Install of package #
