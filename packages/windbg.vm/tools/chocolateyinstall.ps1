@@ -5,17 +5,25 @@ try {
     $toolName = 'WinDbg'
     $category = 'Debuggers'
 
-    # It seems WinDbg is now distributed as an .appinstaller and we need to install it using Add-AppxPackage
-    Add-AppxPackage -AppInstallerFile 'https://windbg.download.prss.microsoft.com/dbazure/prod/1-0-0/windbg.appinstaller'
+    $bundleVersion = "1-2402-24001"
+    $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/$bundleVersion-0/windbg.msixbundle"
+    $bundleSha256 = "e941076cb4d7912d32a22ea87ad2693c01fa465227b4d1ead588283518de428f"
 
-    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-    $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-    $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe"
-    # Use `start` to close the open console
-    $executableArgs = "/C start WinDbgX.exe"
-    $executableDir  = Join-Path ${Env:UserProfile} "Desktop"
-    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $executableDir -RunAsAdmin
+    $packageArgs = @{
+        packageName   = ${Env:ChocolateyPackageName}
+        url           = $bundleUrl
+        checksum      = $bundleSha256
+        checksumType  = "sha256"
+        fileFullPath  = Join-Path ${Env:TEMP} "$toolName.msixbundle"
+    }
+    Get-ChocolateyWebFile @packageArgs
+    Add-AppxPackage -Path $packageArgs.fileFullPath
+
+    $toolPackage = Get-AppxPackage -Name "Microsoft.$toolName"
+    $iconLocation = Join-Path $toolPackage.InstallLocation "DbgX.Shell.exe" -Resolve
+    $executablePath = "shell:AppsFolder\$($toolPackage.PackageFamilyName)!$($toolPackage.Name)"
+
+    VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -iconLocation $iconLocation -RunAsAdmin
 } catch {
     VM-Write-Log-Exception $_
 }
-
