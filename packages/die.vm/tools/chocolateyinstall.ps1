@@ -5,10 +5,10 @@ try {
   $toolName = 'die'
   $category = 'File Information'
 
-  $zipUrl = 'https://github.com/horsicq/DIE-engine/releases/download/3.07/die_win32_portable_3.07.zip'
-  $zipSha256 = 'c7f16841df475d6f09d37cf745804c866c823876c4605b5958376402cbb64eca'
-  $zipUrl_64 = 'https://github.com/horsicq/DIE-engine/releases/download/3.07/die_win64_portable_3.07.zip'
-  $zipSha256_64 = '3450169643be76484ac4bd5e1473f6f4745d9825c8a07255a3925a4a6e8bad7e'
+  $zipUrl = 'https://github.com/horsicq/DIE-engine/releases/download/3.09/die_win32_portable_3.09_x86.zip'
+  $zipSha256 = '7cdc3c3e33e23cc04463dc2c463c5d9dd7f746ee5dbacb280657e29b5d75b39a'
+  $zipUrl_64 = 'https://github.com/horsicq/DIE-engine/releases/download/3.09/die_win64_portable_3.09_x64.zip'
+  $zipSha256_64 = '299ff9d91cead31c32926ecfb5f27d629d06997d259e70af8632044edaf27c9b'
 
   $executablePath = (VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -zipUrl_64 $zipUrl_64 -zipSha256_64 $zipSha256_64)[-1]
   VM-Add-To-Right-Click-Menu $toolName "detect it easy (DIE)" "`"$executablePath`" `"%1`"" "$executablePath"

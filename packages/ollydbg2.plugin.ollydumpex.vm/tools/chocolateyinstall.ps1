@@ -9,14 +9,14 @@ try {
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolSrcDir
-    url           = 'https://low-priority.appspot.com/ollydumpex/OllyDumpEx_v1.80.zip'
-    checksum      = 'f4956adf59722242503b09a4503d269565990efa0c41d7062e2a8e95f61bff5c'
+    url           = 'https://low-priority.appspot.com/ollydumpex/OllyDumpEx_v1.84.zip'
+    checksum      = 'd83d59dce42f8a8bef2881bc5bcb8f4ded24d511a101696ad756b590420172d3'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs
 
   # Should unzip to the directory below
-  $toolSrcDir = Join-Path $toolSrcDir 'OllyDumpEx_v1.80' -Resolve
+  $toolSrcDir = Join-Path $toolSrcDir 'OllyDumpEx_v1.84' -Resolve
   $pluginSrcPath = Join-Path $toolSrcDir 'OllyDumpEx_Od20.dll' -Resolve
   $toolDstDir = Join-Path ${Env:RAW_TOOLS_DIR} 'OllyDbg2' -Resolve
 

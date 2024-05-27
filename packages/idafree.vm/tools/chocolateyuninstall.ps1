@@ -10,4 +10,4 @@ VM-Remove-Tool-Shortcut $toolName $category
 Uninstall-BinFile -Name $toolName
 
 # Manually silently uninstall
-VM-Uninstall-With-Uninstaller "IDA Freeware*?8.3" "EXE" "--mode unattended"
+VM-Uninstall-With-Uninstaller "IDA Freeware*?8.4" $category "EXE" "--mode unattended"
