@@ -10,7 +10,7 @@ try {
     fileType     = 'exe'
     silentArgs   = '--mode unattended'
     url          = 'https://out7.hex-rays.com/files/idafree84_windows.exe'
-    checksum     = '065df6e50c4eadc8145e8748d7d58aa263c48c344c0f98f4fbdc65e7b4d990a0'
+    checksum     = 'a2fc7eae91860a6d05c946d1ee8ab59afd061e8fc5f965de4112d66b16ac2091'
     checksumType = 'sha256'
   }
   Install-ChocolateyPackage @packageArgs
