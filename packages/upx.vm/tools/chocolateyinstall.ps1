@@ -4,9 +4,9 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'upx'
 $category = 'Packers'
 
-$zipUrl = "https://github.com/upx/upx/releases/download/v4.2.3/upx-4.2.3-win32.zip"
-$zipSha256 = "46063a5e41b56b137f14ffc8f30f7502c155a60cd959595727f5d02a2bffa997"
-$zipUrl_64 = 'https://github.com/upx/upx/releases/download/v4.2.3/upx-4.2.3-win64.zip'
-$zipSha256_64 = '5f0458eb44ef2a9f8a3d02946e2d1382b1dac3e4a95d4dacf662ede567abfc59'
+$zipUrl = "https://github.com/upx/upx/releases/download/v4.2.4/upx-4.2.4-win32.zip"
+$zipSha256 = "2e90ebda45b29217126d8e8ee4d0863bd9705a13adcca3ce07b7d19df55ca355"
+$zipUrl_64 = 'https://github.com/upx/upx/releases/download/v4.2.4/upx-4.2.4-win64.zip'
+$zipSha256_64 = '22e9ef20e4c72aad85e32c71cbc9c086436c179456382aa75c0c24868456a671'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -zipUrl_64 $zipUrl_64 -zipSha256_64 $zipSha256_64 -consoleApp $true -innerFolder $true
