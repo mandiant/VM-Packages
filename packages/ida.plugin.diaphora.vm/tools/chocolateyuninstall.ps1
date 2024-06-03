@@ -1,7 +1,5 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'diaphora'
-$category = 'Utilities'
-
-VM-Uninstall $toolName $category
+$pluginName = "diaphora_plugin.py"
+VM-Uninstall-IDA-Plugin -pluginName $pluginName
