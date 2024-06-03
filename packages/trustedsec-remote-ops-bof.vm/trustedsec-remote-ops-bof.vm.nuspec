@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>truestedsec-remote-ops-bof.vm</id>
-    <version>0.0.0.20240412</version>
+    <id>trustedsec-remote-ops-bof.vm</id>
+    <version>0.0.0.20240531</version>
     <authors>trustedsec</authors>
     <description>Addition to Situational Awareness BOFs intended for single task Windows primitives such as creating a task, stopping a service, etc.</description>
     <dependencies>
