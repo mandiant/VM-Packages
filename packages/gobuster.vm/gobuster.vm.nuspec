@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>gobuster.vm</id>
-    <version>3.6.0</version>
+    <version>3.6.0.20240606</version>
     <description>Directory/file and DNS busting tool written in Go</description>
     <authors>OJ Reeves</authors>
     <dependencies>
