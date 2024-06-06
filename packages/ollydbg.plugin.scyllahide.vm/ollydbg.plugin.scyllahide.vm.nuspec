@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ollydbg.plugin.scyllahide.vm</id>
-    <version>1.4</version>
+    <version>1.4.0.20240606</version>
     <description>ScyllaHide is an advanced open-source x64/x86 user mode Anti-Anti-Debug library.</description>
     <authors>x64dbg</authors>
     <dependencies>
