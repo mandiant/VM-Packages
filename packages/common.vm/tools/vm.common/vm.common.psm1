@@ -1735,6 +1735,7 @@ function VM-Get-MSIInstallerPathByProductName {
     }
 }
 
+# Install Python library with Pip
 function VM-Pip-Install {
     param (
         [string]$package
@@ -1742,5 +1743,49 @@ function VM-Pip-Install {
     # Create output file to log python module installation details
     $outputFile = VM-New-Install-Log ${Env:VM_COMMON_DIR}
 
-    Invoke-Expression "py -3.10 -m pip install $package --disable-pip-version-check 2>&1 >> $outputFile"
+    # Ignore warning with `-W ignore` to avoid warnings like deprecation to fail the installation
+    Invoke-Expression "py -3.10 -W ignore -m pip install $package --disable-pip-version-check 2>&1 >> $outputFile"
+}
+
+# Install tool using Pip and create shortcut in the Tools directory
+function VM-Install-With-Pip {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
+    Param
+    (
+        [Parameter(Mandatory=$true)]
+        [string] $toolName, # Example: magika
+        [Parameter(Mandatory=$true)]
+        [string] $category,
+        [Parameter(Mandatory=$false)]
+        [string] $arguments = "--help"
+    )
+    try {
+        VM-Pip-Install $toolName
+        $executablePath = "$(where.exe $toolName)"
+
+        VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
+    } catch {
+        VM-Write-Log-Exception $_
+    }
+}
+
+# Uninstall Python library with Pip
+function VM-Pip-Uninstall {
+    param (
+        [string]$package
+    )
+    Invoke-Expression "py -3.10 -m pip uninstall $package -y --disable-pip-version-check 2>&1"
+}
+
+# Uninstall tool using Pip and remove shortcut in the Tools directory
+function VM-Uninstall-With-Pip {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string] $toolName, # Example: magika
+        [Parameter(Mandatory=$true)]
+        [string] $category
+    )
+    VM-Pip-Uninstall $toolName
+    VM-Remove-Tool-Shortcut $toolName $category
 }
