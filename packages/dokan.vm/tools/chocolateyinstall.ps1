@@ -8,6 +8,7 @@ $exeSha256 = '930b596d6cd7a8f3508f39bd4eab8c2f178178d39d11a9e135180b69820df47f'
 
 $fileType = 'MSI'
 $silentArgs = '/qn /norestart'
+$validExitCodes= @(0, 3010, 1603, 1605, 1614, 1641)
 
 try {
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -33,6 +34,7 @@ try {
         fileType      = $fileType
         file          = $installerPath
         silentArgs    = $silentArgs
+        validExitCodes= $validExitCodes
         softwareName  = $toolName
     }
     Install-ChocolateyInstallPackage @packageArgs

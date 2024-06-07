@@ -676,7 +676,7 @@ function VM-Install-With-Installer {
         [Parameter(Mandatory=$false)]
         [string] $sha256,
         [Parameter(Mandatory=$false)]
-        [array] $validExitCodes= @(0, 3010, 1605, 1614, 1641),
+        [array] $validExitCodes= @(0, 3010, 1603, 1605, 1614, 1641),
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
