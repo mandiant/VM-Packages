@@ -1,0 +1,44 @@
+name: MyGet version mitmatches
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs daily at a weird time (02:41 UTC) to avoid delays during periods of
+    # high loads of GitHub Actions workflow runs.
+    - cron: '41 2 * * *'
+
+
+jobs:
+  update_badge:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Checkout wiki code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+      - name: Add results to wiki
+        run: |
+          $mismatches=$(python scripts/utils/compare_myget.py)
+          echo "mismatches=$mismatches" >> $env:GITHUB_ENV
+      - name: Commit changes
+        working-directory: wiki
+        run: |
+          git config user.email 'vm-packages@google.com'
+          git config user.name 'vm-packages'
+          git commit -am 'Add MyGet mismatches'
+          git push
+      - name: Update dynamic badge gist
+        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483 # v1.7.0
+        with:
+          auth: ${{ secrets.REPO_TOKEN }}
+          gistID: dfe6ed22576b6c1d2fa749ff46f3bc6f
+          filename: myget_badge.svg
+          label: 'MyGet mismatches'
+          message: ${{ env.mismatches }}
+          valColorRange: ${{ env.mismatches }}
+          maxColorRange: 1
+          minColorRange: 0
+          invertColorRange: true
