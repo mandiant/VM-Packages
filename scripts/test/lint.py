@@ -319,6 +319,7 @@ class UsesInvalidCategory(Lint):
         "pdbs.pdbresym.vm",
         "python3.vm",
         "x64dbgpy.vm",
+        "vscode.extension.",
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
