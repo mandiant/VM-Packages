@@ -1,4 +1,4 @@
-name: Update package
+name: Update packages
 
 on:
   workflow_dispatch:

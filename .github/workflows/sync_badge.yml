@@ -1,4 +1,4 @@
-name: Updates packages number badge on README
+name: Update packages badge
 
 on:
   push:
