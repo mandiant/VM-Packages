@@ -1,4 +1,4 @@
-name: MyGet version mitmatches
+name: MyGet version mismatches
 
 on:
   workflow_dispatch:
