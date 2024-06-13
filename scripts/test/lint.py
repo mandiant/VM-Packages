@@ -253,12 +253,26 @@ class VersionNotUpdated(Lint):
         return True
 
 
+class PackageIdNotMatchingFolderOrNuspecName(Lint):
+    name = "package ID doesn't match package folder name or nuspec file name"
+    recommendation = "make sure the package ID is the same as the package folder name and the nuspec file name"
+
+    def check(self, path):
+        dom = minidom.parse(str(path))
+        pkg_id = dom.getElementsByTagName("id")[0].firstChild.data
+
+        nuspec = path.parts[-1]
+        folder = path.parts[-2]
+
+        return not (pkg_id == folder == nuspec[:-len(".nuspec")])
+
 NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
     VersionFormatIncorrect(),
     DoesNotListDependencyCommonVm(),
     DependencyContainsUppercaseChar(),
     VersionNotUpdated(),
+    PackageIdNotMatchingFolderOrNuspecName(),
 )
 
 
