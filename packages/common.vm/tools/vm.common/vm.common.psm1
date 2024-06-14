@@ -791,10 +791,6 @@ function VM-Uninstall-With-Uninstaller {
     # Remove tool shortcut
     VM-Remove-Tool-Shortcut $toolName $category
 
-    # Remove tool files
-    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
-    Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
-
     # Attempt to find and execute the uninstaller, may need to use wildcards
     # See: https://docs.chocolatey.org/en-us/create/functions/get-uninstallregistrykey
     [array]$key = Get-UninstallRegistryKey -SoftwareName $toolName
@@ -821,6 +817,10 @@ function VM-Uninstall-With-Uninstaller {
         $key | ForEach-Object {VM-Write-Log "WARN" " - $($_.DisplayName)"}
         VM-Write-Log "WARN" "Now allowing Chocolatey's auto uninstaller a chance to run."
     }
+
+    # Remove tool files
+    $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+    Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
 }
 
 function VM-Write-Log-Exception {

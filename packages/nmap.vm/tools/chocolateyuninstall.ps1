@@ -18,7 +18,7 @@ try {
     Uninstall-BinFile -Name "zenmap"
 
     # Silently uninstall
-    VM-Uninstall-With-Uninstaller "Nmap*" "EXE" "/S"
+    VM-Uninstall-With-Uninstaller "Nmap*" $category "EXE" "/S"
 } catch {
     VM-Write-Log-Exception $_
 }
