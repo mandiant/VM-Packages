@@ -54,6 +54,12 @@ try {
   $label = "Open Terminal here"
   $icon = "$executablePath"
   VM-Add-To-Right-Click-Menu -menuKey $toolName -menuLabel $label -command $command -menuIcon $icon -type "directory" -background
+
+  # Set windows terminal as the default terminal (effective only when OS Build >= 19045.3031)
+  $registryPath = 'HKCU:\Console\%%Startup'
+  New-Item $registryPath -Force | Out-Null
+  Set-ItemProperty $registryPath -Name "DelegationConsole" -Value "{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}" -Force | Out-Null
+  Set-ItemProperty $registryPath -Name "DelegationTerminal" -Value "{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}" -Force | Out-Null
 } catch {
   VM-Write-Log-Exception $_
 }
