@@ -5,14 +5,32 @@ try {
     $toolName = 'Metasploit'
     $category = 'Command & Control'
 
-    $exeUrl = 'https://windows.metasploit.com/metasploitframework-latest.msi'
-    $exeSha256 = '470039711E182C4551169A776AFC8C10B4BAEA1600334449998894B2D725D49A'
-    # can't install to specified path.
+    # Download the installer
+    $packageArgs        = @{
+        packageName     = $env:ChocolateyPackageName
+        file            = Join-Path ${Env:TEMP} 'metasploitframework-latest.msi'
+        url             = 'https://windows.metasploit.com/metasploitframework-latest.msi'
+    }
+    $filePath = Get-ChocolateyWebFile @packageArgs
+    VM-Assert-Path $filePath
+    VM-Assert-Signature $filePath
+
+    # Install the downloaded installer
+    $packageArgs        = @{
+        packageName     = $env:ChocolateyPackageName
+        file            = $filePath
+        fileType        = 'MSI'
+        silentArgs      = "/quiet /norestart INSTALLLOCATION=$(${Env:SystemDrive})\"
+    }
+    Install-ChocolateyInstallPackage @packageArgs -ErrorAction SilentlyContinue
+
     $toolDir = Join-Path ${Env:SystemDrive} "metasploit-framework"
     $binDir = Join-Path $toolDir "bin"
     $executablePath = (Join-Path $binDir "msfconsole.bat")
-    VM-Install-With-Installer $toolName $category "MSI" "/q /norestart" $executablePath $exeUrl -sha256 $exeSha256
+    VM-Assert-Path $executablePath
 
+    VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath
+    Install-BinFile -Name $toolName -Path $executablePath
 } catch {
     VM-Write-Log-Exception $_
 }
