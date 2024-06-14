@@ -7,7 +7,7 @@ $category = 'Command & Control'
 VM-Uninstall $toolName $category
 
 # Silently uninstall
-VM-Uninstall-With-Uninstaller $toolName "MSI" "/q /norestart"
+VM-Uninstall-With-Uninstaller $toolName $category "MSI" "/q /norestart"
 
 # Remove directory, shortcut, shim
 VM-Uninstall $toolName $category

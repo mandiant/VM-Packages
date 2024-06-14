@@ -9,4 +9,4 @@ foreach ($subtoolName in $subtoolNames) {
 
 VM-Remove-From-Right-Click-Menu 'CFF explorer'
 
-VM-Uninstall-With-Uninstaller "Explorer Suite IV" "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
+VM-Uninstall-With-Uninstaller "Explorer Suite IV" $category "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"

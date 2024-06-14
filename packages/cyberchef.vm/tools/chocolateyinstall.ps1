@@ -19,13 +19,13 @@ try {
   Install-ChocolateyZipPackage @packageArgs
   VM-Assert-Path $toolDir
 
+  $iconLocation = VM-Create-Ico (Join-Path $toolDir "images\cyberchef-128x128.png") # Create .ico for cyberchef icon
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
   $htmlPath = Join-Path $toolDir "CyberChef_v10.18.6.html" -Resolve
   $arguments = "start chrome $htmlPath && exit"
   $executableArgs = "/C $arguments"
-  $iconLocation = "%ProgramFiles%\Google\Chrome\Application\chrome.exe"
 
   Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $toolDir -WindowStyle 7 -IconLocation $iconLocation
 
