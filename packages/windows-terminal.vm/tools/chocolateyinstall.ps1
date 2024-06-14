@@ -40,6 +40,7 @@ try {
   $defaultSettings = @"
 {
   "`$schema": "https://aka.ms/terminal-settings-schema-v1.1",
+  "defaultProfile": "Command Prompt",
   "profiles": {
     "defaults": {
       "elevate": true
