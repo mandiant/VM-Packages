@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vscode.vm</id>
-    <version>1.89.1</version>
+    <version>1.90.1</version>
     <authors>Microsoft</authors>
     <description>VSCode is a modern, open-source code editor.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="vscode" version="[1.89.1]" />
+      <dependency id="vscode" version="[1.90.1]" />
     </dependencies>
   </metadata>
 </package>
