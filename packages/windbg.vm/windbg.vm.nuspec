@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>windbg.vm</id>
-    <version>0.0.0</version>
+    <version>1.2402.24001.20240527</version>
     <authors>Microsoft</authors>
     <description>WinDbg is a debugger that can be used to analyze crash dumps, debug live user-mode and kernel-mode code, and examine CPU registers and memory.</description>
     <dependencies>
@@ -10,4 +10,3 @@
     </dependencies>
   </metadata>
 </package>
-
