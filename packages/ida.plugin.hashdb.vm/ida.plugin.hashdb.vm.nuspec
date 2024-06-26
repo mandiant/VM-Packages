@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.hashdb.vm</id>
-    <version>1.9.0</version>
+    <version>1.9.1</version>
     <authors>OALabs</authors>
     <description>Malware string hash lookup plugin for IDA Pro</description>
     <dependencies>

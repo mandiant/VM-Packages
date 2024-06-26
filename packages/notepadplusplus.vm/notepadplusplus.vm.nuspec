@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>notepadplusplus.vm</id>
-    <version>8.6.7</version>
+    <version>8.6.8</version>
     <description>Wrapper for Notepad++</description>
     <authors>Don Ho</authors>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="notepadplusplus" version="[8.6.7]" />
+      <dependency id="notepadplusplus" version="[8.6.8]" />
     </dependencies>
   </metadata>
 </package>
