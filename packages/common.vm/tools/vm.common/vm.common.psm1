@@ -1789,3 +1789,20 @@ function VM-Uninstall-With-Pip {
     VM-Pip-Uninstall $toolName
     VM-Remove-Tool-Shortcut $toolName $category
 }
+
+# Converts image file to .ico needed for file icons
+function VM-Create-Ico {
+    param (
+        [string]$imagePath
+    )
+    Add-Type -AssemblyName System.Drawing
+    $imageDirPath = Split-Path -Path $imagePath -Parent
+    $filenameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($imagePath)
+    $iconLocation = Join-Path $imageDirPath "$($filenameWithoutExtension).ico"
+    $bitmap = [System.Drawing.Bitmap]::FromFile($imagePath)
+    $icon = [System.Drawing.Icon]::FromHandle($bitmap.GetHicon())
+    $fs = New-Object System.IO.FileStream($iconLocation, 'OpenOrCreate')
+    $icon.Save($fs)
+    $fs.Close()
+    return $iconLocation
+}
