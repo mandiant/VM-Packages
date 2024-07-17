@@ -30,6 +30,11 @@ try {
 try {
     # Add sysinternals tools to path
     Install-ChocolateyPath $toolDir
+
+    # Ensure strings is high in PATH
+    $executablePath = Join-Path $toolDir "strings.exe" -Resolve
+    Install-BinFile -Name strings -Path $executablePath
+
     # Add shortcut to sysinternals folder
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $shortcut = Join-Path $shortcutDir 'sysinternals.lnk'
