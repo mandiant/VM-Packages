@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.lighthouse.vm</id>
-    <version>0.0.0.20240507</version>
+    <version>0.0.0.20240725</version>
     <authors>gaasedelen</authors>
     <description>A powerful coverage explorer.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20240429" />
+      <dependency id="libraries.python3.vm" />
     </dependencies>
   </metadata>
 </package>
