@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>python3.vm</id>
-    <version>0.0.0.20231019</version>
+    <version>0.0.0.20240726</version>
     <description>Metapackage for Python 3 to ensure all packages use the same Python version.</description>
     <authors>Mandiant</authors>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm" version="0.0.0.20240425" />
       <dependency id="python3" version="[3.10.0, 3.11.0)" />
     </dependencies>
   </metadata>

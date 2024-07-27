@@ -954,7 +954,7 @@ function VM-Set-Open-With-Association {
             # Create the 'command' key and its default value
             $commandKey = "${hive}\Software\Classes\${exeName}_auto_file\shell\open\command"
             New-Item -Path $commandKey -Force
-            New-ItemProperty -Path $commandKey -Name '(Default)' -Value "`"$executablePath`" `"%1`""
+            New-ItemProperty -Path $commandKey -Name '(Default)' -Value "`"$executablePath`" `"%1`" %*"
 
             # Create/update the file extension key
             $extKey = "${hive}\Software\Classes\$extension"
