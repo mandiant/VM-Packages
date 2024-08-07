@@ -5,10 +5,10 @@ try {
   $toolName = '010Editor'
   $category = 'Hex Editors'
 
-  $url   = 'https://download.sweetscape.com/010EditorWin32Installer14.0.1.exe'
-  $checksum = 'f80b87bd05f67fd6deb1988ab5ff3a259aae393f7a9fb763f6197b9541700d08'
-  $url64 = 'https://download.sweetscape.com/010EditorWin64Installer14.0.1.exe'
-  $checksum64 = '4600e9febf04ecfc5334746bbf86a951eadcca48610a26f5de3d737636443899'
+  $url   = 'https://download.sweetscape.com/010EditorWin32Installer15.0.exe'
+  $checksum = '20bb9534385c09e962da5f8653e6121368b1a330b1cd5e135d4afe39eab714eb'
+  $url64 = 'https://download.sweetscape.com/010EditorWin64Installer15.0.exe'
+  $checksum64 = 'a39860c150cc65399379a9072220eed0870b6a753a4fbaafd6c0741291a6490b'
 
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
