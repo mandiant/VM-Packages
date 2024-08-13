@@ -18,6 +18,7 @@
     <module name="psutil"/>
     <module name="pyasn1"/>
     <module name="pycryptodome"/>
+    <module name="pycryptodomex"/>
     <module name="pyftpdlib"/>
     <module name="pyOpenSSL"/>
     <module name="pyreadline3"/>
