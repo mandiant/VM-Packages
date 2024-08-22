@@ -327,6 +327,7 @@ class UsesInvalidCategory(Lint):
         "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
+        "microsoft-office.vm",
         "notepadpp.plugin.",
         "npcap.vm",
         "openjdk.vm",
