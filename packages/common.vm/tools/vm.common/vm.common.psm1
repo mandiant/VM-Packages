@@ -1789,3 +1789,14 @@ function VM-Uninstall-With-Pip {
     VM-Pip-Uninstall $toolName
     VM-Remove-Tool-Shortcut $toolName $category
 }
+
+function VM-Set-Legal-Notice {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string[]]$legalnoticetext
+    )
+    $RegistryPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+    New-ItemProperty -Path $RegistryPath -Name legalnoticecaption -Value "Terms and Conditions" -Force
+    New-ItemProperty -Path $RegistryPath -Name legalnoticetext -Value $legalnoticetext -Force
+}
+
