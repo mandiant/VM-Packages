@@ -11,6 +11,7 @@ try {
   $zipSha256 = "5941a0401830c2310226f0cd2d640e091f1c8bf1b93c5288e6626eecebf20bff"
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
+  $packageToolDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
   # Remove files from previous zips for upgrade
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
@@ -33,6 +34,11 @@ try {
   $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
   VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -executableDir $toolDir -consoleApp $true
   Install-BinFile -Name $toolName -Path $executablePath
+
+  # Replace `default.ini` with our modified one that includes change for 'internet_detector'.
+  # IMPORTANT: Keep our modified `default.ini` in-sync on updates to package.
+  $fakenetConfigDir = Get-ChildItem "C:\Tools\fakenet\*\configs"
+  Copy-Item "$packageToolDir\default.ini" -Destination $fakenetConfigDir
 
   # Create shortcut in Desktop to FakeNet tool directory
   $desktopShortcut  = Join-Path ${Env:UserProfile} "Desktop\fakenet_logs.lnk"
