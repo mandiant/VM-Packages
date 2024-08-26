@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    # Testing all packages takes several hours
+    timeout-minutes: 720
     strategy:
       fail-fast: false
       # Updating the wiki fails if between the checkout of the wiki and the push of the update the other job pushes its update
