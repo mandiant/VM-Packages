@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>bstrings.vm</id>
-    <version>1.5.2.20240411</version>
+    <version>1.5.2.20240826</version>
     <authors>Eric Zimmerman</authors>
     <description>Find them strings yo. Built in regex patterns. Handles locked files</description>
     <dependencies>
