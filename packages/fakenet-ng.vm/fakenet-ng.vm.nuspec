@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>fakenet-ng.vm</id>
-    <version>3.2.0.20240425</version>
+    <version>3.2.0.20240902</version>
     <description>FakeNet-NG is a dynamic network analysis tool.</description>
     <authors>Mandiant</authors>
     <dependencies>
