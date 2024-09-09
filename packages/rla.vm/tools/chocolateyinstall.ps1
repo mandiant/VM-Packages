@@ -5,6 +5,6 @@ $toolName = 'RLA'
 $category = 'Forensic'
 
 $zipUrl = 'https://download.mikestammer.com/net6/rla.zip'
-$zipSha256 = 'F30F9EF4F2E6BA8A002F8A799851D4173D85D5784FC3E388FBE1CFD525D20333'
+$zipSha256 = '1017f1d19d57665afd8fdfb13955a8280708931cb5cd75eca45ae28e23756b16'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
