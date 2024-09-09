@@ -5,7 +5,7 @@ $toolName = 'Event Log Explorer'
 $category = 'Forensic'
 
 $exeUrl = 'https://eventlogxp.com/download/elex_setup.exe'
-$exeSha256 = '84384a2d639a87f2d301315f1b670f702822c8b4e7a654d2a206d6cd6bac3dc3'
+$exeSha256 = '8dc2c9d4a620bf421dac9c9bce2ab690798005edbf5d7ccb202717a14f8cc894'
 
 $toolDir = Join-Path ${Env:ProgramFiles(x86)} $toolName
 $executablePath = Join-Path $toolDir "elex.exe"
