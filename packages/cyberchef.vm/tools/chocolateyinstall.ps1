@@ -25,7 +25,7 @@ try {
   $htmlPath = Join-Path $toolDir "CyberChef_v10.19.0.html" -Resolve
   $arguments = "start chrome $htmlPath && exit"
   $executableArgs = "/C $arguments"
-  $iconLocation = "%ProgramFiles%\Google\Chrome\Application\chrome.exe"
+  $iconLocation = VM-Create-Ico (Join-Path $toolDir "images\cyberchef-128x128.png") # Create .ico for cyberchef icon
 
   Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $toolDir -WindowStyle 7 -IconLocation $iconLocation
 
