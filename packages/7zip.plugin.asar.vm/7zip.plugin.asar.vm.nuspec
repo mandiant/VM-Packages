@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>7zip.plugin.asar.vm</id>
+    <version>1.5.0.20240930</version>
+    <description>Asar7z is a small plugin for the popular 7-Zip archiver. You can use Asar7z with 7-Zip to open, modify, or create .asar archives, which are used for packaging applications based on the Electron framework.</description>
+    <authors>tc4shell</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="7zip.vm" />
+    </dependencies>
+  </metadata>
+</package>

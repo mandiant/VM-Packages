@@ -335,6 +335,7 @@ class UsesInvalidCategory(Lint):
         "python3.vm",
         "x64dbgpy.vm",
         "vscode.extension.",
+        "7zip.plugin.",
     ]
 
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
