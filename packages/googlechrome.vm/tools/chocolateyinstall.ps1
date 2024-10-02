@@ -1,6 +1,10 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
+$fileType = "MSI"
+$silentArgs = "/quiet /norestart /l*v `"$($env:TEMP)\$($env:chocolateyPackageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
+$validExitCodes = @(0, 3010, 1603, 1605, 1614, 1641)
+
 try {
     # Download the installer
     $packageArgs        = @{
@@ -14,11 +18,12 @@ try {
     VM-Assert-Signature $filePath
 
     # Install the downloaded installer
-    $packageArgs        = @{
-        packageName     = $env:ChocolateyPackageName
-        file            = $filePath
-        fileType        = 'MSI'
-        silentArgs      = "/quiet /norestart /l*v `"$($env:TEMP)\$($env:chocolateyPackageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
+    $packageArgs = @{
+        packageName    = $env:ChocolateyPackageName
+        file           = $filePath
+        fileType       = $fileType
+        silentArgs     = $silentArgs
+        validExitCodes = $validExitCodes
     }
     Install-ChocolateyInstallPackage @packageArgs -ErrorAction SilentlyContinue
 
