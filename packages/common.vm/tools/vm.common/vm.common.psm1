@@ -1523,6 +1523,8 @@ public class Shell {
         $SHCNE_ASSOCCHANGED = 0x08000000
         $SHCNF_IDLIST = 0
         [void][Shell]::SHChangeNotify($SHCNE_ASSOCCHANGED, $SHCNF_IDLIST, [IntPtr]::Zero, [IntPtr]::Zero)
+        # Refresh the Taskbar
+        Stop-Process -Name explorer -Force  # This restarts the explorer process so that the new taskbar is displayed.
     } catch {
         VM-Write-Log-Exception $_
     }
