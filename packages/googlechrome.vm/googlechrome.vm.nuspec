@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>googlechrome.vm</id>
-    <version>0.0.0.20240425</version>
+    <version>0.0.0.20241002</version>
     <authors>Google LLC.</authors>
     <description>Chrome is a popular web browser.</description>
     <dependencies>
