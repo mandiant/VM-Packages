@@ -6,7 +6,6 @@ try {
 
   $category = 'Utilities'
   $toolName = 'CyberChef'
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
   $packageArgs = @{
@@ -19,17 +18,10 @@ try {
   Install-ChocolateyZipPackage @packageArgs
   VM-Assert-Path $toolDir
 
-  $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-  $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-  $executableCmd  = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-  $htmlPath = Join-Path $toolDir "CyberChef_v10.19.0.html" -Resolve
-  $arguments = "start chrome $htmlPath && exit"
-  $executableArgs = "/C $arguments"
-  $iconLocation = VM-Create-Ico (Join-Path $toolDir "images\cyberchef-128x128.png") # Create .ico for cyberchef icon
-
-  Install-ChocolateyShortcut -ShortcutFilePath $shortcut -TargetPath $executableCmd -Arguments $executableArgs -WorkingDirectory $toolDir -WindowStyle 7 -IconLocation $iconLocation
-
-  VM-Assert-Path $shortcut
+  $chromePath = "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe"
+  $cyberchefPath = Get-Item "$toolDir\CyberChef*.html"
+  $iconLocation = VM-Create-Ico (Join-Path $toolDir "images\cyberchef-128x128.png")
+  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $chromePath -arguments "-home $cyberchefPath" -iconLocation $iconLocation
 } catch {
   VM-Write-Log-Exception $_
 }
