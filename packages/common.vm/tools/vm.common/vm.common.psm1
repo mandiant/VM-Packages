@@ -1737,16 +1737,18 @@ function VM-Get-MSIInstallerPathByProductName {
     }
 }
 
-# Install Python library with Pip
+# Install Python library/ies with Pip
 function VM-Pip-Install {
     param (
-        [string]$package
+        [string]$libraries # Comma-separated list of libraries to install, example: "flare-capa", "flare-capa,tabulate"
     )
     # Create output file to log python module installation details
     $outputFile = VM-New-Install-Log ${Env:VM_COMMON_DIR}
 
-    # Ignore warning with `-W ignore` to avoid warnings like deprecation to fail the installation
-    Invoke-Expression "py -3.10 -W ignore -m pip install $package --disable-pip-version-check 2>&1 >> $outputFile"
+    ForEach ($library in $libraries.Split(",")) {
+        # Ignore warning with `-W ignore` to avoid warnings like deprecation to fail the installation
+        Invoke-Expression "py -3.10 -W ignore -m pip install $library --disable-pip-version-check 2>&1 >> $outputFile"
+    }
 }
 
 # Install tool using Pip and create shortcut in the Tools directory

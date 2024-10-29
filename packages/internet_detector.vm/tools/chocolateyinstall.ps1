@@ -11,10 +11,8 @@ New-Item -Path $toolDir -ItemType Directory -Force -ea 0
 VM-Assert-Path $toolDir
 
 # Install pyinstaller (needed to build the Python executable) and tool dependencies ('pywin32')
-$dependencies = @('pyinstaller', 'pywin32')
-ForEach ($dependency in $dependencies) {
-    VM-Pip-Install $dependency
-}
+$dependencies = "pyinstaller,pywin32"
+VM-Pip-Install $dependencies
 
 # This wrapper is needed because we can't run PyInstaller as admin, so this forces a usermode context.
 Start-Process -FilePath 'cmd.exe' -ArgumentList "/c pyinstaller --onefile -w --distpath $toolDir --workpath $packageToolDir --specpath $packageToolDir $packageToolDir\internet_detector.pyw" -Wait
