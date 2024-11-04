@@ -60,7 +60,7 @@ jobs:
         uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc # v6.0.1
         with:
           title: ':robot: Package update'
-          body: 'Automated package update'
+          body: 'Automated package update created by [update_packages.yml](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/update_packages.yml). Note the update is triggered weekly and will modify this PR if it has not been merged.'
           branch: package-update
           author: vm-packages <vm-packages@google.com>
           add-paths: packages/*
