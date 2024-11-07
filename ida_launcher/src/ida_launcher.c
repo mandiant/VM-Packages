@@ -21,7 +21,7 @@ int findHighestIdaVersion(HKEY rootKey, LPCSTR subKey, LPCSTR idaIdentifier, LPS
     int highestMajor = -1, highestMinor = -1;
     BOOL found = FALSE;
 
-    lRes = RegOpenKeyExA(rootKey, subKey, 0, KEY_READ, &hKey);
+    lRes = RegOpenKeyExA(rootKey, subKey, 0, KEY_READ | KEY_WOW64_64KEY, &hKey);
     if (lRes != ERROR_SUCCESS) {
         return 0; // Unable to open registry key
     }
@@ -32,7 +32,6 @@ int findHighestIdaVersion(HKEY rootKey, LPCSTR subKey, LPCSTR idaIdentifier, LPS
         if (lRes != ERROR_SUCCESS) {
             break; // No more keys or an error occurred
         }
-
         HKEY hSubKey;
         lRes = RegOpenKeyExA(hKey, keyName, 0, KEY_READ, &hSubKey);
         if (lRes == ERROR_SUCCESS) {
@@ -43,7 +42,6 @@ int findHighestIdaVersion(HKEY rootKey, LPCSTR subKey, LPCSTR idaIdentifier, LPS
                 DWORD majorSize = sizeof(majorVersion), minorSize = sizeof(minorVersion);
                 RegQueryValueExA(hSubKey, "MajorVersion", NULL, NULL, (LPBYTE)&majorVersion, &majorSize);
                 RegQueryValueExA(hSubKey, "MinorVersion", NULL, NULL, (LPBYTE)&minorVersion, &minorSize);
-
                 if (compareVersions(majorVersion, minorVersion, highestMajor, highestMinor) > 0) {
                     highestMajor = majorVersion;
                     highestMinor = minorVersion;
@@ -56,7 +54,6 @@ int findHighestIdaVersion(HKEY rootKey, LPCSTR subKey, LPCSTR idaIdentifier, LPS
         }
         dwIndex++;
     }
-
     RegCloseKey(hKey);
     return found;
 }
@@ -66,17 +63,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     char idaPath[260] = {0};
     DWORD dwSize = sizeof(idaPath);
 
-    // Search for the highest version of IDA Pro first
-    if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Pro", idaPath, dwSize)) {
-        // If IDA Pro not found, search for the highest version of IDA Freeware
-        if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Freeware", idaPath, dwSize)) {
-            MessageBox(NULL, "IDA not found.", "Error", MB_OK | MB_ICONERROR);
-            return 1;
+    // Search for the highest version of IDA Pro first (version 9.0+ uses "IDA Professional")
+    if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Professional", idaPath, dwSize)) {
+        if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Pro", idaPath, dwSize)) {
+            // If IDA Pro not found, search for the highest version of IDA Freeware
+            if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Freeware", idaPath, dwSize)) {
+                MessageBox(NULL, "IDA not found.", "Error", MB_OK | MB_ICONERROR);
+                return 1;
+            }
         }
     }
 
-    // Append ida64.exe to the path
-    strcat(idaPath, "\\ida64.exe");
+    // Construct the path with ida64.exe
+    char idaPath64[260];
+    strcpy(idaPath64, idaPath);
+    strcat(idaPath64, "\\ida64.exe");
+
+    // Check if ida64.exe exists
+    if (GetFileAttributesA(idaPath64) != INVALID_FILE_ATTRIBUTES) {
+        strcpy(idaPath, idaPath64); // Use ida64.exe if it exists
+    } else {
+        // If ida64.exe doesn't exist, use ida.exe
+        strcat(idaPath, "\\ida.exe"); 
+    }
 
     // Check if a file path is provided as an argument
     if (strlen(lpCmdLine) > 0) {
