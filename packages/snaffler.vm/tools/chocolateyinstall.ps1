@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Snaffler'
 $category = 'Reconnaissance'
 
-$exeUrl = 'https://github.com/SnaffCon/Snaffler/releases/download/1.0.179/Snaffler.exe'
-$exeSha256 = 'e37c93696ca4b0e763fff07431cc7ff6b0e4e03415113ad2faf08bfed0bada39'
+$exeUrl = 'https://github.com/SnaffCon/Snaffler/releases/download/1.0.184/Snaffler.exe'
+$exeSha256 = 'a9c3b97f77c2908b9c9f3c4f46a3c58217da3f3bb6fb9bbaeed59560a493d49b'
 
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp $true
