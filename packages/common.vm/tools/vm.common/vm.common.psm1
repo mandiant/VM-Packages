@@ -128,20 +128,20 @@ function VM-Assert-Path {
     }
 }
 
-# Raise an exception if the Signature of $file_path is invalid
+# Raise an exception if the signtool.exe is not found or if the signature of $filePath is invalid
+# vcbuildtools.vm installs signtool.exe
 function VM-Assert-Signature {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
-        [String] $file_path
+        [String] $filePath
     )
-    $signature_status = (Get-AuthenticodeSignature -FilePath $file_path).Status
-    if ($signature_status -eq 'Valid') {
-        VM-Write-Log "INFO" "Valid signature: $file_path"
-    } else {
-        $err_msg = "Invalid signature: $file_path"
-        VM-Write-Log "ERROR" $err_msg
-        throw $err_msg
+    $signtoolPath = Get-ChildItem -Path "C:\Program Files*\Windows Kits\10\bin\*\x86\signtool.exe" | Select-Object -Last 1
+    if (-Not $signtoolPath) { throw "signtool.exe not found" }
+
+    & $signtoolPath verify /pa /all /tw /q $filePath
+    if ($LASTEXITCODE) {
+        throw "INVALID SIGNATURE: $filePath"
     }
 }
 
