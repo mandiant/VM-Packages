@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'DCode'
 $category = 'Forensic'
 
-$url = 'https://www.digital-detective.net/download/download.php?downcode=ae2znu5994j1lforlh03'
+$url = 'https://www.digital-detective.net/download/downloadbac.php?downcode=ae2znu5994j1lforlh03'
 $sha256 = '9ffe1106ee9d9f55b53d5707621d5990f493604e20f3dbdb0d22ec1b8ecb2458'
 
 $toolDir = Join-Path ${Env:ProgramFiles(x86)} "Digital Detective"
