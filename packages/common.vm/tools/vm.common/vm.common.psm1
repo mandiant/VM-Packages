@@ -1820,3 +1820,48 @@ function VM-Create-Ico {
     $fs.Close()
     return $iconLocation
 }
+
+# Unzip the ZIP `$desktop\drive-download*.zip` and the ZIPs (files with extension `.7z` and `.zip`) inside it.
+# Try without password and with passwords "infected" and "flare.
+# Delete extracted ZIPS after unzipping them.
+# Useful to extract zipped labs downloaded from GDrive keeping the folder structure.
+function VM-Unzip-Recursively {
+    $desktop = Join-Path ${Env:UserProfile} "Desktop"
+    $zip = Get-Item "$desktop\drive-download*.zip"
+    if (-Not (Test-Path $zip)) {
+        Write-Host "[-] ERROR FINDING '$zip'" -ForegroundColor Red
+        return
+    }
+
+    # Unzip main ZIP
+    $out = & 7z x $zip -o"$desktop" -y -ba -bb
+    if (-not $?) {
+        Write-Host "[-] ERROR UNZIPPING '$zip'" -ForegroundColor Red
+        return
+    }
+
+    Write-Host "[+] UNZIPPED '$zip'" -ForegroundColor Green
+    # Unzip extracted ZIPs (files with extension `.7z` and `.zip`)
+    ForEach ($line in $out.Split([Environment]::NewLine)) {
+        # Line example: "- MACC\Labs\apple.7z"
+        if (($line -like "- *.7z") -or ($line -like "- *.zip")) {
+            $file = $line.substring(2) # remove "- "
+            $fileDir = Split-Path $file -Parent
+            & 7z e $file -y -o"$fileDir" -pinfected 2>&1>$null
+            if (-not $?) {
+                & 7z e $file -y -o"$fileDir" -pflare 2>&1>$null
+            }
+            if (-not $?) {
+                & 7z e $file -y -o"$fileDir" -p 2>&1>$null
+            }
+            if (-not $?) {
+                Write-Host "  [-] ERROR UNZIPPING '$file'" -ForegroundColor Red
+                return
+            }
+
+            # Remove ZIP after extracting it
+            Remove-Item $file -Force
+            Write-Host "  [+] UNZIPPED '$file'" -ForegroundColor Green
+        }
+    }
+}
