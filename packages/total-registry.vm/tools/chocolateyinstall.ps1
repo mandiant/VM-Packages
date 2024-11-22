@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'TotalReg'
 $category = 'Registry'
 
-$exeUrl = 'https://github.com/zodiacon/TotalRegistry/releases/download/v0.9.7.8/TotalReg.exe'
-$exeSha256 = 'ad3db638738eb5433fec88ad6b3954e55f9ce3f8dcba45256d70f78b3d6dff8c'
+$exeUrl = 'https://github.com/zodiacon/TotalRegistry/releases/download/v0.9.7.9/TotalReg.exe'
+$exeSha256 = 'e83ae98b6492e22d05e6c49240fda8e4dd68f24c5cf79afc854d5441e7e91f80'
 
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp $false

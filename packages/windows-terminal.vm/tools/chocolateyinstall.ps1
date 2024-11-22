@@ -6,8 +6,8 @@ try {
   $category = 'Productivity Tools'
   $executableName = "wt.exe"
 
-  $zipUrl = 'https://github.com/microsoft/terminal/releases/download/v1.19.10573.0/Microsoft.WindowsTerminal_1.19.10573.0_x64.zip'
-  $zipSha256 = 'F756A41FA2DBEE274334CB49D93A84CB29E5DF0A2446FC79BF7ED9FFE8B49FFB'
+  $zipUrl = 'https://github.com/microsoft/terminal/releases/download/v1.21.3231.0/Microsoft.WindowsTerminal_1.21.3231.0_x64.zip'
+  $zipSha256 = '8fb268b93c9b99d6cf553709c2c58bf1b2ff4b364199152e09221dfb2a44bbf5'
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 

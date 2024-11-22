@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sclauncher.vm</id>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <authors>Josh Stroschein</authors>
     <description>A small program to load 32-bit shellcode and allow for execution or debugging. Can also output PE files from shellcode.</description>
     <dependencies>

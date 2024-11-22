@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'AzureHound'
 $category = 'Reconnaissance'
 
-$zipUrl = 'https://github.com/BloodHoundAD/AzureHound/releases/download/v2.1.9/azurehound-windows-amd64.zip'
-$zipSha256 = '5422add82c8158aa88c23483d38f42c4d8de8e5f00dad811604c6710e40c33b1'
+$zipUrl = 'https://github.com/BloodHoundAD/AzureHound/releases/download/v2.2.1/azurehound-windows-amd64.zip'
+$zipSha256 = '111ce3f5c15cdcce58d54c5d549b1e36eaa4b78a0a31531548cb9b0f71f78125'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256
