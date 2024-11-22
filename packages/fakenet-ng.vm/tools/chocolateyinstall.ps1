@@ -7,8 +7,8 @@ try {
   $toolName = 'fakenet'
   $category = 'Networking'
 
-  $zipUrl = "https://github.com/mandiant/flare-fakenet-ng/releases/download/v3.2-alpha/fakenet3.2-alpha.zip"
-  $zipSha256 = "5941a0401830c2310226f0cd2d640e091f1c8bf1b93c5288e6626eecebf20bff"
+  $zipUrl = "https://github.com/mandiant/flare-fakenet-ng/releases/download/v3.3/fakenet3.3.zip"
+  $zipSha256 = "cd3f263a01926366643118c541a6ad24a171b4369363a60deb9a570a1d600865"
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
   $packageToolDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
