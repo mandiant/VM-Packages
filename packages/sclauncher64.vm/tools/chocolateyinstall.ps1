@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'SCLauncher64'
 $category = 'Shellcode'
 
-$exeUrl = 'https://github.com/jstrosch/sclauncher/releases/download/v0.0.5/sclauncher64.exe'
-$exeSha256 = 'e7ec06d0f0110a4892d2c026f57392f36b25433cfc114fbcba81041a44d970c8'
+$exeUrl = 'https://github.com/jstrosch/sclauncher/releases/download/v0.0.6/sclauncher64.exe'
+$exeSha256 = 'b8eea28ba340b2c1db1932b3356327c04834090452054f49b0809452605521e5'
 
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp $true
