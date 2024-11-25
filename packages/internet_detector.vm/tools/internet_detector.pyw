@@ -12,13 +12,16 @@
 VERSION = "1.0.0"
 TOOL_NAME = "internet_detector"
 
-import threading
-import requests
+import win32event
 import win32api
 import win32gui
 import win32con
-import urllib3
+import winerror
 import winreg
+
+import threading
+import requests
+import urllib3
 import signal
 import ctypes
 import time
