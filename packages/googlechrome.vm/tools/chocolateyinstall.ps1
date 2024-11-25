@@ -66,5 +66,11 @@ ForEach ($hive in @("HKCU:", "HKLM:")) {
     Remove-Item -Path "${hive}\SOFTWARE\Classes\MSEdgeHTM" -Recurse -ErrorAction SilentlyContinue
 }
 
-# Make Chrome the default for .html files
-VM-Set-Open-With-Association $exePath ".html"
+# Set Chrome to be the default browser
+SetDefaultBrowser "chrome"
+
+# Do not show the "Open with" popup
+Set-ItemProperty -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -name "NoNewAppAlert" -value 1 -type "DWord"
+
+# Restart Explorer.exe for registry change to take effect
+Stop-Process -Name explorer -Force
