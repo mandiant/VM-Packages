@@ -59,8 +59,8 @@ body:
         - Debuggers
         - Delphi
         - Disassemblers
-        - dotNet
         - Documents
+        - dotNet
         - Exploitation
         - File Information
         - Forensic
@@ -77,6 +77,7 @@ body:
         - Persistence
         - Privilege Escalation
         - Productivity Tools
+        - Python
         - Reconnaissance
         - Registry
         - Shellcode
