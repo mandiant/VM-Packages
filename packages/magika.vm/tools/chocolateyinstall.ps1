@@ -4,4 +4,6 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'magika'
 $category = 'File Information'
 
-VM-Install-With-Pip -toolName $toolName -category $category
+VM-Pip-Install 'magika==0.5.0'
+$executablePath = "$(where.exe $toolName)"
+VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
