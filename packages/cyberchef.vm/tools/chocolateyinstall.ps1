@@ -18,6 +18,9 @@ try {
   Install-ChocolateyZipPackage @packageArgs
   VM-Assert-Path $toolDir
 
+  # FLARE-VM adds CyberChef to the taskbar.
+  # We use the chrome executable as we can't use an `.html` shortcut for the taskbar.
+  # Because of this reason we are not using the `VM-Install-From-Zip` helper that would simplify the package code.
   $chromePath = "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe"
   $cyberchefPath = Get-Item "$toolDir\CyberChef*.html"
   $iconLocation = VM-Create-Ico (Join-Path $toolDir "images\cyberchef-128x128.png")
