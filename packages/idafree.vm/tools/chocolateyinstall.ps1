@@ -29,9 +29,9 @@ try {
   # Download ida_launcher.exe to assist with taskbar and right click option and store it in %RAW_TOOLS_DIR%
   # ida_launcher.exe is a custom binary that searches for the latest ida64.exe and executes it
   $launcherName = 'ida_launcher'
-  $launcherSource = 'https://raw.githubusercontent.com/mandiant/VM-Packages/773649e54aaea62f270c8416cb480020d6475065/ida_launcher/ida_launcher.exe'
+  $launcherSource = 'https://raw.githubusercontent.com/mandiant/VM-Packages/119ba385de053b01b0d1732d60ad1b1152496dc2/ida_launcher/ida_launcher.exe'
   $launcherPath = Join-Path ${Env:RAW_TOOLS_DIR} "$launcherName.exe"
-  $launcherChecksum = "ebebf8cf01253aab0562b42128f08fdb9b4452f1f49847c51673e5610063a8b5"
+  $launcherChecksum = "a98241e476150d053d67d149c1b54816c8306db51e0987613ec25a0f8ad22006"
   Write-Host "[+] Downloading '$launcherSource'"
   Get-ChocolateyWebFile -PackageName $launcherName -FileFullPath $launcherPath -Url $launcherSource -Checksum $launcherChecksum -ChecksumType "sha256"
 
