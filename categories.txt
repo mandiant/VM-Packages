@@ -22,6 +22,7 @@ Persistence
 PowerShell
 Privilege Escalation
 Productivity Tools
+Python
 Reconnaissance
 Registry
 Shellcode

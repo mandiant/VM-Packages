@@ -75,6 +75,7 @@ body:
         - Persistence
         - Privilege Escalation
         - Productivity Tools
+        - Python
         - Reconnaissance
         - Registry
         - Shellcode
