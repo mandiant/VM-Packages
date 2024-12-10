@@ -1762,10 +1762,18 @@ function VM-Install-With-Pip {
         [Parameter(Mandatory=$true)]
         [string] $category,
         [Parameter(Mandatory=$false)]
+        [string] $version = "",
+        [Parameter(Mandatory=$false)]
         [string] $arguments = "--help"
     )
     try {
-        VM-Pip-Install $toolName
+        # Conditionally add version string
+        $toolNameForPip = $toolName
+        if (![string]::IsNullOrEmpty($version)) {  # Check if $version is not empty or null
+            $toolNameForPip += "==$version"
+        }
+
+        VM-Pip-Install $toolNameForPip
         $executablePath = "$(where.exe $toolName)"
 
         VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
