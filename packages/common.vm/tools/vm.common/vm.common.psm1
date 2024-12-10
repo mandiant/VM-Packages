@@ -1762,10 +1762,12 @@ function VM-Install-With-Pip {
         [Parameter(Mandatory=$true)]
         [string] $category,
         [Parameter(Mandatory=$false)]
+        [string] $version = "", # Version using pip format, example: "==0.5.0"
+        [Parameter(Mandatory=$false)]
         [string] $arguments = "--help"
     )
     try {
-        VM-Pip-Install $toolName
+        VM-Pip-Install $toolName$version
         $executablePath = "$(where.exe $toolName)"
 
         VM-Install-Shortcut $toolName $category $executablePath -consoleApp $true -arguments $arguments
