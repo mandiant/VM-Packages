@@ -1,0 +1,37 @@
+name: Generate Package Wiki
+
+on:
+  schedule:
+    # Runs daily at a weird time (02:50 UTC) to avoid delays during periods of
+    # high loads of GitHub Actions workflow runs.
+    - cron: '50 2 * * *'  
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  generate-wiki:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Checkout Wiki Repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 0
+
+      - name: Generate Wiki Content
+        id: generate-content
+        shell: pwsh
+        run: scripts/utils/generate_package_wiki.ps1
+
+      - name: Commit changes
+        working-directory: wiki
+        run: |
+          git config user.email 'vm-packages@google.com'
+          git config user.name 'vm-packages'
+          git add .
+          git commit -am "Update Package Wiki"
+          git push
