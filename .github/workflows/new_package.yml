@@ -42,12 +42,12 @@ jobs:
         if: steps.test.outcome == 'success'
         with:
           title: ':robot: Add ${{env.pkg_name}}.vm'
-          body: 'Automated PR from ${{github.event.issue.html_url}} :rocket:'
-          add-paths: packages/*
-          commit-message: |
-            Add ${{env.pkg_name}}.vm
-            
+          body: |
+            Automated package creation from ${{github.event.issue.html_url}} by [new_package.yml](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/new_package.yml). :rocket:
+
             Closes ${{github.event.issue.html_url}}.
+          add-paths: packages/*
+          commit-message: 'Add ${{env.pkg_name}}.vm'
           branch: package-${{env.pkg_name}}
           committer: vm-packages <vm-packages@google.com>
           author: vm-packages <vm-packages@google.com>
