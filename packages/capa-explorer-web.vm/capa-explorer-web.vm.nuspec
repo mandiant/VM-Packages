@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>capa-explorer-web.vm</id>
-    <version>1.0.0.20250219</version>
+    <version>1.0.0.20250425</version>
     <authors>Soufiane Fariss</authors>
     <description>Web interface for exploring and understanding capa results</description>
     <dependencies>
-      <dependency id="common.vm"  version="0.0.0.20250206" />
+      <dependency id="common.vm"  version="0.0.0.20250425" />
     </dependencies>
     <tags>Utilities</tags>
   </metadata>
