@@ -12,13 +12,16 @@
 VERSION = "1.0.0"
 TOOL_NAME = "internet_detector"
 
-import threading
-import requests
+import win32event
 import win32api
 import win32gui
 import win32con
-import urllib3
+import winerror
 import winreg
+
+import threading
+import requests
+import urllib3
 import signal
 import ctypes
 import time
@@ -60,6 +63,16 @@ default_palette = None
 hicon_indicator_off = None
 hicon_indicator_on = None
 
+def is_already_running():
+    global mutex
+    # Try to create a mutex with a unique name.
+    mutex_name = f"{{{os.path.basename(__file__).replace('.py', '')}}}"  # Use filename as part of mutex name
+    try:
+        mutex = win32event.CreateMutex(None, False, mutex_name)  # False means don't acquire initially
+        return winerror.ERROR_ALREADY_EXISTS == win32api.GetLastError()
+    except Exception as e:
+        print(f"Mutex creation error: {e}")
+        return False  # Assume not running if error
 
 def signal_handler(sig, frame):
     global check_thread, tray_icon_thread, tray_icon
@@ -377,7 +390,12 @@ def set_wallpaper(image_path):
 
 
 def main_loop():
-    global stop_event, check_thread, tray_icon_thread, tray_icon
+    global stop_event, check_thread, tray_icon_thread, tray_icon, mutex
+
+    if is_already_running():
+        print("Another instance is already running. Exiting.")
+        return
+
     # Create and start the threads
     tray_icon_thread = threading.Thread(target=tray_icon_loop)
     check_thread = threading.Thread(target=check_internet_loop)
@@ -423,3 +441,7 @@ if __name__ == "__main__":
     print(f"Current color: {default_color}")
 
     main_loop()
+
+    # Release the mutex when the application exits
+    if mutex:
+        win32api.CloseHandle(mutex)
