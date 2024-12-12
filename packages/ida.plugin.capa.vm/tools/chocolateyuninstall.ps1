@@ -8,8 +8,8 @@ $pluginPath = Join-Path $pluginsDir "capa_explorer.py"
 Remove-Item $pluginPath
 
 # Delete capa rules
-$rulesDir = Join-Path $pluginsDir "capa-rules-6.1.0"
-Remove-Item $rulesDir
+$rulesDir = Get-ChildItem "$pluginsDir\capa-rules-*"
+Remove-Item $rulesDir -Recurse
 
 # Delete registry information
 Remove-Item 'HKCU:\SOFTWARE\IDAPython\IDA-Settings\capa'
