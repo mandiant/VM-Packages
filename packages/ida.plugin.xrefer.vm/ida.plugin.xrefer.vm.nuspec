@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ida.plugin.xrefer.vm</id>
+    <version>1.0.0</version>
+    <description>Custom navigation interface within IDA.</description>
+    <authors>Muhammad Umair</authors>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20241029"/>
+      <dependency id="libraries.python3.vm" version="0.0.0.20241213"/>
+      <dependency id="openjdk.vm" />
+    </dependencies>
+  </metadata>
+</package>
