@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vcredist140.vm</id>
-    <version>0.0.0.20231019</version>
+    <version>0.0.0.20241213</version>
     <description>Metapackage for Python 3 to ensure all packages use the same Python version.</description>
     <authors>Mandiant</authors>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="vcredist140" version="[14.36.32532, 14.37)" />
+      <dependency id="vcredist140" version="[14.42.34433, 14.43)" />
     </dependencies>
   </metadata>
 </package>
