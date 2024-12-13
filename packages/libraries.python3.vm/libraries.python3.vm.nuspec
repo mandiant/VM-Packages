@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>libraries.python3.vm</id>
-    <version>0.0.0.20240726</version>
+    <version>0.0.0.20241213</version>
     <description>Metapackage to install common Python libraries</description>
     <authors>Several, check in pypi.org for every of the libraries</authors>
     <dependencies>
