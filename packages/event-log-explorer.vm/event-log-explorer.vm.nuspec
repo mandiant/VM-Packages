@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>event-log-explorer.vm</id>
-    <version>5.5.2.20240908</version>
+    <version>5.6.0.20241212</version>
     <authors>FSPro Labs</authors>
     <description>Software solution for viewing, analyzing and monitoring events recorded in Microsoft Windows event logs.</description>
     <dependencies>
