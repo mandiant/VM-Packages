@@ -354,7 +354,7 @@ class UsesInvalidCategory(Lint):
         # utf-8-sig ignores BOM
         file_content = open(path, "r", encoding="utf-8-sig").read()
 
-        match = re.search("\$category = ['\"](?P<category>[\w &/]+)['\"]", file_content)
+        match = re.search(r"\$category = ['\"](?P<category>[\w &/]+)['\"]", file_content)
         if not match or match.group("category") not in self.CATEGORIES:
             return True
         return False
