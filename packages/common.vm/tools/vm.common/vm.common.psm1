@@ -1828,6 +1828,7 @@ function VM-Create-Ico {
 # Delete extracted ZIPS after unzipping them.
 # Useful to extract zipped labs downloaded from GDrive keeping the folder structure.
 function VM-Unzip-Recursively {
+    $ErrorActionPreference = 'Continue'
     $desktop = Join-Path ${Env:UserProfile} "Desktop"
     $zip = Get-Item "$desktop\drive-download*.zip"
     if (-Not (Test-Path $zip)) {
