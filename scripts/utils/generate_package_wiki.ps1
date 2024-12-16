@@ -10,7 +10,7 @@ if (Test-Path $categoryFile) {
     if ($categoryMatch) {
     $category = $categoryMatch.Matches.Groups[1].Value.Trim("'""")
     } else {
-    $category = "Not Categorized" 
+    $category = "Not Categorized"
     }
 } else {
     $category = "Not Categorized"
