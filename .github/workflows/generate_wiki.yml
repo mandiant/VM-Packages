@@ -2,7 +2,9 @@ name: Generate Package Wiki
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Run daily at 12:00 PM UTC
+    # Runs daily at a weird time (02:50 UTC) to avoid delays during periods of
+    # high loads of GitHub Actions workflow runs.
+    - cron: '50 2 * * *'  
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
@@ -12,89 +14,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Chocolatey
-        run: choco install chocolatey -y
+      - name: Checkout Wiki Repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 0
 
       - name: Generate Wiki Content
         id: generate-content
         shell: pwsh
+        run: scripts/utils/generate_package_wiki.ps1
+        
+      - name: Commit changes
+        working-directory: wiki
         run: |
-          $source = "https://www.myget.org/F/vm-packages/api/v2" 
-
-          $packagesDir = "packages"
-          $packages = Get-ChildItem -Path $packagesDir -Directory | ForEach-Object { $_.Name } | Sort-Object
-
-          $wikiContent = "# Package List`n`n"
-          $packagesByCategory = @{}
-
-          foreach ($package in $packages) {
-            $categoryFile = "$packagesDir/$package/tools/chocolateyinstall.ps1"
-            if (Test-Path $categoryFile) {
-              $categoryMatch = Select-String -Path $categoryFile -Pattern '\$category\s*=\s*["''](.+?)["'']' -AllMatches
-              if ($categoryMatch) {
-                $category = $categoryMatch.Matches.Groups[1].Value.Trim("'""")
-              } else {
-                $category = "Not Categorized" 
-              }
-            } else {
-              $category = "Not Categorized"
-            }
-
-            if (-not ($packagesByCategory.ContainsKey($category))) {
-              $packagesByCategory[$category] = ""
-            }
-
-
-            try {
-              $descriptionResult = choco info $package -s $source | Select-String -Pattern "Description:\s*(.+)"
-              if ($descriptionResult) {
-                $description = $descriptionResult.Matches.Groups[1].Value.Trim()
-              } else {
-                $description = "Description not found." 
-              }
-            }
-            catch {
-              Write-Warning "Error getting description for $($package): $_"
-              $description = "Error retrieving description." 
-            }
-
-
-            $packagesByCategory[$category] += "| $package | $description |`n"
-          }
-
-          # Process categories (excluding "Not Categorized")
-          $sortedCategories = ($packagesByCategory.Keys | Where-Object {$_ -ne "Not Categorized"} | Sort-Object)
-          foreach ($category in $sortedCategories) {
-            $wikiContent += "## $category`n`n"
-            $wikiContent += "| Package | Description |`n"
-            $wikiContent += "|---|---|`n"
-            $wikiContent += $packagesByCategory[$category] + "`n`n"
-          }
-
-
-          # Add "Not Categorized" last
-          if ($packagesByCategory.ContainsKey("Not Categorized")) {
-            $wikiContent += "## Not Categorized`n`n"
-            $wikiContent += "| Package | Description |`n"
-            $wikiContent += "|---|---|`n"
-            $wikiContent += $packagesByCategory["Not Categorized"] + "`n`n"
-          }
-
-          Write-Output "::set-output name=wiki_content::$wikiContent"
-
-      - name: Update Wiki Page
-        uses: octokit/request-action@v2.x
-        with:
-          route: PUT /repos/${{ github.repository }}/contents/Packages.md
-          mediaType: |
-            {
-              "previews": [
-                "luke-cage"
-              ]
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        data:
-          message: "Update Package Wiki"
-          content: ${{ steps.generate-content.outputs.wiki_content | btoa }}
-          sha: ${{ github.event.pull_request.head.sha || github.sha }}
+          git config user.email 'vm-packages@google.com'
+          git config user.name 'vm-packages'
+          git add .
+          git commit -am "Update Package Wiki"
+          git push
