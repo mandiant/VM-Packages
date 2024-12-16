@@ -22,8 +22,3 @@ $imagesPath = Join-Path $packageToolDir "images"
 Copy-Item "$imagesPath\*" ${Env:VM_COMMON_DIR} -Force
 
 VM-Install-Shortcut -toolName $toolName -category $category -executablePath "$toolDir/$toolName.exe"
-
-# Create scheduled task for tool to run every 2 minutes.
-$action = New-ScheduledTaskAction -Execute "$toolDir/$toolName.exe"
-$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 2)
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'Internet Detector' -Force
