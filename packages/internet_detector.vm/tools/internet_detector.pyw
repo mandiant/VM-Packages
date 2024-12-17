@@ -47,6 +47,7 @@ ICON_INDICATOR_ON = os.path.join(os.environ.get("VM_COMMON_DIR"), "indicator_on.
 ICON_INDICATOR_OFF = os.path.join(os.environ.get("VM_COMMON_DIR"), "indicator_off.ico")
 DEFAULT_BACKGROUND = os.path.join(os.environ.get("VM_COMMON_DIR"), "background.png")
 INTERNET_BACKGROUND = os.path.join(os.environ.get("VM_COMMON_DIR"), "background-internet.png")
+REGISTRY_PATH = r"Software\InternetDetector"
 
 # Global variables
 tray_icon = None
@@ -417,6 +418,33 @@ def set_wallpaper(image_path):
     if not result:
         print("Error setting wallpaper. Make sure the image path is correct.")
 
+def save_default_settings():
+    """Saves the default color, palette, and color prevalence to the registry."""
+    try:
+        key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, REGISTRY_PATH)
+        winreg.SetValueEx(key, "DefaultColor", 0, winreg.REG_SZ, default_color)
+        winreg.SetValueEx(key, "DefaultPalette", 0, winreg.REG_SZ, default_palette)
+        winreg.SetValueEx(key, "DefaultColorPrevalence", 0, winreg.REG_DWORD, default_color_prevalence)
+        winreg.CloseKey(key)
+        print("Default settings saved to registry.")
+    except WindowsError as e:
+        print(f"Error saving default settings to registry: {e}")
+
+def load_default_settings():
+    """Loads the default color, palette, and color prevalence from the registry."""
+    global default_color, default_palette, default_color_prevalence
+    try:
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, REGISTRY_PATH, 0, winreg.KEY_READ)
+        default_color, _ = winreg.QueryValueEx(key, "DefaultColor")
+        default_palette, _ = winreg.QueryValueEx(key, "DefaultPalette")
+        default_color_prevalence, _ = winreg.QueryValueEx(key, "DefaultColorPrevalence")
+        winreg.CloseKey(key)
+        print("Default settings loaded from registry.")
+        return True
+    except WindowsError:
+        print("No saved default settings found in registry.")
+        return False
+
 def main_loop():
     global stop_event, check_thread, tray_icon_thread, tray_icon, mutex
 
@@ -442,9 +470,14 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     default_transparency = get_transparency_effects()
-    default_color_prevalence = get_current_color_prevalence()
-    default_color = get_current_taskbar_color()
-    default_palette = get_current_color_palette()
+
+    # Try to load default settings from the registry
+    if not load_default_settings():
+        # If not found, get the current settings and save them as defaults
+        default_color_prevalence = get_current_color_prevalence()
+        default_color = get_current_taskbar_color()
+        default_palette = get_current_color_palette()
+        save_default_settings()
 
     # Create a hidden window to receive messages (required for system tray icons)
     def wndProc(hwnd, msg, wparam, lparam):
