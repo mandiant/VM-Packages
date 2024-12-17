@@ -28,7 +28,6 @@ import time
 import os
 import re
 
-
 # Define constants
 CHECK_INTERVAL = 2  # Seconds
 CONNECT_TEST_URL_AND_RESPONSES = {
@@ -62,6 +61,7 @@ default_palette = None
 # Win32 API icon handles
 hicon_indicator_off = None
 hicon_indicator_on = None
+mutex = None
 
 def is_already_running():
     global mutex
@@ -75,7 +75,7 @@ def is_already_running():
         return False  # Assume not running if error
 
 def signal_handler(sig, frame):
-    global check_thread, tray_icon_thread, tray_icon
+    global check_thread, tray_icon_thread, tray_icon, mutex
     print("Ctrl+C detected. Exiting...")
     stop_event.set()  # Signal the background thread to stop
     if check_thread:
@@ -83,9 +83,13 @@ def signal_handler(sig, frame):
     if tray_icon_thread:
         tray_icon_thread.join()
     if tray_icon:
-        del tray_icon
+        try:
+            del tray_icon
+        except Exception as e:
+            print(f"Error destroying tray icon: {e}")
+    if mutex:
+        win32api.CloseHandle(mutex)
     exit(0)
-
 
 def load_icon(icon_path):
     try:
@@ -94,12 +98,12 @@ def load_icon(icon_path):
         print(f"Error loading indicator icon: {e}")
         return None
 
-
 class SysTrayIcon:
     def __init__(self, hwnd, icon, tooltip):
         self.hwnd = hwnd
         self.icon = icon
         self.tooltip = tooltip
+        self.valid = True
         # System tray icon data structure
         self.nid = (
             self.hwnd,
@@ -110,9 +114,14 @@ class SysTrayIcon:
             self.tooltip,
         )
         # Add the icon to the system tray
-        win32gui.Shell_NotifyIcon(win32gui.NIM_ADD, self.nid)
+        try:
+            win32gui.Shell_NotifyIcon(win32gui.NIM_ADD, self.nid)
+        except Exception as e:
+            print(f"Error creating tray icon: {e}")
+            self.valid = False
 
     def set_tooltip(self, new_tooltip):
+        if not self.valid: return
         self.tooltip = new_tooltip
         self.nid = (
             self.hwnd,
@@ -122,9 +131,14 @@ class SysTrayIcon:
             self.icon,
             self.tooltip,
         )
-        win32gui.Shell_NotifyIcon(win32gui.NIM_MODIFY, self.nid)
+        try:
+            win32gui.Shell_NotifyIcon(win32gui.NIM_MODIFY, self.nid)
+        except Exception as e:
+            print(f"Error modifying tray icon tooltip: {e}")
+            self.valid = False
 
     def set_icon(self, icon):
+        if not self.valid: return
         self.icon = icon
         self.nid = (
             self.hwnd,
@@ -134,12 +148,20 @@ class SysTrayIcon:
             self.icon,
             self.tooltip,
         )
-        win32gui.Shell_NotifyIcon(win32gui.NIM_MODIFY, self.nid)
+        try:
+            win32gui.Shell_NotifyIcon(win32gui.NIM_MODIFY, self.nid)
+        except Exception as e:
+            print(f"Error modifying tray icon image: {e}")
+            self.valid = False
 
     def __del__(self):
         # Remove the icon from the system tray when the object is destroyed
-        win32gui.Shell_NotifyIcon(win32gui.NIM_DELETE, self.nid)
-
+        if not self.valid: return
+        try:
+            win32gui.Shell_NotifyIcon(win32gui.NIM_DELETE, self.nid)
+        except Exception as e:
+            print(f"Error deleting tray icon: {e}")
+            self.valid = False
 
 def get_current_color_prevalence():
     try:
@@ -157,7 +179,6 @@ def get_current_color_prevalence():
     except WindowsError:
         print("Error accessing registry.")
         return None
-
 
 # Reads color palette binary data from a registry key and returns it as a hex string.
 def get_current_color_palette():
@@ -177,7 +198,6 @@ def get_current_color_palette():
     except WindowsError:
         print("Error accessing registry.")
         return None
-
 
 # Attempts to get the current taskbar color based on user personalization settings and returns it in hex format.
 def get_current_taskbar_color():
@@ -202,7 +222,6 @@ def get_current_taskbar_color():
     except WindowsError:
         print("Error accessing registry.")
         return None
-
 
 def set_taskbar_accent_color(hex_color, hex_color_palette, color_prevalence):
     """
@@ -248,7 +267,6 @@ def set_taskbar_accent_color(hex_color, hex_color_palette, color_prevalence):
     except WindowsError as e:
         print(f"Error accessing or modifying registry: {e}")
 
-
 def get_transparency_effects():
     try:
         key = winreg.OpenKey(
@@ -264,7 +282,6 @@ def get_transparency_effects():
     except WindowsError as e:
         print(f"Error accessing or modifying registry: {e}")
 
-
 def set_transparency_effects(value):
     try:
         key = winreg.OpenKey(
@@ -279,7 +296,6 @@ def set_transparency_effects(value):
     except WindowsError as e:
         print(f"Error accessing or modifying registry: {e}")
 
-
 # Attempt to extract a known good value in response.
 def extract_title(data):
     match = re.search(r"<title>(.*?)</title>", data)
@@ -287,7 +303,6 @@ def extract_title(data):
         return match.group(1)
     else:
         return None
-
 
 def check_internet():
     for url, expected_response in CONNECT_TEST_URL_AND_RESPONSES.items():
@@ -300,7 +315,6 @@ def check_internet():
         except:
             pass
     return False
-
 
 def check_internet_and_update_tray_icon():
     global tray_icon, hicon_indicator_off, hicon_indicator_on, default_color
@@ -321,12 +335,28 @@ def check_internet_and_update_tray_icon():
         if get_wallpaper_path() != DEFAULT_BACKGROUND:  # Checked so program isn't continuously setting the wallpaper
             set_wallpaper(DEFAULT_BACKGROUND)
 
-
 def check_internet_loop():
+    global tray_icon
     while not stop_event.is_set():
-        check_internet_and_update_tray_icon()
-        time.sleep(CHECK_INTERVAL)
+        if tray_icon and tray_icon.valid:
+            check_internet_and_update_tray_icon()
+            time.sleep(CHECK_INTERVAL)
+        else:
+            print("Tray icon is invalid. Exiting check_internet_loop.")
+            stop_event.set()
+            if tray_icon:
+                del tray_icon
+                tray_icon = None
 
+            # Restart the tray icon and check_internet threads
+            tray_icon_thread = threading.Thread(target=tray_icon_loop)
+            tray_icon_thread.start()
+            # Wait for the tray icon to finish initializing
+            while tray_icon is None:
+                time.sleep(0.1)
+            check_thread = threading.Thread(target=check_internet_loop)
+            check_thread.start()
+            return
 
 def tray_icon_loop():
     global hwnd, tray_icon, hicon_indicator_off, hicon_indicator_on, stop_event
@@ -345,12 +375,12 @@ def tray_icon_loop():
     tray_icon = SysTrayIcon(hwnd, hicon_indicator_off, "Internet Detector")
 
     while not stop_event.is_set():
-        msg = win32gui.PeekMessage(hwnd, 0, 0, 0)
-        if msg and len(msg) == 6:
+        # Use PeekMessage to avoid blocking and allow thread exit
+        ret, msg = win32gui.PeekMessage(hwnd, 0, 0, win32con.PM_REMOVE)
+        if ret != 0:
             win32gui.TranslateMessage(msg)
             win32gui.DispatchMessage(msg)
         time.sleep(0.1)
-
 
 def get_wallpaper_path():
     """Attempts to retrieve the path to the current wallpaper image."""
@@ -378,7 +408,6 @@ def get_wallpaper_path():
     # If all else fails, return None
     return None
 
-
 def set_wallpaper(image_path):
     """Sets the desktop wallpaper to the image at the specified path."""
     print(f"Setting wallpaper to: {image_path}")
@@ -387,7 +416,6 @@ def set_wallpaper(image_path):
     )
     if not result:
         print("Error setting wallpaper. Make sure the image path is correct.")
-
 
 def main_loop():
     global stop_event, check_thread, tray_icon_thread, tray_icon, mutex
@@ -409,7 +437,6 @@ def main_loop():
 
     while not stop_event.is_set():
         time.sleep(1)
-
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
@@ -441,7 +468,3 @@ if __name__ == "__main__":
     print(f"Current color: {default_color}")
 
     main_loop()
-
-    # Release the mutex when the application exits
-    if mutex:
-        win32api.CloseHandle(mutex)
