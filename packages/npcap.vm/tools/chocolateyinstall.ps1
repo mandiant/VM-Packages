@@ -17,8 +17,11 @@ try {
     VM-Assert-Path $packageArgs.fileFullPath
 
     $ahkInstaller = Join-Path $(Split-Path $MyInvocation.MyCommand.Definition) "install.ahk" -Resolve
-    $rc = (Start-Process -FilePath $ahkInstaller -ArgumentList $packageArgs.fileFullPath -PassThru -Wait).ExitCode
-    if ($rc -eq 1) {
+    $process = Start-Process -FilePath $ahkInstaller -ArgumentList $packageArgs.fileFullPath -PassThru
+    # Wait for the AutoHotKey script to finish. We need a max time as if something goes wrong
+    # (for example the installation takes longer than exception), it will never finish.
+    $process.WaitForExit(600000)
+    if ($process.ExitCode -eq 1) {
         throw "AutoHotKey returned a failure exit code ($rc) for: ${Env:ChocolateyPackageName}"
     } else {
         VM-Assert-Path $(Join-Path ${Env:PROGRAMFILES} "Npcap\npcap.cat")

@@ -13,7 +13,7 @@ WinWait, %installerTitle%,,20
 WinActivate
 
 exitCode := 1
-loop, 20
+loop, 50
 {
     if WinExist(installerTitle, "i).*license agreement.*")
     {
@@ -27,7 +27,7 @@ loop, 20
     }
     if WinExist(installerTitle, "i).*installing.*")
     {
-        Sleep, 5000
+        Sleep, 10000
     }
     if WinExist(installerTitle, "i).*installation complete.*")
     {
@@ -51,6 +51,6 @@ loop, 20
         exitCode := 0
         break
     }
-    Sleep 1000
+    Sleep, 1000
 }
 ExitApp %exitCode%
