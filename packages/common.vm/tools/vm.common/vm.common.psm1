@@ -402,7 +402,9 @@ function VM-Install-From-Zip {
         # $powershellCommand = "Get-Content README.md"
         # $powershellCommand = "Import-Module module.ps1; Get-Help Main-Function"
         [Parameter(Mandatory=$false)]
-        [string] $powershellCommand
+        [string] $powershellCommand,
+        [Parameter(Mandatory=$false)]
+        [string] $iconLocation
     )
     try {
         $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
@@ -432,7 +434,7 @@ function VM-Install-From-Zip {
 
         if ($powershellCommand) {
             $executablePath = $toolDir
-            VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $executablePath -powershell
+            VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $executablePath -powershell -iconLocation $iconLocation
         }
         elseif ($withoutBinFile) { # Used when tool does not have an associated executable
             if (-Not $executableName) { # Tool is located in $toolDir (c3.vm for example)
@@ -440,12 +442,12 @@ function VM-Install-From-Zip {
             } else { # Tool is in a specific directory (pma-labs.vm for example)
                 $executablePath = Join-Path $toolDir $executableName -Resolve
             }
-            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath
+            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -iconLocation $iconLocation
         }
         else {
             if (-Not $executableName) { $executableName = "$toolName.exe" }
             $executablePath = Join-Path $toolDir $executableName -Resolve
-            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments
+            VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $consoleApp -arguments $arguments -iconLocation $iconLocation
             Install-BinFile -Name $toolName -Path $executablePath
         }
         return ,@($toolDir, $executablePath)
