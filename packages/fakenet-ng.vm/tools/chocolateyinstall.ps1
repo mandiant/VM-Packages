@@ -32,7 +32,7 @@ try {
   $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
 
   $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
-  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -executableDir $toolDir -consoleApp $true
+  VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -executableDir $toolDir
   Install-BinFile -Name $toolName -Path $executablePath
 
   # Replace `default.ini` with our modified one that includes change for 'internet_detector'.
