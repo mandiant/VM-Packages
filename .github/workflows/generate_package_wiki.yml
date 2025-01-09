@@ -12,10 +12,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Checkout Wiki Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki
@@ -24,7 +24,6 @@ jobs:
 
       - name: Generate Wiki Content
         id: generate-content
-        shell: pwsh
         run: scripts/utils/generate_package_wiki.ps1
 
       - name: Commit changes
@@ -32,6 +31,6 @@ jobs:
         run: |
           git config user.email 'vm-packages@google.com'
           git config user.name 'vm-packages'
-          git add .
+          git add . # Create page if it doesn't exist
           git commit -am "Update Package Wiki"
           git push
