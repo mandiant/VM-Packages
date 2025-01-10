@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ida.plugin.xray.vm</id>
+    <version>0.0.0.20250110</version>
+    <authors>patois</authors>
+    <description>Hexrays decompiler plugin that colorizes and filters the decompiler's output based on regular expressions</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20240509" />
+    </dependencies>
+  </metadata>
+</package>
