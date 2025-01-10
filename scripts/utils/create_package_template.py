@@ -65,6 +65,21 @@ NUSPEC_TEMPLATE_NODE = r"""<?xml version="1.0" encoding="utf-8"?>
 </package>
 """
 
+NUSPEC_TEMPLATE_PIP = r"""<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>{pkg_name}.vm</id>
+    <version>{version}</version>
+    <authors>{authors}</authors>
+    <description>{description}</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20240514" />
+      <dependency id="python3.vm" />
+    </dependencies>
+  </metadata>
+</package>
+"""
+
 """
 Needs the following format strings:
     pkg_name="...", version="...", authors="...", description="...", dependency="...", dependency_version="..."
@@ -178,6 +193,21 @@ VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha25
 Needs the following format strings:
     tool_name="...", category="..."
 """
+
+PIP_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = '{category}'
+
+VM-Install-With-Pip -toolName $toolName -category $category
+"""
+
+"""
+Needs the following format strings:
+    tool_name="...", category="..."
+"""
+
 GENERIC_UNINSTALL_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
@@ -211,6 +241,16 @@ $pluginName = '{tool_name}'
 VM-Uninstall-IDA-Plugin -pluginName $pluginName
 
 """
+PIP_UNINSTALL_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
+Import-Module vm.common -Force -DisableNameChecking
+
+$pluginName = '{tool_name}'
+$category = '{category}'
+
+VM-Uninstall-With-Pip $toolName $category
+
+"""
+
 
 
 def create_zip_exe_template(packages_path, **kwargs):
@@ -305,7 +345,20 @@ def create_ida_plugin_template(packages_path, **kwargs):
         target_url=kwargs.get("target_url"),
         target_hash=kwargs.get("target_hash"),
     )
-
+    
+def create_pip_template(packages_path, **kwargs):
+    create_template(
+        PIP_TEMPLATE,
+        nuspec_template=NUSPEC_TEMPLATE_PIP,
+        uninstall_template=PIP_UNINSTALL_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
+    )
 
 def create_template(
     template="",
@@ -462,6 +515,19 @@ TYPES = {
             "category",
             "dependency",
             "shim_path",
+        ],
+    },
+    "PIP": {
+        "cb": create_pip_template,
+        "doc": "A Python package installed with pip",
+        "example": "pip install magika",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
         ],
     },
 }
