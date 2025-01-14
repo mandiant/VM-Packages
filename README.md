@@ -10,21 +10,38 @@ This repository contains the source code for packages supporting the following a
 * [FLARE VM](https://github.com/mandiant/flare-vm)
 * [CommandoVM](https://github.com/mandiant/commando-vm)
 
-> Packages do not contain actual software distributions. Packages are PowerShell scripts that only contain instructions for obtaining and configuring tools. See [Chocolatey legal information](https://docs.chocolatey.org/en-us/information/legal) for more details.
+> Packages do not contain actual software distributions.
+> Packages are PowerShell scripts that only contain instructions for obtaining and configuring tools.
+> See [Chocolatey legal information](https://docs.chocolatey.org/en-us/information/legal) for more details.
+
 
 # How does this work?
-The packages stored in this repository are automatically built and pushed to a public package feed hosted on myget.org. From this feed FLARE VM and our other binary analysis environments download packages and execute the included scripts to install tools.
 
+The packages stored in this repository are automatically built and pushed to a public [package feed hosted on MyGet](https://www.myget.org/feed/Packages/vm-packages).
+From this feed FLARE VM and our other binary analysis environments download packages and execute the included scripts to install tools.
 The installation of packages relies on [Chocolatey](https://chocolatey.org/).
 
-# Contributing
-To propose new tools, to report problems, and to suggest improvements please open a new [issue](https://github.com/mandiant/VM-Packages/issues).
-Ensure you select the correct issue type and provide all the requested information.
 
-Please see the [Wiki](https://github.com/mandiant/VM-Packages/wiki) for documentation on how to create a package using our established best practices.
+## Open Source Packages
 
-# Open Source Packages
-Open sourcing the installation packages allows the community to not only suggest new tools, improvements, and report bugs, but to help implement them. It's now very transparent how and what gets installed. Moreover, we can use GitHub Actions (free for open-source repositories) for testing and automations. This reduces manual maintenance and simplifies contributions.
+Open sourcing the installation packages allows the community to not only suggest new tools, improvements, and report bugs, but to help implement them.
+It's now transparent how and what gets installed.
+Moreover, we can use GitHub Actions (free for open-source repositories) for testing and automation.
+This reduces manual maintenance and simplifies contributions.
 
-## Automation
-Once a package is submitted, our pull request automations test the package to see if it builds and installs correctly. Additionally, we use GitHub Actions to build and test each package on a daily basis to check for any errors (see [Daily Failures Wiki page](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures)). Simply being aware of broken packages should quickly solve a lot of problems VM users faced in the past.
+
+## Automation using GitHub Actions
+
+Once a package is submitted, our pull request automation test the package to see if it builds and installs correctly.
+Additionally, we build and test each package on a daily basis to check for any errors.
+Simply being aware of broken packages should quickly solve a lot of problems VM users faced in the past.
+To see the daily test results check the [Daily Failures](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures) and [MyGet Version Mismatches](https://github.com/mandiant/VM-Packages/wiki/MyGet-Version-Mismatches) wiki pages.
+The status is also displayed in the badges at the beginning of this README.
+
+We have also automated other task, such as the creation of new packages (using [`create_package_template.py`](https://github.com/mandiant/VM-Packages/blob/main/scripts/utils/create_package_template.py)) and the package updates (using [`update_package.py`](https://github.com/mandiant/VM-Packages/blob/main/scripts/utils/update_package.py)).
+
+
+## Documentation
+
+- Check our [CONTRIBUTING guide](/CONTRIBUTING.md) to learn how to contribute to the project.
+- Check our [Wiki](https://github.com/mandiant/VM-Packages/wiki) for documentation on how to create a package using our established best practices.
