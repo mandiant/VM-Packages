@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>tor-browser.vm</id>
-    <version>14.0.3</version>
+    <version>14.0.4</version>
     <authors>Tor Project</authors>
     <description>The Tor software protects you by bouncing your communications around a distributed network of relays run by volunteers all around the world.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="tor-browser" version="[14.0.3]" />
+      <dependency id="tor-browser" version="[14.0.4]" />
     </dependencies>
   </metadata>
 </package>
