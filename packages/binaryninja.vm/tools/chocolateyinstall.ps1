@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $toolName = 'BinaryNinja Free'
+  $toolName = 'binaryninja'
   $category = 'Disassemblers'
 
   $packageArgs = @{
