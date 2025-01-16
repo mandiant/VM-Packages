@@ -1,10 +1,10 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'binaryninja'
-$category = 'Disassemblers'
-VM-Remove-Tool-Shortcut $toolName $category
+$toolName = "binaryninja"
+$category = "Disassemblers"
 
-Uninstall-BinFile -Name $toolName
-
-VM-Uninstall-With-Uninstaller "Binary Ninja*" $category "EXE" "/S /ALLUSERS=1"
+VM-Uninstall-With-Uninstaller -toolName $toolName `
+    -category $category `
+    -fileType "EXE" `
+    -silentArgs "/S /ALLUSERS=1"
