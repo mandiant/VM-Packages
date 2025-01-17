@@ -1761,7 +1761,7 @@ function VM-Install-With-Pip {
         [string] $toolName, # Example: magika
         [Parameter(Mandatory=$true)]
         [string] $category,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory=$true)]
         [string] $version = "", # Version using pip format, example: "==0.5.0"
         [Parameter(Mandatory=$false)]
         [string] $arguments = "--help"
