@@ -1,6 +1,6 @@
 VM-Packages
-Copyright 2021 Mandiant, Inc.
+Copyright 2021 Google LLC
 
-This software includes code developed by Mandiant, Inc.
+This software includes code developed by Google LLC.
 
 Portions of this software may be contributed by the community.
