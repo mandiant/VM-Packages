@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>autoit-ripper.vm</id>
-    <version>0.0.0.20240607</version>
+    <version>1.1.2</version>
     <authors>Michał Praszmo</authors>
     <description>Extracts compiled AutoIt scripts from PE executables.</description>
     <dependencies>
