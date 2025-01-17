@@ -72,5 +72,4 @@ SetDefaultBrowser "chrome"
 # Do not show the "Open with" popup
 Set-ItemProperty -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -name "NoNewAppAlert" -value 1 -type "DWord"
 
-# Restart Explorer.exe for registry change to take effect
-Stop-Process -Name explorer -Force
+VM-Refresh-Desktop # For registry change to take effect

@@ -38,6 +38,9 @@ try {
 
   # ida64.exe supports both 32 bit and 64 bit in IDA >= 8.2
   VM-Add-To-Right-Click-Menu $launcherName 'Open with IDA' "`"$launcherPath`" `"%1`"" "$icon"
+
+  # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+  VM-Refresh-Desktop
 } catch {
   VM-Write-Log-Exception $_
 }

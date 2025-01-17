@@ -72,6 +72,9 @@ try {
       Copy-Item $licensePath $idaDir
     }
   }
+
+  # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+  VM-Refresh-Desktop
 } catch {
   VM-Write-Log-Exception $_
 }

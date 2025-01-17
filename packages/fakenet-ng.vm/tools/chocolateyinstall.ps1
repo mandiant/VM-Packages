@@ -44,6 +44,9 @@ try {
   $desktopShortcut  = Join-Path ${Env:UserProfile} "Desktop\fakenet_logs.lnk"
   Install-ChocolateyShortcut -shortcutFilePath $desktopShortcut -targetPath $toolDir
   VM-Assert-Path $desktopShortcut
+
+  # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+  VM-Refresh-Desktop
 } catch {
   VM-Write-Log-Exception $_
 }

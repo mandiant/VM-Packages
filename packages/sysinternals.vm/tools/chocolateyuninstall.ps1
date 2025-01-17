@@ -18,3 +18,6 @@ ForEach ($category in $shortcuts.GetEnumerator()) {
 
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null
+
+# Refresh Desktop as the shortcuts are used in FLARE-VM LayoutModification.xml
+VM-Refresh-Desktop

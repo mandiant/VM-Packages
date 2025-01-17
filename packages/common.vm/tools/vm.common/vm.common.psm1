@@ -621,6 +621,9 @@ function VM-Uninstall {
 
     # Uninstall binary
     Uninstall-BinFile -Name $toolName
+
+    # Refresh Desktop, needed for example if shortcut is used in FLARE-VM LayoutModification.xml
+    VM-Refresh-Desktop
 }
 
 function VM-Remove-Tool-Shortcut {
