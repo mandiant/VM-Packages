@@ -10,3 +10,6 @@ foreach ($subtoolName in $subtoolNames) {
 VM-Remove-From-Right-Click-Menu 'Open with CFF Explorer'
 
 VM-Uninstall-With-Uninstaller "Explorer Suite IV" $category "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
+
+# Refresh Desktop as CFF Explorer shortcut is used in FLARE-VM LayoutModification.xml
+VM-Refresh-Desktop

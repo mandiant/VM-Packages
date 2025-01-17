@@ -34,6 +34,9 @@ try {
   Remove-Item -Path "HKLM:\SOFTWARE\Classes\*file\shell\Open with CFF Explorer" -Recurse
 
   VM-Add-To-Right-Click-Menu 'Open with CFF Explorer' 'Open with CFF Explorer' "`"$cffExecutablePath`" %1" $cffExecutablePath
+
+  # Refresh Desktop as CFF Explorer shortcut is used in FLARE-VM LayoutModification.xml
+  VM-Refresh-Desktop
 } catch {
   VM-Write-Log-Exception $_
 }

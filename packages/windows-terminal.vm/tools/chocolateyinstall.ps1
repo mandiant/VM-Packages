@@ -54,6 +54,9 @@ try {
   $label = "Open Terminal here"
   $icon = "$executablePath"
   VM-Add-To-Right-Click-Menu -menuKey $toolName -menuLabel $label -command $command -menuIcon $icon -type "directory" -background
+
+  # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+  VM-Refresh-Desktop
 } catch {
   VM-Write-Log-Exception $_
 }
