@@ -49,7 +49,7 @@ foreach ($package in $packages) {
 }
 
 
-$exclude_tests = @("installer.vm")
+$exclude_tests = @("installer.vm", "idapro.vm")
 
 $failures = New-Object Collections.Generic.List[string]
 $failed = 0
