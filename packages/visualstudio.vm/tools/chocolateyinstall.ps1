@@ -16,6 +16,9 @@ try {
     $shortcut = Join-Path $shortcutDir "$toolName.lnk"
     Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
     VM-Assert-Path $shortcut
+
+    # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+    VM-Refresh-Desktop
 } catch {
     VM-Write-Log-Exception $_
 }

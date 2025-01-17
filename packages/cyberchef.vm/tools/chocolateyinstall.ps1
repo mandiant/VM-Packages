@@ -25,6 +25,9 @@ try {
   $cyberchefPath = Get-Item "$toolDir\CyberChef*.html"
   $iconLocation = VM-Create-Ico (Join-Path $toolDir "images\cyberchef-128x128.png")
   VM-Install-Shortcut -toolName $toolName -category $category -executablePath $chromePath -arguments "-home $cyberchefPath" -iconLocation $iconLocation
+
+  # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+  VM-Refresh-Desktop
 } catch {
   VM-Write-Log-Exception $_
 }
