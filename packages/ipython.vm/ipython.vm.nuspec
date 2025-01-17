@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ipython.vm</id>
-    <version>8.27.0.20241001</version>
+    <version>8.27.0.20250122</version>
     <authors>Fernando Perez</authors>
     <description>A powerful interactive Python shell</description>
     <dependencies>
