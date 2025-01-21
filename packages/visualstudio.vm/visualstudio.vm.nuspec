@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>visualstudio.vm</id>
-    <version>17.6.1.20240217</version>
+    <version>17.6.1.20250120</version>
     <description>IDE.</description>
     <authors>Microsoft</authors>
     <dependencies>
