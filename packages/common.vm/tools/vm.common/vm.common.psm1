@@ -70,11 +70,18 @@ function VM-Remove-PreviousZipPackage {
     }
 }
 
+
 function VM-Write-Log {
+<#
+.SYNOPSIS
+  Log message to file and console.
+.DESCRIPTION
+  Log message to log file with extra useful information and to console with a color depending on the level.
+#>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true, Position=0)]
-        [ValidateSet("INFO","WARN","ERROR","FATAL","DEBUG")]
+        [ValidateSet("INFO","WARN","ERROR")]
         [String] $level,
         [Parameter(Mandatory=$true, Position=1)]
         [string] $message
@@ -106,11 +113,11 @@ function VM-Write-Log {
 
     # Log message to console
     if (($level -eq "ERROR") -Or ($level -eq "FATAL")) {
-        Write-Host -ForegroundColor Red -BackgroundColor White "$line"
+        Write-Host -ForegroundColor Red -BackgroundColor White "$message"
     } elseif ($level -eq "WARN") {
-        Write-Host -ForegroundColor Yellow "$line"
+        Write-Host -ForegroundColor Yellow "$message"
     } else {
-        Write-Host "$line"
+        Write-Host -ForegroundColor Cyan "$message"
     }
 }
 
