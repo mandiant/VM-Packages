@@ -6,8 +6,8 @@ try {
     VM-Pip-Install $dependencies
 
     $pluginName = 'xrefer.py'
-    $pluginUrl = 'https://github.com/mandiant/xrefer/archive/refs/tags/v1.0.0.zip'
-    $pluginSha256 = '8c1b5cee59674e104e0bac20f908e9b3cf17af25b18b3ed80a845b62b257e7f1'
+    $pluginUrl = 'https://github.com/mandiant/xrefer/archive/refs/tags/v1.0.3.zip'
+    $pluginSha256 = '631538a17dd5c4b99f530eb53ebbf67c8c3a915d4953178b14f234a0f9fb9d6f'
 
     VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha256 $pluginSha256
 } catch {

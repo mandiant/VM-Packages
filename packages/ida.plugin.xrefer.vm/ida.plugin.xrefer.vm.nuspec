@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.xrefer.vm</id>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
     <description>Custom navigation interface within IDA.</description>
     <authors>Muhammad Umair</authors>
     <dependencies>
