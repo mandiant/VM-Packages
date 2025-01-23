@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>cygwin.vm</id>
-    <version>3.5.5</version>
+    <version>3.5.5.20250123</version>
     <description>Wrapper for cygwin and useful cygwin packages</description>
     <authors>Red Hat Inc.</authors>
     <dependencies>
