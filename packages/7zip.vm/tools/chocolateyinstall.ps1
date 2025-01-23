@@ -5,10 +5,10 @@ try {
   $toolName = '7z'
   $category = 'Productivity Tools'
 
-  $url = 'https://sourceforge.net/projects/sevenzip/files/7-Zip/15.05/7z1505.exe/download'
-  $checksum = 'fa99d29283d9a6c501b70d2755cd06cf5bc3dd8e48acc73926b6e0f389885120'
-  $url64 = 'https://sourceforge.net/projects/sevenzip/files/7-Zip/15.05/7z1505-x64.exe/download'
-  $checksum64 = '6abaf04e44c87bd109df7485eb67a2d69a2e3e6e6deb9df59e5e707176c69449'
+  $url = 'https://github.com/myfreeer/7z-build-nsis/releases/download/23.01/7z2301-x86.exe'
+  $checksum = '7b1d50073e6d3631267f2bbb986fb1faffddc5fc72d6bc23e10b5920a6f365b4'
+  $url64 = 'https://github.com/myfreeer/7z-build-nsis/releases/download/23.01/7z2301-x64.exe'
+  $checksum64 = 'b7f1d8360d988808447f9af3989db7665dfec72bac83c8b6467cc35f8fe718ff'
 
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
@@ -30,11 +30,20 @@ try {
   $executablePath = Join-Path $toolDir "${toolName}FM.exe" -Resolve
   VM-Install-Shortcut $toolName $category $executablePath
 
+  # Test integrity of the archive (which also check that the password is correct) before extraction.
+  $7zCommand = @'
+	cmd /c (7z t -pinfected "%1" || (
+		cmd /c start mshta vbscript:Execute^(
+			"msgbox ""The password is not 'infected' or the archive is corrupted!!"", vbOKOnly, ""7z Error"":close"
+		^) && call
+	)) && 7z x -pinfected "%1"
+'@ -replace "`t", "" -replace "`n", ""
+
   # Add 7z unzip with password "infected" to the right menu for the most common extensions.
   # 7z can unzip other file extensions like .docx but these don't likely use the infected password.
   $extensions = @(".7z", ".bzip2", ".gzip", ".tar", ".wim", ".xz", ".txz", ".zip", ".rar")
   foreach ($extension in $extensions) {
-    VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' "`"$7zExecutablePath`" x -pinfected `"%1`"" "$executablePath" -extension $extension
+    VM-Add-To-Right-Click-Menu $toolName 'unzip "infected"' $7zCommand $executablePath -extension $extension
     VM-Set-Open-With-Association $executablePath $extension
   }
 } catch {
