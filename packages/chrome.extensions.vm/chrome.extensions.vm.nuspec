@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>chrome.extensions.vm</id>
-    <version>0.0.0.20240930</version>
+    <version>0.0.0.20250123</version>
     <authors>Mandiant</authors>
     <description>A package for multiple useful chrome extensions from the Chrome webstore.</description>
     <dependencies>

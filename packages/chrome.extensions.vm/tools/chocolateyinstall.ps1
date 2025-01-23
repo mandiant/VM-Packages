@@ -68,6 +68,9 @@ try {
     $tries += 1
   }
 
+  # Wait for an extra 60 seconds to make sure all extensions' tabs are opened already.
+  Start-Sleep -Seconds 60
+
   # Close Chrome gracefully.
   if ($chromeProcess.CloseMainWindow())
   {
