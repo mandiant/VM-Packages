@@ -107,8 +107,9 @@ $category = '{category}'
 
 $zipUrl = '{target_url}'
 $zipSha256 = '{target_hash}'
+$arguments = '{arguments}'
 
-VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp ${console_app} -innerFolder ${inner_folder}
+VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp ${console_app} -innerFolder ${inner_folder} -arguments $arguments
 """
 
 """
@@ -120,8 +121,9 @@ Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = '{tool_name}'
 $category = '{category}'
+$arguments = '{arguments}'
 
-VM-Install-Node-Tool -toolName $toolName -category $category -arguments "--help"
+VM-Install-Node-Tool -toolName $toolName -category $category -arguments $arguments
 """
 
 """
@@ -155,8 +157,9 @@ $category = '{category}'
 
 $exeUrl = '{target_url}'
 $exeSha256 = '{target_hash}'
+$arguments = '{arguments}'
 
-VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp ${console_app}
+VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp ${console_app} -arguments $arguments
 """
 
 """
@@ -200,8 +203,9 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = '{tool_name}'
 $category = '{category}'
 $version = '=={version}'
+$arguments = '{arguments}'
 
-VM-Install-With-Pip -toolName $toolName -category $category -version $version
+VM-Install-With-Pip -toolName $toolName -category $category -version $version -arguments $arguments
 """
 
 """
@@ -267,6 +271,7 @@ def create_zip_exe_template(packages_path, **kwargs):
         target_hash=kwargs.get("target_hash"),
         console_app=kwargs.get("console_app"),
         inner_folder=kwargs.get("inner_folder"),
+        arguments=kwargs.get("arguments"),
     )
 
 
@@ -281,6 +286,7 @@ def create_node_template(packages_path, **kwargs):
         description=kwargs.get("description"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
+        arguments=kwargs.get("arguments"),
     )
 
 
@@ -311,6 +317,7 @@ def create_single_exe_template(packages_path, **kwargs):
         description=kwargs.get("description"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
+        arguments=kwargs.get("arguments"),
         target_url=kwargs.get("target_url"),
         target_hash=kwargs.get("target_hash"),
         console_app=kwargs.get("console_app"),
@@ -358,6 +365,7 @@ def create_pip_template(packages_path, **kwargs):
         description=kwargs.get("description"),
         tool_name=kwargs.get("tool_name"),
         category=kwargs.get("category"),
+        arguments=kwargs.get("arguments"),
     )
 
 def create_template(
@@ -377,6 +385,7 @@ def create_template(
     dependency="",
     console_app="",
     inner_folder="",
+    arguments="",
 ):
     pkg_path = os.path.join(packages_path, f"{pkg_name}.vm")
     try:
@@ -408,6 +417,7 @@ def create_template(
                 tool_name=tool_name,
                 version=version,
                 category=category,
+                arguments=arguments,
                 target_url=target_url,
                 target_hash=target_hash,
                 shim_path=shim_path,
@@ -470,6 +480,7 @@ TYPES = {
             "description",
             "tool_name",
             "category",
+            "arguments",
         ],
     },
     "SINGLE_EXE": {
@@ -486,6 +497,7 @@ TYPES = {
             "target_url",
             "target_hash",
             "console_app",
+            "arguments",
         ],
     },
     "SINGLE_PS1": {
@@ -529,6 +541,7 @@ TYPES = {
             "description",
             "tool_name",
             "category",
+            "arguments",
         ],
     },
 }
@@ -601,6 +614,7 @@ def main(argv=None):
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
     parser.add_argument("--console_app", type=str, default="false", choices=["false", "true"],  help="The tool is a console application, the shortcut should run it with `cmd /K $toolPath --help` to be able to see the output.")
     parser.add_argument("--inner_folder", type=str, default="false", choices=["false", "true"],  help="The ZIP file unzip to a single folder that contains all the tools.")
+    parser.add_argument("--arguments", type=str, required=False, default="", help="Command-line arguments for the execution")
     args = parser.parse_args(args=argv)
 
     if args.type is None:
