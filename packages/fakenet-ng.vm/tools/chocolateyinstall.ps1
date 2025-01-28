@@ -37,8 +37,8 @@ try {
 
   # Replace `default.ini` with our modified one that includes change for 'internet_detector'.
   # IMPORTANT: Keep our modified `default.ini` in-sync on updates to package.
-  $fakenetConfigDir = Get-ChildItem "C:\Tools\fakenet\*\configs"
-  Copy-Item "$packageToolDir\default.ini" -Destination $fakenetConfigDir
+  # Do not remove the version in the path to avoid replacing the config file of another version.
+  Copy-Item "$packageToolDir\default.ini" -Destination "$toolDir\configs"
 
   # Create shortcut in Desktop to FakeNet tool directory
   $desktopShortcut  = Join-Path ${Env:UserProfile} "Desktop\fakenet_logs.lnk"
