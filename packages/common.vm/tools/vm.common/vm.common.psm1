@@ -404,7 +404,7 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [string] $executableName, # Executable name, needed if different from "$toolName.exe"
         [Parameter(Mandatory=$false)]
-        [bool] $verifySignature=$false,
+        [switch] $verifySignature,
         [Parameter(Mandatory=$false)]
         [switch] $withoutBinFile, # Tool should not be installed as a bin file
         # Examples:

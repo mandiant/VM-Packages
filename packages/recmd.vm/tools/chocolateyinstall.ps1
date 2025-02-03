@@ -5,4 +5,4 @@ $toolName = 'RECmd'
 $category = 'Forensic'
 $zipUrl = 'https://download.mikestammer.com/net6/RECmd.zip'
 
-VM-Install-From-Zip $toolName $category $zipUrl -consoleApp $true -innerFolder $true -verifySignature $true
+VM-Install-From-Zip $toolName $category $zipUrl -consoleApp $true -innerFolder $true -verifySignature

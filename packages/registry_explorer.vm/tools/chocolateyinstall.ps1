@@ -5,4 +5,4 @@ $toolName = 'RegistryExplorer'
 $category = 'Registry'
 $zipUrl = 'https://download.mikestammer.com/net6/RegistryExplorer.zip'
 
-VM-Install-From-Zip $toolName $category $zipUrl -consoleApp $false -innerFolder $true -verifySignature $true
+VM-Install-From-Zip $toolName $category $zipUrl -consoleApp $false -innerFolder $true -verifySignature
