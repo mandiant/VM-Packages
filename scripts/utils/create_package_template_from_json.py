@@ -25,8 +25,8 @@ def main():
     for k, v in pkg.items():
         if k in ("why", "dependencies", "info"):
             continue
-        cmd_args.append(f"--{k}")
-        cmd_args.append(f"{v}")
+        # Use "--argument=<value>" format to avoid issues with if the value contains "-" 
+        cmd_args.append(f"--{k}={v}")
 
     create_package_template.main(cmd_args)
 

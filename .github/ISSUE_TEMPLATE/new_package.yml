@@ -135,6 +135,13 @@ body:
       description: |
         SHA256 hash of the `.zip` file downloaded from the download url introduced in the previous field. The hash is used for verification purposes. Example: `62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95 `
   - type: input
+    id: arguments
+    attributes:
+      label: Arguments
+      description: |	
+        Command-line arguments to pass to the tool when running it from the `Tools` directory. For example `--help`.
+      value: --help
+  - type: input
     id: dependencies
     attributes:
       label: Dependencies
