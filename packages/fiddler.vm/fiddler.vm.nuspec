@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>fiddler.vm</id>
-    <version>5.0.20245</version>
+    <version>5.0.20251</version>
     <authors>Telerik</authors>
     <description>Intercepts, decrypts, and analyzes HTTPS traffic</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="fiddler" version="[5.0.20245.10105]" />
+      <dependency id="fiddler" version="[5.0.20251.1171]" />
     </dependencies>
   </metadata>
 </package>
