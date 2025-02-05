@@ -404,6 +404,8 @@ function VM-Install-From-Zip {
         [Parameter(Mandatory=$false)]
         [string] $executableName, # Executable name, needed if different from "$toolName.exe"
         [Parameter(Mandatory=$false)]
+        [switch] $verifySignature,
+        [Parameter(Mandatory=$false)]
         [switch] $withoutBinFile, # Tool should not be installed as a bin file
         # Examples:
         # $powershellCommand = "Get-Content README.md"
@@ -417,17 +419,31 @@ function VM-Install-From-Zip {
         # Remove files from previous zips for upgrade
         VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
-        # Download and unzip
-        $packageArgs = @{
-            packageName    = ${Env:ChocolateyPackageName}
-            unzipLocation  = $toolDir
-            url            = $zipUrl
-            checksum       = $zipSha256
-            checksumType   = 'sha256'
-            url64bit       = $zipUrl_64
-            checksum64     = $zipSha256_64
+        # We do not check hashes for tools that we use signature verification for
+        if ($verifySignature) {
+            # Download zip
+            $packageArgs      = @{
+                packageName     = $env:ChocolateyPackageName
+                file            = Join-Path ${Env:TEMP} $toolName
+                url             = $zipUrl
+            }
+            $filePath = Get-ChocolateyWebFile @packageArgs
+            # Extract zip
+            Get-ChocolateyUnzip -FileFullPath $filePath -Destination $toolDir
         }
-        Install-ChocolateyZipPackage @packageArgs | Out-Null
+        else {  # Not verifying signature, so check if hash is as expected
+            # Download and unzip
+            $packageArgs = @{
+                packageName    = ${Env:ChocolateyPackageName}
+                unzipLocation  = $toolDir
+                url            = $zipUrl
+                checksum       = $zipSha256
+                checksumType   = 'sha256'
+                url64bit       = $zipUrl_64
+                checksum64     = $zipSha256_64
+            }
+            Install-ChocolateyZipPackage @packageArgs | Out-Null
+        }
         VM-Assert-Path $toolDir
 
         # If $innerFolder is set to $true, after unzipping there should be only one folder
@@ -435,6 +451,21 @@ function VM-Install-From-Zip {
         if ($innerFolder) {
             $dirList = Get-ChildItem $toolDir -Directory
             $toolDir = Join-Path $toolDir $dirList[0].Name -Resolve
+        }
+
+        if ($verifySignature) {
+            # Check signature of all executable files individually
+            Get-ChildItem -Path "$toolDir\*.exe" | ForEach-Object {
+                try {
+                    # Check signature for each file
+                    VM-Assert-Signature $_.FullName
+                } catch {
+                    # Remove the file with invalid signature
+                    Write-Warning "Removing file '$($_.FullName)' due to invalid signature"
+                    Remove-Item $_.FullName -Force -ea 0 | Out-Null
+                    VM-Write-Log-Exception $_
+                }
+            }
         }
 
         if ($powershellCommand) {
