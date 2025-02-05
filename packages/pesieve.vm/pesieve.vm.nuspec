@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>pesieve.vm</id>
-    <version>0.4.0</version>
+    <version>0.4.0.20250205</version>
     <authors>hasherezade</authors>
     <description>pe-sieve recognizes and dumps variety of implants within the scanned process.</description>
     <dependencies>
       <dependency id="common.vm" />
-      <dependency id="pesieve" version="[0.4.0]" />
+      <dependency id="pesieve" version="[0.4.0.1]" />
     </dependencies>
   </metadata>
 </package>
