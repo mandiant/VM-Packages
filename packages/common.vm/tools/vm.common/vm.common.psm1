@@ -1915,3 +1915,22 @@ function VM-Unzip-Recursively {
         }
     }
 }
+# Obtains the chocolatey install script path from a package, for example: C:\ProgramData\chocolatey\lib\capa.vm\tools\chocolateyinstall.ps1
+# Reads the tag with name tags from the nuspec file,
+# Returns the category if the tags exist in the nuspec
+function VM-Get-Category {
+    Param
+    (
+        [Parameter(Mandatory=$true)]
+        [string] $installPath
+
+    )
+    $chocoToolDir = $(Split-Path -parent (Split-Path -parent $installPath))
+    $packageName = ${Env:ChocolateyPackageName}
+    $nuspec = $packageName + ".nuspec"
+    VM-Assert-Path $chocoToolDir
+    $nuspecFilePath = Join-Path $chocoToolDir $nuspec -Resolve
+    $nuspecContent = [xml](Get-Content $nuspecFilePath)
+    $category = $nuspecContent.package.metadata.tags
+    return $category
+}
