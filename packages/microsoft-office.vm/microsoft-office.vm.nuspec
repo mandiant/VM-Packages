@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>microsoft-office.vm</id>
-    <version>0.0.0.20250123</version>
-    <description>Microsoft Office ProPlusRetail</description>
+    <version>0.0.0.20250203</version>
+    <description>Microsoft Office ProPlus2024Retail.</description>
     <authors>Microsoft</authors>
     <dependencies>
       <dependency id="common.vm" />
