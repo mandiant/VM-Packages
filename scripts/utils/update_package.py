@@ -39,9 +39,9 @@ def get_latest_version(org, project, version):
     latest_version = response.json()["tag_name"]
     # version excludes `v` from the capturing group in the regex in update_github_url therefore latest_version_match mustn't include `v` if the version starts with `v`. Otherwise the github URL would replace the version without the `v` with the github version tag with the `v` which will result in the wrong URL such as: https://github.com/jstrosch/sclauncher/releases/download/vv0.0.6/sclauncher.exe
     if latest_version.startswith('v'):
-    	return latest_version[1:]
+        return latest_version[1:]
     else:
-    	return latest_version
+        return latest_version
 
 
 # Get url response's content hash (SHA256)
