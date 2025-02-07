@@ -5,6 +5,15 @@ $toolName = 'internet_detector'
 $category = 'Networking'
 $packageToolDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
+# Modify fakenet's configuration to ignore the internet detector traffic
+$fakenetConfig = "$Env:RAW_TOOLS_DIR\fakenet\fakenet3.3\configs\default.ini"
+VM-Assert-Path $fakenetConfig
+
+$IcmpID = Get-Random -Maximum 0x10000
+$config = Get-Content -Path $fakenetConfig
+$config = $config -replace '^.*BlackListIDsICMP.*$', "BlackListIDsICMP: $IcmpID"
+Set-Content -Path $fakenetConfig -Value $config -Encoding UTF8 -Force
+
 # Create tool directory
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 New-Item -Path $toolDir -ItemType Directory -Force -ea 0
@@ -14,8 +23,15 @@ VM-Assert-Path $toolDir
 $dependencies = "pyinstaller==6.11.1,pywin32==308,icmplib==3.0.4"
 VM-Pip-Install $dependencies
 
+# Set the ICMP ID at the tool script
+$scriptPath = "$packageToolDir\internet_detector.pyw"
+$tempScript = Join-Path ${Env:TEMP} "temp_$([guid]::NewGuid())"
+$script = Get-Content -Path $scriptPath
+$script = $script -replace '^ICMP_ID.*$', "ICMP_ID = $IcmpID"
+Set-Content -Path $tempScript -Value $script -Encoding UTF8 -Force
+
 # This wrapper is needed because PyInstaller emits an error when running as admin and this mitigates the issue.
-Start-Process -FilePath 'cmd.exe' -WorkingDirectory $toolDir -ArgumentList "/c pyinstaller --onefile -w --log-level FATAL --distpath $toolDir --workpath $packageToolDir --specpath $packageToolDir $packageToolDir\internet_detector.pyw" -Wait
+Start-Process -FilePath 'cmd.exe' -WorkingDirectory "$toolDir" -ArgumentList "/c pyinstaller --onefile -w --log-level FATAL --distpath `"$toolDir`" --workpath `"$packageToolDir`" --specpath `"$packageToolDir`" `"$tempScript`"" -Wait
 
 # Move images to %VM_COMMON_DIR% directory
 $imagesPath = Join-Path $packageToolDir "images"

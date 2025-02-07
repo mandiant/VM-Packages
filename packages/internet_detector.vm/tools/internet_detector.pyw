@@ -36,6 +36,7 @@ CHECK_INTERVAL = 2  # Seconds
 #   no DNS resolution is needed.
 # - The used IP addresses are some of the largest public DNS servers to
 #   ensure zero or minimal downtime.
+ICMP_ID = 1234
 TEST_IPS = [
     "8.8.8.8",  # Google
     "8.8.4.4",  # Google
@@ -315,7 +316,7 @@ def check_internet():
     for ip_address in TEST_IPS:
         try:
             # Perform internet connectivity tests
-            ip_host = icmplib.ping(ip_address, 1)
+            ip_host = icmplib.ping(ip_address, 1, id=ICMP_ID)
             if ip_host.is_alive:
                 print(f"Internet connectivity detected via IP: {ip_address}")
                 return True
