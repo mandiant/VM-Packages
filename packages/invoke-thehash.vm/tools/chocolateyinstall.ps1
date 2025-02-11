@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 #vars for invoke-thehash
 $toolName = 'Invoke-TheHash'
-$category = 'Exploitation'
+$category = 'Lateral Movement'
 
 # install invoke-thehash and import module
 $zipUrl = 'https://github.com/Kevin-Robertson/Invoke-TheHash/archive/refs/heads/master.zip'
