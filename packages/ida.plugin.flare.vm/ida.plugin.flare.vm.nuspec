@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.flare.vm</id>
-    <version>0.0.0.20240725</version>
+    <version>0.0.0.20250213</version>
     <authors>Jay Smith</authors>
     <description>IDA Pro plugins used by the FLARE team.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20240509" />
       <dependency id="libraries.python3.vm" />
     </dependencies>
+    <tags>IDA Plugins</tags>
   </metadata>
 </package>
