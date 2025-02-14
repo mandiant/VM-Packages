@@ -1564,8 +1564,10 @@ public class Shell {
         $SHCNE_ASSOCCHANGED = 0x08000000
         $SHCNF_IDLIST = 0
         [void][Shell]::SHChangeNotify($SHCNE_ASSOCCHANGED, $SHCNF_IDLIST, [IntPtr]::Zero, [IntPtr]::Zero)
-        # Refresh the Taskbar
-        Stop-Process -Name explorer -Force  # This restarts the explorer process so that the new taskbar is displayed.
+        # Restart the explorer process to refresh the taskbar.
+        # Use '-ErrorAction Continue' to avoid failing the package installation if it fails,
+        # for example if there is no desktop session (as in this case explorer.exe is not running)
+        Stop-Process -Name explorer -Force -ErrorAction Continue
     } catch {
         VM-Write-Log-Exception $_
     }
