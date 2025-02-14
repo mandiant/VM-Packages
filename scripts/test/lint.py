@@ -273,6 +273,36 @@ class PackageIdNotMatchingFolderOrNuspecName(Lint):
         folder = path.parts[-2]
 
         return not (pkg_id == folder == nuspec[:-len(".nuspec")])
+        
+        
+        
+class UsesInvalidCategoryNuspec(Lint):
+    # Some nuspec packages don't have a category
+    EXCLUSIONS = [
+        "common.vm",
+        "debloat.vm",
+        "installer.vm",
+    ]
+    root_path = os.path.abspath(os.path.join(__file__, "../../.."))
+    categories_txt = os.path.join(root_path, "categories.txt")
+    with open(categories_txt) as file:
+        CATEGORIES = [line.rstrip() for line in file]
+        logger.debug(CATEGORIES)
+
+    name = "Uses an invalid category"
+    recommendation = f"Set $category to a category in {categories_txt} or exclude the package in the linter"
+
+    def check(self, path):
+        if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
+            return False
+
+        # utf-8-sig ignores BOM
+        file_content = open(path, "r", encoding="utf-8-sig").read()
+
+        match = re.search(r"<tags>(?P<category>[\w ]+)<\/tags>", file_content)
+        if not match or match.group("category") not in self.CATEGORIES:
+            return True
+        return False
 
 NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
@@ -281,6 +311,7 @@ NUSPEC_LINTS = (
     DependencyContainsUppercaseChar(),
     VersionNotUpdated(),
     PackageIdNotMatchingFolderOrNuspecName(),
+    UsesInvalidCategoryNuspec(),
 )
 
 
@@ -345,24 +376,20 @@ class UsesInvalidCategory(Lint):
         "chrome.extensions.vm",
     ]
 
-    root_path = os.path.abspath(os.path.join(__file__, "../../.."))
-    categories_txt = os.path.join(root_path, "categories.txt")
-    with open(categories_txt) as file:
-        CATEGORIES = [line.rstrip() for line in file]
-        logger.debug(CATEGORIES)
+    
 
-    name = "Uses an invalid category"
-    recommendation = f"Set $category to a category in {categories_txt} or exclude the package in the linter"
+    name = "Doesn't use the function VM-Get-Category"
+    recommendation = f"Set $category to retrieve the category from VM-Get-Category or exclude the package in the linter"
 
     def check(self, path):
         if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
             return False
-
+        
         # utf-8-sig ignores BOM
         file_content = open(path, "r", encoding="utf-8-sig").read()
 
-        match = re.search(r"\$category = ['\"](?P<category>[\w &/]+)['\"]", file_content)
-        if not match or match.group("category") not in self.CATEGORIES:
+        match = re.search(r"\$category = VM-Get-Category\s*\(\$MyInvocation\.MyCommand\.Definition\)", file_content)
+        if not match: 
             return True
         return False
 
