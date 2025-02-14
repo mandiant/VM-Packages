@@ -369,7 +369,9 @@ class UsesInvalidCategory(Lint):
 INSTALL_LINTS = (
     MissesImportCommonVm(),
     FirstLineDoesNotSetErrorAction(),
-    UsesInvalidCategory(),
+    #This line has been disabled temporarily because it would validate the category from the chocolatey install script
+    #It needs to be disabled until a new linter checks if a valid category exists in the nuspec package
+    #UsesInvalidCategory(),
 )
 
 UNINSTALL_LINTS = (UsesInvalidCategory(),)
