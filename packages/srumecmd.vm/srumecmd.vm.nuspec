@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>srumecmd.vm</id>
-    <version>0.5.1.20240826</version>
+    <version>1.0.0.20250215</version>
     <authors>Eric Zimmerman</authors>
     <description>Process SRUDB.dat and (optionally) SOFTWARE hive for network, process, and energy info!</description>
     <dependencies>

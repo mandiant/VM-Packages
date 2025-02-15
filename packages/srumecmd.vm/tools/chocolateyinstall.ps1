@@ -5,6 +5,6 @@ $toolName = 'SrumECmd'
 $category = 'Forensic'
 
 $zipUrl = 'https://download.mikestammer.com/net6/SrumECmd.zip'
-$zipSha256 = 'acfff757f1da4e7cc5c7c521c8fd7eeda938ac9402ae4874f2c8f49239d52dc1'
+$zipSha256 = '09762bdbd45ebaa4bd6e2cfa6dc8cdaea2092ee6b657420787098d8a6397e9c4'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
