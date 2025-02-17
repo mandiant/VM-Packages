@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'apktool'
-  $category = 'Java & Android'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $rawToolPath = Join-Path ${Env:RAW_TOOLS_DIR} "$toolName"
 
   # Download apktool.bat

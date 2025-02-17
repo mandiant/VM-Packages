@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'BurpSuiteCommunity'
-  $category = 'Web Application'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $shimPath = 'BurpSuiteCommunity\BurpSuiteCommunity.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

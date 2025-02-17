@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = '7z'
-  $category = 'Productivity Tools'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $url = 'https://github.com/myfreeer/7z-build-nsis/releases/download/23.01/7z2301-x86.exe'
   $checksum = '7b1d50073e6d3631267f2bbb986fb1faffddc5fc72d6bc23e10b5920a6f365b4'

@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'chainsaw'
-$category = 'Forensic'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://github.com/WithSecureLabs/chainsaw/releases/download/v2.11.0/chainsaw_all_platforms+rules.zip'
 $zipSha256 = 'a67f1fbd57efa02c281cad892b9e0b6f90ccc99035961935048191d055a543b7'
