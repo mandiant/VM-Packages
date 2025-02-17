@@ -5,6 +5,6 @@ $toolName = 'AppCompatCacheParser'
 $category = 'Forensic'
 
 $zipUrl = 'https://download.mikestammer.com/net6/AppCompatCacheParser.zip'
-$zipSha256 = '0ef9cc96a0784bc54f79e584f5845f7e3ada703cbfb6e209e9612bf1f7aad6c9'
+$zipSha256 = '08be9f08cd2a4f0080ffb6ac336bdaa3ffd357efac632c2f6a1f5415a8c06a57'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false

@@ -5,6 +5,6 @@ $toolName = 'SumECmd'
 $category = 'Forensic'
 
 $zipUrl = 'https://download.mikestammer.com/net6/SumECmd.zip'
-$zipSha256 = '74ed2f833056c2c88ee906fd1cbd8938a1d8f0c2df7e7ce031614858c8d16cb7'
+$zipSha256 = 'f96cd86af40b143b005ad9c97e821927b51dff3842b310f7610bcea50629761e'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false

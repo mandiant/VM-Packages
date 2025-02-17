@@ -5,6 +5,6 @@ $toolName = 'MFTECmd'
 $category = 'Forensic'
 
 $zipUrl = 'https://download.mikestammer.com/net6/MFTECmd.zip'
-$zipSha256 = '705cebd566987e815c7e2ac6d0159d200223065817a6f115b4ce5ba61a22b424'
+$zipSha256 = 'c7f20ce740f49a738f7228493f0764a09d23fb1dd67502b7cdd32d73fc3383f3'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false

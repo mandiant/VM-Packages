@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sumecmd.vm</id>
-    <version>0.5.2.20240826</version>
+    <version>1.0.0.20250215</version>
     <authors>Eric Zimmerman</authors>
     <description>Process Microsoft User Access Logs found under "C:\Windows\System32\LogFiles\SUM"</description>
     <dependencies>
