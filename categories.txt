@@ -1,4 +1,4 @@
-Command & Control
+Command and Control
 Credential Access
 Debuggers
 Delphi
@@ -9,8 +9,9 @@ Exploitation
 File Information
 Forensic
 Hex Editors
+IDA Plugins
 InnoSetup
-Java & Android
+Java and Android
 Javascript
 Lateral Movement
 Memory
