@@ -1,7 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-#vars for invoke-thehash
 $toolName = 'Invoke-TheHash'
 $category = 'Lateral Movement'
 
