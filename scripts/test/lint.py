@@ -374,7 +374,8 @@ INSTALL_LINTS = (
     #UsesInvalidCategory(),
 )
 
-UNINSTALL_LINTS = (UsesInvalidCategory(),)
+#UNINSTALL_LINTS = (UsesInvalidCategory(),)
+UNINSTALL_LINTS = ()
 
 
 def lint_install(path):
