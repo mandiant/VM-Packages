@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>egress-assess.vm</id>
-    <version>0.0.0.20240412</version>
+    <version>0.0.0.20250218</version>
     <authors>RedSiege</authors>
     <description>Egress-Assess is a tool used to test egress data detection capabilities.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240412" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Reconnaissance</tags>
   </metadata>
 </package>

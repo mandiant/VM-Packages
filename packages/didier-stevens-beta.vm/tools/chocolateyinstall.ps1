@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-    $category = 'Documents'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
     $zipUrl = 'https://github.com/DidierStevens/Beta/archive/cbb1d5c32d02b4e07128a197c8b8fb6ea597916a.zip'
     $zipSha256 = 'e9d83063f45f8e2791d33de194a46850bd7f1921e755bd4651c769cbcdbd5052'
 

@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'de4dot'
-    $category = 'dotNet'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     $zipUrl = 'https://github.com/ViRb3/de4dot-cex/releases/download/v4.0.0/de4dot-cex.zip'
     $zipSha256 = 'C726CBD18B894CA63B7F6A565C6C86EF512B96E68119C6502CDF64A51F6A1C78'
