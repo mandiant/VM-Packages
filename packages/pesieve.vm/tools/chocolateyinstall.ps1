@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'pe-sieve'
-  $category = 'Memory'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $shimPath = 'bin\pe-sieve.exe'
 
   $executablePath = Join-Path ${Env:ChocolateyInstall} $shimPath -Resolve

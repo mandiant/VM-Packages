@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'Windows Terminal'
-  $category = 'Productivity Tools'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $executableName = "wt.exe"
 
   $zipUrl = 'https://github.com/microsoft/terminal/releases/download/v1.22.10352.0/Microsoft.WindowsTerminal_1.22.10352.0_x64.zip'

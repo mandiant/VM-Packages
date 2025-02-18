@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'sysinternals'
-$category = 'Utilities'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
 try {

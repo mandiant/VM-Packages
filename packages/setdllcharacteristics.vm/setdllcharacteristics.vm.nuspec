@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>setdllcharacteristics.vm</id>
-    <version>0.0.1.20240411</version>
+    <version>0.0.1.20250218</version>
     <authors>Didier Stevens</authors>
     <description>A CLI tool for manipulating ASLR, DEP, and check signature flags of PE files</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240411" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>PE</tags>
   </metadata>
 </package>

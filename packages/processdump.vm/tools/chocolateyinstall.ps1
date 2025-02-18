@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = "pd"
-  $category = "Memory"
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} 'Process-Dump'
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
