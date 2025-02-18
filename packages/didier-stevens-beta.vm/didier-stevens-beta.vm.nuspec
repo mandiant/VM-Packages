@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>didier-stevens-beta.vm</id>
-    <version>0.0.0.20240726</version>
+    <version>0.0.0.20250218</version>
     <authors>Didier Stevens</authors>
     <description>Beta versions of Didier Stevens's software</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240726" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="python3.vm" version="0.0.0.20240726"/>
     </dependencies>
+    <tags>Documents</tags>
   </metadata>
 </package>

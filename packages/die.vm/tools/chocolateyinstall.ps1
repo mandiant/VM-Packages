@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'die'
-  $category = 'File Information'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $zipUrl = 'https://github.com/horsicq/DIE-engine/releases/download/3.10/die_win32_portable_3.10_x86.zip'
   $zipSha256 = 'dbd639a9bebceaf84e63c47bdb4a64e3fbb7677ec834321fe9b8574fe7781b10'
