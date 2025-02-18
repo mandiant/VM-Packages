@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'hollows_hunter'
-$category = 'Memory'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://github.com/hasherezade/hollows_hunter/releases/download/v0.4.0.2/hollows_hunter32.zip'
 $zipSha256 = '81f9e36d9aac860a8cb8e49715e9c70af6c9a52daa619cac86d71f473c959838'

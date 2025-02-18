@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'ida'
-  $category = 'Disassemblers'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $installerPaths = Resolve-Path "${Env:USERPROFILE}\Desktop\ida-pro_9*.exe"
   if ($installerPaths.count -eq 0) {

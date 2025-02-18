@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'internet_detector'
-$category = 'Networking'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $packageToolDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
 # Create tool directory

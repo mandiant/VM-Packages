@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'ida'
-  $category = 'Disassemblers'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $packageArgs = @{
     packageName  = ${Env:ChocolateyPackageName}
