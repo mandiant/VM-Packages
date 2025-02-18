@@ -5,7 +5,7 @@ try {
   # We do not use the VM-Install-From-Zip because the shortcut executable has to be run from the tools dir:
   # https://github.com/mandiant/flare-fakenet-ng/issues/180
   $toolName = 'fakenet'
-  $category = 'Networking'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $zipUrl = "https://github.com/mandiant/flare-fakenet-ng/releases/download/v3.3/fakenet3.3.zip"
   $zipSha256 = "cd3f263a01926366643118c541a6ad24a171b4369363a60deb9a570a1d600865"

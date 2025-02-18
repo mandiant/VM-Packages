@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'ghidra'
-    $category = 'Disassemblers'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
     $shimPath = 'bin\ghidra.exe'
     # get version as defined in nuspec and remove potential 4th segment `.YYYYMMDD`
     $version = $env:ChocolateyPackageVersion -replace '\.\d{4}\d{2}\d{2}$'

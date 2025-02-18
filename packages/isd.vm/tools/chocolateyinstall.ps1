@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'Inno Setup Decompiler'
-    $category = 'InnoSetup'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     $zipUrl = 'https://github.com/dscharrer/innoextract/files/5507287/isdsetup.1.5.exe.zip'
     $zipSha256 = '8fe99b5a989066131b6553394c2c93eed5adbd9430494ab921aafd74d2c818dc'
