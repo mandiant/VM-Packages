@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
-$category = 'Credential Access'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 try {
 

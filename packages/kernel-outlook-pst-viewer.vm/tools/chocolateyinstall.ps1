@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Kernel Outlook PST Viewer'
-$category = 'Forensic'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $exeUrl = 'https://www.nucleustechnologies.com/dl/dl.php?id=125'
 $exeSha256 = '4e2eb12620d5c06822913b82decc1c44d272082ce75a266e0ec3ab4e38c52ab9'

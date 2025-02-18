@@ -8,7 +8,7 @@ try {
         @{name = 'PowerPoint'; executable = 'POWERPNT.EXE'},
         @{name = 'OneNote'; executable = 'ONENOTE.EXE'}
     )
-    $category = 'Documents'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
     # Install with choco instead as dependency to provide params such the product
