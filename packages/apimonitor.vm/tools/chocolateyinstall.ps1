@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $category = 'Utilities'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut32 = Join-Path $shortcutDir "apimonitor-x86.lnk"

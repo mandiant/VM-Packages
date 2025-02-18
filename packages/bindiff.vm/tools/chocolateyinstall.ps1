@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'BinDiff'
-$category = 'File Information'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $exeUrl = 'https://github.com/google/bindiff/releases/download/v8/bindiff8.msi'
 $exeSha256 = '688831e490bef8a20c9917048b693bad591f346b3b96489fc79ad8d20d7cb15f'

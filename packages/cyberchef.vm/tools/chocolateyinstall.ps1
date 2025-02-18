@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
 
-  $category = 'Utilities'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $toolName = 'CyberChef'
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 

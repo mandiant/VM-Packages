@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = '010Editor'
-  $category = 'Hex Editors'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $url   = 'https://download.sweetscape.com/010EditorWin32Installer15.0.1.exe'
   $checksum = '4bb1d184863ccbd693158da763968f79a5b774bd7304c31884e93a93282c237e'

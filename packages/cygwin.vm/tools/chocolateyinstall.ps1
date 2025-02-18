@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'cygwin'
-  $category = 'Productivity Tools'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   # install additional cygwin packages
   $packages = @(

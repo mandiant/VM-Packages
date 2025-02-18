@@ -48,7 +48,7 @@ try {
   # Install of package #
   ######################
   $toolName = 'ArsenalImageMounter'
-  $category = 'Forensic'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $shimPath = "\bin\${toolName}.exe"
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
