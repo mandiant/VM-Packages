@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$category = 'PE'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $subtoolNames = 'CFF Explorer', 'PE Detective', 'Task Explorer', 'Task Explorer-x64'
 foreach ($subtoolName in $subtoolNames) {
   VM-Remove-Tool-Shortcut  $subtoolName $category

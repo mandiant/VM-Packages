@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>exeinfope.vm</id>
-    <version>0.0.7.20250218</version>
+    <version>0.0.7.20250219</version>
     <authors>A.S.L Soft</authors>
     <description>Displays metadata for a variety of file types and identifies many executable packers</description>
     <dependencies>

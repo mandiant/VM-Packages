@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>gowitness.vm</id>
-    <version>3.0.5.20250218</version>
+    <version>3.0.5.20250219</version>
     <authors>sensepost</authors>
     <description>Website screenshot utility written in Golang, that uses Chrome Headless to generate screenshots of web interfaces using the command line, with a handy report viewer to process results.</description>
     <dependencies>
