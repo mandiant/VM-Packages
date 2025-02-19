@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>telnet.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>Gaige Paulsen, Tim Krauskopf, Aaron Contorer</authors>
     <description>A network protocol used to virtually access a computer and to provide a two-way, collaborative and text-based communication channel between two machines</description>
     <dependencies>

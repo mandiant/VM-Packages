@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>tor-browser.vm</id>
-    <version>14.0.5.20250218</version>
+    <version>14.0.5.20250219</version>
     <authors>Tor Project</authors>
     <description>The Tor software protects you by bouncing your communications around a distributed network of relays run by volunteers all around the world.</description>
     <dependencies>

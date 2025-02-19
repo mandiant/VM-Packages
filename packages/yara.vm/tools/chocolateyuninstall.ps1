@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$category = 'Forensic'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $shimPath = Join-Path ${Env:ChocolateyInstall} "bin" -Resolve
 $toolPaths = Get-ChildItem $shimPath | Where-Object { $_.Name -match '^yarac?(32|64)\.exe$' }
 

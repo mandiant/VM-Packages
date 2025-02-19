@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'TestDisk'
-$category = 'Forensic'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $subToolNames = 'testdisk', 'photorec', 'qphotorec', 'fidentify'
 foreach ($subToolName in $subToolNames) {
