@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>internet_detector.vm</id>
-    <version>1.0.0.20250218</version>
+    <version>1.0.0.20250219</version>
     <authors>Elliot Chernofsky and Ana Martinez Gomez</authors>
     <description>Tool that changes the background and a taskbar icon if it detects internet connectivity</description>
     <dependencies>

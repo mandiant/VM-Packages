@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'ida'
-$category = 'Disassemblers'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 # Remove binary from PATH
 Uninstall-BinFile -Name $toolName
