@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'sfextract'
-$category = 'dotNet'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 dotnet tool uninstall --global sfextract
 

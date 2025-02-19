@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sqlitebrowser.vm</id>
-    <version>3.12.2.20250218</version>
+    <version>3.12.2.20250219</version>
     <authors>René Peinthor, Martin Kleusberg, Mauricio Piacentini, Justin Clift</authors>
     <description>Open source tool to create, design, and edit database files compatible with SQLite.</description>
     <dependencies>

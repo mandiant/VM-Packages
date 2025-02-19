@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>syswhispers2.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>jthuraisamy</authors>
     <description>SysWhispers helps with evasion by generating header/ASM files implants can use to make direct system calls.</description>
     <dependencies>

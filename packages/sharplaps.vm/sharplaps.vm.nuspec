@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sharplaps.vm</id>
-    <version>1.1.20250218</version>
+    <version>1.1.20250219</version>
     <authors>swisskyrepo</authors>
     <description>This executable is made to be executed within Cobalt Strike session using execute-assembly. It will retrieve the LAPS password from the Active Directory.</description>
     <dependencies>
