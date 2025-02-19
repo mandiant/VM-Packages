@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dotdumper.vm</id>
-    <version>1.1.0.20250218</version>
+    <version>1.1.0.20250219</version>
     <authors>ThisIsLibra</authors>
     <description>An automatic unpacker and logger for DotNet Framework targeting files</description>
     <dependencies>

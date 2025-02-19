@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ghidra.vm</id>
-    <version>11.2.1.20250218</version>
+    <version>11.2.1.20250219</version>
     <authors>National Security Agency</authors>
     <description>A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission.</description>
     <dependencies>
