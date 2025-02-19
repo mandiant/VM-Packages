@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'Metasploit'
-    $category = 'Command & Control'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     # Download the installer
     $packageArgs        = @{

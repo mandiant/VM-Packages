@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Merlin'
-$category = 'Command & Control'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
 $zipUrl = 'https://github.com/Ne0nd0g/merlin/releases/download/v2.1.3/merlinServer-Windows-x64.7z'
