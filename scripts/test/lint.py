@@ -276,7 +276,7 @@ class PackageIdNotMatchingFolderOrNuspecName(Lint):
         
         
         
-class UsesInvalidCategoryNuspec(Lint):
+class UsesInvalidCategory(Lint):
     # Some nuspec packages don't have a category
     EXCLUSIONS = [
         "common.vm",
@@ -290,7 +290,7 @@ class UsesInvalidCategoryNuspec(Lint):
         logger.debug(CATEGORIES)
 
     name = "Uses an invalid category"
-    recommendation = f"Set $category to a category in {categories_txt} or exclude the package in the linter"
+    recommendation = f"Place a valid category between <tags></tags> from {categories_txt} or exclude the package in the linter"
 
     def check(self, path):
         if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
@@ -311,7 +311,7 @@ NUSPEC_LINTS = (
     DependencyContainsUppercaseChar(),
     VersionNotUpdated(),
     PackageIdNotMatchingFolderOrNuspecName(),
-    UsesInvalidCategoryNuspec(),
+    UsesInvalidCategory(),
 )
 
 
@@ -352,7 +352,7 @@ class FirstLineDoesNotSetErrorAction(Lint):
         return not self.FIRST_LINE == lines[0]
 
 
-class UsesInvalidCategory(Lint):
+class UsesCategoryFromNuspec(Lint):
     # Some packages don't have a category (we don't create a link in the tools directory)
     EXCLUSIONS = [
         ".dbgchild.vm",
@@ -379,7 +379,7 @@ class UsesInvalidCategory(Lint):
     
 
     name = "Doesn't use the function VM-Get-Category"
-    recommendation = f"Set $category to retrieve the category from VM-Get-Category or exclude the package in the linter"
+    recommendation = f"Set '$category = VM-Get-Category($MyInvocation.MyCommand.Definition)' or exclude the package in the linter"
 
     def check(self, path):
         if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
@@ -399,11 +399,10 @@ INSTALL_LINTS = (
     FirstLineDoesNotSetErrorAction(),
     #This line has been disabled temporarily because it would validate the category from the chocolatey install script
     #It needs to be disabled until a new linter checks if a valid category exists in the nuspec package
-    #UsesInvalidCategory(),
+    UsesCategoryFromNuspec(),
 )
 
-#UNINSTALL_LINTS = (UsesInvalidCategory(),)
-UNINSTALL_LINTS = ()
+UNINSTALL_LINTS = (UsesCategoryFromNuspec(),)
 
 
 def lint_install(path):
