@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>apimonitor.vm</id>
-    <version>2.13.0.20250217</version>
+    <version>2.13.0.20250219</version>
     <authors>Rohitab Batra</authors>
     <description>API Monitor lets you monitor and control API calls made by applications and services.</description>
     <dependencies>

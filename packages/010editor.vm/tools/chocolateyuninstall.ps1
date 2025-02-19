@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 
 $toolName = '010Editor'
-$category = 'Hex Editors'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 

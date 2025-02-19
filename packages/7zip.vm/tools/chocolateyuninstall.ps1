@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = '7z'
-$category = 'Productivity Tools'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 VM-Uninstall $toolName $category
 

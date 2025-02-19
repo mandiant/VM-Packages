@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>bindiff.vm</id>
-    <version>8.0.0.20250217</version>
+    <version>8.0.0.20250219</version>
     <authors>Zynamics</authors>
     <description>A comparison tool for binary files that assists in quickly finding differences and similarities in disassembled code</description>
     <dependencies>
