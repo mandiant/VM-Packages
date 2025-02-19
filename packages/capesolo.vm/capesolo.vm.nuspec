@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>capesolo.vm</id>
-    <version>0.4.23</version>
+    <version>0.4.23.20250219</version>
     <authors>kevoreilly, enzok, doomedraven</authors>
     <description>Standalone sandbox tool with unpacker and debugger</description>
     <dependencies>

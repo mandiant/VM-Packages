@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>confuserex.vm</id>
-    <version>1.6.0.20250217</version>
+    <version>1.6.0.20250219</version>
     <authors>mkaring</authors>
     <description>ConfuserEx is a open-source protector for .NET applications. It is the successor of Confuser project.</description>
     <dependencies>

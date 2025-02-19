@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>burp-free.vm</id>
-    <version>0.0.0.20250217</version>
+    <version>0.0.0.20250219</version>
     <authors>PortSwigger Ltd.</authors>
     <description>Burp Suite Community Edition is PortSwigger's free integrated platform for performing security testing of web applications.</description>
     <dependencies>

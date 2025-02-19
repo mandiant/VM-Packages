@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>chainsaw.vm</id>
-    <version>2.11.0.20250217</version>
+    <version>2.11.0.20250219</version>
     <authors>WithSecure Labs</authors>
     <description>Chainsaw provides a powerful 'first-response' capability to quickly identify threats within Windows forensic artefacts such as Event Logs and the MFT file.</description>
     <dependencies>

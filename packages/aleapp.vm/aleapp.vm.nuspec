@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>aleapp.vm</id>
-    <version>3.2.2.20250217</version>
+    <version>3.2.2.20250219</version>
     <authors>Alexis Brignoni</authors>
     <description>Android Logs Events And Protobuf Parser.</description>
     <dependencies>

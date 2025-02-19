@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>7zip.vm</id>
-    <version>23.01.0.20250217</version>
+    <version>23.01.0.20250219</version>
     <authors>myfreeer</authors>
     <description>7-zip build with nsis script decompiling</description>
     <dependencies>

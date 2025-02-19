@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'C3'
-$category = 'Command & Control'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 VM-Uninstall $toolName $category

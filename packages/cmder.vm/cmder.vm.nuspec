@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>cmder.vm</id>
-    <version>1.3.25.20250217</version>
+    <version>1.3.25.20250219</version>
     <description>Metapackage for cmder</description>
     <authors>Mandiant, Samuel Vasko</authors>
     <dependencies>

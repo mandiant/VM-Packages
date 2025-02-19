@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>blobrunner64.vm</id>
-    <version>0.0.5.20250217</version>
+    <version>0.0.5.20250219</version>
     <authors>OALabs</authors>
     <description>BlobRunner is a simple tool to quickly debug shellcode extracted during malware analysis.</description>
     <dependencies>
