@@ -2,6 +2,6 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Kernel OST Viewer'
-$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
+$category = 'Forensic'
 
 VM-Uninstall $toolName $category
