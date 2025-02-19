@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>inveigh.vm</id>
-    <version>2.0.10.20250218</version>
+    <version>2.0.10.20250219</version>
     <authors>Kevin-Robertson, joncave, kant2002</authors>
     <description>Inveigh is a cross-platform .NET IPv4/IPv6 machine-in-the-middle tool for penetration testers.</description>
     <dependencies>

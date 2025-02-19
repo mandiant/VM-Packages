@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>juicypotato.vm</id>
-    <version>0.1.20250218</version>
+    <version>0.1.20250219</version>
     <authors>ohpe</authors>
     <description>Local Privilege Escalation tool that abuses the SeImpersonatePrivilege to go from a Windows Service Account to NT AUTHORITY\SYSTEM</description>
     <dependencies>

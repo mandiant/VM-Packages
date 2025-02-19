@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>imhex.vm</id>
-    <version>1.35.4.20250218</version>
+    <version>1.35.4.20250219</version>
     <authors>WerWolv</authors>
     <description>A Hex Editor for Reverse Engineers, Programmers and people who value their retinas when working at 3 AM.</description>
     <dependencies>

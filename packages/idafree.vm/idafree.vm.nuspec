@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>idafree.vm</id>
-    <version>8.4.0.20250218</version>
+    <version>8.4.0.20250219</version>
     <authors>Hex-Rays</authors>
     <description>Free version of IDA Pro, a powerful Interactive DisAssembler and debugger.</description>
     <dependencies>

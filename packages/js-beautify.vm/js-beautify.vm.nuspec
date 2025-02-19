@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>js-beautify.vm</id>
-    <version>1.15.1.20250218</version>
+    <version>1.15.1.20250219</version>
     <authors>beautifier.io</authors>
     <description>JavaScript beautifier and deobfuscator.</description>
     <dependencies>
