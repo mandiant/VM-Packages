@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>resourcehacker.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>Angus Johnson</authors>
     <description>Resource Hacker is a resource editor for 32bit and 64bit Windows applications.</description>
     <dependencies>

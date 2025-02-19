@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>spoolsample.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>tifkin_, harmj0y, enigma0x3</authors>
     <description>PoC tool to coerce Windows hosts authenticate to other machines via the MS-RPRN RPC interface.</description>
     <dependencies>
