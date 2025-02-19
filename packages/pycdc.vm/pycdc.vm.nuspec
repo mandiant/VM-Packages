@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>pycdc.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>Michael Hansen, Darryl Pogue</authors>
     <description>Python decompiler</description>
     <dependencies>

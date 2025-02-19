@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>payloadsallthethings.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>swisskyrepo</authors>
     <description>A list of useful payloads and bypasses for Web Application Security.</description>
     <dependencies>

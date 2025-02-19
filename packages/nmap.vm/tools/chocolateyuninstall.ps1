@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'nmap'
-    $category = 'Networking'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
     # Remove shortcuts for all the EXE's

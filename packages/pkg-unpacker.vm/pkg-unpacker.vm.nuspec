@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>pkg-unpacker.vm</id>
-    <version>1.0.0.20250218</version>
+    <version>1.0.0.20250219</version>
     <authors>LockBlock-dev</authors>
     <description>Unpacker for pkg applications.</description>
     <dependencies>

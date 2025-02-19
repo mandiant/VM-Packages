@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>powerzure.vm</id>
-    <version>0.0.0.20250218</version>
+    <version>0.0.0.20250219</version>
     <authors>hausec</authors>
     <description>PowerZure is a PowerShell project created to assess and exploit resources within Microsoft’s cloud platform, Azure.</description>
     <dependencies>
