@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>windump.vm</id>
-    <version>0.3.20250218</version>
+    <version>0.3.20250219</version>
     <authors>Riverbed Technology and hsluoyz</authors>
     <description>Windows version of tcpdump, the command line network analyzer for UNIX</description>
     <dependencies>
