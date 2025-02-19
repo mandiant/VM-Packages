@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'WinDbg'
-    $category = 'Debuggers'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     $bundleVersion = "1-2402-24001"
     $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/$bundleVersion-0/windbg.msixbundle"

@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>trustedsec-remote-ops-bof.vm</id>
-    <version>0.0.0.20240531</version>
+    <version>0.0.0.20250218</version>
     <authors>trustedsec</authors>
     <description>Addition to Situational Awareness BOFs intended for single task Windows primitives such as creating a task, stopping a service, etc.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240412" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Reconnaissance</tags>
   </metadata>
 </package>

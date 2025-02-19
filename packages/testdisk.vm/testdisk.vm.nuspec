@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>testdisk.vm</id>
-    <version>7.2.0.20240606</version>
+    <version>7.2.0.20250218</version>
     <authors>Christophe Grenier</authors>
     <description>A robust data recovery tool, TestDisk, specializes in restoring lost partitions across diverse filesystems and facilitates file undeletion within supported filesystems.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Forensic</tags>
   </metadata>
 </package>

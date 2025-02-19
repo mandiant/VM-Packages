@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'vbdec'
-    $category = 'Visual Basic'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     $exeUrl = 'http://sandsprite.com/flare_vm/VBDEC_Setup_983E127DB204A3E50723E4A30D80EF8C.exe'
     $exeSha256 = 'E6FA33F1D8C51214B1B6E49665F1EDBCBF05399D57CC2A04CED0A74A194ADA63'

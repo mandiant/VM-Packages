@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = "ttd"
-    $category = "Debuggers"
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     # From https://aka.ms/ttd/download
     $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/1-11-319-0/TTD.msixbundle"

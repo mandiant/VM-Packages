@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>windump.vm</id>
-    <version>0.3</version>
+    <version>0.3.20250218</version>
     <authors>Riverbed Technology and hsluoyz</authors>
     <description>Windows version of tcpdump, the command line network analyzer for UNIX</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="npcap.vm" />
     </dependencies>
+    <tags>Networking</tags>
   </metadata>
 </package>

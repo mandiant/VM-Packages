@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'VisualStudio'
-    $category = 'Productivity Tools'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     # Install with choco instead as dependency to provide params to add common components
     # The community package chocolatey-visualstudio.extension 1.11 includes a -DefaultParameterValues parameter

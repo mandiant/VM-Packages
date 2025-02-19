@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'procdot'
-$category = 'Utilities'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
 $zipUrl = 'https://procdot.com/download/procdot/binaries/procdot_1_22_57_windows.zip'

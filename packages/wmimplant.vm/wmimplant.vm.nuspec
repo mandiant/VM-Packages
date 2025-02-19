@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>wmimplant.vm</id>
-    <version>0.0.0.20240125</version>
+    <version>0.0.0.20250218</version>
     <authors>RedSiege</authors>
     <description>WMImplant is a PowerShell based tool that leverages WMI to both perform actions against targeted machines, but also as the C2 channel for issuing commands and receiving results.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Command and Control</tags>
   </metadata>
 </package>

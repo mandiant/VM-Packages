@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>pycdc.vm</id>
-    <version>0.0.0.20250110</version>
+    <version>0.0.0.20250218</version>
     <authors>Michael Hansen, Darryl Pogue</authors>
     <description>Python decompiler</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240509" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Python</tags>
   </metadata>
 </package>

@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'DB Browser for SQLite'
 $subToolName = 'DB Browser for SQLCipher'
-$category = 'Utilities'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $exeUrl = 'https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.12.2/DB.Browser.for.SQLite-3.12.2-win64.msi'
 $exeSha256 = '723d601f125b0d2402d9ea191e4b310345ec52f76b61e117bf49004a2ff9b8ae'

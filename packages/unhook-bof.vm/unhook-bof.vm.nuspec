@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>unhook-bof.vm</id>
-    <version>0.0.0.20240412</version>
+    <version>0.0.0.20250218</version>
     <authors>rsmudge, physics-sec</authors>
     <description>This is a Beacon Object File to refresh DLLs and remove their hooks. The code is from Cylance's Universal Unhooking research.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240412" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Payload Development</tags>
   </metadata>
 </package>

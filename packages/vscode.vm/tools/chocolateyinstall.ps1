@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'VSCode'
-  $category = 'Productivity Tools'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
