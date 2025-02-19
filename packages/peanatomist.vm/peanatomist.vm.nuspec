@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>peanatomist.vm</id>
-    <version>0.2.11931.20250218</version>
+    <version>0.2.11931.20250219</version>
     <authors>RamMerLabs</authors>
     <description>PE Analysis tool providing detailed information</description>
     <dependencies>

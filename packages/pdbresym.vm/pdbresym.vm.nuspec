@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>pdbresym.vm</id>
-    <version>1.3.6.20250218</version>
+    <version>1.3.6.20250219</version>
     <authors>Stephen Eckels</authors>
     <description>Download PDBs</description>
     <dependencies>

@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'psnotify'
-$category = 'dotNet'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $toolDir = 'C:\psnotify'
 
 # Remove tool files

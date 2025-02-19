@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>psnotify.vm</id>
-    <version>0.2.4.20250218</version>
+    <version>0.2.4.20250219</version>
     <authors>alphillips-lab</authors>
     <description>A POC tool to fight .NET anti-dumping tricks.</description>
     <dependencies>

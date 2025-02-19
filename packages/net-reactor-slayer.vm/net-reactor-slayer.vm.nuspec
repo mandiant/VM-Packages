@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>net-reactor-slayer.vm</id>
-    <version>6.4.0.20250218</version>
+    <version>6.4.0.20250219</version>
     <authors>SychicBoy</authors>
     <description>NETReactorSlayer is an open source (GPLv3) deobfuscator and unpacker for Eziriz .NET Reactor.</description>
     <dependencies>
