@@ -9,5 +9,6 @@
       <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
     <tags>Payload Development</tags>
+    <tags>Productivity Tools</tags>
   </metadata>
 </package>

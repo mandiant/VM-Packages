@@ -9,7 +9,7 @@
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="autohotkey" version="[1.1.37.1]" />
     </dependencies>
-    <tags>Network</tags>
+    <tags>Networking</tags>
   </metadata>
 </package>
 
