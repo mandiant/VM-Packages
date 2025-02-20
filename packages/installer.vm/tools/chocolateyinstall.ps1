@@ -76,8 +76,9 @@ try {
     $cache = "${Env:LocalAppData}\ChocoCache"
     Remove-Item $cache -Recurse -Force
 
-    # Construct failed packages file path
+    # Construct failed packages file path and create the file
     $failedPackages = Join-Path $Env:VM_COMMON_DIR "failed_packages.txt"
+    New-Item $failedPackages
     $failures = @{}
 
     # Check and list failed packages from "lib-bad"
