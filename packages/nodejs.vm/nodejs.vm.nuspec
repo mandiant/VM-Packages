@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>nodejs.vm</id>
-    <version>0.0.0.20240827</version>
+    <version>0.0.0.20250219</version>
     <authors>Node.js Foundation</authors>
     <description>Metapackage for Node.js to ensure all packages use the same Node.js version.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="nodejs" version="[20.7.0, 20.8.0)" />
       <dependency id="git" version="[2.45.0,)" />
     </dependencies>
+    <tags>Javascript</tags>
   </metadata>
 </package>
