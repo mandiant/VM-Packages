@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'notepad++'
-$category = 'Productivity Tools'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 try {
     # Path to Notepad++'s configuration file
