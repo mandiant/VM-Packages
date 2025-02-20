@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ftk-imager.vm</id>
-    <version>4.7.1.20250218</version>
+    <version>4.7.1.20250220</version>
     <authors>AccessData</authors>
     <description>The tool provides full disk imaging capabilities, mount images, preview data from forensic images, and seamlessly export files in common forensic formats, with an option for RAM capture.</description>
     <dependencies>
