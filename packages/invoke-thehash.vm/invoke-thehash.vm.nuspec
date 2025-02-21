@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>invoke-thehash.vm</id>
+    <version>1.0</version>
+    <authors>Kevin-Robertson, Vokaysh</authors>
+    <description>Invoke-TheHash contains PowerShell functions for performing pass the hash WMI and SMB tasks.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20250203" />
+    </dependencies>
+  </metadata>
+</package>
