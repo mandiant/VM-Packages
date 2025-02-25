@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'nmap'
-    $category = 'Networking'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
