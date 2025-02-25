@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Invoke-TheHash'
-$category = 'Lateral Movement'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 # install invoke-thehash and import module
 $zipUrl = 'https://github.com/Kevin-Robertson/Invoke-TheHash/archive/01ee90f934313acc7d09560902443c18694ed0eb.zip'
