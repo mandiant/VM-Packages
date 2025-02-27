@@ -5,13 +5,13 @@ try {
   ###################################
   # Install of drivers dependencies #
   ###################################
-  $zipCliUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/master/Command%20line%20applications/aim_ll.zip'
-  $zipCliSha256 = '21c32aed320eca532969590b67dc8151bddd6aebe9699abd09cc3e026fd01a29'
+  $zipCliUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/02e94240383111915a39734e1648d361a7013251/Command%20line%20applications/aim_ll.zip'
+  $zipCliSha256 = '3b4121868446012f63a3d162db976bdfe42bb7926d46a39aba849c60657f88b0'
   $tempCliDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "aim_ll"
   $toolCli = "aim_ll.exe"
 
-  $zipDriverUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/63801fc2b51f899244e43f1bf5275d2ac92a2477/DriverSetup/DriverFiles.zip'
-  $zipDriverSha256 = 'c5de8e5d5a2c0231baf2cdb74fb0b0f4047658c69105bcab28990734b3979ee3'
+  $zipDriverUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/02e94240383111915a39734e1648d361a7013251/DriverSetup/DriverFiles.zip'
+  $zipDriverSha256 = '0aa82ab50be6deb6f3d8fa38d2a9391913d71ca3fb7c7f7b80e3c2ae79802d54'
   $tempDriverDownloadDir = Join-Path ${Env:TEMP} "temp_$([guid]::NewGuid())"
 
   $packageArgs = @{
