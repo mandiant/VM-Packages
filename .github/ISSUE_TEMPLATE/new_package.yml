@@ -70,7 +70,7 @@ body:
       label: Category
       description: Which category should this tool be installed to?
       options:
-        - Command & Control
+        - Command and Control
         - Credential Access
         - Debuggers
         - Delphi
@@ -82,7 +82,7 @@ body:
         - Forensic
         - Hex Editors
         - InnoSetup
-        - Java & Android
+        - Java and Android
         - Javascript
         - Lateral Movement
         - Memory
