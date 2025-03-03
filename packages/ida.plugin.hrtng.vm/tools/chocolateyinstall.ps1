@@ -1,8 +1,8 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$pluginUrl = "https://github.com/KasperskyLab/hrtng/releases/download/v2.2.21/hrtng-2.2.21.7z"
-$pluginSha256 = "0918639f3a27fe2d85556cd7a730fc588456302f2e95a23e9e3f62f4e17b0f1e"
+$pluginUrl = "https://github.com/KasperskyLab/hrtng/releases/download/v2.3.25/hrtng-2.3.25.7z"
+$pluginSha256 = "4dc76bf461db3c1cd043d84c7a0a542a837a02d6e01ec3c69fd25c100afd265c"
 $tempDownloadDir = Join-Path ${Env:TEMP} "temp_$([guid]::NewGuid())"
 
 $packageArgs = @{
