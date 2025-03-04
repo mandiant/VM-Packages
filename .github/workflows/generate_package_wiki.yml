@@ -24,7 +24,7 @@ jobs:
 
       - name: Generate Wiki Content
         id: generate-content
-        run: scripts/utils/generate_package_wiki.ps1
+        run: python scripts/utils/generate_package_wiki.py
 
       - name: Commit changes
         working-directory: wiki
