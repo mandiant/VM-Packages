@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vnc-viewer.vm</id>
-    <version>7.7.0.20250219</version>
+    <version>7.13.1</version>
     <authors>RealVNC</authors>
     <description>Tool for connecting to and interacting with VNC servers.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="vnc-viewer" version="[7.7.0]" />
+      <dependency id="vnc-viewer" version="[7.13.1]" />
     </dependencies>
     <tags>Utilities</tags>
   </metadata>
