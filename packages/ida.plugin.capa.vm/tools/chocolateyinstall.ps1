@@ -3,20 +3,20 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     # Install dependency: capa Python library
-    $version = "8.0.1"
+    $version = "9.0.0"
     VM-Pip-Install "flare-capa==$version"
 
     # Install plugin
     $pluginName = "capa_explorer.py"
     $pluginUrl = "https://raw.githubusercontent.com/mandiant/capa/v$version/capa/ida/plugin/capa_explorer.py"
-    $pluginSha256 = "bf6c9a0e5fd2c75a93bb3c19e0221c36cda441c878af3c23ea3aafef4fecf3e9"
+    $pluginSha256 = "0470f7dd693f3d974c71397a0b484ddc6a21a0ee4c971de2c2097509a093345d"
     VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha256 $pluginSha256
 
 
     # Download capa rules
     $pluginsDir = VM-Get-IDA-Plugins-Dir
     $rulesUrl = "https://github.com/mandiant/capa-rules/archive/refs/tags/v$version.zip"
-    $rulesSha256 = "7c5f932b1da4e18eed50add117e7fc55c14dc51487495cb31e33e0b44c522fbc"
+    $rulesSha256 = "74f3a0fe6df6288b6292aef1360f64cf83084f9b5427dc85b462579d10c39662"
     $packageArgs = @{
         packageName    = ${Env:ChocolateyPackageName}
         unzipLocation  = $pluginsDir
