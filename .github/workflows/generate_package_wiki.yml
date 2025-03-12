@@ -1,10 +1,8 @@
 name: Generate Package Wiki
 
 on:
-  schedule:
-    # Runs daily at a weird time (02:50 UTC) to avoid delays during periods of
-    # high loads of GitHub Actions workflow runs.
-    - cron: '50 2 * * *'  
+  push:
+    branches: [ main ]
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
