@@ -20,7 +20,10 @@ def sort_write_wiki_content(file_path):
     Args:
         file_path (str): The path to the output Markdown file.
     """
-    wikiContent = ""
+    wikiContent = """This page documents the available VM packages sorted by category.
+This page is [generated automatically](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/generate_package_wiki.yml).
+Do not edit it manually.\n
+"""
     for category in packages_by_category.keys():
         wikiContent += "## " + category + "\n\n"
         wikiContent += "| Package | Description |\n"
