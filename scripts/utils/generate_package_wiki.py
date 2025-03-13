@@ -4,28 +4,35 @@ import pathlib
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
-# Dict[str (category), list (packages information)]
-packages_by_category = defaultdict(str)
+
+# Dict[str (category), Dict[str (pkg_name, pkg_description)]]
+packages_by_category = defaultdict(dict)
 
 
 def sort_write_wiki_content(file_path):
-    """ Writes package information sorted by category to a Markdown wiki file.
+    """Writes package information sorted by category to a Markdown wiki file.
 
     This function iterates through the `packages_by_category` dictionary, which
     contains package information organized by category. For each category, it
     generates a Markdown header and a table containing package names and
-    descriptions. The resulting Markdown content is then written to the specified
-    file.
+    descriptions. Both the categories and the packages inside a category are
+    sorted alphabetically. The resulting Markdown content is then written to
+    the specified file.
 
     Args:
         file_path (str): The path to the output Markdown file.
     """
-    wikiContent = ""
-    for category in packages_by_category.keys():
-        wikiContent += "## " + category + "\n\n"
+    wikiContent = """This page documents the available VM packages sorted by category.
+This page is [generated automatically](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/generate_package_wiki.yml).
+Do not edit it manually.\n
+"""
+    for category, packages in sorted(packages_by_category.items()):
+        wikiContent += f"## {category }\n\n"
         wikiContent += "| Package | Description |\n"
         wikiContent += "| ------- | ----------- |\n"
-        wikiContent += packages_by_category[category] + "\n\n"
+        for pkg_name, pkg_description in sorted(packages.items()):
+            wikiContent += f"| {pkg_name} | {pkg_description} |\n"
+        wikiContent += "\n\n"
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(wikiContent)
 
@@ -50,12 +57,12 @@ def find_element_text(parent, tag_name):
 
 
 def process_packages_directory(packages_dir):
-    """ Obtains the package name, description and category from a directory
-    
+    """Obtains the package name, description and category from a directory
+
     This function parses all the nuspec files in the specified packages directory.
-    It saves into packages_by_category[category] a line containing the package
-    name and the description separated by "|".
-    
+    It saves into packages_by_category[category] a dictionary with the package
+    name as key and the description as value.
+
     Args:
         packages: directory where the packages reside.
     """
@@ -74,9 +81,7 @@ def process_packages_directory(packages_dir):
                 continue
             description = find_element_text(nuspec_metadata, "description")
             package = find_element_text(nuspec_metadata, "id")
-            """packages_by_category is a dictionary of str where each package and description
-            are appended formatted in Markdown"""
-            packages_by_category[category] += "| " + package + " | " + description + " |\n"
+            packages_by_category[category][package] = description
 
 
 if __name__ == "__main__":
