@@ -1,7 +1,7 @@
+import argparse
+import logging
 import os
 import sys
-import logging
-import argparse
 import textwrap
 import time
 
@@ -15,9 +15,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-root_path = os.path.abspath(os.path.join(__file__ ,"../../.."))
+root_path = os.path.abspath(os.path.join(__file__, "../../.."))
 with open(f"{root_path}/categories.txt") as file:
     CATEGORIES = [line.rstrip() for line in file]
+
 
 # If the dependency/tool's version uses the 4th segment, update the package's
 # version to use the current date (YYYYMMDD) in the 4th segment
@@ -25,8 +26,9 @@ def package_version(dependency_version):
     version_segments = dependency_version.split(".")
     if len(version_segments) < 4:
         return dependency_version
-    version_segments[3] =  time.strftime("%Y%m%d")
+    version_segments[3] = time.strftime("%Y%m%d")
     return ".".join(version_segments[:4])
+
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
 INSTALL_TEMPLATE_NAME = "chocolateyinstall.ps1"
@@ -260,7 +262,6 @@ VM-Uninstall-With-Pip $toolName $category
 """
 
 
-
 def create_zip_exe_template(packages_path, **kwargs):
     create_template(
         ZIP_EXE_TEMPLATE,
@@ -356,7 +357,8 @@ def create_ida_plugin_template(packages_path, **kwargs):
         target_url=kwargs.get("target_url"),
         target_hash=kwargs.get("target_hash"),
     )
-    
+
+
 def create_pip_template(packages_path, **kwargs):
     create_template(
         PIP_TEMPLATE,
@@ -371,6 +373,7 @@ def create_pip_template(packages_path, **kwargs):
         category=kwargs.get("category"),
         arguments=kwargs.get("arguments"),
     )
+
 
 def create_template(
     template="",
@@ -394,13 +397,13 @@ def create_template(
     pkg_path = os.path.join(packages_path, f"{pkg_name}.vm")
     try:
         os.makedirs(pkg_path)
-    except:
+    except FileExistsError:
         logger.debug(f"Directory already exists: {pkg_path}")
 
     tools_path = os.path.join(pkg_path, "tools")
     try:
         os.makedirs(tools_path)
-    except:
+    except FileExistsError:
         logger.debug(f"Directory already exists: {tools_path}")
 
     with open(os.path.join(pkg_path, NUSPEC_TEMPLATE_NAME.format(pkg_name)), "w") as f:
@@ -411,8 +414,8 @@ def create_template(
                 authors=authors,
                 description=description,
                 dependency=dependency,
-                dependency_version = version,
-                category = category,
+                dependency_version=version,
+                category=category,
             )
         )
 
@@ -426,7 +429,7 @@ def create_template(
                 target_hash=target_hash,
                 shim_path=shim_path,
                 console_app=console_app,
-                inner_folder=inner_folder
+                inner_folder=inner_folder,
             )
         )
 
@@ -605,20 +608,43 @@ def main(argv=None):
         nargs="?",
         help="Installation template type, see descriptions via %(prog)s --type",
     )
-    parser.add_argument("--raw", action="store_true", help="Create package files like .nuspec with raw placeholder data")
-    parser.add_argument("--pkg_name", type=str.lower, default="", help="Package name without suffix (i.e., no '.vm' needed)")
+    parser.add_argument(
+        "--raw", action="store_true", help="Create package files like .nuspec with raw placeholder data"
+    )
+    parser.add_argument(
+        "--pkg_name", type=str.lower, default="", help="Package name without suffix (i.e., no '.vm' needed)"
+    )
     parser.add_argument("--version", type=str, default="", help="Tool's version number")
     parser.add_argument("--authors", type=str, default="", help="Comma separated list of authors for tool")
-    parser.add_argument("--tool_name", type=str, default="", help="Name of tool (usually the file name with the '.exe') or plugin (the .py or .dll plugin file)")
+    parser.add_argument(
+        "--tool_name",
+        type=str,
+        default="",
+        help="Name of tool (usually the file name with the '.exe') or plugin (the .py or .dll plugin file)",
+    )
     parser.add_argument("--category", type=str, default="", choices=CATEGORIES, help="Category for tool")
     parser.add_argument("--description", type=str, default="", help="Description for tool")
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
     parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
     parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
-    parser.add_argument("--console_app", type=str, default="false", choices=["false", "true"],  help="The tool is a console application, the shortcut should run it with `cmd /K $toolPath --help` to be able to see the output.")
-    parser.add_argument("--inner_folder", type=str, default="false", choices=["false", "true"],  help="The ZIP file unzip to a single folder that contains all the tools.")
-    parser.add_argument("--arguments", type=str, required=False, default="", help="Command-line arguments for the execution")
+    parser.add_argument(
+        "--console_app",
+        type=str,
+        default="false",
+        choices=["false", "true"],
+        help="The tool is a console application, the shortcut should run it with `cmd /K $toolPath --help` to be able to see the output.",
+    )
+    parser.add_argument(
+        "--inner_folder",
+        type=str,
+        default="false",
+        choices=["false", "true"],
+        help="The ZIP file unzip to a single folder that contains all the tools.",
+    )
+    parser.add_argument(
+        "--arguments", type=str, required=False, default="", help="Command-line arguments for the execution"
+    )
     args = parser.parse_args(args=argv)
 
     if args.type is None:

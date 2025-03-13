@@ -15,6 +15,16 @@ jobs:
         with:
           # fetch all history for all branches
           fetch-depth: 0
+      - name: Install dependencies
+        run: pip install black==25.* isort==6.* flake8==7.*
+      # Different line limits: Black/isort (120), Flake8 (150).
+      # Flake8 allows longer lines for better long string readability. Black doesn't enforce string length.
+      - name: Run black
+        run: black --line-length=120 --check --diff .
+      - name: Run flake8
+        run: flake8 --max-line-length=150
+      - name: Run isort
+        run: isort --check --diff --profile black --line-length=120 .
       - name: Run lint.py
         run: python scripts/test/lint.py packages
       - name: Run lint.ps1

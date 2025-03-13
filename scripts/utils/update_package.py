@@ -1,11 +1,12 @@
+import argparse
 import hashlib
 import os
 import re
-import requests
-import sys
 import time
-import argparse
 from enum import IntEnum
+
+import requests
+
 
 # Replace version in nuspec, for example:
 # `<version>1.6.3</version>`
@@ -37,11 +38,13 @@ def get_latest_version(org, project, version):
         print(f"GitHub API response not ok: {response.status_code}")
         return None
     latest_version = response.json()["tag_name"]
-    # version excludes `v` from the capturing group in the regex in update_github_url therefore latest_version_match mustn't include `v` if the version starts with `v`. Otherwise the github URL would replace the version without the `v` with the github version tag with the `v` which will result in the wrong URL such as: https://github.com/jstrosch/sclauncher/releases/download/vv0.0.6/sclauncher.exe
-    if latest_version.startswith('v'):
-    	return latest_version[1:]
+    # Version parsing in update_github_url excludes 'v'. Consequently the latest_version must also exclude 'v' if present.
+    # Otherwise, the github URL would would be replace by a version with double `v`, such as:
+    # https://github.com/jstrosch/sclauncher/releases/download/vv0.0.6/sclauncher.exe
+    if latest_version.startswith("v"):
+        return latest_version[1:]
     else:
-    	return latest_version
+        return latest_version
 
 
 # Get url response's content hash (SHA256)
@@ -60,7 +63,7 @@ def get_sha256(url):
 # v1.2 -> 1.2
 # 1 -> 1
 def format_version(version):
-    match = re.match("v?(?P<version>\d+(.\d+){0,2})", version)
+    match = re.match(r"v?(?P<version>\d+(.\d+){0,2})", version)
     if not match:
         raise ValueError(f"wrong version: {version}")
     return match.group("version")
@@ -138,14 +141,14 @@ def get_increased_version(url, version):
     # Try all possible increased versions, for example for 12.0.1
     # ['12.0.1.1', '13', '13.0', '13.0.0', '13.0.0.0', '12.1', '12.1.0', '12.0.2']
     # New possible segment
-    versions = [ version + ".1"]
+    versions = [version + ".1"]
     for i in range(len(version_list_original)):
         version_list = version_list_original.copy()
         version_list[i] = str(int(version_list[i]) + 1)
-        version_i = ".".join(version_list[:i+1])
+        version_i = ".".join(version_list[: i + 1])
         versions.append(version_i)
         # Try max of 4 segments
-        for j in range(i, 3-i):
+        for j in range(i, 3 - i):
             version_i += ".0"
             versions.append(version_i)
     for latest_version in versions:
@@ -163,7 +166,7 @@ def update_version_url(package):
     # Match urls like:
     # - https://download.sweetscape.com/010EditorWin32Installer12.0.1.exe
     # - https://www.winitor.com/tools/pestudio/current/pestudio-9.53.zip
-    matches = re.findall("[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']", content)
+    matches = re.findall(r"[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']", content)
 
     # It doesn't include a download url with the version
     if not matches:
@@ -179,7 +182,6 @@ def update_version_url(package):
         if latest_version and latest_version_match != latest_version:
             return None
         latest_version = latest_version_match
-        latest_url = url.replace(version, latest_version)
         sha256 = get_sha256(url)
         # Hash can be uppercase or downcase
         content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
@@ -200,7 +202,7 @@ def update_dependencies(package):
     with open(nuspec_path, "r", encoding="utf-8") as file:
         content = file.read()
     matches = re.findall(
-        f'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>',
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>',
         content,
     )
 
@@ -210,12 +212,12 @@ def update_dependencies(package):
         stream = os.popen(f"powershell.exe choco find -er {dependency}")
         output = stream.read()
         # ignore case to also find dependencies like GoogleChrome
-        m = re.search(f"^{dependency}\|(?P<version>.+)", output, re.M | re.I)
+        m = re.search(rf"^{dependency}\|(?P<version>.+)", output, re.M | re.I)
         if m:
             latest_version = m.group("version")
             if latest_version != version:
                 content = re.sub(
-                    f'<dependency id="{dependency}" version=["\']\[{version}\]["\'] */>',
+                    rf'<dependency id="{dependency}" version=["\']\[{version}\]["\'] */>',
                     f'<dependency id="{dependency}" version="[{latest_version}]" />',
                     content,
                 )
@@ -244,7 +246,7 @@ class UpdateType(IntEnum):
     def from_str(string):
         try:
             return UpdateType[string]
-        except:
+        except KeyError:
             # ALL is the default value
             print("Invalid update type, default to ALL")
             return UpdateType.ALL
