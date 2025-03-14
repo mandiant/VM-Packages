@@ -4,7 +4,6 @@ import pathlib
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
-
 # Dict[str (category), Dict[str (pkg_name, pkg_description)]]
 packages_by_category = defaultdict(dict)
 
@@ -27,7 +26,7 @@ This page is [generated automatically](https://github.com/mandiant/VM-Packages/b
 Do not edit it manually.\n
 """
     for category, packages in sorted(packages_by_category.items()):
-        wikiContent += f"## {category }\n\n"
+        wikiContent += f"## {category}\n\n"
         wikiContent += "| Package | Description |\n"
         wikiContent += "| ------- | ----------- |\n"
         for pkg_name, pkg_description in sorted(packages.items()):

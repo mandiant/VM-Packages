@@ -20,14 +20,14 @@ Usage:
    $ python lint.py packages/
 """
 
-import os
-import sys
-import logging
-import pathlib
 import argparse
 import datetime
-import subprocess
+import logging
+import os
+import pathlib
 import re
+import subprocess
+import sys
 from typing import Dict
 from xml.dom import minidom
 
@@ -272,10 +272,9 @@ class PackageIdNotMatchingFolderOrNuspecName(Lint):
         nuspec = path.parts[-1]
         folder = path.parts[-2]
 
-        return not (pkg_id == folder == nuspec[:-len(".nuspec")])
-        
-        
-        
+        return not (pkg_id == folder == nuspec[: -len(".nuspec")])
+
+
 class UsesInvalidCategory(Lint):
     # The common.vm, debloat.vm, and installer.vm packages are special as they
     # assist with the installation and allow to share code between packages.
@@ -293,8 +292,8 @@ class UsesInvalidCategory(Lint):
         CATEGORIES = [line.rstrip() for line in file]
         logger.debug(CATEGORIES)
 
-    name = "Uses an invalid category"
-    recommendation = f"Place a category between <tags> and </tags> from {categories_txt} or exclude the package in the linter"
+    name = "uses an invalid category"
+    recommendation = f"use a category from {categories_txt} between <tags> and </tags>"
 
     def check(self, path):
         if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
@@ -307,6 +306,7 @@ class UsesInvalidCategory(Lint):
         if not match or match.group("category") not in self.CATEGORIES:
             return True
         return False
+
 
 NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
@@ -382,21 +382,19 @@ class UsesCategoryFromNuspec(Lint):
         "dcode.vm",
     ]
 
-    
-
     name = "Doesn't use the function VM-Get-Category"
-    recommendation = f"Set '$category = VM-Get-Category($MyInvocation.MyCommand.Definition)' or exclude the package in the linter"
+    recommendation = "Set '$category = VM-Get-Category($MyInvocation.MyCommand.Definition)'"
 
     def check(self, path):
         if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
             return False
-        
+
         # utf-8-sig ignores BOM
         file_content = open(path, "r", encoding="utf-8-sig").read()
 
         pattern = re.escape("$category = VM-Get-Category($MyInvocation.MyCommand.Definition)")
         match = re.search(pattern, file_content)
-        if not match: 
+        if not match:
             return True
         return False
 
