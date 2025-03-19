@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'CryptoTester'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://github.com/Demonslay335/CryptoTester/releases/download/v1.7.1.0/CryptoTester.zip'
-$zipSha256 = '3d354ce4f66a023dfa3cfcb3beac06d5b7be331d6f247035ee7957e5af64fac3'
+$zipUrl = 'https://github.com/Demonslay335/CryptoTester/releases/download/v1.7.2.0/CryptoTester.zip'
+$zipSha256 = '3440ff6d2bb4f160709221fb3df8dae0c4a0f9c61414e4ea15c776b153431cca'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false
