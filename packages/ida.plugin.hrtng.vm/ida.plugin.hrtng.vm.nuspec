@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.hrtng.vm</id>
-    <version>2.2.21.20250213</version>
+    <version>2.4.30</version>
     <authors>KasperskyLab</authors>
     <description>IDA Pro plugin with features such as decryption, automation, deobfuscation, patching, lib code recognition and pseudocode transformations.</description>
     <dependencies>
