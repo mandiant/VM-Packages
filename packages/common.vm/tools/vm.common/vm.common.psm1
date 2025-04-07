@@ -1237,7 +1237,6 @@ function VM-Set-Service-Manual-Start {
                 Stop-Service -Name $service.Name -Force -ErrorAction Stop
                 Write-Output "INFO" "Service $serviceName has been stopped."
             }
-            
             Set-Service -Name $service.Name -StartupType Manual
             Write-Output "INFO" "Service $serviceName has been set to manual startup."
         } else {

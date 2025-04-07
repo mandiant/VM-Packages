@@ -9,6 +9,65 @@
         FORMAT: 
         <app name="APP_NAME"/>
         -->
+        <app name="Microsoft.549981C3F5F10"/>
+        <app name="Microsoft.BingWeather"/>
+        <app name="Microsoft.GetHelp"/>
+        <app name="Microsoft.Getstarted"/>
+        <app name="Microsoft.MicrosoftOfficeHub"/>
+        <app name="SolitaireCollection"/>
+        <app name="Microsoft.MicrosoftSolitaireCollection"/>
+        <app name="Microsoft.MicrosoftStickyNotes"/>
+        <app name="Microsoft.People"/>
+        <app name="Microsoft.ScreenSketch"/>
+        <app name="Microsoft.Windows.Photos"/>
+        <app name="Microsoft.WindowsAlarms"/>
+        <app name="Microsoft.WindowsCamera"/>
+        <app name="microsoft.windowscommunicationsapps"/>
+        <app name="Microsoft.WindowsFeedbackHub"/>
+        <app name="Microsoft.WindowsMaps"/>
+        <app name="Microsoft.WindowsSoundRecorder"/>
+        <app name="Microsoft.Xbox.TCUI"/>
+        <app name="Microsoft.XboxGameOverlay"/>
+        <app name="Microsoft.XboxGamingOverlay"/>
+        <app name="Microsoft.XboxIdentityProvider"/>
+        <app name="Microsoft.XboxSpeechToTextOverlay"/>
+        <app name="Microsoft.YourPhone"/>
+        <app name="*Zune*"/>
+        <!--NEW ADDITIONS-->
+        <app name="Microsoft.Windows.OOBENetworkConnectionFlow"/>
+        <app name="Microsoft.Windows.OOBENetworkCaptivePortal"/>
+        <app name="MicrosoftWindows.UndockedDevKit"/>
+        <app name="Microsoft.Windows.CloudExperienceHost"/>
+        <app name="Microsoft.BioEnrollment"/>
+        <app name="Microsoft.AAD.BrokerPlugin"/>
+        <app name="Microsoft.Windows.ContentDeliveryManager"/>
+        <app name="Microsoft.MicrosoftEdgeDevToolsClient"/>
+        <app name="Microsoft.Windows.Apprep.ChxApp"/>
+        <app name="Microsoft.Windows.AssignedAccessLockApp"/>
+        <app name="Microsoft.Windows.CallingShellApp"/>
+        <app name="Microsoft.Windows.NarratorQuickStart"/>
+        <app name="Microsoft.Windows.ParentalControls"/>
+        <app name="Microsoft.Windows.PeopleExperienceHost"/>
+        <app name="Microsoft.Windows.PinningConfirmationDialog"/>
+        <app name="Microsoft.Windows.PrintQueueActionCenter"/>
+        <app name="Microsoft.Windows.SecureAssessmentBrowser"/>
+        <app name="Microsoft.AsyncTextService"/>
+        <app name="Microsoft.Windows.XGpuEjectDialog"/>
+        <app name="Microsoft.XboxGameCallableUI"/>
+        <app name="Windows.CBSPreview"/>
+        <app name="Microsoft.OutlookForWindows"/>
+        <app name="Microsoft.Ink.Handwriting"/>
+        <app name="MicrosoftWindows.CrossDevice"/>
+        <app name="Microsoft.BingNews"/>
+        <app name="Microsoft.Services.Store.Engagement"/>
+        <app name="Microsoft.Todos"/>
+        <app name="Microsoft.Copilot"/>
+        <app name="MicrosoftCorporationII.QuickAssist"/>
+        <app name="Microsoft.GamingApp"/>
+        <app name="Clipchamp.Clipchamp"/>
+        <app name="Microsoft.Paint"/>
+        <app name="Microsoft.PowerAutomateDesktop"/>
+        <app name="MicrosoftWindows.Client.WebExperience"/>
     </apps>
     <services>
         <!--
@@ -19,6 +78,27 @@
         FORMAT: 
         <service name="SERVICE_NAME"/>
         -->
+        <!-- TESTING-->
+        <service name="AudioEndpointBuilder"/>
+        <service name="Audiosrv"/>
+        <service name="BITS"/>
+        <service name="CDPSvc"/>
+        <service name="DiagTrack"/>
+        <service name="DispBrokerDesktopSvc"/>
+        <service name="edgeupdate"/>
+        <service name="MapsBroker"/>
+        <service name="Spooler"/>
+        <service name="Themes"/>
+        <service name="UsoSvc"/>
+        <service name="WpnService"/>
+        <service name="WSearch"/>
+        <service name="cbdhsvc_2378b"/>
+        <service name="CDPUserSvc_2378b"/>
+        <service name="OneSyncSvc_2378b"/>
+        <service name="webthreatdefusersvc_2378b"/>
+        <service name="WpnUserService_2378b"/>
+        <service name="XboxNetApiSvc"/>
+        <service name="RetailDemo"/>
     </services>
     <tasks>
         <!--
@@ -29,6 +109,102 @@
         FORMAT: 
         <task name="DESCRIPTIVE_NAME" value="TASK_NAME"/> 
         -->
+        <task name="Microsoft Edge Update Task Machine Core" value="\MicrosoftEdgeUpdateTaskMachineCore"/>
+        <task name="Microsoft Edge Update Task Machine UA" value="\MicrosoftEdgeUpdateTaskMachineUA"/>
+        <task name="OneDrive Reporting Task" value="\OneDrive Reporting Task-S-1-5-21-195162240-2331873549-1182541320-1001"/>
+        <task name="OneDrive Standalone Update Task" value="\OneDrive Standalone Update Task-S-1-5-21-195162240-2331873549-1182541320-1001"/>
+        <task name="AD RMS Rights Policy Template Management (Automated)" value="\Microsoft\Windows\Active Directory Rights Management Services Client\AD RMS Rights Policy Template Management (Automated)"/>
+        <task name="AD RMS Rights Policy Template Management (Manual)" value="\Microsoft\Windows\Active Directory Rights Management Services Client\AD RMS Rights Policy Template Management (Manual)"/>
+        <task name="EDP Policy Manager" value="\Microsoft\Windows\AppID\EDP Policy Manager"/>
+        <task name="Policy Converter" value="\Microsoft\Windows\AppID\PolicyConverter"/>
+        <task name="Mare Backup" value="\Microsoft\Windows\Application Experience\MareBackup"/>
+        <task name="Microsoft Compatibility Appraiser" value="\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser"/>
+        <task name="App UI River Verifier Daily" value="\Microsoft\Windows\ApplicationData\appuriverifierdaily"/>
+        <task name="App UI River Verifier Install" value="\Microsoft\Windows\ApplicationData\appuriverifierinstall"/>
+        <task name="Backup" value="\Microsoft\Windows\AppListBackup\Backup"/>
+        <task name="Backup Non-Maintenance" value="\Microsoft\Windows\AppListBackup\BackupNonMaintenance"/>
+        <task name="UCPD Velocity" value="\Microsoft\Windows\AppxDeploymentClient\UCPD velocity"/>
+        <task name="Proxy" value="\Microsoft\Windows\Autochk\Proxy"/>
+        <task name="BitLocker Encrypt All Drives" value="\Microsoft\Windows\BitLocker\BitLocker Encrypt All Drives"/>
+        <task name="BitLocker MDM Policy Refresh" value="\Microsoft\Windows\BitLocker\BitLocker MDM policy Refresh"/>
+        <task name="Uninstall Device Task" value="\Microsoft\Windows\Bluetooth\UninstallDeviceTask"/>
+        <task name="Bg Task Registration Maintenance Task" value="\Microsoft\Windows\BrokerInfrastructure\BgTaskRegistrationMaintenanceTask"/>
+        <task name="Consolidator" value="\Microsoft\Windows\Customer Experience Improvement Program\Consolidator"/>
+        <task name="Device" value="\Microsoft\Windows\Device Information\Device"/>
+        <task name="Device User" value="\Microsoft\Windows\Device Information\Device User"/>
+        <task name="Metadata Refresh" value="\Microsoft\Windows\Device Setup\Metadata Refresh"/>
+        <task name="Register Device Account Change" value="\Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceAccountChange"/>
+        <task name="Register Device Location Rights Change" value="\Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceLocationRightsChange"/>
+        <task name="Register Device Protection State Changed" value="\Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceProtectionStateChanged"/>
+        <task name="Register Device Setting Change" value="\Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceSettingChange"/>
+        <task name="Register Device WNS Fallback" value="\Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceWnsFallback"/>
+        <task name="DXGI Adapter Cache" value="\Microsoft\Windows\DirectX\DXGIAdapterCache"/>
+        <task name="EDP App Launch Task" value="\Microsoft\Windows\EDP\EDP App Launch Task"/>
+        <task name="EDP Auth Task" value="\Microsoft\Windows\EDP\EDP Auth Task"/>
+        <task name="EDP Inaccessible Credentials Task" value="\Microsoft\Windows\EDP\EDP Inaccessible Credentials Task"/>
+        <task name="Storage Card Encryption Task" value="\Microsoft\Windows\EDP\StorageCardEncryption Task"/>
+        <task name="Property Definition Sync" value="\Microsoft\Windows\File Classification Infrastructure\Property Definition Sync"/>
+        <task name="Bootstrap Usage Data Reporting" value="\Microsoft\Windows\Flighting\FeatureConfig\BootstrapUsageDataReporting"/>
+        <task name="Reconcile Features" value="\Microsoft\Windows\Flighting\FeatureConfig\ReconcileFeatures"/>
+        <task name="Usage Data Flushing" value="\Microsoft\Windows\Flighting\FeatureConfig\UsageDataFlushing"/>
+        <task name="Usage Data Reporting" value="\Microsoft\Windows\Flighting\FeatureConfig\UsageDataReporting"/>
+        <task name="Local User Sync Data Available" value="\Microsoft\Windows\Input\LocalUserSyncDataAvailable"/>
+        <task name="Mouse Sync Data Available" value="\Microsoft\Windows\Input\MouseSyncDataAvailable"/>
+        <task name="Pen Sync Data Available" value="\Microsoft\Windows\Input\PenSyncDataAvailable"/>
+        <task name="Sync Pen Settings" value="\Microsoft\Windows\Input\syncpensettings"/>
+        <task name="Touchpad Sync Data Available" value="\Microsoft\Windows\Input\TouchpadSyncDataAvailable"/>
+        <task name="Scan For Updates" value="\Microsoft\Windows\InstallService\ScanForUpdates"/>
+        <task name="Scan For Updates As User" value="\Microsoft\Windows\InstallService\ScanForUpdatesAsUser"/>
+        <task name="Wake Up And Continue Updates" value="\Microsoft\Windows\InstallService\WakeUpAndContinueUpdates"/>
+        <task name="Wake Up And Scan For Updates" value="\Microsoft\Windows\InstallService\WakeUpAndScanForUpdates"/>
+        <task name="Synchronize Language Settings" value="\Microsoft\Windows\International\Synchronize Language Settings"/>
+        <task name="La57 Cleanup" value="\Microsoft\Windows\Kernel\La57Cleanup"/>
+        <task name="Reconcile Language Resources" value="\Microsoft\Windows\LanguageComponentsInstaller\ReconcileLanguageResources"/>
+        <task name="Uninstallation" value="\Microsoft\Windows\LanguageComponentsInstaller\Uninstallation"/>
+        <task name="Temp Signed License Exchange" value="\Microsoft\Windows\License Manager\TempSignedLicenseExchange"/>
+        <task name="WinSAT" value="\Microsoft\Windows\Maintenance\WinSAT"/>
+        <task name="Detect Hardware Change" value="\Microsoft\Windows\Management\Autopilot\DetectHardwareChange"/>
+        <task name="Remediate Hardware Change" value="\Microsoft\Windows\Management\Autopilot\RemediateHardwareChange"/>
+        <task name="Cellular" value="\Microsoft\Windows\Management\Provisioning\Cellular"/>
+        <task name="MDM Diagnostics Cleanup" value="\Microsoft\Windows\Management\Provisioning\MdmDiagnosticsCleanup"/>
+        <task name="Maps Toast Task" value="\Microsoft\Windows\Maps\MapsToastTask"/>
+        <task name="Maps Update Task" value="\Microsoft\Windows\Maps\MapsUpdateTask"/>
+        <task name="LP Remove" value="\Microsoft\Windows\MUI\LPRemove"/>
+        <task name="SQM Tasks" value="\Microsoft\Windows\PI\Sqm-Tasks"/>
+        <task name="Sysprep Generalize Drivers" value="\Microsoft\Windows\Plug and Play\Sysprep Generalize Drivers"/>
+        <task name="Edu Print Prov" value="\Microsoft\Windows\Printing\EduPrintProv"/>
+        <task name="Printer Cleanup Task" value="\Microsoft\Windows\Printing\PrinterCleanupTask"/>
+        <task name="Print Job Cleanup Task" value="\Microsoft\Windows\Printing\PrintJobCleanupTask"/>
+        <task name="Mobility Manager" value="\Microsoft\Windows\Ras\MobilityManager"/>
+        <task name="Remote Assistance Task" value="\Microsoft\Windows\RemoteAssistance\RemoteAssistanceTask"/>
+        <task name="Intelligent Pwdless Task" value="\Microsoft\Windows\Security\Pwdless\IntelligentPwdlessTask"/>
+        <task name="Family Safety Monitor" value="\Microsoft\Windows\Shell\FamilySafetyMonitor"/>
+        <task name="Family Safety Refresh Task" value="\Microsoft\Windows\Shell\FamilySafetyRefreshTask"/>
+        <task name="Themes Synced Image Download" value="\Microsoft\Windows\Shell\ThemesSyncedImageDownload"/>
+        <task name="Update User Picture Task" value="\Microsoft\Windows\Shell\UpdateUserPictureTask"/>
+        <task name="Speech Model Download Task" value="\Microsoft\Windows\Speech\SpeechModelDownloadTask"/>
+        <task name="Enable License Acquisition" value="\Microsoft\Windows\Subscription\EnableLicenseAcquisition"/>
+        <task name="License Acquisition" value="\Microsoft\Windows\Subscription\LicenseAcquisition"/>
+        <task name="Ws Swap Assessment Task" value="\Microsoft\Windows\Sysmain\WsSwapAssessmentTask"/>
+        <task name="Run Update Notification Manager" value="\Microsoft\Windows\UNP\RunUpdateNotificationMgr"/>
+        <task name="Start Oobe Expedite Work" value="\Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work"/>
+        <task name="Start Oobe Apps Scan After Update" value="\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate"/>
+        <task name="Start Oobe Apps Scan (License Accepted)" value="\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted"/>
+        <task name="USO UX Broker" value="\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker"/>
+        <task name="UUS Failover Task" value="\Microsoft\Windows\UpdateOrchestrator\UUS Failover Task"/>
+        <task name="Perform Remediation" value="\Microsoft\Windows\WaaSMedic\PerformRemediation"/>
+        <task name="Windows Defender Cache Maintenance" value="\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance"/>
+        <task name="Windows Defender Cleanup" value="\Microsoft\Windows\Windows Defender\Windows Defender Cleanup"/>
+        <task name="Windows Defender Scheduled Scan" value="\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan"/>
+        <task name="Windows Defender Verification" value="\Microsoft\Windows\Windows Defender\Windows Defender Verification"/>
+        <task name="MoProfileManagement" value="\Microsoft\Windows\WlanSvc\MoProfileManagement"/>
+        <task name="WIM-Hash-Management" value="\Microsoft\Windows\WOF\WIM-Hash-Management"/>
+        <task name="WIM-Hash-Validation" value="\Microsoft\Windows\WOF\WIM-Hash-Validation"/>
+        <task name="Work Folders Logon Synchronization" value="\Microsoft\Windows\Work Folders\Work Folders Logon Synchronization"/>
+        <task name="Work Folders Maintenance Work" value="\Microsoft\Windows\Work Folders\Work Folders Maintenance Work"/>
+        <task name="Device-Sync" value="\Microsoft\Windows\Workplace Join\Device-Sync"/>
+        <task name="OobeDiscovery" value="\Microsoft\Windows\WwanSvc\OobeDiscovery"/>
+        <task name="XblGameSaveTask" value="\Microsoft\XblGameSave\XblGameSaveTask"/>
     </tasks>
     <registry-items>
         <!--
@@ -37,12 +213,154 @@
         FORMAT: 
         <registry-item name="DESCRIPTIVE_NAME" path="REG_PATH" value="REG_VALUE" type="TYPE" data="NEW_DATA"/> 
         -->
+        <registry-item name="Enable Fast Startup" path="HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" value="HiberbootEnabled" type="DWord" data="1"/>
+        <registry-item name="[1 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Desktop" value="DragFullWindows" type="DWord" data="0"/>
+        <registry-item name="[2 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Desktop" value="MenuShowDelay" type="DWord" data="0"/>
+        <registry-item name="[3 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Desktop\WindowMetrics" value="MinAnimate" type="String" data="0"/>
+        <registry-item name="[4 of 9] Optimize visual effects for performance" path="HKCU:\Control Panel\Keyboard" value="KeyboardDelay" type="DWord" data="0"/>
+        <registry-item name="[5 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ListviewAlphaSelect" type="DWord" data="0"/>
+        <registry-item name="[6 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ListviewShadow" type="DWord" data="0"/>
+        <registry-item name="[7 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarAnimations" type="DWord" data="0"/>
+        <registry-item name="[8 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" value="VisualFXSetting" type="DWord" data="3"/>
+        <registry-item name="[9 of 9] Optimize visual effects for performance" path="HKCU:\Software\Microsoft\Windows\DWM" value="EnableAeroPeek" type="DWord" data="0"/>
+        <registry-item name="DisableBingSearch" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" value="BingSearchEnabled" type="DWord" data="0"/>
+        <registry-item name="Disable Cortana Privacy Policy" path="HKCU:\Software\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="DWord" data="0" />
+        <registry-item name="Restrict Implicit Text Collection" path="HKCU:\Software\Microsoft\InputPersonalization" value="RestrictImplicitTextCollection" type="DWord" data="1" />
+        <registry-item name="Restrict Implicit Ink Collection" path="HKCU:\Software\Microsoft\InputPersonalization" value="RestrictImplicitInkCollection" type="DWord" data="1" />
+        <registry-item name="Disable Cortana Contact Harvesting" path="HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" value="HarvestContacts" type="DWord" data="0" />
+        <registry-item name="Hide Cortana Button" path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowCortanaButton" type="DWord" data="0" />
+        <registry-item name="Disable Cortana through Policy Manager" path="HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana" value="Value" type="DWord" data="0" />
+        <registry-item name="Disable Cortana through Windows Search Policy" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" value="AllowCortana" type="DWord" data="0" />
+        <registry-item name="Disable Input Personalization" path="HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" value="AllowInputPersonalization" type="DWord" data="0" />
+        <registry-item name="Disable Tailored Experiences with Diagnostic Data" path="HKCU:\Software\Policies\Microsoft\Windows\CloudContent" value="DisableTailoredExperiencesWithDiagnosticData" type="DWord" data="1" />
+        <registry-item name="Disable Tailored Experiences with Diagnostic Data" path="HKCU:\Software\Policies\Microsoft\Windows\CloudContent" value="DisableTailoredExperiencesWithDiagnosticData" type="DWord" data="1" />
+        <registry-item name="Disable OneDrive Files On-Demand" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSyncNGSC" type="DWord" data="1" />
+        <registry-item name="Disable Advertising ID" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" value="DisabledByGroupPolicy" type="DWord" data="1" />
+        <registry-item name="Disable Telemetry" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="DWord" data="0" />
+        <registry-item name="Disable Telemetry Wow6432Node" path="HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="DWord" data="0" />
+        <registry-item name="Disable Data Collection" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowTelemetry" type="DWord" data="0" />
+        <registry-item name="Disable PreviewBuilds" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="AllowBuildPreview" type="DWord" data="0" />
+        <registry-item name="Enable NoGenTicket" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" value="NoGenTicket" type="DWord" data="1" />
+        <registry-item name="Disable SQM" path="HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows" value="CEIPEnable" type="DWord" data="0" />
+        <registry-item name="Disable AppCompat AIT" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" value="AITEnable" type="DWord" data="0" />
+        <registry-item name="Disable AppCompat Inventory" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" value="DisableInventory" type="DWord" data="1" />
+        <registry-item name="Disable AppV CEIP" path="HKLM:\SOFTWARE\Policies\Microsoft\AppV\CEIP" value="CEIPEnable" type="DWord" data="0" />
+        <registry-item name="Disable PreventHandwritingDataSharing" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC" value="PreventHandwritingDataSharing" type="DWord" data="1" />
+        <registry-item name="Disable AllowLinguisticDataCollection" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput" value="AllowLinguisticDataCollection" type="DWord" data="0" />
+        <registry-item name="Disable Automatic Server Share" path="HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" value="AutoShareServer" type="DWord" data="0" />
+        <registry-item name="Disable Automatic Workstation Share" path="HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" value="AutoShareWks" type="DWord" data="0" />
+        <registry-item name="Hide Taskbar Search" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" value="SearchboxTaskbarMode" type="DWord" data="0" />
+        <registry-item name="Hide Task View" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowTaskViewButton" type="DWord" data="0" />
+        <registry-item name="Remove MeetNow User" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="DWord" data="1" />
+        <registry-item name="Remove MeetNow Machine" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="DWord" data="1" />
+        <registry-item name="Remove Bing Tab in Taksbar" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" value="ShellFeedsTaskbarViewMode" type="DWord" data="2" />
+        <registry-item name="Remove Bing Desktop Search Bar" path="HKLM:\SOFTWARE\Policies\Microsoft\Edge" value="WebWidgetAllowed" type="DWord" data="0" />
+        <registry-item name="Disable Windows Update Automatic Download" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" value="AUOptions" type="DWord" data="2" />
+        <registry-item name="Disable Windows Update Automatic Restart" path="HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" value="Debugger" type="String" data="cmd.exe" />
+        <registry-item name="Disable Microsoft Connectivity Test (msftconnecttest.com)" path="HKLM:\SYSTEM\CurrentControlSet\services\NlaSvc\Parameters\Internet" value="EnableActiveProbing" type="DWord" data="0" />
+        <registry-item name="Disable Resetbase" path="HKLM\Software\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" value="DisableResetbase" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoice" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsActivateWithVoice_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoice_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoice_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoiceAboveLock" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsActivateWithVoiceAboveLock_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoiceAboveLock_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoiceAboveLock_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessLocation" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsAccessLocation_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessLocation_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessLocation_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable location CapabilityAccessManager" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" value="Value" type="REG_SZ" data="Deny"/>
+        <registry-item name="Disable lfsvc Status" path="HKLM\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" value="Status" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable LetAppsAccessAccountInfo" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsAccessAccountInfo_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessAccountInfo_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessAccountInfo_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable userAccountInformation CapabilityAccessManager" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" value="Value" type="REG_SZ" data="Deny"/>
+        <registry-item name="Disable LetAppsAccessMotion" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsAccessMotion_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessMotion_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable LetAppsAccessMotion_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
+        <registry-item name="Disable activity CapabilityAccessManager" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\activity" value="Value" type="REG_SZ" data="Deny"/>
+        <registry-item name="Disable CEIPEnable SQMClient Windows" path="HKLM\Software\Policies\Microsoft\SQMClient\Windows" value="CEIPEnable" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable CEIPEnable SQMClient" path="HKLM\Software\Microsoft\SQMClient" value="CEIPEnable" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable UploadDisableFlag SQMClient" path="HKLM\Software\Microsoft\SQMClient" value="UploadDisableFlag" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable Debugger CompatTelRunner.exe" path="HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\CompatTelRunner.exe" value="Debugger" type="REG_SZ" data="%SYSTEMROOT%\System32\taskkill.exe"/>
+        <registry-item name="Disable Debugger DeviceCensus.exe" path="HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DeviceCensus.exe" value="Debugger" type="REG_SZ" data="%SYSTEMROOT%\System32\taskkill.exe"/>
+        <registry-item name="Disable AllowDesktopAnalyticsProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowDesktopAnalyticsProcessing" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowDeviceNameInTelemetry" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowDeviceNameInTelemetry" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable MicrosoftEdgeDataOptIn" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="MicrosoftEdgeDataOptIn" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowWUfBCloudProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowWUfBCloudProcessing" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowUpdateComplianceProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowUpdateComplianceProcessing" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowCommercialDataPipeline" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowCommercialDataPipeline" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowTelemetry DataCollection" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowTelemetry DataCollection Policies" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowTelemetry" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable DisableOneSettingsDownloads" path="HKLM\Software\Policies\Microsoft\Windows\DataCollection" value="DisableOneSettingsDownloads" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable NoGenTicket" path="HKLM\Software\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" value="NoGenTicket" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable Disabled Windows Error Reporting" path="HKLM\Software\Policies\Microsoft\Windows\Windows Error Reporting" value="Disabled" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable Disabled Windows Error Reporting Microsoft" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="Disabled" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DefaultConsent Windows Error Reporting Consent" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting\Consent" value="DefaultConsent" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DefaultOverrideBehavior Windows Error Reporting Consent" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting\Consent" value="DefaultOverrideBehavior" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DontSendAdditionalData Windows Error Reporting" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="DontSendAdditionalData" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable LoggingDisabled Windows Error Reporting" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="LoggingDisabled" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DODownloadMode" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" value="DODownloadMode" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable DisableSoftLanding" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" value="DisableSoftLanding" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DisableWindowsSpotlightFeatures" path="HKLM\Software\Policies\Microsoft\Windows\CloudContent" value="DisableWindowsSpotlightFeatures" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DisableWindowsConsumerFeatures" path="HKLM\Software\Policies\Microsoft\Windows\CloudContent" value="DisableWindowsConsumerFeatures" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DisabledByGroupPolicy" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" value="DisabledByGroupPolicy" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable EnableExperimentation" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="EnableExperimentation" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable EnableConfigFlighting" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="EnableConfigFlighting" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowExperimentation" path="HKLM\SOFTWARE\Microsoft\PolicyManager\default\System\AllowExperimentation" value="value" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowBuildPreview" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="AllowBuildPreview" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable HideInsiderPage" path="HKLM\SOFTWARE\Microsoft\WindowsSelfHost\UI\Visibility" value="HideInsiderPage" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications Policies DataCollection" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable Enabled TIPC" path="HKLM\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection Policies" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection Policies 2" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable Enabled TIPC 2" path="HKLM\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable HideSCAMeetNow Explorer" path="HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable TurnOffWindowsCopilot" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DisableFileSyncNGSC OneDrive" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSyncNGSC" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable DisableFileSync OneDrive" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSync" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable AgentActivationEnabled" path="HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" value="AgentActivationEnabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AgentActivationOnLockScreenEnabled" path="HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" value="AgentActivationOnLockScreenEnabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable Value DeviceAccess Global" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" value="Value" type="REG_SZ" data="Deny"/>
+        <registry-item name="Disable Value DeviceAccess Global 2" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{E6AD100E-5F4E-44CD-BE0F-2265D88D14F5}" value="Value" type="REG_SZ" data="Deny"/>
+        <registry-item name="Disable Value DeviceAccess Global 3" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{C1D23ACC-752B-43E5-8448-8D0E519CD6D6}" value="Value" type="REG_SZ" data="Deny"/>
+        <registry-item name="Disable IsMSACloudSearchEnabled" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" value="IsMSACloudSearchEnabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable IsAADCloudSearchEnabled" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" value="IsAADCloudSearchEnabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable Enabled AdvertisingInfo" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" value="Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable SubscribedContent-338393Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-338393Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable SubscribedContent-353694Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-353694Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable SubscribedContent-353696Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-353696Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable NumberOfSIUFInPeriod" path="HKCU\SOFTWARE\Microsoft\Siuf\Rules" value="NumberOfSIUFInPeriod" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AcceptedPrivacyPolicy" path="HKCU\SOFTWARE\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable Enabled TIPC" path="HKCU\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable NumberOfSIUFInPeriod (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Siuf\Rules" value="NumberOfSIUFInPeriod" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AcceptedPrivacyPolicy (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable Enabled TIPC (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable ShowCopilotButton" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowCopilotButton" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AutoOpenCopilotLargeScreens" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" value="AutoOpenCopilotLargeScreens" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable IsUserEligible BingChat" path="HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" value="IsUserEligible" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable TurnOffWindowsCopilot" path="HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="REG_DWORD" data="1"/>
+        <registry-item name="Disable TaskbarDa" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarDa" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable System.IsPinnedToNameSpaceTree CLSID" path="HKCU\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" value="System.IsPinnedToNameSpaceTree" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable System.IsPinnedToNameSpaceTree Wow6432Node CLSID" path="HKCU\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" value="System.IsPinnedToNameSpaceTree" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable TaskbarDa" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarDa" type="DWord" data="0"/>
+        <registry-item name="Disable MicrosoftWindows.Client.WebExperience" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy" value="" type="String" data=""/>
+        <registry-item name="Disable Windows Copilot (Machine)" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="DWord" data="1"/>
+        <registry-item name="Disable Windows Copilot (User)" path="HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="DWord" data="1"/>
+        <registry-item name="Disable Copilot access (User eligibility)" path="HKCU:\Software\Microsoft\Windows\Shell\Copilot\BingChat" value="IsUserEligible" type="DWord" data="0"/>
+        <registry-item name="Disable Auto-Open Copilot" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" value="AutoOpenCopilotLargeScreens" type="DWord" data="0"/>
+        <registry-item name="Remove Copilot Button in Explorer" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowCopilotButton" type="DWord" data="0"/>
     </registry-items>
     <path-items>
         <!--
         INFO:
         Removes files and folders from the system
-        FORMAT: 
+        FORMAT:
         <path-item name="DESCRIPTIVE_NAME" type="dir/file" path="DIR_PATH/FILE_PATH"/>
         -->
     </path-items>
@@ -53,5 +371,104 @@
         FORMAT: 
         <custom-item name="DESCRIPTIVE_NAME"> <cmd value="PS_COMMAND"/> ... </custom-item>
         -->
+        <custom-item name="Remove OneDrive">
+            <cmd value="taskkill /f /im OneDrive.exe"/>
+            <cmd value="C:\Windows\SysWOW64\OneDriveSetup.exe /uninstall"/>
+        </custom-item>
+        <custom-item name="Unpin Taskbar Icons">
+            <cmd value='Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name "Favorites" -Type Binary -Value ([byte[]](255))'/>
+            <cmd value='Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name "FavoritesResolve" -ErrorAction SilentlyContinue'/>
+        </custom-item>
+        <custom-item name="Unpin all Start Menu Tiles">
+            <cmd value="$key = Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\*start.tilegrid$windows.data.curatedtilecollection.tilecollection\Current'; $data = $key.Data[0..25] + ([byte[]](202,50,0,226,44,1,1,0,0)); Set-ItemProperty -Path $key.PSPath -Name 'Data' -Type Binary -Value $data; Stop-Process -Name 'ShellExperienceHost' -Force -ErrorAction SilentlyContinue" />
+        </custom-item>
+        <custom-item name="Remove Desktop Links">
+            <cmd value="del $(Join-Path $env:USERPROFILE 'Desktop\*.lnk')" />
+            <cmd value="del $(Join-Path $env:PUBLIC 'Desktop\*.lnk')" />
+        </custom-item>
+        <custom-item name="Disabling display and sleep mode timeouts">
+            <cmd value="powercfg /X monitor-timeout-ac 0" />
+            <cmd value="powercfg /X monitor-timeout-dc 0" />
+            <cmd value="powercfg /X standby-timeout-ac 0" />
+            <cmd value="powercfg /X standby-timeout-dc 0" />
+        </custom-item>
+        <custom-item name="Removing Steps Recorder, Fax And Scan">
+            <cmd value="Get-WindowsCapability -Online -Name 'App.StepsRecorder*' | Remove-WindowsCapability -Online" />
+            <cmd value="Get-WindowsCapability -Online -Name 'Print.Fax.Scan*' | Remove-WindowsCapability -Online" />
+        </custom-item>
+        <custom-item name="Blocking tracking hosts">
+            <cmd value="$domain='oca.telemetry.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='telemetry.v.dropbox.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='spclient.wg.spotify.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='oca.telemetry.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='oca.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='kmwatsonc.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='settings-win.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='settings.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='functional.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='browser.events.data.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='self.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='v10.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='v10c.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='us-v10c.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='eu-v10c.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='v10.vortex-win.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='vortex-win.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='telecommand.telemetry.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='www.telecommandsvc.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='umwatson.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='watsonc.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='eu-watsonc.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='watson.telemetry.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='umwatsonc.events.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ceuswatcab01.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ceuswatcab02.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='eaus2watcab01.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='eaus2watcab02.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='weus2watcab01.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='weus2watcab02.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='co4.telecommand.telemetry.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='cs11.wpc.v0cdn.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='cs1137.wpc.gammacdn.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='modern.watson.data.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='inference.location.live.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='location-inference-westus.cloudapp.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ecn.dev.virtualearth.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ecn-us.dev.virtualearth.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='weathermapdata.blob.core.windows.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='arc.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ris.api.iris.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='assets.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='c.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='g.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ntp.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='srtb.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='fd.api.iris.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='staticview.msn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='mucp.api.account.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='query.prod.cms.rt.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='config.edge.skype.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='c.bing.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='th.bing.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='edgeassetservice.azureedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='c-ring.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='fp.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='I-ring.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='s-ring.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='dual-s-ring.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='creativecdn.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='a-ring-fallback.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='fp-afd-nocache-ccp.azureedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='prod-azurecdn-akamai-iris.azureedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='widgetcdn.azureedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='widgetservice.azurefd.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='fp-vs.azureedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='ln-ring.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='t-ring.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='t-ring-fdv2.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='tse1.mm.bing.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='evoke-windowsservices-tas.msedge.net';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+            <cmd value="$domain='tile-service.weather.microsoft.com';$hostsFilePath=$env:SYSTEMROOT+'\System32\drivers\etc\hosts';$comment='managed by privacy.sexy';$encoding=[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::utf8;@(@{ip='0.0.0.0'},@{ip='::1'})|ForEach-Object{if(!(Test-Path $hostsFilePath -PathType Leaf)){New-Item $hostsFilePath -ItemType File -Force|Out-Null};$entry=$($_.ip)+[char]9+$domain+' # '+$comment;if(!(Get-Content $hostsFilePath -Raw -Encoding $encoding|Where-Object{$_ -match [regex]::Escape($entry)})){Add-Content $hostsFilePath $entry -Encoding $encoding}}" />
+        </custom-item>
     </custom-items>
 </config>
