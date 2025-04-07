@@ -1229,18 +1229,22 @@ function VM-Set-Service-Manual-Start {
         [ValidateNotNullOrEmpty()]
         [string]$serviceName
     )
-
     try {
         $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
-
         if ($service) {
+            if ($service.Status -eq "Running") {
+                Write-Output "INFO" "Stopping service $serviceName..."
+                Stop-Service -Name $service.Name -Force -ErrorAction Stop
+                Write-Output "INFO" "Service $serviceName has been stopped."
+            }
+            
             Set-Service -Name $service.Name -StartupType Manual
-            VM-Write-Log "INFO" "Service $serviceName has been disabled."
+            Write-Output "INFO" "Service $serviceName has been set to manual startup."
         } else {
-            VM-Write-Log "WARN" "Service $serviceName not found."
+            Write-Output "WARN" "Service $serviceName not found."
         }
     } catch {
-        VM-Write-Log "ERROR" "An error occurred while setting the service startup type. Error: $_"
+        Write-Output "ERROR" "An error occurred: $_"
     }
 }
 
