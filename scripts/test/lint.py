@@ -283,8 +283,6 @@ class UsesInvalidCategory(Lint):
         "common.vm",
         "debloat.vm",
         "installer.vm",
-        # exclude dcode as it fails to install: https://github.com/mandiant/VM-Packages/issues/1176
-        "dcode.vm",
     ]
     root_path = os.path.abspath(os.path.join(__file__, "../../.."))
     categories_txt = os.path.join(root_path, "categories.txt")
@@ -378,8 +376,6 @@ class UsesCategoryFromNuspec(Lint):
         "x64dbgpy.vm",
         "vscode.extension.",
         "chrome.extensions.vm",
-        # exclude dcode as it fails to install: https://github.com/mandiant/VM-Packages/issues/1176
-        "dcode.vm",
     ]
 
     name = "Doesn't use the function VM-Get-Category"
