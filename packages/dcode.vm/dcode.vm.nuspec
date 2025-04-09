@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dcode.vm</id>
-    <version>5.6.24123.20240507</version>
+    <version>5.6.24123.20250408</version>
     <authors>Digital Detective Group</authors>
     <description>Utility for converting data found on desktop and mobile devices into human-readable timestamps.</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
+    <tags>Forensic</tags>
   </metadata>
 </package>
