@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Group3r'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$exeUrl = 'https://github.com/Group3r/Group3r/releases/download/1.0.67/Group3r.exe'
-$exeSha256 = '4c3fa4168e5b406f8b4ad0d61e38b85388b04fcaed2abab4c5dc51462d1d515b'
+$exeUrl = 'https://github.com/Group3r/Group3r/releases/download/1.0.69/Group3r.exe'
+$exeSha256 = '8f71cf000b5092e214f6e52470b702ce662ad2ed0deff86c26728a0e3532ef25'
 
 VM-Install-Single-Exe $toolName $category $exeUrl -exeSha256 $exeSha256 -consoleApp $true
