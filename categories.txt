@@ -8,6 +8,7 @@ dotNet
 Exploitation
 File Information
 Forensic
+Go
 Hex Editors
 IDA Plugins
 InnoSetup
