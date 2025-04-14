@@ -42,7 +42,7 @@ body:
     attributes:
       label: Version
       description: |
-        Use the following scheme and today's date, as we install the latest version with npm:  `0.0.0.YYYYMMDD`. Example: `0.0.0.20240513`. See the [_Version_ documentation in our wiki](https://github.com/mandiant/VM-Packages/wiki/Package-Structure#version) for more details.
+        Use the following scheme and today's date, as we install the latest version with npm:  `0.0.0.YYYYMMDD`. Example: `0.0.0.20240513`. See the [_Version_ documentation in our wiki](https://github.com/mandiant/VM-Packages/wiki/Chocolatey-Packages#version) for more details.
       placeholder: ex. 0.0.0.20240513
     validations:
       required: true
