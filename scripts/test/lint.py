@@ -376,6 +376,7 @@ class UsesCategoryFromNuspec(Lint):
         "x64dbgpy.vm",
         "vscode.extension.",
         "chrome.extensions.vm",
+        "keystone.vm",
     ]
 
     name = "Doesn't use the function VM-Get-Category"

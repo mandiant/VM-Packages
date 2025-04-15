@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>keystone.vm</id>
+    <version>0.9.2</version>
+    <authors>Nguyen Anh Quynh</authors>
+    <description>Keystone is a Python library providing a multi-platform, multi-architecture assembler.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20250407" />
+      <dependency id="python3.vm" />
+    </dependencies>
+    <tags>Utilities</tags>
+  </metadata>
+</package>
