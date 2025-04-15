@@ -9,7 +9,8 @@ try {
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
   $executablePath = Join-Path ${Env:ChocolateyInstall} $shimPath -Resolve
-  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
+  $executableDir = Split-Path -Path $executablePath -Parent
+  Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -WorkingDirectory $executableDir -RunAsAdmin
   VM-Assert-Path $shortcut
 } catch {
   VM-Write-Log-Exception $_
