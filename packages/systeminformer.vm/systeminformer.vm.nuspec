@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>systeminformer.vm</id>
-    <version>3.2.25091</version>
+    <version>3.2.25102</version>
     <authors>winsiderss</authors>
     <description>A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware.</description>
     <dependencies>
