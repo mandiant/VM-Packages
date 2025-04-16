@@ -41,7 +41,16 @@ Copy-Item "$imagesPath\*" ${Env:VM_COMMON_DIR} -Force
 
 VM-Install-Shortcut -toolName $toolName -category $category -executablePath "$toolDir\$toolName.exe"
 
-# Create scheduled task for tool to run every 2 minutes.
+# Create scheduled task for tool to run at login and every 1 minute.
 $action = New-ScheduledTaskAction -Execute "$toolDir\$toolName.exe"
-$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 1)
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'Internet Detector' -Force
+$trigger_1 = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 1)
+$trigger_2 = New-ScheduledTaskTrigger -AtLogon
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries `
+                                         -DontStopIfGoingOnBatteries `
+                                         -StartWhenAvailable `
+                                         -ExecutionTimeLimit (New-TimeSpan -Days 0) # 0 = infinite
+Register-ScheduledTask -TaskName 'Internet Detector' `
+                       -Action $action `
+                       -Trigger $trigger_1, $trigger_2 `
+                       -Settings $settings `
+                       -Force
