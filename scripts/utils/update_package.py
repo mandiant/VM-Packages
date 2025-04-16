@@ -95,6 +95,11 @@ def update_github_url(package):
     install_script_path, content = get_install_script(package)
     # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
     # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
+
+    # No chocolateyinstall.ps1 available
+    if not content:
+        return None
+
     matches = re.findall(
         "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/v?(?P<version>[^/]+)/[^\"']+)[\"']",
         content,
@@ -162,6 +167,11 @@ def get_increased_version(url, version):
 # Update package which uses a generic url that includes the version
 def update_version_url(package):
     install_script_path, content = get_install_script(package)
+
+    # No chocolateyinstall.ps1 available
+    if not content:
+        return None
+
     # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
     # Match urls like:
     # - https://download.sweetscape.com/010EditorWin32Installer12.0.1.exe
