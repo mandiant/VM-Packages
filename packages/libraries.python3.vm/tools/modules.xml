@@ -15,7 +15,7 @@
     <module name="msoffcrypto-tool"/>
     <module name="olefile"/>
     <module name="oletools"/>
-    <module name="pefile"/>
+    <module name="pefile>=2024.08.26"/>
     <module name="psutil"/>
     <module name="pyasn1"/>
     <module name="pycryptodome"/>
