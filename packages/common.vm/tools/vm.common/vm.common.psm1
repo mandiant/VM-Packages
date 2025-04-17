@@ -458,14 +458,18 @@ function VM-Install-From-Zip {
         if ($verifySignature) {
             # Check signature of all executable files individually
             Get-ChildItem -Path "$toolDir\*.exe" | ForEach-Object {
+                $file = $_
                 try {
                     # Check signature for each file
-                    VM-Assert-Signature $_.FullName
+                    VM-Assert-Signature $file.FullName
                 } catch {
-                    # Remove the file with invalid signature
-                    Write-Warning "Removing file '$($_.FullName)' due to invalid signature"
-                    Remove-Item $_.FullName -Force -ea 0 | Out-Null
                     VM-Write-Log-Exception $_
+                    if ($_.Exception.Message -like "INVALID SIGNATURE*")
+                    {
+                        # Remove the file with invalid signature
+                        VM-Write-Log "ERROR" "Removing file '$($file.FullName)' due to invalid signature"
+                        Remove-Item $file.FullName -Force -ea 0 | Out-Null
+                    }
                 }
             }
         }
@@ -792,14 +796,18 @@ function VM-Install-With-Installer {
         if ($verifySignature) {
             # Check signature of all executable files individually
             Get-ChildItem -path $toolDir -include *.msi, *.exe -recurse -File -ea 0 | ForEach-Object {
+                $file = $_
                 try {
                     # Check signature for each file
-                    VM-Assert-Signature $_.FullName
+                    VM-Assert-Signature $file.FullName
                 } catch {
-                    # Remove the file with invalid signature
-                    Write-Warning "Removing file '$($_.FullName)' due to invalid signature"
-                    Remove-Item $_.FullName -Force -ea 0 | Out-Null
                     VM-Write-Log-Exception $_
+                    if ($_.Exception.Message -like "INVALID SIGNATURE*")
+                    {
+                        # Remove the file with invalid signature
+                        VM-Write-Log "ERROR" "Removing file '$($file.FullName)' due to invalid signature"
+                        Remove-Item $file.FullName -Force -ea 0 | Out-Null
+                    }
                 }
             }
         }
