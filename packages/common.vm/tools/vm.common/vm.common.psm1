@@ -1359,6 +1359,26 @@ function VM-Remove-Path {
     }
 }
 
+function VM-Install-Locale {
+# Function for installing locales
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$name,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$lang
+    )
+
+    try {
+        $job = Install-Language -Language $lang -AsJob
+        VM-Write-Log "INFO" "Installing the $name language as a background job with id $($job.Id)."
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while installing the $name language. Error: $_"
+    }
+}
+
 function VM-Execute-Custom-Command{
 # Function for removing items in need of custom code.
     param(
@@ -1503,6 +1523,15 @@ function VM-Apply-Configurations {
                 $type = $_.type
                 $path = $_.path
                 VM-Remove-Path -name $name -type $type -path $path
+            }
+        }
+
+        # Process the locales
+        if ($config.config."locales"."locale") {
+            $config.config."locales"."locale" | ForEach-Object {
+                $name = $_.name
+                $lang = $_.lang
+                VM-Install-Locale -name $name -lang $lang
             }
         }
 
