@@ -70,6 +70,11 @@ ForEach ($hive in @("HKCU:", "HKLM:")) {
 SetDefaultBrowser "chrome"
 
 # Do not show the "Open with" popup
-Set-ItemProperty -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -name "NoNewAppAlert" -value 1 -type "DWord"
+$explorerRegistryKey = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer"
+if (-not (Test-Path -Path $explorerRegistryKey)) {
+    New-Item -Path $explorerRegistryKey -Force
+}
+
+Set-ItemProperty -path $explorerRegistryKey -name "NoNewAppAlert" -value 1 -type "DWord"
 
 VM-Refresh-Desktop # For registry change to take effect
