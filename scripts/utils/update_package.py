@@ -4,7 +4,7 @@ import os
 import re
 import time
 from enum import IntEnum
-
+from pathlib import Path
 import requests
 
 
@@ -69,37 +69,51 @@ def format_version(version):
     return match.group("version")
 
 
+# get content of nuspec file
+def get_nuspec(package):
+    nuspec_path = f"packages/{package}/{package}.nuspec"
+    with open(nuspec_path, "r", encoding="utf-8") as file:
+        content = file.read()
+    return (nuspec_path, content)
+
+
+# get nuspec version
+def get_version_from_nuspec(package):
+    content = get_nuspec(package)
+
+    # find the version from nuspec
+    version = re.findall(r"<version>(?P<version>[^<]+)</version>", content)[0]
+    return version
+
+
+# check if the package has a `chocolateyinstall.ps1` file, some packages do not have one
+def check_install_script_present(package):
+    install_script_path = f"packages/{package}/tools/chocolateyinstall.ps1"
+    return Path(install_script_path).is_file()
+
+
 # Replace version in the package's nuspec file
 def update_nuspec_version(package, latest_version):
-    nuspec_path = f"packages/{package}/{package}.nuspec"
-    with open(nuspec_path, "r") as file:
-        content = file.read()
-    latest_version, content = replace_version(latest_version, content)
+    (nuspec_path, content) = get_nuspec(package)
+    (latest_version, content) = replace_version(latest_version, content)
     with open(nuspec_path, "w") as file:
         file.write(content)
+    return latest_version
 
 
 # read the chocolateyinstall.ps1 package file
 def get_install_script(package):
     install_script_path = f"packages/{package}/tools/chocolateyinstall.ps1"
-    try:
-        file = open(install_script_path, "r")
-    except FileNotFoundError:
-        # chocolateyinstall.ps1 may not exist for metapackages
-        return (None, None)
-    return (install_script_path, file.read())
+    with open(install_script_path, "r") as file:
+        content = file.read()
+    return (install_script_path, content)
 
 
 # Update package using GitHub releases
 def update_github_url(package):
-    install_script_path, content = get_install_script(package)
+    (install_script_path, content) = get_install_script(package)
     # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
     # Match urls like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
-
-    # No chocolateyinstall.ps1 available
-    if not content:
-        return None
-
     matches = re.findall(
         "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/v?(?P<version>[^/]+)/[^\"']+)[\"']",
         content,
@@ -166,16 +180,10 @@ def get_increased_version(url, version):
 
 # Update package which uses a generic url that includes the version
 def update_version_url(package):
-    install_script_path, content = get_install_script(package)
-
-    # No chocolateyinstall.ps1 available
-    if not content:
-        return None
-
+    (install_script_path, content) = get_install_script(package)
     # Use findall as some packages have two urls (for 32 and 64 bits), we need to update both
     # Match urls like:
     # - https://download.sweetscape.com/010EditorWin32Installer12.0.1.exe
-    # - https://www.winitor.com/tools/pestudio/current/pestudio-9.53.zip
     matches = re.findall(r"[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']", content)
 
     # It doesn't include a download url with the version
@@ -184,7 +192,7 @@ def update_version_url(package):
 
     latest_version = None
     for url, version in matches:
-        latest_version_match, latest_sha256 = get_increased_version(url, version)
+        (latest_version_match, latest_sha256) = get_increased_version(url, version)
         # No newer version available
         if (not latest_version_match) or (latest_version_match == version):
             return None
@@ -208,12 +216,9 @@ def update_version_url(package):
 # Update dependencies
 # Metapackages have only one dependency and same name (adding `.vm`)  and version as the dependency
 def update_dependencies(package):
-    nuspec_path = f"packages/{package}/{package}.nuspec"
-    with open(nuspec_path, "r", encoding="utf-8") as file:
-        content = file.read()
+    (nuspec_path, content) = get_nuspec(package)
     matches = re.findall(
-        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>',
-        content,
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>', content
     )
 
     updates = False
@@ -236,18 +241,55 @@ def update_dependencies(package):
                 if dependency.lower() == package[:-3].lower():  # Metapackage
                     package_version = latest_version
     if updates:
-        package_version, content = replace_version(package_version, content)
+        (package_version, content) = replace_version(package_version, content)
         with open(nuspec_path, "w") as file:
             file.write(content)
         return package_version
     return None
 
 
+# Update package which uses a generic url that has no version
+def update_dynamic_url(package):
+    version = get_version_from_nuspec(package)
+
+    # We only fix the hash of tools whose URLs don't download a concrete version.
+    # # The version for these tools has the format "0.0.0.yyyymmdd".
+    if re.fullmatch(r"0\.0\.0\.(\d{8})", version):
+        (install_script_path, content) = get_install_script(package)
+
+        # find the urls and sha256hashes in the `chocolateyinstall.ps1`
+        matches_url = re.findall(r"[\"'](https{0,1}://[^\"']+)[\"']", content)
+        matches_hash = re.findall(r"[\"']([a-fA-F0-9]{64})[\"']", content)
+
+        # if there is no matching url or no matching hashes or the number of matching url is not equal to number of matching hashes exit out
+        # works for multiple url and hashes if the order of urls and hash match from top to bottom
+        if not matches_url or not matches_hash or len(matches_url) != len(matches_hash):
+            return None
+
+        # find the new hash and check with existing hash and replace if different
+        for url, sha256 in zip(matches_url, matches_hash):
+            latest_sha256 = get_sha256(url)
+            if latest_sha256.lower() == sha256.lower():
+                return None
+
+            content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+
+        # write back the changed chocolateyinstall.ps1
+        with open(install_script_path, "w") as file:
+            file.write(content)
+
+        # since not versioned url, the current version will be same as previous version
+        latest_version = update_nuspec_version(package, version)
+        return latest_version
+
+
 class UpdateType(IntEnum):
+    # UpdateTypes are defined using powers of 2 to allow for bitwise combinations.
     DEPENDENCIES = 1
     GITHUB_URL = 2
     VERSION_URL = 4
-    ALL = DEPENDENCIES | GITHUB_URL | VERSION_URL
+    DYNAMIC_URL = 8
+    ALL = DEPENDENCIES | GITHUB_URL | VERSION_URL | DYNAMIC_URL
 
     def __str__(self):
         return self.name
@@ -265,22 +307,34 @@ class UpdateType(IntEnum):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("package_name")
-    parser.add_argument("--update_type", type=UpdateType.from_str, choices=list(UpdateType), default=UpdateType.ALL)
+    parser.add_argument(
+        "--update_type",
+        type=UpdateType.from_str,
+        choices=list(UpdateType),
+        default=UpdateType.ALL,
+    )
     args = parser.parse_args()
+
+    is_install_script_present = check_install_script_present(args.package_name)
 
     latest_version = None
     if args.update_type & UpdateType.DEPENDENCIES:
         latest_version = update_dependencies(args.package_name)
 
-    if args.update_type & UpdateType.GITHUB_URL:
-        latest_version2 = update_github_url(args.package_name)
-        if latest_version2:
-            latest_version = latest_version2
+    if is_install_script_present:
 
-    if args.update_type & UpdateType.VERSION_URL:
-        latest_version2 = update_version_url(args.package_name)
-        if latest_version2:
-            latest_version = latest_version2
+        if args.update_type & UpdateType.GITHUB_URL:
+            latest_version2 = update_github_url(args.package_name)
+            if latest_version2:
+                latest_version = latest_version2
+
+        if args.update_type & UpdateType.VERSION_URL:
+            latest_version2 = update_version_url(args.package_name)
+            if latest_version2:
+                latest_version = latest_version2
+
+        if args.update_type & UpdateType.DYNAMIC_URL:
+            latest_version = update_dynamic_url(args.package_name)
 
     if not latest_version:
         exit(1)
