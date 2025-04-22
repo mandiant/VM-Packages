@@ -12,10 +12,7 @@ try {
     choco install visualstudio2022community --params "--add Microsoft.VisualStudio.Component.CoreEditor --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended" --execution-timeout 6000 --no-progress
 
     $executablePath = Join-Path ${Env:ProgramFiles} "Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe" -Resolve
-    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
-    $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-    VM-Assert-Path $shortcut
+    VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath
 
     # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
     VM-Refresh-Desktop
