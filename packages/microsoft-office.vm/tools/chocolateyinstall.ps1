@@ -9,7 +9,6 @@ try {
         @{name = 'OneNote'; executable = 'ONENOTE.EXE'}
     )
     $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
-    $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
     # Install with choco instead as dependency to provide params such the product
     choco install microsoft-office-deployment --params="'/DisableUpdate:TRUE  /Product:ProPlus2024Retail'" --no-progress
@@ -20,9 +19,7 @@ try {
     # Ensure the tools are installed and create shortcuts
     forEach ($tool in $tools) {
         $executablePath = Join-Path $officeDirectory $($tool.executable) -Resolve
-        $shortcut = Join-Path $shortcutDir "$($tool.name).lnk"
-        Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath
-        VM-Assert-Path $shortcut
+        VM-Install-Shortcut -toolName $tool.name -category $category -executablePath $executablePath
     }
 } catch {
     VM-Write-Log-Exception $_
