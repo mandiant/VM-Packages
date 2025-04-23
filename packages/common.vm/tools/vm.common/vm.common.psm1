@@ -505,6 +505,7 @@ function VM-Install-Node-Tool {
         [string] $arguments
     )
     try {
+        # "--no-update-notifier" removes the npm funding notice that may cause an error
         npm install -g $toolName --no-update-notifier
         VM-Install-Shortcut -toolName $toolName -category $category -arguments "$toolName $arguments" -powershell
     } catch {
