@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>visualstudio.vm</id>
-    <version>17.6.1.20250219</version>
-    <description>IDE.</description>
+    <version>17.6.1.20250423</version>
+    <description>Visual Studio is an IDE, installed with useful components and workloads.</description>
     <authors>Microsoft</authors>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
