@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>memprocfs.vm</id>
-    <version>5.14.9</version>
+    <version>5.14</version>
     <authors>Ulf Frisk</authors>
     <description>MemProcFS is an easy and convenient way of viewing physical memory as files in a virtual file system.</description>
     <dependencies>
