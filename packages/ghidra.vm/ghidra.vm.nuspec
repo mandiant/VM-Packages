@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ghidra.vm</id>
-    <version>11.3.1</version>
+    <version>11.3.2</version>
     <authors>National Security Agency</authors>
     <description>A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="ghidra" version="[11.3.1]" />
+      <dependency id="ghidra" version="[11.3.2]" />
       <dependency id="openjdk.vm" />
     </dependencies>
     <tags>Disassemblers</tags>
