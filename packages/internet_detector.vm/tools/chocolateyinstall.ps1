@@ -19,10 +19,6 @@ $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 New-Item -Path $toolDir -ItemType Directory -Force -ea 0
 VM-Assert-Path $toolDir
 
-# Install pyinstaller 6.11.1 (needed to build the Python executable with a version capable of executing in admin cmd) and tool dependencies ('pywin32')
-$dependencies = "pyinstaller==6.11.1,pywin32==308,icmplib==3.0.4"
-VM-Pip-Install $dependencies
-
 # Set the ICMP ID at the tool script to a randomized value per installation
 # to make it harder for a malware to hardcode it and to lower/zero the
 # probability of overlapping with any other application sending ping requests.

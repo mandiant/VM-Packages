@@ -34,4 +34,6 @@
     <module name="yara-python"/>
     <module name="frida"/>
     <module name="frida-tools"/>
+    <module name="pyinstaller==6.10.0"/>
+    <module name="pywin32"/>
 </modules>
