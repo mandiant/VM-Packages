@@ -15,7 +15,7 @@
     <module name="msoffcrypto-tool"/>
     <module name="olefile"/>
     <module name="oletools"/>
-    <module name="pefile"/>
+    <module name="pefile>=2024.08.26"/>
     <module name="psutil"/>
     <module name="pyasn1"/>
     <module name="pycryptodome"/>
@@ -34,4 +34,6 @@
     <module name="yara-python"/>
     <module name="frida"/>
     <module name="frida-tools"/>
+    <module name="pyinstaller==6.10.0"/>
+    <module name="pywin32"/>
 </modules>
