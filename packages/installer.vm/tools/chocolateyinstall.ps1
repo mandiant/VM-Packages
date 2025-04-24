@@ -110,7 +110,7 @@ try {
 
     # Log additional info if we found failed packages
     $logPath = Join-Path ${Env:VM_COMMON_DIR} "log.txt"
-    if ((Test-Path $failedPackages)) {
+    if ($failures.Count -gt 0) {
         VM-Write-Log "ERROR" "For each failed package, you may attempt a manual install via: choco install -y <package_name>"
         VM-Write-Log "ERROR" "Failed package list saved to: $failedPackages"
         VM-Write-Log "ERROR" "Please check the following logs for additional errors:"
