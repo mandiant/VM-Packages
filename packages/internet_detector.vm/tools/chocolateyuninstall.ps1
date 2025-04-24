@@ -8,7 +8,12 @@ Disable-ScheduledTask -TaskName 'Internet Detector' -ea 0 | ForEach-Object {
     $_ | Stop-ScheduledTask
     $_ | Unregister-ScheduledTask -Confirm:$false
 }
-Stop-Process -Name "$toolName.exe" -Force -ea 0
+
+Get-Process -Name $toolName -ea 0 | ForEach-Object {
+    Stop-Process -Id $_.Id -Force
+    Wait-Process -Id $_.Id
+}
+
 VM-Uninstall $toolName $category
 
 $fakenetConfig = "$Env:RAW_TOOLS_DIR\fakenet\fakenet3.5\configs\default.ini"
