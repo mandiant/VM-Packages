@@ -2,8 +2,8 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-    $exeUrl = 'https://npcap.com/dist/npcap-1.81.exe'
-    $exeSha256 = '69a7f8467d2d207fc9f188dda5fea42e13de71f126ebf42bcf4b4682d5b68bd0'
+    $exeUrl = 'https://npcap.com/dist/npcap-1.82.exe'
+    $exeSha256 = 'dd6a26f07e90fe8308f06b09af0eafa188f4ff0a1a184e5adfa35e37467c705d'
     $installerName = Split-Path -Path $exeUrl -Leaf
 
     $packageArgs = @{
