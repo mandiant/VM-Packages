@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ilspy.vm</id>
-    <version>9.0.0.20250219</version>
+    <version>9.1.0</version>
     <authors>SharpDevelop Team</authors>
     <description>The open-source .NET assembly browser and decompiler.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="ilspy" version="[9.0.0]" />
+      <dependency id="ilspy" version="[9.1.0]" />
       <dependency id="dotnet-8.vm" />
     </dependencies>
     <tags>dotNet</tags>

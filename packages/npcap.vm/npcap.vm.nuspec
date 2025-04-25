@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>npcap.vm</id>
-    <version>1.81</version>
+    <version>1.82</version>
     <authors>Nmap Project</authors>
     <description>Npcap is an architecture for packet capture and network analysis for Windows operating systems, consisting of a software library and a network driver.</description>
     <dependencies>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dokan.vm</id>
-    <version>2.2.1.20250219</version>
+    <version>2.3.0</version>
     <authors>kacos2000</authors>
     <description>Dokan simplifies the creation of custom file systems on Windows without the complexity of developing kernel-level drivers, offering an accessible solution for file system development, similar to FUSE on Linux.</description>
     <dependencies>
