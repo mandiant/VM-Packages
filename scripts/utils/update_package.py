@@ -3,6 +3,7 @@ import hashlib
 import os
 import re
 import time
+import xml.etree.ElementTree as ET
 from enum import IntEnum
 from pathlib import Path
 
@@ -178,7 +179,44 @@ def get_increased_version(url, version):
     return (None, None)
 
 
-# Update package which uses a generic URL that includes the version
+# Retrieves the latest version and SHA256 hash of a Microsoft MSIXBUNDLE from a given URL.
+# It parses the AppInstaller file to extract the version and the URI of the main bundle.
+# Returns a tuple containing the latest version (with '.' replaced by '-') and its SHA256 hash, or (None, None) on failure.
+def get_msixbundle_version(url, version):
+    if not url.endswith(".msixbundle"):
+        return (None, None)
+
+    pack_name = url.split("/")[-1].replace(".msixbundle", "")
+
+    resp = requests.get(f"https://aka.ms/{pack_name}/download")
+    if not resp.ok:
+        return (None, None)
+
+    namespace = "http://schemas.microsoft.com/appx/appinstaller/2018"
+    namespaces = {"ai": namespace}
+    app_installer_version = None
+    msixbundle_uri = None
+    try:
+        xml = ET.fromstring(resp.content.decode("utf-8"))
+        app_installer_version = xml.get("Version")
+        main_bundle_element = xml.find("ai:MainBundle", namespaces)
+        if main_bundle_element is not None:
+            msixbundle_uri = main_bundle_element.get("Uri")
+        else:
+            return (None, None)
+
+        latest_sha256 = get_sha256(msixbundle_uri)
+        if latest_sha256:
+            latest_version = app_installer_version.replace(".", "-")
+            return (latest_version, latest_sha256)
+    except Exception:
+        # do not print and error, as the CI expects this script to only print the version
+        pass
+
+    return (None, None)
+
+
+# Update package which uses a generic url that includes the version
 def update_version_url(package):
     install_script_path, content = get_install_script(package)
     # Use findall as some packages have two URLs (for 32 and 64 bits), we need to update both
@@ -283,13 +321,55 @@ def update_dynamic_url(package):
         return latest_version
 
 
+# Update package that url ends with .msixbundle
+def update_msixbundle_url(package):
+    install_script_path, content = get_install_script(package)
+
+    if not content:
+        return None
+
+    # Match urls like:
+    # - https://windbg.download.prss.microsoft.com/dbazure/prod/1-2502-25002-0/windbg.msixbundle
+    m = re.search(
+        r"[\"'](?P<url>https{0,1}:\/\/.+?[A-Za-z\-_]+\/(?P<version>\d+\-\d+\-\d+\-\d+)\/[A-Za-z\-_]+\.msixbundle)[\"']",
+        content,
+    )
+    if not m:
+        return None
+
+    version = m.group("version")
+
+    sha256_m = re.search(r"[\"'](?P<sha256>[A-Fa-f0-9]{64})[\"']", content)
+    if not sha256_m:
+        return None
+
+    latest_version, latest_sha256 = get_msixbundle_version(m.group("url"), version)
+    # No newer version available
+    if (not latest_version) or (latest_version == version):
+        return None
+
+    sha256 = sha256_m.group("sha256")
+    # Hash can be uppercase or downcase
+    content = (
+        content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256).replace(version, latest_version)
+    )
+
+    with open(install_script_path, "w") as file:
+        file.write(content)
+
+    update_nuspec_version(package, latest_version.replace("-", "."))
+
+    return latest_version
+
+
 class UpdateType(IntEnum):
     # UpdateTypes are defined using powers of 2 to allow for bitwise combinations.
     DEPENDENCIES = 1
     GITHUB_URL = 2
     VERSION_URL = 4
     DYNAMIC_URL = 8
-    ALL = DEPENDENCIES | GITHUB_URL | VERSION_URL | DYNAMIC_URL
+    MSIXBUNDLE_URL = 16
+    ALL = DEPENDENCIES | GITHUB_URL | VERSION_URL | DYNAMIC_URL | MSIXBUNDLE_URL
 
     def __str__(self):
         return self.name
@@ -335,6 +415,11 @@ if __name__ == "__main__":
 
         if args.update_type & UpdateType.DYNAMIC_URL:
             latest_version = update_dynamic_url(args.package_name)
+
+        if args.update_type & UpdateType.MSIXBUNDLE_URL:
+            latest_version2 = update_msixbundle_url(args.package_name)
+            if latest_version2:
+                latest_version = latest_version2
 
     if not latest_version:
         exit(1)
