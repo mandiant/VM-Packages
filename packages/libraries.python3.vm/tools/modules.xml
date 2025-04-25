@@ -34,6 +34,11 @@
     <module name="yara-python"/>
     <module name="frida"/>
     <module name="frida-tools"/>
+    <!-- Dependencies of the internet detector tool that are also useful for malware analysis
+      The internet detector needs to build the Python executable with a version of pyinstaller capable of executing in admin cmd.
+      Fix also the version of pywin32 and icmplib to avoid issues
+    -->
     <module name="pyinstaller==6.10.0"/>
-    <module name="pywin32"/>
+    <module name="pywin32==308"/>
+    <module name="icmplib==3.0.4"/>
 </modules>
