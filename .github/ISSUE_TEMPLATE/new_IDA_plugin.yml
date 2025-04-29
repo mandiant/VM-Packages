@@ -32,7 +32,7 @@ body:
     attributes:
       label: Package type
       description: |
-        - **`IDA_PLUGIN`** - IDA plugin distributed as a single file or ZIP containing a plugin (and supporting files/directories) that need to be copied to the IDA plugins directory. For ZIPs, we check if there is an inner folder (this is the case for GH ZIPs) and if there is a directory called `plugins`. We copy all files in this directory (the root directory, the inner folder or the `plugins` directory depending what is present) with the exception of the README and the LICENSE file (often present in GH repos). The copied files must include the file `plugin name` specified below.
+        - **`IDA_PLUGIN`** - IDA plugin distributed as a single file or ZIP containing a plugin (and supporting files/directories) that need to be copied to the IDA plugins directory. For ZIPs, we check if there is an inner folder (this is the case for GH ZIPs) and if there is a directory called `plugins`. We copy all files in this directory (the root directory, the inner folder or the `plugins` directory depending what is present) with the exception of the README and the LICENSE file (often present in GH repos). The copied files must include the file `plugin name` specified below. If you need to be more specific in which files to copy, supply them in the `files` field below.
         - **`OTHER/UNKNOWN`** - An IDA plugin distributed in a different way than `IDA_PLUGIN`. It is required that you provide details of how the plugin is installed in the `Extra information` section. Note this type does not support automation, a PR would be appreciated!
       options:
         - IDA_PLUGIN
@@ -79,6 +79,12 @@ body:
       label: Download SHA256 Hash
       description: |
         SHA256 hash of the file or ZIP downloaded from the download url introduced in the previous field. The hash is used for verification purposes. Example: `62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95`
+  - type: input
+    id: files
+    attributes:
+      label: Files to copy
+      description: |
+        A comma separated list of files and/or directories to copy into the plugin directory. Only necessary for plugins with awkward repository layouts. Example: `awkward_directory/awesomeplugin.py, `awkward_directory/awesomeplugin_libs`,
   - type: textarea
     id: why
     attributes:

@@ -309,7 +309,9 @@ function VM-Install-IDA-Plugin {
         [Parameter(Mandatory=$true)]
         [string] $pluginUrl,
         [Parameter(Mandatory=$true)]
-        [string] $pluginSha256
+        [string] $pluginSha256,
+        [Parameter(Mandatory=$false)]
+        [string[]] $pluginFiles
     )
     try {
         $pluginExtension = [System.IO.Path]::GetExtension($pluginUrl)
@@ -337,15 +339,25 @@ function VM-Install-IDA-Plugin {
                     $tempDownloadDir = $subDir
                 }
             }
-            # Look for the plugins directory
-            $pluginDir = Get-Item "$tempDownloadDir\plugins" -ea 0
-            if (!$pluginDir) { $pluginDir = $tempDownloadDir }
 
-            # Delete files we don't want to copy
-            Remove-Item "$pluginDir\README*" -Force -ea 0
-            Remove-Item "$pluginDir\LICENSE*" -Force -ea 0
+            if ($pluginFiles) {
+                # If we have a specific list of files to copy, copy only those
+                foreach ($file in $pluginFiles) {
+                    Copy-Item "$tempDownloadDir\$file" -Destination $pluginsDir
+                }
+            }
+            else {
+                # Default behaviour is to copy all files (optionally in a "plugins" directory)
+                # Look for the plugins directory
+                $pluginDir = Get-Item "$tempDownloadDir\plugins" -ea 0
+                if (!$pluginDir) { $pluginDir = $tempDownloadDir }
 
-            Copy-Item "$pluginDir\*" $pluginsDir -Recurse
+                # Delete files we don't want to copy
+                Remove-Item "$pluginDir\README*" -Force -ea 0
+                Remove-Item "$pluginDir\LICENSE*" -Force -ea 0
+
+                Copy-Item "$pluginDir\*" $pluginsDir -Recurse
+            }
         }
         else {
             $packageArgs = @{
@@ -371,10 +383,20 @@ function VM-Uninstall-IDA-Plugin {
     Param
     (
         [Parameter(Mandatory=$true)]
-        [string] $pluginName # Example: capa_explorer.py
+        [string] $pluginName, # Example: capa_explorer.py
+        [Parameter(Mandatory=$false)]
+        [string[]] $pluginFiles
     )
-    $pluginPath = Join-Path (VM-Get-IDA-Plugins-Dir) $pluginName
-    Remove-Item $pluginPath -Recurse -Force -ea 0
+    $pluginsDir = VM-Get-IDA-Plugins-Dir
+
+    if ($pluginFiles) {
+        foreach ($file in $pluginFiles) {
+            Remove-Item "$pluginsDir\$file" -Recurse -Force -ea 0
+        }
+    }
+    else {
+        Remove-Item "$pluginsDir\$pluginName" -Recurse -Force -ea 0
+    }
 }
 
 # This functions returns $toolDir and $executablePath
@@ -505,7 +527,6 @@ function VM-Install-Node-Tool {
         [string] $arguments
     )
     try {
-        # "--no-update-notifier" removes the npm funding notice that may cause an error
         npm install -g $toolName --no-update-notifier
         VM-Install-Shortcut -toolName $toolName -category $category -arguments "$toolName $arguments" -powershell
     } catch {
