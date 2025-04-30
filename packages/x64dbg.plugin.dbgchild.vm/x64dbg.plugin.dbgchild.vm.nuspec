@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>x64dbg.plugin.dbgchild.vm</id>
-    <version>20250219</version>
+    <version>20250430</version>
     <description>DbgChild is an x64dbg plugin to automatically attach to spawned child processes.</description>
     <authors>Dreg (David Reguera Garcia)</authors>
     <dependencies>
@@ -10,5 +10,6 @@
       <dependency id="x64dbg.vm" />
     </dependencies>
     <tags>Debuggers</tags>
+    <projectUrl>https://github.com/therealdreg/DbgChild</projectUrl>
   </metadata>
 </package>

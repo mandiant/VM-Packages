@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>x64dbg.vm</id>
-    <version>2025.03.15.20250411</version>
-    <description>An open-source x64/x32 debugger for Windows.</description>
+    <version>2025.03.15.20250430</version>
+    <description>X64dbg is an open-source x64/x32 debugger for Windows.</description>
     <authors>mrexodia</authors>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
     <tags>Debuggers</tags>
+    <projectUrl>https://sourceforge.net/projects/x64dbg/</projectUrl>
   </metadata>
 </package>
