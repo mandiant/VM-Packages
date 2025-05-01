@@ -46,7 +46,7 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250501" />
     </dependencies>
     <tags>{category}</tags>
   </metadata>

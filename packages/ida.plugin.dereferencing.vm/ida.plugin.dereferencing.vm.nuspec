@@ -6,7 +6,7 @@
     <authors>danigargu</authors>
     <description>IDA Pro plugin that implements new registers and stack views.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240429" />
+      <dependency id="common.vm" version="0.0.0.20240501" />
       <dependency id="libraries.python3.vm" />
     </dependencies>
     <tags>IDA Plugins</tags>
