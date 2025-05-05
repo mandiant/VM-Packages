@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>routesixtysink.vm</id>
-    <version>0.0.0.20250219</version>
+    <version>0.0.0.20250506</version>
     <authors>Dillon Franke, Michael Maturi</authors>
-    <description>Route Sixty-Sink is an open source tool that enables defenders and security researchers alike to quickly identify vulnerabilities in any .NET assembly using automated source-to-sink analysis.</description>
+    <description>Route Sixty-Sink identifies .NET assembly vulnerabilities using automated source-to-sink analysis.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
     <tags>Reconnaissance</tags>
+    <projectUrl>https://github.com/mandiant/route-sixty-sink</projectUrl>
   </metadata>
 </package>
