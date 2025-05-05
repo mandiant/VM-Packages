@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>capesolo.vm</id>
-    <version>0.4.23.20250220</version>
+    <version>0.4.23.20250430</version>
     <authors>kevoreilly, enzok, doomedraven</authors>
-    <description>Standalone sandbox tool with unpacker and debugger</description>
+    <description>Capesolo is an standalone sandbox tool with unpacker and debugger.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="python3.vm" />
     </dependencies>
     <tags>Debuggers</tags>
+    <projectUrl>https://github.com/CAPESandbox/CAPEsolo</projectUrl>
   </metadata>
 </package>

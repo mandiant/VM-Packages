@@ -95,6 +95,7 @@ class IncludesRequiredFieldsOnly(Lint):
         "authors",
         "dependencies",
         "tags",
+        "projectUrl",
     ]
     recommendation = f"Only include required fields: {', '.join(allowed_fields)}"
 
