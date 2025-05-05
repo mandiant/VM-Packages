@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>de4dot-cex.vm</id>
-    <version>4.0.0.20250219</version>
+    <version>4.0.0.20250505</version>
     <authors>ViRb3</authors>
-    <description>A de4dot fork with full support for vanilla ConfuserEx</description>
+    <description>de4dot CEx is a de4dot fork with full support for vanilla ConfuserEx.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
     <tags>dotNet</tags>
+    <projectUrl>https://github.com/ViRb3/de4dot-cex</projectUrl>
   </metadata>
 </package>

@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>codetrack.vm</id>
-    <version>1.0.3.20250219</version>
+    <version>1.0.3.20250505</version>
     <authors>CodeTrack</authors>
-    <description>A free .NET Performance Profile and Execution Analyzer</description>
+    <description>CodeTrack is a free .NET Performance Profile and Execution Analyzer.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="codetrack" version="[1.0.3.301]" />
     </dependencies>
     <tags>dotNet</tags>
+    <projectUrl>https://www.getcodetrack.com</projectUrl>
   </metadata>
 </package>

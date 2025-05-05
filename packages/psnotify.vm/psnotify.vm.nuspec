@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>psnotify.vm</id>
-    <version>0.2.4.20250219</version>
+    <version>0.2.4.20250505</version>
     <authors>alphillips-lab</authors>
-    <description>A POC tool to fight .NET anti-dumping tricks.</description>
+    <description>psnotify is a POC tool to fight .NET anti-dumping tricks.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
     <tags>dotNet</tags>
+    <projectUrl>https://github.com/WithSecureLabs/GarbageMan/tree/master/psnotify</projectUrl>
   </metadata>
 </package>
