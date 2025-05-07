@@ -23,7 +23,6 @@ $packageArgs = @{
     consoleApp = $true
 }
 
-# download msi file
 VM-Install-With-Installer @packageArgs
 
 # delete default desktop shortcut
