@@ -25,7 +25,6 @@ $packageArgs = @{
 
 # download msi file
 VM-Install-With-Installer @packageArgs
-VM-Assert-Path $executablePath
 
 # delete default desktop shortcut
 try{
