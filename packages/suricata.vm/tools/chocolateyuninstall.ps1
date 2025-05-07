@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'Suricata'
+$toolName = 'suricata'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-VM-Uninstall $toolName $category
+VM-Uninstall-With-Uninstaller $toolName $category "MSI" "/qn /norestart"

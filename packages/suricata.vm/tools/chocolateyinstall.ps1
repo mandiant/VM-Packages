@@ -3,30 +3,28 @@ Import-Module vm.common -Force -DisableNameChecking
 Import-Module powershell-yaml
 
 # set configurations
-$toolName = "Suricata"
+$toolName = 'suricata'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
-$filetype = "MSI"
 $toolDir = Join-Path ${Env:ProgramFiles} $toolName
-$executablePath = Join-Path $toolDir "suricata.exe"
-$url = "https://www.openinfosecfoundation.org/download/windows/Suricata-7.0.10-1-64bit.msi"
+$executablePath = Join-Path $toolDir "$toolName.exe"
+$exeUrl = "https://www.openinfosecfoundation.org/download/windows/Suricata-7.0.10-1-64bit.msi"
 $sha256 = "b32a6ca8a793a603a23de307c83831c874099f50bbcd2710ee8325d69a49fb44"
-$silentArgs = "/qn /norestart"
 
 $packageArgs = @{
     toolName = $toolName
     category = $category
-    filetype = $filetype
-    silentArgs = $silentArgs
+    filetype = "MSI"
+    silentArgs = "/qn /norestart"
     executablePath = $executablePath
-    url = $url
+    url = $exeUrl
     sha256 = $sha256
     consoleApp = $true
 }
 
 VM-Install-With-Installer @packageArgs
 
-# delete default desktop shortcut
 try{
+    # delete default desktop shortcut
     $desktopShortcutPath = "${Env:HomeDrive}\Users\*\Desktop\$toolName*.lnk"
     Remove-Item -Path $desktopShortcutPath -ErrorAction SilentlyContinue
 }
@@ -39,15 +37,11 @@ $rulesXmlPath = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)/rules.
 $rulesXml = [xml](Get-Content $rulesXmlPath)
 
 $rulesDir = Join-Path $toolDir "rules" -Resolve
-$rulesConfigPath = Join-Path $toolDir "suricata.yaml" -Resolve
-
-$rulesConfig = ConvertFrom-Yaml (Get-Content -Raw -Path $rulesConfigPath)
 
 $failures = @()
 $rules = $rulesXml.rules.rule
 
-$tempToolDir = Join-Path ${Env:TEMP} $toolName
-$tempToolDir += ".vm"
+$tempToolDir = Join-Path ${Env:TEMP} "$toolName.vm"
 $tempRuleDir = Join-Path $tempToolDir "rules"
 
 foreach ($rule in $rules) {
@@ -83,6 +77,9 @@ foreach ($rule in $rules) {
 }
 
 $allRuleFiles = Get-ChildItem -Path $tempRuleDir -Recurse -File -Filter *.rules
+
+$rulesConfigPath = Join-Path $toolDir "suricata.yaml" -Resolve
+$rulesConfig = ConvertFrom-Yaml (Get-Content -Raw -Path $rulesConfigPath)
 
 # move all rule files in temp rule folder to the suricata rule folder
 # add rules to `suricata.yaml`
