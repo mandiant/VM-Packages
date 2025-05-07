@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>arsenalimagemounter.vm</id>
-    <version>3.11.306</version>
+    <version>3.11.307</version>
     <authors>Arsenal Recon</authors>
     <description>Mounts the contents of disk images as complete disks in Windows.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="dotnet-9.vm" />
-      <dependency id="arsenalimagemounter" version="[3.11.306]" />
+      <dependency id="arsenalimagemounter" version="[3.11.307]" />
       <dependency id="dokan.vm" />
     </dependencies>
     <tags>Forensic</tags>
