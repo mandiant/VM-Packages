@@ -61,12 +61,12 @@ foreach ($rule in $rules) {
     try{
         Invoke-WebRequest -Uri $rule.url -OutFile $filePath
 
-        # If the file ends in .zip, unzip it
+        # If the rule url is of type zip archive (collection of multiple rule files)
         if ($filePath -like '*.zip') {
             Write-Host "ZIP file detected."
             Get-ChocolateyUnzip -FileFullPath $filePath -Destination $tempRuleDir
 
-            #  if rules are present in innerFolder of zip archive
+            # if collection of rules are present in innerFolder of zip archive
             if ($rule.innerFolder){
                 $innerFolder = Join-Path $tempRuleDir $rule.innerFolder
                 Get-ChildItem -Path $innerFolder -File | ForEach-Object {
