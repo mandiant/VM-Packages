@@ -63,20 +63,16 @@ foreach ($rule in $rules) {
 
         # If the file ends in .zip, unzip it
         if ($filePath -like '*.zip') {
-
             Write-Host "ZIP file detected."
-
             Get-ChocolateyUnzip -FileFullPath $filePath -Destination $tempRuleDir
 
             #  if rules are present in innerFolder of zip archive
             if ($rule.innerFolder){
                 $innerFolder = Join-Path $tempRuleDir $rule.innerFolder
-
                 Get-ChildItem -Path $innerFolder -File | ForEach-Object {
                     Copy-Item -Path $_.FullName -Destination $tempRuleDir -Force
                 }
             }
-
         } elseif ($filePath -like '*.rules') {
             Write-Host "Rules file detected. Moving to $tempRuleDir..."
             Move-Item -Path $filePath -Destination $tempRuleDir
