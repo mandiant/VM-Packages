@@ -8,8 +8,8 @@ $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $filetype = "MSI"
 $toolDir = Join-Path ${Env:ProgramFiles} $toolName
 $executablePath = Join-Path $toolDir "suricata.exe"
-$url = "https://www.openinfosecfoundation.org/download/windows/Suricata-7.0.8-1-64bit.msi"
-$sha256 = "8bdd78d2978e4efc6d23ab1ced024342cac7d38afb152a6e3f70ac5182bd8cd4"
+$url = "https://www.openinfosecfoundation.org/download/windows/Suricata-7.0.10-1-64bit.msi"
+$sha256 = "b32a6ca8a793a603a23de307c83831c874099f50bbcd2710ee8325d69a49fb44"
 $silentArgs = "/qn /norestart"
 
 $packageArgs = @{
