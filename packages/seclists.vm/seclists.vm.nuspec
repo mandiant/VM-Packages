@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>seclists.vm</id>
-    <version>2025.1</version>
+    <version>2025.2</version>
     <authors>danielmiessler</authors>
     <description>SecLists is the security tester's companion. It's a collection of multiple types of lists used during security assessments, collected in one place.</description>
     <dependencies>
