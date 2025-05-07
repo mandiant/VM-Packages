@@ -78,11 +78,8 @@ foreach ($rule in $rules) {
             }
 
         } elseif ($filePath -like '*.rules') {
-
             Write-Host "Rules file detected. Moving to $tempRuleDir..."
-
             Move-Item -Path $filePath -Destination $tempRuleDir
-
         } else {
             throw "`t[!] Unsupported file type: '$filePath'. Only .zip and .rule are allowed."
         }
