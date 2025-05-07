@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>floss.vm</id>
-    <version>3.1.1.20250220</version>
-    <description>FLOSS uses advanced static analysis techniques to automatically deobfuscate strings from malware binaries. You can use it just like strings.exe to enhance basic static analysis of unknown binaries.</description>
+    <version>3.1.1.20250505</version>
+    <description>FLOSS automatically deobfuscates strings in malware using advanced static analysis, enhancing basic static analysis like strings.exe.</description>
     <authors>@williballenthin, @mr-tz</authors>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
     <tags>File Information</tags>
+    <projectUrl>https://github.com/mandiant/flare-floss</projectUrl>
   </metadata>
 </package>
