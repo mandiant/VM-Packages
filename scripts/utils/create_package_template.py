@@ -46,7 +46,7 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250501" />
     </dependencies>
     <tags>{category}</tags>
   </metadata>
@@ -186,7 +186,7 @@ VM-Install-Single-Ps1 $toolName $category $ps1Url -ps1Sha256 $ps1Sha256
 
 """
 Needs the following format strings:
-    tool_name="...", target_url="...", target_hash="..."
+    tool_name="...", target_url="...", target_hash="...", files="..."
 """
 IDA_PLUGIN_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
@@ -194,8 +194,9 @@ Import-Module vm.common -Force -DisableNameChecking
 $pluginName = '{tool_name}'
 $pluginUrl = '{target_url}'
 $pluginSha256 = '{target_hash}'
+$pluginFiles = @({files})
 
-VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha256 $pluginSha256
+VM-Install-IDA-Plugin -pluginName $pluginName -pluginUrl $pluginUrl -pluginSha256 $pluginSha256 -pluginFiles $pluginFiles
 """
 
 """
@@ -249,7 +250,8 @@ IDA_PLUGIN_UNINSTALL_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
 $pluginName = '{tool_name}'
-VM-Uninstall-IDA-Plugin -pluginName $pluginName
+$pluginFiles = @({files})
+VM-Uninstall-IDA-Plugin -pluginName $pluginName -pluginFiles $pluginFiles
 
 """
 PIP_UNINSTALL_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
@@ -356,6 +358,7 @@ def create_ida_plugin_template(packages_path, **kwargs):
         tool_name=kwargs.get("tool_name"),
         target_url=kwargs.get("target_url"),
         target_hash=kwargs.get("target_hash"),
+        files=kwargs.get("files"),
     )
 
 
@@ -393,6 +396,7 @@ def create_template(
     console_app="",
     inner_folder="",
     arguments="",
+    files="",
 ):
     pkg_path = os.path.join(packages_path, f"{pkg_name}.vm")
     try:
@@ -430,11 +434,12 @@ def create_template(
                 shim_path=shim_path,
                 console_app=console_app,
                 inner_folder=inner_folder,
+                files=files,
             )
         )
 
     with open(os.path.join(tools_path, UNINSTALL_TEMPLATE_NAME), "w") as f:
-        f.write(uninstall_template.format(tool_name=tool_name))
+        f.write(uninstall_template.format(tool_name=tool_name, files=files))
 
 
 def get_script_directory():
@@ -645,6 +650,9 @@ def main(argv=None):
     parser.add_argument(
         "--arguments", type=str, required=False, default="", help="Command-line arguments for the execution"
     )
+    parser.add_argument(
+        "--files", type=str, required=False, help="Comma separated list of files to copy to the installation directory"
+    )
     args = parser.parse_args(args=argv)
 
     if args.type is None:
@@ -666,6 +674,9 @@ def main(argv=None):
 
     # remove type before passing to template create function
     del args.type
+
+    # fixup the files argument
+    args.files = ", ".join(repr(name.strip()) for name in args.files.split(","))
 
     create_type_template_cb(packages_path, **vars(args))
 
