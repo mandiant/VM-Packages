@@ -1787,7 +1787,7 @@ function VM-Get-MSIInstallerPathByProductName {
 
     try {
         # Get a list of all installed MSI products
-        $installedProducts = Get-CimInstance -Class Win32_Product | Where-Object { $_.Name -like $ProductName }
+        $installedProducts = Get-CimInstance -Class Win32_Product | Where-Object { $_.Name -match $ProductName }
 
         if (-not $installedProducts) {
             VM-Write-Log "WARN" "No product found with name like '$ProductName'"
