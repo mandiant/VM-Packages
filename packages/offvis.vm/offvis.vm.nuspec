@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>offvis.vm</id>
-    <version>1.0.0.20250430</version>
+    <version>1.0.0.20250505</version>
     <authors>Microsoft</authors>
-    <description>The Microsoft Office Visualization Tool (OffVis) is a tool from Microsoft that helps understanding the Microsoft Office binary file format in order to deconstruct .doc-, .xls- and .ppt-based targeted attacks.</description>
+    <description>OffVis is an office visualization tool for understanding and deconstructing targeted attacks in .doc, .xls, and .ppt files.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="dotnet3.5" />

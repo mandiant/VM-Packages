@@ -86,6 +86,20 @@ def run_cmd(cmd):
     return out
 
 
+class InvalidDescriptionLength(Lint):
+    max_length = 175
+    name = "the description length is invalid"
+    recommendation = f"the description must be limited to {max_length} characters maximum."
+
+    def check(self, path):
+        dom = minidom.parse(str(path))
+        description = dom.getElementsByTagName("description")[0].firstChild.data
+        if len(description) > self.max_length:
+            print(f"The description has invalid length: {len(description)}")
+            return True
+        return False
+
+
 class IncludesRequiredFieldsOnly(Lint):
     name = "file lists non-required fields"
     allowed_fields = [
@@ -315,6 +329,7 @@ NUSPEC_LINTS = (
     VersionNotUpdated(),
     PackageIdNotMatchingFolderOrNuspecName(),
     UsesInvalidCategory(),
+    InvalidDescriptionLength(),
 )
 
 

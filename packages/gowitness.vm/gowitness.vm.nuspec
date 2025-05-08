@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>gowitness.vm</id>
-    <version>3.0.5.20250219</version>
+    <version>3.0.5.20250506</version>
     <authors>sensepost</authors>
-    <description>Website screenshot utility written in Golang, that uses Chrome Headless to generate screenshots of web interfaces using the command line, with a handy report viewer to process results.</description>
+    <description>gowitness uses Chrome Headless for website screenshots and provides a built-in report viewer.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="googlechrome.vm" />
     </dependencies>
     <tags>Reconnaissance</tags>
+    <projectUrl>https://github.com/sensepost/gowitness</projectUrl>
   </metadata>
 </package>
