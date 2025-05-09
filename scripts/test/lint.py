@@ -119,7 +119,8 @@ class IncludesRequiredFieldsOnly(Lint):
 
         non_required_fields = list()
         for c in metadata.childNodes:
-            if c.nodeName == "#text":
+            # Skip text nodes (whitespace) and comments.
+            if c.nodeName == "#text" or c.nodeName == "#comment":
                 continue
             if c.nodeName not in self.allowed_fields:
                 non_required_fields.append(c.nodeName)
