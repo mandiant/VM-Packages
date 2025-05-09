@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>pebear.vm</id>
-    <version>0.7.0.20250424</version>
+    <version>0.7.1</version>
     <authors>hasherezade</authors>
     <description>Delivers fast and flexible "first view" for malware analysts</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="pebear" version="[0.7.0.4]" />
+      <dependency id="pebear" version="[0.7.1]" />
     </dependencies>
     <tags>PE</tags>
   </metadata>

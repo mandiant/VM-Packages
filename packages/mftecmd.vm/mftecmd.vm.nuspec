@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>mftecmd.vm</id>
-    <version>0.0.0.20250424</version>
+    <version>0.0.0.20250507</version>
     <authors>Eric Zimmerman</authors>
     <description>$MFT, $Boot, $J, $SDS, $I30, and $LogFile (coming soon) parser. Handles locked files</description>
     <dependencies>
