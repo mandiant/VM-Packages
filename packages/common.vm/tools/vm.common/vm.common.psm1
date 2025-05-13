@@ -458,14 +458,18 @@ function VM-Install-From-Zip {
         if ($verifySignature) {
             # Check signature of all executable files individually
             Get-ChildItem -Path "$toolDir\*.exe" | ForEach-Object {
+                $file = $_
                 try {
                     # Check signature for each file
-                    VM-Assert-Signature $_.FullName
+                    VM-Assert-Signature $file.FullName
                 } catch {
-                    # Remove the file with invalid signature
-                    Write-Warning "Removing file '$($_.FullName)' due to invalid signature"
-                    Remove-Item $_.FullName -Force -ea 0 | Out-Null
                     VM-Write-Log-Exception $_
+                    if ($_.Exception.Message -like "INVALID SIGNATURE*")
+                    {
+                        # Remove the file with invalid signature
+                        VM-Write-Log "ERROR" "Removing file '$($file.FullName)' due to invalid signature"
+                        Remove-Item $file.FullName -Force -ea 0 | Out-Null
+                    }
                 }
             }
         }
@@ -738,6 +742,8 @@ function VM-Install-With-Installer {
         [Parameter(Mandatory=$false)]
         [bool] $consoleApp=$false,
         [Parameter(Mandatory=$false)]
+        [switch] $verifySignature,
+        [Parameter(Mandatory=$false)]
         [string] $arguments = "",
         [Parameter(Mandatory=$false)]
         [string] $iconLocation
@@ -753,9 +759,15 @@ function VM-Install-With-Installer {
         $packageArgs = @{
             packageName   = ${Env:ChocolateyPackageName}
             url           = $url
-            checksum      = $sha256
-            checksumType  = "sha256"
         }
+
+        # Add checksum details only if signature verification is not requested
+        if (-not $verifySignature)
+        {
+            $packageArgs.checksum     = $sha256
+            $packageArgs.checksumType = 'sha256'
+        }
+
         if ($ext -in @("zip", "7z")) {
             VM-Remove-PreviousZipPackage ${Env:chocolateyPackageFolder}
             $unzippedDir= Join-Path $toolDir "$($toolName)_installer"
@@ -779,6 +791,25 @@ function VM-Install-With-Installer {
             $packageArgs['fileFullPath'] = $installerPath
             Get-ChocolateyWebFile @packageArgs
             VM-Assert-Path $installerPath
+        }
+
+        if ($verifySignature) {
+            # Check signature of all executable files individually
+            Get-ChildItem -path $toolDir -include *.msi, *.exe -recurse -File -ea 0 | ForEach-Object {
+                $file = $_
+                try {
+                    # Check signature for each file
+                    VM-Assert-Signature $file.FullName
+                } catch {
+                    VM-Write-Log-Exception $_
+                    if ($_.Exception.Message -like "INVALID SIGNATURE*")
+                    {
+                        # Remove the file with invalid signature
+                        VM-Write-Log "ERROR" "Removing file '$($file.FullName)' due to invalid signature"
+                        Remove-Item $file.FullName -Force -ea 0 | Out-Null
+                    }
+                }
+            }
         }
 
         # Install tool via native installer
