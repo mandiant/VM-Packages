@@ -5,8 +5,8 @@ try {
     $toolName = 'WinDbg'
     $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-    $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/1-2502-25002-0/windbg.msixbundle"
-    $bundleSha256 = "2802c9da1eccdfd488d1364aa601170d44dc37e2c8354be514f5f5a40c9cfcda"
+    $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/1-2504-15001-0/windbg.msixbundle"
+    $bundleSha256 = "627a6913fc71a9550ad0b2b05dfb20c204502c1f9ad3b4769f738881dffa9ae3"
 
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
