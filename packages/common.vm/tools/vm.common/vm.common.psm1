@@ -81,7 +81,7 @@ function VM-Write-Log {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true, Position=0)]
-        [ValidateSet("INFO","WARN","ERROR")]
+        [ValidateSet("INFO","WARN","ERROR","FATAL")]
         [String] $level,
         [Parameter(Mandatory=$true, Position=1)]
         [string] $message
@@ -1834,7 +1834,7 @@ function VM-Get-MSIInstallerPathByProductName {
 
     try {
         # Get a list of all installed MSI products
-        $installedProducts = Get-CimInstance -Class Win32_Product | Where-Object { $_.Name -like $ProductName }
+        $installedProducts = Get-CimInstance -Class Win32_Product | Where-Object { $_.Name -match $ProductName }
 
         if (-not $installedProducts) {
             VM-Write-Log "WARN" "No product found with name like '$ProductName'"
