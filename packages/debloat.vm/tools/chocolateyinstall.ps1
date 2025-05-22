@@ -1,8 +1,9 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$packageToolsDir = Join-Path $(Get-Location) "debloat.vm\tools"
-$packageStartDir = Join-Path $(Get-Location) "debloat.vm\start"
+$packageBaseDir = "C:\ProgramData\chocolatey\lib\debloat.vm"
+$packageToolsDir = Join-Path $packageBaseDir "\tools"
+$packageStartDir = Join-Path $packageBaseDir "\start"
 
 try {
     # Determine OS Version
