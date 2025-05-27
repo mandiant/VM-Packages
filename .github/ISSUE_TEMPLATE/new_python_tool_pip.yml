@@ -21,7 +21,7 @@ body:
     attributes:
       label: Tool Name
       description: |
-        The name of the tool being installed with `py -3.10 -m pip install <tool_name><version>`, Example: `autoit-ripper`.
+        The name of the tool being installed with `py -3.13 -m pip install <tool_name><version>`, Example: `autoit-ripper`.
       placeholder: ex. autoit-ripper
     validations:
       required: true
@@ -32,7 +32,7 @@ body:
     attributes:
       label: Package type
       description: |
-        - **`PIP`** - A Python tool installed with `py -3.10 -m pip install <tool_name><version>`. Example: `py -3.10 -m pip install magika==0.5.0`
+        - **`PIP`** - A Python tool installed with `py -3.13 -m pip install <tool_name><version>`. Example: `py -3.13 -m pip install magika==0.6.2`
 
         For other types of tools, use a different issue template.
       options:

@@ -7,7 +7,7 @@
     <authors>@mike-hunhoff, @williballenthin, @mr-tz</authors>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20240424" />
-      <dependency id="libraries.python3.vm" />
+      <dependency id="libraries.python3.vm" version="0.0.0.20250425" />
     </dependencies>
     <tags>IDA Plugins</tags>
   </metadata>

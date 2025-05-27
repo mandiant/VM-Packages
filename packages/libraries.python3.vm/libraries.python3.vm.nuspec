@@ -6,7 +6,7 @@
     <description>Metapackage to install common Python libraries</description>
     <authors>Several, check in pypi.org for every of the libraries</authors>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250509" />
       <dependency id="vcbuildtools.vm" />
       <dependency id="python3.vm" />
     </dependencies>

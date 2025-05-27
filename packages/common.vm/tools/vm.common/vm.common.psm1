@@ -1871,7 +1871,7 @@ function VM-Pip-Install {
 
     	ForEach ($library in $libraries.Split(",")) {
         	# Ignore warning with `-W ignore` to avoid warnings like deprecation to fail the installation
-        	Invoke-Expression "py -3.10 -W ignore -m pip install $library --disable-pip-version-check 2>&1 >> $outputFile"
+        	Invoke-Expression "py -3.13 -W ignore -m pip install $library --disable-pip-version-check 2>&1 >> $outputFile"
     	}
     } catch {
         VM-Write-Log-Exception $_
@@ -1908,7 +1908,7 @@ function VM-Pip-Uninstall {
     param (
         [string]$package
     )
-    Invoke-Expression "py -3.10 -m pip uninstall $package -y --disable-pip-version-check 2>&1"
+    Invoke-Expression "py -3.13 -m pip uninstall $package -y --disable-pip-version-check 2>&1"
 }
 
 # Uninstall tool using Pip and remove shortcut in the Tools directory
