@@ -29,6 +29,29 @@ def package_version(dependency_version):
     version_segments[3] = time.strftime("%Y%m%d")
     return ".".join(version_segments[:4])
 
+# Get the package version from common.vm package version
+def get_common_vm_version():
+    common_vm_path = os.path.join(root_path, "packages", "common.vm")
+    nuspec_path = os.path.join(common_vm_path, "common.vm.nuspec")
+
+    if os.path.exists(nuspec_path):
+        with open(nuspec_path, "r") as f:
+            for line in f:
+                if "<version>" in line:
+                    return line.split("<version>")[1].split("</version>")[0].strip()
+    return "0.0.0.20250206"  # Default version if version tag is not found
+
+# Get the package version from nodejs.vm package version
+def get_nodejs_vm_version():
+    nodejs_vm_path = os.path.join(root_path, "packages", "nodejs.vm")
+    nuspec_path = os.path.join(nodejs_vm_path, "nodejs.vm.nuspec")
+
+    if os.path.exists(nuspec_path):
+        with open(nuspec_path, "r") as f:
+            for line in f:
+                if "<version>" in line:
+                    return line.split("<version>")[1].split("</version>")[0].strip()
+    return "0.0.0.20250219"  # Default version if version tag is not found
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
 INSTALL_TEMPLATE_NAME = "chocolateyinstall.ps1"
@@ -37,6 +60,8 @@ INSTALL_TEMPLATE_NAME = "chocolateyinstall.ps1"
 Needs the following format strings:
     pkg_name="...", version="...", authors="...", description="..."
 """
+COMMON_PACKAGE_VERSION = get_common_vm_version()
+NODEJS_PACKAGE_VERSION = get_nodejs_vm_version()
 NUSPEC_TEMPLATE_NAME = "{}.vm.nuspec"
 NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
@@ -46,7 +71,7 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="{common_version}" />
     </dependencies>
     <tags>{category}</tags>
   </metadata>
@@ -61,8 +86,8 @@ NUSPEC_TEMPLATE_NODE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
-      <dependency id="nodejs.vm" version="0.0.0.20240516" />
+      <dependency id="common.vm" version="{common_version}" />
+      <dependency id="nodejs.vm" version="{nodejs_version}" />
     </dependencies>
     <tags>{category}</tags>
   </metadata>
@@ -77,7 +102,7 @@ NUSPEC_TEMPLATE_PIP = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="{common_version}" />
       <dependency id="python3.vm" />
     </dependencies>
     <tags>{category}</tags>
@@ -97,7 +122,7 @@ NUSPEC_TEMPLATE_METAPACKAGE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="{common_version}" />
       <dependency id="{dependency}" version="[{dependency_version}]" />
     </dependencies>
     <tags>{category}</tags>
@@ -393,6 +418,8 @@ def create_template(
     console_app="",
     inner_folder="",
     arguments="",
+    common_version=COMMON_PACKAGE_VERSION,
+    nodejs_version=NODEJS_PACKAGE_VERSION,
 ):
     pkg_path = os.path.join(packages_path, f"{pkg_name}.vm")
     try:
@@ -416,6 +443,8 @@ def create_template(
                 dependency=dependency,
                 dependency_version=version,
                 category=category,
+                common_version=common_version,
+                nodejs_version=nodejs_version,
             )
         )
 
@@ -430,6 +459,8 @@ def create_template(
                 shim_path=shim_path,
                 console_app=console_app,
                 inner_folder=inner_folder,
+                common_version=common_version,
+                nodejs_version=nodejs_version,
             )
         )
 

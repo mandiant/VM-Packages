@@ -252,11 +252,11 @@ def update_version_url(package):
 
 
 # Update dependencies
-# Metapackages have only one dependency and same name (adding `.vm`)  and version as the dependency
+# Metapackages have only one dependency and same name (adding `.vm`) and version as the dependency
 def update_dependencies(package):
     nuspec_path, content = get_nuspec(package)
     matches = re.findall(
-        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>', content
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\']\s+version=["\']\[(?P<version>[^"\']+)\]["\'] */>', content
     )
 
     updates = False
@@ -285,6 +285,33 @@ def update_dependencies(package):
         return package_version
     return None
 
+# Update metapackage dependencies
+# Metapackages have only one dependency and same name (adding `.vm`) and version as the dependency
+def update_metapackage_dependencies(package):
+    nuspec_path, content = get_nuspec(package)
+    matches = re.findall(
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\']\s+version=["\'](?P<version>[^"\'\[\]]+)["\'] */>', content
+    )
+
+    updates = False
+    for dependency, version in matches:
+        stream = os.popen(f"powershell.exe choco find -er {dependency}")
+        output = stream.read()
+        # ignore case to also find dependencies like GoogleChrome
+        m = re.search(rf"^{dependency}\|(?P<version>.+)", output, re.M | re.I)
+        if m:
+            latest_version = m.group("version")
+            if latest_version != version:
+                content = re.sub(
+                    rf'<dependency id="{dependency}"\s+version=["\']{version}["\']\s*/>',
+                    f'<dependency id="{dependency}" version="{latest_version}" />',
+                    content,
+                )
+                updates = True
+    if updates:
+        with open(nuspec_path, "w") as file:
+            file.write(content)
+    
 
 # Update package which uses a generic URL that has no version
 def update_dynamic_url(package):
@@ -398,6 +425,10 @@ if __name__ == "__main__":
     is_install_script_present = check_install_script_present(args.package_name)
 
     latest_version = None
+
+    # Update dependencies first, as it is required for other updates
+    update_metapackage_dependencies(args.package_name)
+    
     if args.update_type & UpdateType.DEPENDENCIES:
         latest_version = update_dependencies(args.package_name)
 
