@@ -29,6 +29,7 @@ def package_version(dependency_version):
     version_segments[3] = time.strftime("%Y%m%d")
     return ".".join(version_segments[:4])
 
+
 # Get the package version from common.vm package version
 def get_common_vm_version():
     common_vm_path = os.path.join(root_path, "packages", "common.vm")
@@ -41,6 +42,7 @@ def get_common_vm_version():
                     return line.split("<version>")[1].split("</version>")[0].strip()
     return "0.0.0.20250206"  # Default version if version tag is not found
 
+
 # Get the package version from nodejs.vm package version
 def get_nodejs_vm_version():
     nodejs_vm_path = os.path.join(root_path, "packages", "nodejs.vm")
@@ -52,6 +54,7 @@ def get_nodejs_vm_version():
                 if "<version>" in line:
                     return line.split("<version>")[1].split("</version>")[0].strip()
     return "0.0.0.20250219"  # Default version if version tag is not found
+
 
 UNINSTALL_TEMPLATE_NAME = "chocolateyuninstall.ps1"
 INSTALL_TEMPLATE_NAME = "chocolateyinstall.ps1"

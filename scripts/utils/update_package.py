@@ -285,6 +285,7 @@ def update_dependencies(package):
         return package_version
     return None
 
+
 # Update metapackage dependencies
 # Metapackages have only one dependency and same name (adding `.vm`) and version as the dependency
 def update_metapackage_dependencies(package):
@@ -311,7 +312,7 @@ def update_metapackage_dependencies(package):
     if updates:
         with open(nuspec_path, "w") as file:
             file.write(content)
-    
+
 
 # Update package which uses a generic URL that has no version
 def update_dynamic_url(package):
@@ -428,7 +429,7 @@ if __name__ == "__main__":
 
     # Update dependencies first, as it is required for other updates
     update_metapackage_dependencies(args.package_name)
-    
+
     if args.update_type & UpdateType.DEPENDENCIES:
         latest_version = update_dependencies(args.package_name)
 
