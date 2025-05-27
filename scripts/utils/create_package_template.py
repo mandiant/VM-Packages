@@ -46,7 +46,7 @@ NUSPEC_TEMPLATE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250527" />
     </dependencies>
     <tags>{category}</tags>
   </metadata>
@@ -61,7 +61,7 @@ NUSPEC_TEMPLATE_NODE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250527" />
       <dependency id="nodejs.vm" version="0.0.0.20240516" />
     </dependencies>
     <tags>{category}</tags>
@@ -77,7 +77,7 @@ NUSPEC_TEMPLATE_PIP = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250527" />
       <dependency id="python3.vm" />
     </dependencies>
     <tags>{category}</tags>
@@ -97,7 +97,7 @@ NUSPEC_TEMPLATE_METAPACKAGE = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250527" />
       <dependency id="{dependency}" version="[{dependency_version}]" />
     </dependencies>
     <tags>{category}</tags>

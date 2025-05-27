@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>unpyc3.vm</id>
-    <version>0.0.0.20250219</version>
+    <version>0.0.0.20250527</version>
     <authors>David Reilly</authors>
     <description>A decompiler for Python 3.7+.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
-      <dependency id="libraries.python3.vm" version="0.0.0.20250425" />
+      <dependency id="common.vm" version="0.0.0.20250527" />
+      <dependency id="libraries.python3.vm" version="0.0.0.20250527" />
     </dependencies>
     <tags>Python</tags>
   </metadata>
