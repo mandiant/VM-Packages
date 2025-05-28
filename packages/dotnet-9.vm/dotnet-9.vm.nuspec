@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dotnet-9.vm</id>
-    <version>0.0.0.20250509</version>
+    <version>0.0.0.20250527</version>
     <authors>Microsoft</authors>
     <!-- Metapackage for .NET9 to ensure all packages use the same version.-->
     <description>.NET 9.</description>
