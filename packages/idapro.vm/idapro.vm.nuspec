@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>idapro.vm</id>
-    <version>0.0.0.20250430</version>
+    <version>0.0.0.20250612</version>
     <authors>Hex-Rays</authors>
     <description>IDA Pro 9 is an interactive DisAssembler and debugger. Requires `ida-pro_9*.exe` (optional `.hexlic`) from https://hex-rays.com/ida-pro in the Desktop.</description>
     <dependencies>
