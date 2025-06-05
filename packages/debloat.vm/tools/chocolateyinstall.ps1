@@ -1,8 +1,8 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$packageToolsDir = Join-Path $(Get-Location) "debloat.vm\tools"
-$packageStartDir = Join-Path $(Get-Location) "debloat.vm\start"
+$packageToolsDir = $PSScriptRoot
+$packageStartDir = Join-Path $PSScriptRoot "\start"
 
 try {
     # Determine OS Version
