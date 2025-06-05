@@ -5,6 +5,6 @@ $toolName = 'WxTCmd'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.mikestammer.com/net6/WxTCmd.zip'
-$zipSha256 = '7d6b09e159001eae17c2dcf5255cb2988506b4ae51e3e9b836a3355b2259a474'
+$zipSha256 = 'c8989a097f9440006484ee0b6a0b8e7181d043b2ba2a91b37760f23ab88901c3'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
