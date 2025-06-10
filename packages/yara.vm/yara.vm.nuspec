@@ -9,6 +9,6 @@
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="yara" version="[4.5.3]" />
     </dependencies>
-    <tags>Forensic</tags>
+    <tags>Utilities</tags>
   </metadata>
 </package>
