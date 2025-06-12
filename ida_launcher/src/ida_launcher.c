@@ -66,10 +66,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // Search for the highest version of IDA Pro first (version 9.0+ uses "IDA Professional")
     if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Professional", idaPath, dwSize)) {
         if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Pro", idaPath, dwSize)) {
-            // If IDA Pro not found, search for the highest version of IDA Freeware
-            if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Freeware", idaPath, dwSize)) {
-                MessageBox(NULL, "IDA not found.", "Error", MB_OK | MB_ICONERROR);
-                return 1;
+            // If IDA Pro not found, search for the highest version of IDA Free (version 9.0+ uses "IDA Free")
+            if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Free", idaPath, dwSize)) {
+                if (!findHighestIdaVersion(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "IDA Freeware", idaPath, dwSize)) {
+                    MessageBox(NULL, "IDA not found.", "Error", MB_OK | MB_ICONERROR);
+                    return 1;
+                }
             }
         }
     }
