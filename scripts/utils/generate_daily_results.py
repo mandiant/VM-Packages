@@ -15,7 +15,7 @@ with open(result_file) as result_f:
     result = json.load(result_f)
 
 url = f"https://github.com/{repository}"
-# Short OS (windows-2019 -> Win19) for nicer table display
+# Short OS (windows-2025 -> Win25) for nicer table display
 run = f"[#{run_number}]({url}/actions/runs/{run_id}) Win{os[-2:]}"
 date = datetime.today().strftime("%Y-%m-%d %H:%M")
 log_line = f"| {run} | {date} | {result['failure']}/{result['total']} |"
