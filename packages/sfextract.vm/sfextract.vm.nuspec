@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sfextract.vm</id>
-    <version>2.1.0.20250505</version>
+    <version>2.1.0.20250527</version>
     <authors>Joery Droppers</authors>
     <description>sfextract extracts contents (assemblies, configuration, etc.) from .NET single file bundles.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="dotnet-6.0-sdk" version="[6.0.400, 6.1)" />
+      <dependency id="dotnet-6.0-sdk" version="[6.0.428]" />
     </dependencies>
     <tags>dotNet</tags>
     <projectUrl>https://github.com/Droppers/SingleFileExtractor</projectUrl>

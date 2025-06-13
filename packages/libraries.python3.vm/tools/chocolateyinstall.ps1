@@ -7,7 +7,7 @@ try {
     $modulesXml = [xml](Get-Content $modulesPath)
 
     # Fix pip version
-    VM-Pip-Install "pip~=23.2.1"
+    VM-Pip-Install "pip~=25.1.1"
 
     $failures = @()
     $modules = $modulesXml.modules.module
@@ -21,16 +21,16 @@ try {
         VM-Pip-Install $installValue
 
         if ($LastExitCode -eq 0) {
-            Write-Host "`t[+] Installed Python 3.10 module: $($module.name)" -ForegroundColor Green
+            Write-Host "`t[+] Installed Python 3.13 module: $($module.name)" -ForegroundColor Green
         } else {
-            Write-Host "`t[!] Failed to install Python 3.10 module: $($module.name)" -ForegroundColor Red
+            Write-Host "`t[!] Failed to install Python 3.13 module: $($module.name)" -ForegroundColor Red
             $failures += $module.Name
         }
     }
 
     if ($failures.Count -gt 0) {
         foreach ($module in $failures) {
-            VM-Write-Log "ERROR" "Failed to install Python 3.10 module: $module"
+            VM-Write-Log "ERROR" "Failed to install Python 3.13 module: $module"
         }
         $outputFile = $outputFile.replace('lib\', 'lib-bad\')
         VM-Write-Log "ERROR" "Check $outputFile for more information"
