@@ -9,12 +9,10 @@ $latestVersionUrl = 'https://api.github.com/repos/ufrisk/MemProcFS/releases/late
 
 if (-not (Get-Command Invoke-RestMethod -ErrorAction SilentlyContinue)) {
     Write-Error "Invoke-RestMethod is not available. Please ensure you are running PowerShell 3.0 or later."
-    $latestVersionResponse = (Invoke-WebRequest -Uri $latestVersionUrl -Headers @{ 'User-Agent' = 'VM-Installer').content | ConvertFrom-Json
+    $latestVersionResponse = (Invoke-WebRequest -Uri $latestVersionUrl -Headers @{ 'User-Agent' = 'VM-Installer'}).content | ConvertFrom-Json
 }else {
     $latestVersionResponse = Invoke-RestMethod -Uri $latestVersionUrl -Headers @{ 'User-Agent' = 'VM-Installer' }
 }
-
-$latestVersion = $latestVersionResponse.tag_name
 
 # Get the latest version's SHA256 from the assets searching in the array by the name key and getting the digest
 $latestAsset = $latestVersionResponse.assets | Where-Object { $_.name -eq $latestFileName }
