@@ -25,9 +25,7 @@ def replace_version(latest_version, nuspec_content):
         except ValueError:
             # not all tools use symver, observed examples: `cp_1.1.0` or `current`
             print(f"unusual version format: {latest_version}")
-            print(
-                "reusing old version with updated date, manual fixing may be appropriate"
-            )
+            print("reusing old version with updated date, manual fixing may be appropriate")
             latest_version = version
     # If same version add date
     if version == latest_version:
@@ -41,16 +39,12 @@ def replace_version(latest_version, nuspec_content):
 
 # Get latest version from GitHub releases
 def get_latest_version(org, project, version):
-    response = requests.get(
-        f"https://api.github.com/repos/{org}/{project}/releases/latest"
-    )
+    response = requests.get(f"https://api.github.com/repos/{org}/{project}/releases/latest")
     if not response.ok:
         print(f"GitHub API response not ok: {response.status_code}")
         return None
     if org == "ufrisk" and project == "MemProcFS":
-        latest_version = re.search(
-            r"v\d+\.\d+\.\d+", response.json()["assets"][4]["browser_download_url"]
-        )
+        latest_version = re.search(r"v\d+\.\d+\.\d+", response.json()["assets"][4]["browser_download_url"])
         if latest_version.group().startswith("v"):
             return (
                 latest_version.group()[1:],
@@ -162,9 +156,7 @@ def update_github_url(package):
             latest_sha256 = get_sha256(latest_url)
             if not latest_sha256:
                 return None
-            content = content.replace(sha256, latest_sha256).replace(
-                sha256.upper(), latest_sha256
-            )
+            content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
 
             break
 
@@ -182,9 +174,7 @@ def update_github_url(package):
         # Hash can be uppercase or downcase
         if not latest_sha256:
             return None
-        content = content.replace(sha256, latest_sha256).replace(
-            sha256.upper(), latest_sha256
-        )
+        content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
 
     if org == "ufrisk" and project == "MemProcFS":
         content = content.replace(url, latest_url)
@@ -290,9 +280,7 @@ def update_version_url(package):
         latest_version = latest_version_match
         sha256 = get_sha256(url)
         # Hash can be uppercase or downcase
-        content = content.replace(sha256, latest_sha256).replace(
-            sha256.upper(), latest_sha256
-        )
+        content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
 
     content = content.replace(version, latest_version)
     with open(install_script_path, "w") as file:
@@ -363,9 +351,7 @@ def update_dynamic_url(package):
             if latest_sha256.lower() == sha256.lower():
                 return None
 
-            content = content.replace(sha256, latest_sha256).replace(
-                sha256.upper(), latest_sha256
-            )
+            content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
 
         # write back the changed chocolateyinstall.ps1
         with open(install_script_path, "w") as file:
@@ -406,9 +392,7 @@ def update_msixbundle_url(package):
     sha256 = sha256_m.group("sha256")
     # Hash can be uppercase or downcase
     content = (
-        content.replace(sha256, latest_sha256)
-        .replace(sha256.upper(), latest_sha256)
-        .replace(version, latest_version)
+        content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256).replace(version, latest_version)
     )
 
     with open(install_script_path, "w") as file:
