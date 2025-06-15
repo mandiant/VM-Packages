@@ -150,6 +150,7 @@ def update_github_url(package):
             if not latest_sha256:
                return None
             content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+
             break
             
 
@@ -169,6 +170,15 @@ def update_github_url(package):
             return None
         content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
 
+    if org == 'ufrisk' and project == 'MemProcFS':
+         content = content.replace(url, latest_url)
+         with open(install_script_path, "w") as file:
+              file.write(content)
+         update_nuspec_version(package, latest_version)
+
+         return latest_version
+         
+        
     content = content.replace(version, latest_version)
     with open(install_script_path, "w") as file:
         file.write(content)
