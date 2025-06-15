@@ -25,24 +25,37 @@ def replace_version(latest_version, nuspec_content):
         except ValueError:
             # not all tools use symver, observed examples: `cp_1.1.0` or `current`
             print(f"unusual version format: {latest_version}")
-            print("reusing old version with updated date, manual fixing may be appropriate")
+            print(
+                "reusing old version with updated date, manual fixing may be appropriate"
+            )
             latest_version = version
     # If same version add date
     if version == latest_version:
         latest_version += "." + time.strftime("%Y%m%d")
-    return latest_version, re.sub("<version>[^<]+</version>", f"<version>{latest_version}</version>", nuspec_content)
+    return latest_version, re.sub(
+        "<version>[^<]+</version>",
+        f"<version>{latest_version}</version>",
+        nuspec_content,
+    )
 
 
 # Get latest version from GitHub releases
 def get_latest_version(org, project, version):
-    response = requests.get(f"https://api.github.com/repos/{org}/{project}/releases/latest")
+    response = requests.get(
+        f"https://api.github.com/repos/{org}/{project}/releases/latest"
+    )
     if not response.ok:
         print(f"GitHub API response not ok: {response.status_code}")
         return None
-    if org == 'ufrisk' and project == 'MemProcFS':
-        latest_version = re.search( r'v\d+\.\d+\.\d+', response.json()['assets'][4]['browser_download_url'])
+    if org == "ufrisk" and project == "MemProcFS":
+        latest_version = re.search(
+            r"v\d+\.\d+\.\d+", response.json()["assets"][4]["browser_download_url"]
+        )
         if latest_version.group().startswith("v"):
-           return latest_version.group()[1:] ,  response.json()['assets'][4]['browser_download_url']
+            return (
+                latest_version.group()[1:],
+                response.json()["assets"][4]["browser_download_url"],
+            )
         else:
             return latest_version
     latest_version = response.json()["tag_name"]
@@ -137,22 +150,23 @@ def update_github_url(package):
 
     latest_version = None
     for url, org, project, version in matches:
-        if org == 'ufrisk' and project == 'MemProcFS':
-            latest_version_match , latest_url =  get_latest_version(org, project, version)
+        if org == "ufrisk" and project == "MemProcFS":
+            latest_version_match, latest_url = get_latest_version(org, project, version)
             if (not latest_version_match) or (latest_version_match == version):
-              return None
-        # The version of the 32 and 64 bit downloads need to be the same, we only have one nuspec
+                return None
+            # The version of the 32 and 64 bit downloads need to be the same, we only have one nuspec
             if latest_version and latest_version_match != latest_version:
-              return None
+                return None
             latest_version = latest_version_match
             sha256 = get_sha256(url)
             latest_sha256 = get_sha256(latest_url)
             if not latest_sha256:
-               return None
-            content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+                return None
+            content = content.replace(sha256, latest_sha256).replace(
+                sha256.upper(), latest_sha256
+            )
 
             break
-            
 
         latest_version_match = get_latest_version(org, project, version)
         # No newer version available
@@ -161,24 +175,25 @@ def update_github_url(package):
         # The version of the 32 and 64 bit downloads need to be the same, we only have one nuspec
         if latest_version and latest_version_match != latest_version:
             return None
-        latest_version = latest_version_match                                                            
+        latest_version = latest_version_match
         latest_url = url.replace(version, latest_version)
         sha256 = get_sha256(url)
         latest_sha256 = get_sha256(latest_url)
         # Hash can be uppercase or downcase
         if not latest_sha256:
             return None
-        content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+        content = content.replace(sha256, latest_sha256).replace(
+            sha256.upper(), latest_sha256
+        )
 
-    if org == 'ufrisk' and project == 'MemProcFS':
-         content = content.replace(url, latest_url)
-         with open(install_script_path, "w") as file:
-              file.write(content)
-         update_nuspec_version(package, latest_version)
+    if org == "ufrisk" and project == "MemProcFS":
+        content = content.replace(url, latest_url)
+        with open(install_script_path, "w") as file:
+            file.write(content)
+        update_nuspec_version(package, latest_version)
 
-         return latest_version
-         
-        
+        return latest_version
+
     content = content.replace(version, latest_version)
     with open(install_script_path, "w") as file:
         file.write(content)
@@ -254,7 +269,10 @@ def update_version_url(package):
     # Use findall as some packages have two URLs (for 32 and 64 bits), we need to update both
     # Match URLs like:
     # - https://download.sweetscape.com/010EditorWin32Installer12.0.1.exe
-    matches = re.findall(r"[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']", content)
+    matches = re.findall(
+        r"[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']",
+        content,
+    )
 
     # It doesn't include a download URL with the version
     if not matches:
@@ -272,7 +290,9 @@ def update_version_url(package):
         latest_version = latest_version_match
         sha256 = get_sha256(url)
         # Hash can be uppercase or downcase
-        content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+        content = content.replace(sha256, latest_sha256).replace(
+            sha256.upper(), latest_sha256
+        )
 
     content = content.replace(version, latest_version)
     with open(install_script_path, "w") as file:
@@ -288,7 +308,8 @@ def update_version_url(package):
 def update_dependencies(package):
     nuspec_path, content = get_nuspec(package)
     matches = re.findall(
-        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>', content
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>',
+        content,
     )
 
     updates = False
@@ -342,7 +363,9 @@ def update_dynamic_url(package):
             if latest_sha256.lower() == sha256.lower():
                 return None
 
-            content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+            content = content.replace(sha256, latest_sha256).replace(
+                sha256.upper(), latest_sha256
+            )
 
         # write back the changed chocolateyinstall.ps1
         with open(install_script_path, "w") as file:
@@ -383,7 +406,9 @@ def update_msixbundle_url(package):
     sha256 = sha256_m.group("sha256")
     # Hash can be uppercase or downcase
     content = (
-        content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256).replace(version, latest_version)
+        content.replace(sha256, latest_sha256)
+        .replace(sha256.upper(), latest_sha256)
+        .replace(version, latest_version)
     )
 
     with open(install_script_path, "w") as file:
