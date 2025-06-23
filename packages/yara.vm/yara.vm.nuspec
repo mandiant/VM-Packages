@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>yara.vm</id>
-    <version>4.5.3</version>
-    <authors>Victor M. Alvarez, others</authors>
-    <description>The pattern matching swiss knife</description>
+    <version>4.5.3.20250613</version>
+    <authors>YARA contributors</authors>
+    <description>YARA helps identify and classify malware by creating rules based on textual or binary patterns.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="yara" version="[4.5.3]" />
+      <dependency id="vcredist140.vm" />
     </dependencies>
-    <tags>Forensic</tags>
+    <tags>Utilities</tags>
   </metadata>
 </package>
