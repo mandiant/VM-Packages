@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rules>
+    <rule name="emerging-all" url="https://rules.emergingthreats.net/open/suricata-7.0.3/emerging.rules.zip" innerFolder="rules"/>
+</rules>
