@@ -1,12 +1,12 @@
 $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
-$packageToolsDir = Join-Path $(Get-Location) "debloat.vm\tools"
-$packageStartDir = Join-Path $(Get-Location) "debloat.vm\start"
-
 try {
     # Determine OS Version
     $osVersion = VM-Get-WindowsVersion
+
+    $packageToolsDir = $PSScriptRoot
+    $packageStartDir = Join-Path $packageToolsDir "start" -Resolve
 
     switch ($osVersion) {
         "Win10" { $config = Join-Path $packageToolsDir "win10.xml" }
