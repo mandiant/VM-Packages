@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'telnet'
-  $category = 'Networking'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $system32=Join-Path $Env:WINDIR system32
   $pkgmgr= Join-Path $system32 "pkgmgr.exe"

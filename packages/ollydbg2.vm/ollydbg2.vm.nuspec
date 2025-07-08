@@ -2,11 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ollydbg2.vm</id>
-    <version>2.01.0.20230418</version>
+    <version>2.01.0.20250430</version>
     <description>OllyDbg2 is a 32-bit assembler level analysing debugger for Windows. Emphasis on binary code analysis makes it particularly useful in cases where source is unavailable.</description>
     <authors>Oleh Yuschuk</authors>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Debuggers</tags>
+    <projectUrl>http://www.ollydbg.de/</projectUrl>
   </metadata>
 </package>

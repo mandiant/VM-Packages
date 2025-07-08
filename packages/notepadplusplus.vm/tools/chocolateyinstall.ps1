@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'notepad++'
-$category = 'Productivity Tools'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 try {
     # Path to Notepad++'s configuration file
@@ -46,6 +46,9 @@ try {
 
     $executablePath = Join-Path ${Env:ProgramFiles} "Notepad++\${toolName}.exe" -Resolve
     VM-Install-Shortcut $toolName $category $executablePath
+
+    # Refresh Desktop as shortcut is used in FLARE-VM LayoutModification.xml
+    VM-Refresh-Desktop
 } catch {
     VM-Write-Log-Exception $_
 }

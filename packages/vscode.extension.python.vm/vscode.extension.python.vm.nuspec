@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vscode.extension.python.vm</id>
-    <version>2024.9.11621011</version>
+    <version>2024.9.20250218</version>
     <authors>Microsoft</authors>
     <description>Python language support with extension access points for IntelliSense (Pylance), Debugging (Python Debugger), linting, formatting, refactoring, unit tests, and more.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="vscode.vm" />
     </dependencies>
+    <tags>Productivity Tools</tags>
   </metadata>
 </package>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>uncompyle6.vm</id>
+    <version>3.9.2.20250219</version>
+    <authors>rocky</authors>
+    <description>A decompiler for Python 1.0-3.8.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="python3.vm" />
+    </dependencies>
+    <tags>Python</tags>
+  </metadata>
+</package>

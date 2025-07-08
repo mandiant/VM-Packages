@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'WinDump'
-$category = 'Networking'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://github.com/hsluoyz/WinDump/releases/download/v0.3/WinDump-for-Npcap-0.3.zip'
 $zipSha256 = '7ed45fb06c8c9731ef095db627eaca23b445b2809041e164996121e49b24f5d4'

@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.diaphora.vm</id>
-    <version>3.2.1.20240725</version>
+    <version>3.2.1.20250522</version>
     <authors>joxeankoret</authors>
     <description>Diaphora is a program diffing IDA plugin.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20240509" />
       <dependency id="libraries.python3.vm" />
     </dependencies>
+    <tags>IDA Plugins</tags>
   </metadata>
 </package>

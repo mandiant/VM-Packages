@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>bstrings.vm</id>
-    <version>1.5.2.20240826</version>
+    <version>1.5.3.20250219</version>
     <authors>Eric Zimmerman</authors>
     <description>Find them strings yo. Built in regex patterns. Handles locked files</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240411" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="dotnet-6.vm" />
     </dependencies>
+    <tags>Utilities</tags>
   </metadata>
 </package>

@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Kernel OST Viewer'
-$category = 'Forensic'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $exeUrl = 'https://www.nucleustechnologies.com/dl/dl.php?id=127'
 $exeSha256 = 'f3ec61fe2f01c121e7436cfb6440e839795c280382409fd454f7814f99a20638'

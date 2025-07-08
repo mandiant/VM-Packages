@@ -3,10 +3,10 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'Malcode Analyst Pack'
-  $category = 'Utilities'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-  $url = 'http://sandsprite.com/flare_vm/map_setup_7.26.23__A2A58AF886B9BF4DC6DB5CFDFF9B7E2300F0D0C491CD07DAC871DF60DAA370C4.exe'
-  $checksum = 'A2A58AF886B9BF4DC6DB5CFDFF9B7E2300F0D0C491CD07DAC871DF60DAA370C4'
+  $url = 'https://sandsprite.com/flare_vm/map_setup_4.1.25_3A212024765B7A564A380FAB29078E20FDB220F915EE60A1C9B885BFBC99905E.exe'
+  $checksum = '3A212024765B7A564A380FAB29078E20FDB220F915EE60A1C9B885BFBC99905E'
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

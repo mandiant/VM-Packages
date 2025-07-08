@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
 
 $toolName = 'OllyDbg'
-$category = 'Debuggers'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 Remove-Item $toolDir -Recurse -Force -ea 0 | Out-Null

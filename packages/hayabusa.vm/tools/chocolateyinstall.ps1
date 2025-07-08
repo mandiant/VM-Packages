@@ -2,11 +2,11 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'hayabusa'
-$category = 'Forensic'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = "https://github.com/Yamato-Security/hayabusa/releases/download/v2.18.0/hayabusa-2.18.0-win-x64.zip"
-$zipSha256 = '2d37b316535b2308ba114949d8054974c290428715326f6bfd657d0ca0389ebe'
+$zipUrl = "https://github.com/Yamato-Security/hayabusa/releases/download/v3.3.0/hayabusa-3.3.0-win-x64.zip"
+$zipSha256 = '37bee154170429d272f3c5b228957d62c116d44cd52e6d3fb24e4b49785d6bbd'
 
-$executableName = $toolName.ToLower() + "-2.18.0-win-x64.exe"
+$executableName = $toolName.ToLower() + "-3.3.0-win-x64.exe"
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false -executableName $executableName

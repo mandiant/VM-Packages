@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>idapro.vm</id>
+    <version>0.0.0.20250612</version>
+    <authors>Hex-Rays</authors>
+    <description>IDA Pro 9 is an interactive DisAssembler and debugger. Requires `ida-pro_9*.exe` (optional `.hexlic`) from https://hex-rays.com/ida-pro in the Desktop.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20250206" />
+      <!-- IDA Pro requires Python3 and the rpyc library -->
+      <dependency id="libraries.python3.vm" version="0.0.0.20241213" />
+    </dependencies>
+    <tags>Disassemblers</tags>
+    <projectUrl>https://hex-rays.com/ida-pro</projectUrl>
+  </metadata>
+</package>

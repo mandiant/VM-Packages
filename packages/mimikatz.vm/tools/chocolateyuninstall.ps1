@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$category = 'Credential Access'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 try {
     $name = "Mimikatz"

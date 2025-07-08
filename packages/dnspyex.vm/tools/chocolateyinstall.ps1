@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'dnSpy'
-  $category = 'dotNet'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   $zipUrl = "https://github.com/dnSpyEx/dnSpy/releases/download/v6.5.1/dnSpy-netframework.zip"
   $zipSha256 = "95816dae47093966ccdb780c063f71576640d85d3e8584de490be43b1452f4e4"

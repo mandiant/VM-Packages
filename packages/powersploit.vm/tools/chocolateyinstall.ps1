@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 #vars for powersploit
 $toolName = 'PowerSploit'
-$category = 'Exploitation'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 # install powersploit, import module, and list available powersploit modules
 $zipUrl = 'https://github.com/ZeroDayLab/PowerSploit/archive/72a88240ed0c6527f3880a1fb15ea7a19589c2d8.zip'

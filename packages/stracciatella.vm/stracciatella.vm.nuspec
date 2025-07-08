@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>stracciatella.vm</id>
-    <version>0.7.0.20240412</version>
+    <version>0.7.0.20250219</version>
     <authors>mgeeky</authors>
     <description>Powershell runspace from within C# (aka SharpPick technique) with AMSI, ETW and Script Block Logging disabled.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240412" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Payload Development</tags>
   </metadata>
 </package>

@@ -1,7 +1,9 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'Wireshark'
-$category = 'Networking'
+$toolNames = @('Wireshark', 'tshark')
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-VM-Remove-Tool-Shortcut $toolName $category
+ForEach ($toolName in $toolNames) {
+  VM-Remove-Tool-Shortcut $toolName $category
+}

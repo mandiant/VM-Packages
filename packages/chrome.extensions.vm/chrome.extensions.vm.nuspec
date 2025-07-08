@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>chrome.extensions.vm</id>
-    <version>0.0.0.20240930</version>
+    <version>0.0.0.20250218</version>
     <authors>Mandiant</authors>
     <description>A package for multiple useful chrome extensions from the Chrome webstore.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="googlechrome.vm" />
     </dependencies>
+    <tags>Productivity Tools</tags>
   </metadata>
 </package>

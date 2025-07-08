@@ -2,14 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>procdot.vm</id>
-    <version>1.22.57</version>
+    <version>1.22.57.20250219</version>
     <authors>Christian Wojner</authors>
     <description>Creates visual graphs from procmon output</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="7zip.vm" />
       <dependency id="windump.vm" />
       <dependency id="graphviz" />
     </dependencies>
+    <tags>Utilities</tags>
   </metadata>
 </package>

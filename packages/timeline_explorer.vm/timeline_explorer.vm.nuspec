@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>timeline_explorer.vm</id>
-    <version>2.0.0.20240908</version>
+    <version>2.0.0.20250219</version>
     <authors>Eric Zimmerman</authors>
     <description>View CSV and Excel files, filter, group, sort, etc. with ease</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240411" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="dotnet-6.vm" />
     </dependencies>
+    <tags>Forensic</tags>
   </metadata>
 </package>

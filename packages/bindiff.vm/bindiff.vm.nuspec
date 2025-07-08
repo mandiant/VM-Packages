@@ -2,12 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>bindiff.vm</id>
-    <version>8.0.0.20240402</version>
+    <version>8.0.0.20250505</version>
     <authors>Zynamics</authors>
-    <description>A comparison tool for binary files that assists in quickly finding differences and similarities in disassembled code</description>
+    <description>BinDiff is a comparison tool for binary files that finds differences and similarities in disassembled code.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="vcredist140.vm" />
     </dependencies>
+    <tags>File Information</tags>
+    <projectUrl>https://github.com/google/bindiff</projectUrl>
   </metadata>
 </package>

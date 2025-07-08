@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>teamfiltration.vm</id>
-    <version>3.5.0.20240411</version>
+    <version>3.5.0.20250219</version>
     <authors>Flangvik</authors>
     <description>TeamFiltration is a cross-platform framework for enumerating, spraying, exfiltrating, and backdooring O365 AAD accounts.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240411" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Exploitation</tags>
   </metadata>
 </package>

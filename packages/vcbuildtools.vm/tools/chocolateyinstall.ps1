@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 try {
-  $category = 'Productivity Tools'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
   $programFiles = ${Env:ProgramFiles(x86)}

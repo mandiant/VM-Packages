@@ -2,11 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>010editor.vm</id>
-    <version>15.0.1</version>
-    <description>Professional text and hex editor with Binary Templates technology.</description>
+    <version>15.0.2.20250509</version>
+    <description>010 Editor is a text and hex editor with Binary Templates technology. Takes long to install.</description>
     <authors>SweetScape</authors>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Hex Editors</tags>
+    <projectUrl>https://www.sweetscape.com/010editor/</projectUrl>
   </metadata>
 </package>

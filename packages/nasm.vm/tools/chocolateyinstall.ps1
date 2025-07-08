@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'nasm'
-  $category = 'Productivity Tools'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
   # Delete Desktop shortcut
   $desktopShortcut = Join-Path ${Env:Public} "Desktop\$toolName.lnk"

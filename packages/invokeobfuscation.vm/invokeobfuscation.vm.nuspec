@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>invokeobfuscation.vm</id>
-    <version>1.8.2.20240412</version>
+    <version>1.8.2.20250219</version>
     <authors>cobbr, 4d4c, mvle, danielbohannon</authors>
     <description>Invoke-Obfuscation is a PowerShell v2.0+ compatible PowerShell command and script obfuscator.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240412" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>Payload Development</tags>
   </metadata>
 </package>

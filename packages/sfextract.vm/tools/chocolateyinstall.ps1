@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'sfextract'
-$category = 'dotNet'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 dotnet tool update --global sfextract --version 2.1.0
 

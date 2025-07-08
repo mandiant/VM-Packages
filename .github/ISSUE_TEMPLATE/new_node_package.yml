@@ -42,7 +42,7 @@ body:
     attributes:
       label: Version
       description: |
-        Use the following scheme and today's date, as we install the latest version with npm:  `0.0.0.YYYYMMDD`. Example: `0.0.0.20240513`. See the [_Version_ documentation in our wiki](https://github.com/mandiant/VM-Packages/wiki/Package-Structure#version) for more details.
+        Use the following scheme and today's date, as we install the latest version with npm:  `0.0.0.YYYYMMDD`. Example: `0.0.0.20240513`. See the [_Version_ documentation in our wiki](https://github.com/mandiant/VM-Packages/wiki/Chocolatey-Packages#version) for more details.
       placeholder: ex. 0.0.0.20240513
     validations:
       required: true
@@ -54,19 +54,20 @@ body:
       label: Category
       description: Which category should this tool be installed to?
       options:
-        - Command & Control
+        - Command and Control
         - Credential Access
         - Debuggers
         - Delphi
         - Disassemblers
-        - dotNet
         - Documents
+        - dotNet
         - Exploitation
         - File Information
         - Forensic
+        - Go
         - Hex Editors
         - InnoSetup
-        - Java & Android
+        - Java and Android
         - Javascript
         - Lateral Movement
         - Memory
@@ -77,6 +78,7 @@ body:
         - Persistence
         - Privilege Escalation
         - Productivity Tools
+        - Python
         - Reconnaissance
         - Registry
         - Shellcode
@@ -101,6 +103,13 @@ body:
       label: Tool's description
       description: |
         The tool description should be short and not include version specific details or other information that is likely to change in a future version. Example: `Deobfuscator to remove common JS obfuscation techniques.`.
+  - type: input
+    id: arguments
+    attributes:
+      label: Arguments
+      description: |	
+        Command-line arguments to pass to the tool when running it from the `Tools` directory. For example `--help`.
+      value: --help
   - type: input
     id: dependencies
     attributes:

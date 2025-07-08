@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>snaffler.vm</id>
-    <version>1.0.184</version>
+    <version>1.0.198</version>
     <authors>l0ss, Sh3r4</authors>
     <description>Snaffler is a tool for enumerating accessible SMB shares in an Active Directory environment.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Reconnaissance</tags>
   </metadata>
 </package>

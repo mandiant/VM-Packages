@@ -1,13 +1,11 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'idafree'
-$category = 'Disassemblers'
-
-VM-Remove-Tool-Shortcut $toolName $category
+$toolName = 'ida'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 # Remove binary from PATH
 Uninstall-BinFile -Name $toolName
 
-# Manually silently uninstall
-VM-Uninstall-With-Uninstaller "IDA Freeware*?8.4" $category "EXE" "--mode unattended"
+# Silently uninstall
+VM-Uninstall-With-Uninstaller "IDA Freeware*" $category "EXE" "--mode unattended" | Out-Null

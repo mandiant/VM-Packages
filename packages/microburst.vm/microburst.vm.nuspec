@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>microburst.vm</id>
-    <version>0.0.0.20240412</version>
+    <version>0.0.0.20250219</version>
     <authors>NetSPI</authors>
     <description>MicroBurst includes functions and scripts that support Azure Services discovery, weak configuration auditing, and post exploitation actions such as credential dumping.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240412" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="az.powershell" />
     </dependencies>
+    <tags>Exploitation</tags>
   </metadata>
 </package>

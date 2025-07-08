@@ -2,12 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>garbageman.vm</id>
-    <version>0.2.4.20240411</version>
+    <version>0.2.4.20250505</version>
     <authors>alphillips-lab</authors>
-    <description>A set of tools designed for .NET heap analysis.</description>
+    <description>GarbageMan is a set of tools designed for .NET heap analysis.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240411" />
-      <dependency id="dotnet5-desktop-runtime" version="5.0.6" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="dotnet-5.0-desktopruntime" />
     </dependencies>
+    <tags>dotNet</tags>
+    <projectUrl>https://github.com/WithSecureLabs/GarbageMan</projectUrl>
   </metadata>
 </package>

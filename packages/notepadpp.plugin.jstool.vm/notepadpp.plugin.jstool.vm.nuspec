@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>notepadpp.plugin.jstool.vm</id>
-    <version>1.2312.0</version>
+    <version>1.2312.0.20250218</version>
     <description>A JavaScript (JSON) tool for Notepad++ (formerly JSMinNpp)</description>
     <authors>Sun Junwen</authors>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="notepadplusplus.vm" />
     </dependencies>
+    <tags>Productivity Tools</tags>
   </metadata>
 </package>

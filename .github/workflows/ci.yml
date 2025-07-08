@@ -8,13 +8,23 @@ on:
 
 jobs:
   lint:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           # fetch all history for all branches
           fetch-depth: 0
+      - name: Install dependencies
+        run: pip install black==25.* isort==6.* flake8==7.*
+      # Different line limits: Black/isort (120), Flake8 (150).
+      # Flake8 allows longer lines for better long string readability. Black doesn't enforce string length.
+      - name: Run black
+        run: black --line-length=120 --check --diff .
+      - name: Run flake8
+        run: flake8 --max-line-length=150
+      - name: Run isort
+        run: isort --check --diff --profile black --line-length=120 .
       - name: Run lint.py
         run: python scripts/test/lint.py packages
       - name: Run lint.ps1
@@ -26,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019, windows-2022]
+        os: [windows-2022, windows-2025]
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -38,15 +48,10 @@ jobs:
       - name: Build and test all modified packages
         id: test
         # It runs only if there are modified files
-        # We specifically test for "microsoft-windows-terminal.vm" in 'windows-2019' because it requires at least Windows 10 version 1903/OS build 18362
         if: steps.files.outputs.added_modified_renamed != ''
         run: |
           $os = "${{ matrix.os }}"
           $packages = "${{ steps.files.outputs.added_modified_renamed }}".Split(" ") | Foreach-Object { (Get-Item $_).Directory.Name }
-          if ($os -eq 'windows-2019') {
-            $excludedPackages = @("microsoft-windows-terminal.vm")
-            $packages = $packages | Where-Object { $_ -notin $excludedPackages }
-          }
           $packages = ("common.vm " + $packages -join " ").Trim()
           scripts/test/test_install.ps1 "$packages"
       - name: Upload logs to artifacts

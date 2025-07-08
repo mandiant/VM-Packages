@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sharpcliphistory.vm</id>
-    <version>1.0</version>
+    <version>1.0.20250219</version>
     <authors>F-Secure LABS</authors>
     <description>SharpClipHistory is a .NET 4.5 application written in C# that can be used to read the contents of a user's clipboard history in Windows 10 starting from the 1809 Build.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Credential Access</tags>
   </metadata>
 </package>

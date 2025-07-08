@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>mailsniper.vm</id>
-    <version>0.0.0.20230712</version>
+    <version>0.0.0.20250219</version>
     <authors>dafthack</authors>
     <description>MailSniper is a penetration testing tool for searching through email in a Microsoft Exchange environment for specific terms and performing password spraying.</description>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
+    <tags>Credential Access</tags>
   </metadata>
 </package>

@@ -5,13 +5,13 @@ try {
   ###################################
   # Install of drivers dependencies #
   ###################################
-  $zipCliUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/master/Command%20line%20applications/aim_ll.zip'
-  $zipCliSha256 = '21c32aed320eca532969590b67dc8151bddd6aebe9699abd09cc3e026fd01a29'
+  $zipCliUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/5961f922c5b99ec29acc4af4b60b909b402eed95/Command%20line%20applications/aim_ll.zip'
+  $zipCliSha256 = 'a628fd0bb4b1657b2b89fd8972937b4d9c4b1292ea16764208fa63fc0ce84d54'
   $tempCliDownloadDir = Join-Path ${Env:chocolateyPackageFolder} "aim_ll"
   $toolCli = "aim_ll.exe"
 
-  $zipDriverUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/63801fc2b51f899244e43f1bf5275d2ac92a2477/DriverSetup/DriverFiles.zip'
-  $zipDriverSha256 = 'c5de8e5d5a2c0231baf2cdb74fb0b0f4047658c69105bcab28990734b3979ee3'
+  $zipDriverUrl = 'https://github.com/ArsenalRecon/Arsenal-Image-Mounter/raw/5961f922c5b99ec29acc4af4b60b909b402eed95/DriverSetup/DriverFiles.zip'
+  $zipDriverSha256 = 'cc03472b689f23b1c66d1764b7a12e7212146b5c1f70e2613666efcd93b97192'
   $tempDriverDownloadDir = Join-Path ${Env:TEMP} "temp_$([guid]::NewGuid())"
 
   $packageArgs = @{
@@ -48,7 +48,7 @@ try {
   # Install of package #
   ######################
   $toolName = 'ArsenalImageMounter'
-  $category = 'Forensic'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $shimPath = "\bin\${toolName}.exe"
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

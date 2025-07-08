@@ -2,12 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>x64dbg.plugin.x64dbgpy.vm</id>
-    <version>1.0.59.20240124</version>
-    <description>Automating x64dbg using Python.</description>
+    <version>1.0.59.20250430</version>
+    <description>X64dbgpy is a a plugin to access the API of x64dbg using Python.</description>
     <authors>mrexodia, RealGame (Tomer Zait)</authors>
     <dependencies>
-      <dependency id="common.vm" />
+      <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="x64dbg.vm" />
     </dependencies>
+    <tags>Debuggers</tags>
+    <projectUrl>https://github.com/x64dbg/x64dbgpy</projectUrl>
   </metadata>
 </package>

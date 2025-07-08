@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'sysinternals'
-$category = 'Utilities'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
 try {
@@ -78,6 +78,9 @@ try {
         New-Item -Path $registryKey -Force | Out-Null
         New-ItemProperty -Path $registryKey -Name EulaAccepted -Value 1 -Force | Out-Null
     }
+
+    # Refresh Desktop as the shortcuts are used in FLARE-VM LayoutModification.xml
+    VM-Refresh-Desktop
 } catch {
     VM-Write-Log-Exception $_
 }

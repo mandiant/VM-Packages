@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
   $toolName = 'ConfuserEx'
-  $category = 'Payload Development'
+  $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $shimPath = 'bin\ConfuserEx.exe'
 
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

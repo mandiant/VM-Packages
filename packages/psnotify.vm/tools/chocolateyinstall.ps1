@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'psnotify'
-    $category = 'dotNet'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     $zipUrl = 'https://github.com/WithSecureLabs/GarbageMan/releases/download/v0.2.4/psnotify.zip'
     $zipSha256 = '255633da6e61bf30a67bce995ef72b7f9d8c85c75c8c5ee0aedb48709f7e6454'

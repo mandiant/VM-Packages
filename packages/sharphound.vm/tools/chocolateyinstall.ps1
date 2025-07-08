@@ -2,9 +2,9 @@ $ErrorActionPreference = 'Stop'
 Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'SharpHound'
-$category = 'Reconnaissance'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://github.com/BloodHoundAD/SharpHound/releases/download/v2.5.8/SharpHound-v2.5.8.zip'
-$zipSha256 = '413970222de555da19596792ccbe949c1389c630937d06910ad79d5e46dce930'
+$zipUrl = 'https://github.com/BloodHoundAD/SharpHound/releases/download/v2.6.2/SharpHound-v2.6.2.zip'
+$zipSha256 = '70755670c212cc6bc75bfb419f89de4da579858cdb590c596eaf0d6852625310'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256

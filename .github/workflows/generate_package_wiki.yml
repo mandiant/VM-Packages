@@ -1,0 +1,34 @@
+name: Generate Package Wiki
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  generate-wiki:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Checkout Wiki Repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 0
+
+      - name: Generate Wiki Content
+        id: generate-content
+        run: python scripts/utils/generate_package_wiki.py
+
+      - name: Commit changes
+        working-directory: wiki
+        run: |
+          git config user.email 'vm-packages@google.com'
+          git config user.name 'vm-packages'
+          git add . # Create page if it doesn't exist
+          git commit -am "Update Package Wiki"
+          git push

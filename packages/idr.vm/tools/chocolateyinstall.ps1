@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
     # The way of distributing this tool is unusual, so we can't use the helper functions
     $toolName = 'idr'
-    $category = 'Delphi'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     $zipUrl = 'https://github.com/crypto2011/IDR/archive/da98ef6871b75303bcf1a5acc692e38178c7833e.zip'
     $zipSha256 = 'ea779489a868deb811e403398ec3c1b65484f60811f5fff95a0ae42563b68caf'

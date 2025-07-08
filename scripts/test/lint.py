@@ -1,26 +1,33 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 Check the given packages for style issues.
 
 Usage:
 
    $ python lint.py packages/
-
-Copyright (C) 2022 Mandiant, Inc. All Rights Reserved.
-Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: [package root]/LICENSE.txt
-Unless required by applicable law or agreed to in writing, software distributed under the License
- is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and limitations under the License.
 """
-import os
-import sys
-import logging
-import pathlib
+
 import argparse
 import datetime
-import subprocess
+import logging
+import os
+import pathlib
 import re
+import subprocess
+import sys
 from typing import Dict
 from xml.dom import minidom
 
@@ -79,6 +86,20 @@ def run_cmd(cmd):
     return out
 
 
+class InvalidDescriptionLength(Lint):
+    max_length = 175
+    name = "the description length is invalid"
+    recommendation = f"the description must be limited to {max_length} characters maximum."
+
+    def check(self, path):
+        dom = minidom.parse(str(path))
+        description = dom.getElementsByTagName("description")[0].firstChild.data
+        if len(description) > self.max_length:
+            print(f"The description has invalid length: {len(description)}")
+            return True
+        return False
+
+
 class IncludesRequiredFieldsOnly(Lint):
     name = "file lists non-required fields"
     allowed_fields = [
@@ -87,6 +108,8 @@ class IncludesRequiredFieldsOnly(Lint):
         "description",
         "authors",
         "dependencies",
+        "tags",
+        "projectUrl",
     ]
     recommendation = f"Only include required fields: {', '.join(allowed_fields)}"
 
@@ -96,7 +119,8 @@ class IncludesRequiredFieldsOnly(Lint):
 
         non_required_fields = list()
         for c in metadata.childNodes:
-            if c.nodeName == "#text":
+            # Skip text nodes (whitespace) and comments.
+            if c.nodeName == "#text" or c.nodeName == "#comment":
                 continue
             if c.nodeName not in self.allowed_fields:
                 non_required_fields.append(c.nodeName)
@@ -264,7 +288,39 @@ class PackageIdNotMatchingFolderOrNuspecName(Lint):
         nuspec = path.parts[-1]
         folder = path.parts[-2]
 
-        return not (pkg_id == folder == nuspec[:-len(".nuspec")])
+        return not (pkg_id == folder == nuspec[: -len(".nuspec")])
+
+
+class UsesInvalidCategory(Lint):
+    # The common.vm, debloat.vm, and installer.vm packages are special as they
+    # assist with the installation and allow to share code between packages.
+    # They do not install any tool and consequently don't have a category.
+    EXCLUSIONS = [
+        "common.vm",
+        "debloat.vm",
+        "installer.vm",
+    ]
+    root_path = os.path.abspath(os.path.join(__file__, "../../.."))
+    categories_txt = os.path.join(root_path, "categories.txt")
+    with open(categories_txt) as file:
+        CATEGORIES = [line.rstrip() for line in file]
+        logger.debug(CATEGORIES)
+
+    name = "uses an invalid category"
+    recommendation = f"use a category from {categories_txt} between <tags> and </tags>"
+
+    def check(self, path):
+        if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
+            return False
+
+        # utf-8-sig ignores BOM
+        file_content = open(path, "r", encoding="utf-8-sig").read()
+
+        match = re.search(r"<tags>(?P<category>[\w ]+)<\/tags>", file_content)
+        if not match or match.group("category") not in self.CATEGORIES:
+            return True
+        return False
+
 
 NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
@@ -273,6 +329,8 @@ NUSPEC_LINTS = (
     DependencyContainsUppercaseChar(),
     VersionNotUpdated(),
     PackageIdNotMatchingFolderOrNuspecName(),
+    UsesInvalidCategory(),
+    InvalidDescriptionLength(),
 )
 
 
@@ -313,7 +371,7 @@ class FirstLineDoesNotSetErrorAction(Lint):
         return not self.FIRST_LINE == lines[0]
 
 
-class UsesInvalidCategory(Lint):
+class UsesCategoryFromNuspec(Lint):
     # Some packages don't have a category (we don't create a link in the tools directory)
     EXCLUSIONS = [
         ".dbgchild.vm",
@@ -327,7 +385,6 @@ class UsesInvalidCategory(Lint):
         "installer.vm",
         "libraries.python2.vm",
         "libraries.python3.vm",
-        "microsoft-office.vm",
         "notepadpp.plugin.",
         "npcap.vm",
         "openjdk.vm",
@@ -336,16 +393,11 @@ class UsesInvalidCategory(Lint):
         "x64dbgpy.vm",
         "vscode.extension.",
         "chrome.extensions.vm",
+        "keystone.vm",
     ]
 
-    root_path = os.path.abspath(os.path.join(__file__, "../../.."))
-    categories_txt = os.path.join(root_path, "categories.txt")
-    with open(categories_txt) as file:
-        CATEGORIES = [line.rstrip() for line in file]
-        logger.debug(CATEGORIES)
-
-    name = "Uses an invalid category"
-    recommendation = f"Set $category to a category in {categories_txt} or exclude the package in the linter"
+    name = "Doesn't use the function VM-Get-Category"
+    recommendation = "Set '$category = VM-Get-Category($MyInvocation.MyCommand.Definition)'"
 
     def check(self, path):
         if any([exclusion in str(path) for exclusion in self.EXCLUSIONS]):
@@ -354,8 +406,9 @@ class UsesInvalidCategory(Lint):
         # utf-8-sig ignores BOM
         file_content = open(path, "r", encoding="utf-8-sig").read()
 
-        match = re.search("\$category = ['\"](?P<category>[\w &/]+)['\"]", file_content)
-        if not match or match.group("category") not in self.CATEGORIES:
+        pattern = re.escape("$category = VM-Get-Category($MyInvocation.MyCommand.Definition)")
+        match = re.search(pattern, file_content)
+        if not match:
             return True
         return False
 
@@ -363,10 +416,10 @@ class UsesInvalidCategory(Lint):
 INSTALL_LINTS = (
     MissesImportCommonVm(),
     FirstLineDoesNotSetErrorAction(),
-    UsesInvalidCategory(),
+    UsesCategoryFromNuspec(),
 )
 
-UNINSTALL_LINTS = (UsesInvalidCategory(),)
+UNINSTALL_LINTS = (UsesCategoryFromNuspec(),)
 
 
 def lint_install(path):

@@ -3,7 +3,7 @@ Import-Module vm.common -Force -DisableNameChecking
 
 try {
     $toolName = 'exiftool'
-    $category = 'File Information'
+    $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
     $shimPath = 'bin\exiftool.exe'
 
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category

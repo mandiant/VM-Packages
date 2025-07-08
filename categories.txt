@@ -1,4 +1,4 @@
-Command & Control
+Command and Control
 Credential Access
 Debuggers
 Delphi
@@ -8,9 +8,11 @@ dotNet
 Exploitation
 File Information
 Forensic
+Go
 Hex Editors
+IDA Plugins
 InnoSetup
-Java & Android
+Java and Android
 Javascript
 Lateral Movement
 Memory
@@ -19,9 +21,9 @@ Packers
 Payload Development
 PE
 Persistence
-PowerShell
 Privilege Escalation
 Productivity Tools
+Python
 Reconnaissance
 Registry
 Shellcode

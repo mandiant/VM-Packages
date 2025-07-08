@@ -2,11 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>explorersuite.vm</id>
-    <version>0.0.0.20240717</version>
+    <version>0.0.0.20250219</version>
     <authors>Erik Pistelli</authors>
     <description>A suite of tools including CFF Explorer and a process viewer.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20230925" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
+    <tags>PE</tags>
   </metadata>
 </package>

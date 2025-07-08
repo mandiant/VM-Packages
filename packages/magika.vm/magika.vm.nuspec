@@ -2,12 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>magika.vm</id>
-    <version>0.0.0.20240607</version>
+    <version>0.5.0.20250505</version>
     <authors>Yanick Fratantonio, Luca Invernizzi, Marina Zhang, Giancarlo Metitieri, Thomas Kurt, Francois Galilee, Alexandre Petit-Bianco, Loua Farah, Ange Albertini, Elie Bursztein</authors>
     <description>Magika is an AI powered file type detection tool that uses deep learning to provide accurate detection.</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20240607" />
+      <dependency id="common.vm" version="0.0.0.20250206" />
       <dependency id="python3.vm" />
     </dependencies>
+    <tags>File Information</tags>
+    <projectUrl>https://google.github.io/magika/</projectUrl>
   </metadata>
 </package>

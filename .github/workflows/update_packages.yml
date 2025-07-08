@@ -26,8 +26,8 @@ jobs:
           foreach ($packagePath in (Get-ChildItem packages)){
             $package = $packagePath.Name
             $newVersion = 0
-            # Test indepdendly every type of update and commit what works
-            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL', 'VERSION_URL')) {
+            # Test independently every type of update and commit what works
+            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL', 'VERSION_URL', 'DYNAMIC_URL', 'MSIXBUNDLE_URL')) {
               $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
               $updated = $?
               echo "$package $version"
@@ -39,6 +39,8 @@ jobs:
                 if ($tested) {
                   git add "packages/$package/"
                   $newVersion = $version
+                  # Save the update type to use it in the commit
+                  $finalUpdateType = $UPDATE_TYPE
                 } else {
                   echo "$package $version FAILED"
                   git diff
@@ -49,7 +51,12 @@ jobs:
               Remove-Item built_pkgs -Recurse -ErrorAction Ignore
             }
             if ($newVersion) {
+              if ($finalUpdateType -eq 'DYNAMIC_URL') {
+                git commit -m "Fix broken hash in $package"
+              }
+              else {
               git commit -m "Update $package to $newVersion"
+              }
             }
           }
           Exit(0)
