@@ -33,7 +33,7 @@ jobs:
               echo "$package $version"
               if ($updated -and $version) {
                 # Test package before committing
-                scripts\test\test_install.ps1 -max_tries 1 $package
+                scripts\test\test_install.ps1 -max_tries 1 $package | out-null
                 $tested = $?
                 cd $root
                 if ($tested) {
@@ -45,6 +45,7 @@ jobs:
                   echo "$package $version FAILED"
                   git diff
                 }
+                choco uninstall $package -y
               }
               # Clean changes and built packages
               git restore .
