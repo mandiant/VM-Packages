@@ -116,12 +116,12 @@ def update_github_url(package):
     # Use findall as some packages have two URLs (for 32 and 64 bits), we need to update both
     # Match URLs like https://github.com/mandiant/capa/releases/download/v4.0.1/capa-v4.0.1-windows.zip
     matches = re.findall(
-        "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/v?(?P<version>[^/]+)/[^\"']+)[\"']",
+        r"[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/releases/download/[^/]*?(?P<version>\d+(?:\.\d+)+)/[^\"']+)[\"']",
         content,
     )
     # Match also URLs like https://github.com/joxeankoret/diaphora/archive/refs/tags/3.0.zip
     matches += re.findall(
-        "[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/archive/refs/tags/v?(?P<version>[^/]+).zip)[\"']",
+        r"[\"'](?P<url>https://github.com/(?P<org>[^/]+)/(?P<project>[^/]+)/archive/refs/tags/[^/]*?(?P<version>\d+(?:\.\d+)+)\.zip)[\"']",
         content,
     )
 
