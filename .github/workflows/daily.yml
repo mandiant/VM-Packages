@@ -36,6 +36,8 @@ jobs:
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki
+          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 0
       - name: Add results to wiki
         run: python scripts/utils/generate_daily_results.py ${{ github.repository }} ${{ github.sha }} ${{ github.run_number }} ${{ github.run_id }} ${{ matrix.os }}
       - name: Commit changes
