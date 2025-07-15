@@ -3,14 +3,16 @@ import os
 import pathlib
 import xml.etree.ElementTree as ET
 from collections import defaultdict
+from urllib.request import urlopen
 
 # Dict[str (category), Dict[str (pkg_name, (pkg_description, project_url))]]
 packages_by_category = defaultdict(dict)
 
+DEFAULT_CONFIG_URL = "https://raw.githubusercontent.com/mandiant/flare-vm/main/config.xml"
 PACKAGE_URL_BASE = "https://github.com/mandiant/VM-Packages/tree/main/packages"
 
 
-def sort_write_wiki_content(file_path):
+def sort_write_wiki_content(file_path, default_packages):
     """Writes package information sorted by category to a Markdown wiki file.
 
     This function iterates through the `packages_by_category` dictionary, which
@@ -18,13 +20,15 @@ def sort_write_wiki_content(file_path):
     generates a Markdown header and a table containing package names (with a
     link to the package source code) and descriptions (including the project
     URL). Both the categories and the packages inside a category are sorted
-    alphabetically. The resulting Markdown content is then written to the
-    specified file.
+    alphabetically. The packages in the DEFAULT_CONFIG_URL are marked in bold.
+    The resulting Markdown content is then written to the specified file.
 
     Args:
-        file_path (str): The path to the output Markdown file.
+        file_path: The path to the output Markdown file.
+        default_packages: A set with the package names in the default config
     """
-    wiki_content = """This page documents the available VM packages sorted by category.
+    wiki_content = f"""This page documents the available VM packages sorted by category.
+The packages in the [FLARE-VM default configuration]({DEFAULT_CONFIG_URL}) are marked in bold.
 This page is [generated automatically](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/generate_package_wiki.yml).
 Do not edit it manually.\n
 """
@@ -37,6 +41,10 @@ Do not edit it manually.\n
             description, project_url = pkg_info
 
             package_url = f"{PACKAGE_URL_BASE}/{pkg_name}"
+
+            # Bold package name if the package is the default configuration
+            if pkg_name in default_packages:
+                pkg_name = f"**{pkg_name}**"
 
             # Append a link to the project's URL to the description
             if project_url:
@@ -66,6 +74,23 @@ def find_element_text(parent, tag_name):
     if tag is None:
         return None
     return tag.text
+
+
+def get_default_packages():
+    """Fetches and parses the packages in the default config
+
+    This function retrieves the config.xml file, parses it, and extracts all
+    package names, returning them as a set of strings.
+
+    Returns:
+        A set of strings.
+    """
+    with urlopen(DEFAULT_CONFIG_URL) as f:
+        config_tree = ET.parse(f)
+
+    packages_element = config_tree.getroot().find("packages")
+    package_elements = packages_element.findall("package")
+    return {pkg.get("name") for pkg in package_elements}
 
 
 def process_packages_directory(packages_dir):
@@ -102,5 +127,7 @@ if __name__ == "__main__":
     parser.add_argument("--packages", type=str, required=False, default="packages", help="Path to packages")
     parser.add_argument("--wiki", type=str, required=False, default="wiki/Packages.md", help="Path to the wiki")
     args = parser.parse_args()
+
+    default_packages = get_default_packages()
     process_packages_directory(args.packages)
-    sort_write_wiki_content(args.wiki)
+    sort_write_wiki_content(args.wiki, default_packages)
