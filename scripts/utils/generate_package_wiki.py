@@ -4,14 +4,11 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict
 from urllib.request import urlopen
 
-# Dict[str (category), Dict[str (pkg_name, (pkg_description, project_url))]]
-packages_by_category = defaultdict(dict)
-
 DEFAULT_CONFIG_URL = "https://raw.githubusercontent.com/mandiant/flare-vm/main/config.xml"
 PACKAGE_URL_BASE = "https://github.com/mandiant/VM-Packages/tree/main/packages"
 
 
-def sort_write_wiki_content(file_path, default_packages):
+def sort_write_wiki_content(file_path, packages_by_category, default_packages):
     """Writes package information sorted by category to a Markdown wiki file.
 
     This function iterates through the `packages_by_category` dictionary, which
@@ -24,6 +21,7 @@ def sort_write_wiki_content(file_path, default_packages):
 
     Args:
         file_path: The path to the output Markdown file.
+        packages_by_category: A dict mapping categories to package data.
         default_packages: A set with the package names in the default config
     """
     wiki_content = f"""This page documents the available VM packages sorted by category.
@@ -36,9 +34,7 @@ Do not edit it manually.\n
         wiki_content += "| Package | Description |\n"
         wiki_content += "| ------- | ----------- |\n"
 
-        for pkg_name, pkg_info in sorted(packages.items()):
-            description, project_url = pkg_info
-
+        for pkg_name, description, project_url in sorted(packages):
             package_url = f"{PACKAGE_URL_BASE}/{pkg_name}"
 
             # Bold package name if the package is the default configuration
@@ -92,33 +88,51 @@ def get_default_packages():
     return {pkg.get("name") for pkg in package_elements}
 
 
-def process_packages_directory(packages_dir):
-    """Obtains the package name, description and category from a directory
+def get_packages_by_category(packages_dir):
+    """Parses package metadata from .nuspec files and groups it by category.
 
-    This function parses all the nuspec files in the specified packages directory.
-    It saves into packages_by_category[category] a dictionary with the package
-    name as key and the description as value.
+    This function recursively searches the given directory for `.nuspec` files.
+    For each file found, it parses the XML to extract the package's ID (name),
+    description, project URL, and tags (used as the category). Packages that
+    do not have a category tag are ignored, as they are helper packages that
+    assist with the installation (such as common.vm).
 
     Args:
-        packages: directory where the packages reside.
+        packages_dir: The path to the root directory containing packages.
+
+    Returns:
+        A dictionary where keys are category names (str) and values are sets
+        of tuples. Each tuple represents a package and contains its name,
+        description, and project URL: `(package_name, description, project_url)`.
+        The project_url can be `None` if not specified in the .nuspec file.
+
+    Raises:
+        FileNotFoundError: If the specified `packages_dir` does not exist or
+                           is not a directory.
     """
     if not pathlib.Path(packages_dir).is_dir():
         raise FileNotFoundError(f"Packages directory not found: {packages_dir}")
+
+    # Dict[str, Set[Tuple[str, str, Optional[str]]]]
+    packages_by_category = defaultdict(set)
 
     for nuspec_path in pathlib.Path(packages_dir).glob("**/*.nuspec"):
         nuspec_tree = ET.parse(nuspec_path)
         nuspec_metadata = nuspec_tree.find("{*}metadata")
         if nuspec_metadata is not None:
             category = find_element_text(nuspec_metadata, "tags")
-            # We are only interested in the packages with a category.
-            # Some packages that assist with the istallation (such as common.vm) do
-            # not contain a category
+
+            # Skip helper packages without a category (such as common.vm)
             if not category:
                 continue
+
             package = find_element_text(nuspec_metadata, "id")
             description = find_element_text(nuspec_metadata, "description")
             project_url = find_element_text(nuspec_metadata, "projectUrl")
-            packages_by_category[category][package] = (description, project_url)
+
+            # Add a tuple of package details to the set for the given category
+            packages_by_category[category].add((package, description, project_url))
+    return packages_by_category
 
 
 if __name__ == "__main__":
@@ -128,5 +142,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     default_packages = get_default_packages()
-    process_packages_directory(args.packages)
-    sort_write_wiki_content(args.wiki, default_packages)
+    packages_by_category = get_packages_by_category(args.packages)
+    sort_write_wiki_content(args.wiki, packages_by_category, default_packages)
