@@ -8,7 +8,7 @@ DEFAULT_CONFIG_URL = "https://raw.githubusercontent.com/mandiant/flare-vm/main/c
 PACKAGE_URL_BASE = "https://github.com/mandiant/VM-Packages/tree/main/packages"
 
 
-def sort_write_wiki_content(file_path, packages_by_category, default_packages):
+def create_package_wiki_file(file_path, packages_by_category, default_packages):
     """Writes package information sorted by category to a Markdown wiki file.
 
     This function iterates through the `packages_by_category` dictionary, which
@@ -143,4 +143,4 @@ if __name__ == "__main__":
 
     default_packages = get_default_packages()
     packages_by_category = get_packages_by_category(args.packages)
-    sort_write_wiki_content(args.wiki, packages_by_category, default_packages)
+    create_package_wiki_file(args.wiki, packages_by_category, default_packages)
