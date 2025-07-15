@@ -24,14 +24,14 @@ def sort_write_wiki_content(file_path):
     Args:
         file_path (str): The path to the output Markdown file.
     """
-    wikiContent = """This page documents the available VM packages sorted by category.
+    wiki_content = """This page documents the available VM packages sorted by category.
 This page is [generated automatically](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/generate_package_wiki.yml).
 Do not edit it manually.\n
 """
     for category, packages in sorted(packages_by_category.items()):
-        wikiContent += f"## {category}\n\n"
-        wikiContent += "| Package | Description |\n"
-        wikiContent += "| ------- | ----------- |\n"
+        wiki_content += f"## {category}\n\n"
+        wiki_content += "| Package | Description |\n"
+        wiki_content += "| ------- | ----------- |\n"
 
         for pkg_name, pkg_info in sorted(packages.items()):
             description, project_url = pkg_info
@@ -42,11 +42,11 @@ Do not edit it manually.\n
             if project_url:
                 description = f"{description} [Link]({project_url})"
 
-            wikiContent += f"| [{pkg_name}]({package_url}) | {description} |\n"
+            wiki_content += f"| [{pkg_name}]({package_url}) | {description} |\n"
 
-        wikiContent += "\n\n"
+        wiki_content += "\n\n"
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(wikiContent)
+        f.write(wiki_content)
 
 
 def find_element_text(parent, tag_name):
