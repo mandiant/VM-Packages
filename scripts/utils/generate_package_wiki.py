@@ -4,7 +4,7 @@ import pathlib
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
-# Dict[str (category), Dict[str (pkg_name, pkg_description)]]
+# Dict[str (category), Dict[str (pkg_name, (pkg_description, project_url))]]
 packages_by_category = defaultdict(dict)
 
 PACKAGE_URL_BASE = "https://github.com/mandiant/VM-Packages/tree/main/packages"
@@ -16,9 +16,10 @@ def sort_write_wiki_content(file_path):
     This function iterates through the `packages_by_category` dictionary, which
     contains package information organized by category. For each category, it
     generates a Markdown header and a table containing package names (with a
-    link to the package source code) and descriptions. Both the categories and
-    the packages inside a category are sorted alphabetically. The resulting
-    Markdown content is then written to the specified file.
+    link to the package source code) and descriptions (including the project
+    URL). Both the categories and the packages inside a category are sorted
+    alphabetically. The resulting Markdown content is then written to the
+    specified file.
 
     Args:
         file_path (str): The path to the output Markdown file.
@@ -31,9 +32,18 @@ Do not edit it manually.\n
         wikiContent += f"## {category}\n\n"
         wikiContent += "| Package | Description |\n"
         wikiContent += "| ------- | ----------- |\n"
-        for pkg_name, pkg_description in sorted(packages.items()):
+
+        for pkg_name, pkg_info in sorted(packages.items()):
+            description, project_url = pkg_info
+
             package_url = f"{PACKAGE_URL_BASE}/{pkg_name}"
-            wikiContent += f"| [{pkg_name}]({package_url}) | {pkg_description} |\n"
+
+            # Append a link to the project's URL to the description
+            if project_url:
+                description = f"{description} [Link]({project_url})"
+
+            wikiContent += f"| [{pkg_name}]({package_url}) | {description} |\n"
+
         wikiContent += "\n\n"
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(wikiContent)
@@ -81,9 +91,10 @@ def process_packages_directory(packages_dir):
             # not contain a category
             if not category:
                 continue
-            description = find_element_text(nuspec_metadata, "description")
             package = find_element_text(nuspec_metadata, "id")
-            packages_by_category[category][package] = description
+            description = find_element_text(nuspec_metadata, "description")
+            project_url = find_element_text(nuspec_metadata, "projectUrl")
+            packages_by_category[category][package] = (description, project_url)
 
 
 if __name__ == "__main__":
