@@ -1,5 +1,4 @@
 import argparse
-import os
 import pathlib
 import xml.etree.ElementTree as ET
 from collections import defaultdict
@@ -103,7 +102,7 @@ def process_packages_directory(packages_dir):
     Args:
         packages: directory where the packages reside.
     """
-    if not os.path.isdir(packages_dir):
+    if not pathlib.Path(packages_dir).is_dir():
         raise FileNotFoundError(f"Packages directory not found: {packages_dir}")
 
     for nuspec_path in pathlib.Path(packages_dir).glob("**/*.nuspec"):
