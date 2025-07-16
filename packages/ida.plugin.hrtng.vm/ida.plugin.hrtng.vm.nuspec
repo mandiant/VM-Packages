@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.hrtng.vm</id>
-    <version>2.4.30</version>
+    <version>2.4.30.20250715</version>
     <authors>KasperskyLab</authors>
-    <description>IDA Pro plugin with features such as decryption, automation, deobfuscation, patching, lib code recognition and pseudocode transformations.</description>
+    <description>hrtng is an IDA Pro plugin with features such as decryption, automation, deobfuscation, patching, lib code recognition and pseudocode transformations.</description>
     <dependencies>
       <dependency id="common.vm" />
     </dependencies>
     <tags>IDA Plugins</tags>
+    <projectUrl>https://github.com/KasperskyLab/hrtng</projectUrl>
   </metadata>
 </package>
