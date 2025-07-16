@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vbdec.vm</id>
-    <version>1.0.917.20250219</version>
+    <version>1.0.917.20250716</version>
     <authors>vbGamer45, David Zimmer</authors>
-    <description>VBDec works as a VB6 disassembler, PCode debugger, structure viewer for all vb6 executables, and can generate IDA scripts to integrate structures and named function offsets.</description>
+    <description>VBDec is a VB File format viewer, P-Code Disassembler and debugger.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
     </dependencies>
     <tags>Visual Basic</tags>
+    <projectUrl>https://sandsprite.com/vbdec</projectUrl>
   </metadata>
 </package>
 
