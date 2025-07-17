@@ -36,7 +36,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2022, windows-2025]
+        # TODO: Add windows-2025, see https://github.com/mandiant/VM-Packages/issues/1447
+        os: [windows-2022]
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -58,8 +59,8 @@ jobs:
         uses: ./.github/actions/upload-logs
         if: always()
       - name: Push all built packages to MyGet
-        # Only push packages on master if they were built (not if testing was skipped) and
-        # only with one version of Windows (otherwise it would be pushed 3 times)
+        # Only push packages if they were built (not if testing was skipped)
+        # and only with one version of Windows
         if: steps.test.outcome == 'success' && github.event_name == 'push' && matrix.os == 'windows-2022'
         run: |
           $built_pkgs = Get-ChildItem built_pkgs
