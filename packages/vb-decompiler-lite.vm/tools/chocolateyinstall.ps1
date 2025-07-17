@@ -5,7 +5,7 @@ $toolName = 'VB Decompiler'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://www.vb-decompiler.org/files/vb_decompiler_lite.zip'
-$zipSha256 = 'ec754e61a55c6d4dfe1c5606749334abfbfd9e7a8b5363baf75aec8b5cde9811'
+$zipSha256 = '6c42afc9d99c72652782ebf26539f404a258f812e434e35c152311fa4fabd0f1'
 
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 $executablePath = (Join-Path $toolDir "$toolName.exe")
