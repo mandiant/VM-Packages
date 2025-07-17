@@ -310,7 +310,8 @@ def update_dynamic_url(package):
         # find the new hash and check with existing hash and replace if different
         for url, sha256 in zip(matches_url, matches_hash):
             latest_sha256 = get_sha256(url)
-            if latest_sha256.lower() == sha256.lower():
+            # Unable to get hash, URL is likely broken, or hash hasn't changed
+            if (not latest_sha256) or (latest_sha256.lower() == sha256.lower()):
                 return None
 
             content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
