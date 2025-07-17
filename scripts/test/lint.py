@@ -211,9 +211,10 @@ class VersionNotIncreased(Lint):
 
         package_id = metadata.getElementsByTagName("id")[0].firstChild.data
         remote_version = self.__get_remote_version(package_id)
+        # Package not found in MyGet, the local version is the first version of the package
         if not remote_version:
-            print("Error getting remote version from MyGet")
-            return True
+            print("Package not found in MyGet")
+            return False
 
         if self.__format_version(local_version) < self.__format_version(remote_version):
             print(f"{path} package version ({local_version}) must be higher than the one in MyGet ({remote_version})")
