@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ttd.vm</id>
-    <version>1.11.506</version>
+    <version>1.11.532</version>
     <authors>Microsoft</authors>
     <description>TTD is a time travel debugging command line utility.</description>
     <dependencies>
