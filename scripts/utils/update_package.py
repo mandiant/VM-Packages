@@ -9,6 +9,9 @@ from pathlib import Path
 
 import requests
 
+# Requests without headers fail in Cloudtop
+headers = {"User-Agent": "FLARE-VM"}
+
 
 # Replace version in nuspec, for example:
 # `<version>1.6.3</version>`
@@ -35,7 +38,7 @@ def replace_version(latest_version, nuspec_content):
 
 # Get latest version from GitHub releases
 def get_latest_version(org, project, version):
-    response = requests.get(f"https://api.github.com/repos/{org}/{project}/releases/latest")
+    response = requests.get(f"https://api.github.com/repos/{org}/{project}/releases/latest", headers=headers)
     if not response.ok:
         print(f"GitHub API response not ok: {response.status_code}")
         return None
@@ -51,7 +54,7 @@ def get_latest_version(org, project, version):
 
 # Get URL response's content SHA256 hash
 def get_sha256(url):
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     if not response.ok:
         return None
     return hashlib.sha256(response.content).hexdigest()
@@ -188,7 +191,7 @@ def get_msixbundle_version(url, version):
 
     pack_name = url.split("/")[-1].replace(".msixbundle", "")
 
-    resp = requests.get(f"https://aka.ms/{pack_name}/download")
+    resp = requests.get(f"https://aka.ms/{pack_name}/download", headers=headers)
     if not resp.ok:
         return (None, None)
 
@@ -307,7 +310,8 @@ def update_dynamic_url(package):
         # find the new hash and check with existing hash and replace if different
         for url, sha256 in zip(matches_url, matches_hash):
             latest_sha256 = get_sha256(url)
-            if latest_sha256.lower() == sha256.lower():
+            # Unable to get hash, URL is likely broken, or hash hasn't changed
+            if (not latest_sha256) or (latest_sha256.lower() == sha256.lower()):
                 return None
 
             content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
