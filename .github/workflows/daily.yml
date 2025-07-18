@@ -17,12 +17,11 @@ jobs:
       # Updating the wiki fails if between the checkout of the wiki and the push of the update the other job pushes its update
       max-parallel: 1
       matrix:
-        os: [windows-2022, windows-2025]
+        # TODO: Add windows-2025, see https://github.com/mandiant/VM-Packages/issues/1447
+        os: [windows-2022]
         include:
           - os: windows-2022
             os_name: Win22
-          - os: windows-2025
-            os_name: Win25
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
