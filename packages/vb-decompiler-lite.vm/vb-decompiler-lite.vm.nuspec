@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>vb-decompiler-lite.vm</id>
-    <version>12.5.20250219</version>
+    <version>0.0.0.20250717</version>
     <authors>DotFix Software</authors>
-    <description>Visual Basic decompiler</description>
+    <description>VB Decompiler is a decompiler for Visual Basic, VB.NET and C# applications.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
     <tags>Visual Basic</tags>
+    <projectUrl>https://www.vb-decompiler.org</projectUrl>
   </metadata>
 </package>
