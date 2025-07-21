@@ -25,54 +25,41 @@ jobs:
           New-Item test_logs -itemType Directory | Out-Null
           foreach ($packagePath in (Get-ChildItem packages)){
             $package = $packagePath.Name
-            # Find the best update type and version
-            $highestVersionObj = [version]"0.0"
-            $bestUpdateType = $null
-            # Check each type for $package to find the best version
-            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL', 'VERSION_URL', 'DYNAMIC_URL', 'MSIXBUNDLE_URL')) {
-              # Find a potential version string but don't modify the files yet
-              $versionStr = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
+            $newVersion = 0
+            # Test independently every type of update and commit what works
+            foreach ($UPDATE_TYPE in ('GITHUB_URL', 'MSIXBUNDLE_URL', 'VERSION_URL', 'DEPENDENCIES', 'DYNAMIC_URL')) {
+              $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
+              $updated = $?
+              echo "$package $version"
+              if ($updated -and $version) {
+                # Test package before committing
+                scripts\test\test_install.ps1 -max_tries 1 $package | out-null
+                $tested = $?
+                cd $root
+                if ($tested) {
+                  git add "packages/$package/"
+                  $newVersion = $version
+                  # Save the update type to use it in the commit
+                  $finalUpdateType = $UPDATE_TYPE
+                  break
+                } else {
+                  echo "$package $version FAILED"
+                  git diff
+                }
+                choco uninstall $package -y
+              }
               # Clean changes and built packages
               git restore .
-              if ($versionStr) {
-                try {
-                  $currentVersionObj = [version]$versionStr
-                  if ($currentVersionObj -gt $highestVersionObj) {
-                    $highestVersionObj = $currentVersionObj
-                    $bestUpdateType = $UPDATE_TYPE
-                    echo "Found new best version: $highestVersionObj from $bestUpdateType"
-                  }
-                } catch {
-                  Write-Warning "Could not parse version string: $versionStr"
-                }
-              }
+              Remove-Item built_pkgs -Recurse -ErrorAction Ignore
             }
-            # If no valid update was found, move to the next package
-            if (-not $bestUpdateType) {
-              echo "No valid updates found for $package"
-              continue
-            }
-            echo "Highest version is $($highestVersionObj.ToString()). Proceeding with final test and commit."
-            # Now, re-run the update script for ONLY the best update type found
-            $newVersion = python scripts\utils\update_package.py $package --update_type $bestUpdateType
-            scripts\test\test_install.ps1 -max_tries 1 $package
-            $tested = $?
-            cd $root
-            if ($tested) {
-              git add "packages/$package/"
-              if ($bestUpdateType -eq 'DYNAMIC_URL') {
+            if ($newVersion) {
+              if ($finalUpdateType -eq 'DYNAMIC_URL') {
                 git commit -m "Fix broken hash in $package"
               }
               else {
-                git commit -m "Update $package to $newVersion"
+              git commit -m "Update $package to $newVersion"
               }
-            } else {
-              echo "Test for highest version $newVersion FAILED."
             }
-            # Always clean up everything at the end
-            choco uninstall $package -y -r
-            git restore .
-            Remove-Item built_pkgs -Recurse -ErrorAction Ignore
           }
           Exit(0)
       - name: Upload logs to artifacts
