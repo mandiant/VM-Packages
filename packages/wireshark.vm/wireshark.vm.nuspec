@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>wireshark.vm</id>
-    <version>4.4.7</version>
+    <version>4.4.8</version>
     <description>Wireshark lets you capture and interactively browse the traffic running on a computer network.</description>
     <authors>Gerald Combs, Wireshark team</authors>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="npcap.vm" />
-      <dependency id="wireshark" version="[4.4.7]" />
+      <dependency id="wireshark" version="[4.4.8]" />
     </dependencies>
     <tags>Networking</tags>
   </metadata>
