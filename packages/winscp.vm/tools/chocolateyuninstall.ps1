@@ -4,4 +4,4 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'WinSCP'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-VM-Remove-Tool-Shortcut $toolName $category
+VM-Uninstall $toolName $category
