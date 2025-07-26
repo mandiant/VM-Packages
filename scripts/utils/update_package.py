@@ -30,7 +30,11 @@ def replace_version(latest_version, nuspec_content):
     # If same version add date
     if version == latest_version:
         latest_version += "." + time.strftime("%Y%m%d")
-    return latest_version, re.sub("<version>[^<]+</version>", f"<version>{latest_version}</version>", nuspec_content)
+    return latest_version, re.sub(
+        "<version>[^<]+</version>",
+        f"<version>{latest_version}</version>",
+        nuspec_content,
+    )
 
 
 # Get latest version from GitHub releases
@@ -39,6 +43,15 @@ def get_latest_version(org, project, version):
     if not response.ok:
         print(f"GitHub API response not ok: {response.status_code}")
         return None
+    if org == "ufrisk" and project == "MemProcFS":
+        latest_version = re.search(r"v\d+\.\d+\.\d+", response.json()["assets"][4]["browser_download_url"])
+        if latest_version.group().startswith("v"):
+            return (
+                latest_version.group()[1:],
+                response.json()["assets"][4]["browser_download_url"],
+            )
+        else:
+            return latest_version
     latest_version = response.json()["tag_name"]
     # Version parsing in update_github_url excludes 'v'. Consequently the latest_version must also exclude 'v' if present.
     # Otherwise, the github URL would would be replace by a version with double `v`, such as:
@@ -131,6 +144,22 @@ def update_github_url(package):
 
     latest_version = None
     for url, org, project, version in matches:
+        if org == "ufrisk" and project == "MemProcFS":
+            latest_version_match, latest_url = get_latest_version(org, project, version)
+            if (not latest_version_match) or (latest_version_match == version):
+                return None
+            # The version of the 32 and 64 bit downloads need to be the same, we only have one nuspec
+            if latest_version and latest_version_match != latest_version:
+                return None
+            latest_version = latest_version_match
+            sha256 = get_sha256(url)
+            latest_sha256 = get_sha256(latest_url)
+            if not latest_sha256:
+                return None
+            content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+
+            break
+
         latest_version_match = get_latest_version(org, project, version)
         # No newer version available
         if (not latest_version_match) or (latest_version_match == version):
@@ -146,6 +175,14 @@ def update_github_url(package):
         if not latest_sha256:
             return None
         content = content.replace(sha256, latest_sha256).replace(sha256.upper(), latest_sha256)
+
+    if org == "ufrisk" and project == "MemProcFS":
+        content = content.replace(url, latest_url)
+        with open(install_script_path, "w") as file:
+            file.write(content)
+        update_nuspec_version(package, latest_version)
+
+        return latest_version
 
     content = content.replace(version, latest_version)
     with open(install_script_path, "w") as file:
@@ -222,7 +259,10 @@ def update_version_url(package):
     # Use findall as some packages have two URLs (for 32 and 64 bits), we need to update both
     # Match URLs like:
     # - https://download.sweetscape.com/010EditorWin32Installer12.0.1.exe
-    matches = re.findall(r"[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']", content)
+    matches = re.findall(
+        r"[\"'](https{0,1}://.+?[A-Za-z\-_]((?:\d{1,4}\.){1,3}\d{1,4})[\w\.\-]+)[\"']",
+        content,
+    )
 
     # It doesn't include a download URL with the version
     if not matches:
@@ -256,7 +296,8 @@ def update_version_url(package):
 def update_dependencies(package):
     nuspec_path, content = get_nuspec(package)
     matches = re.findall(
-        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>', content
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\'] version="\[(?P<version>[^"\']+)\]" */>',
+        content,
     )
 
     updates = False
