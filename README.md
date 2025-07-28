@@ -1,7 +1,7 @@
 [![Packages](https://gist.githubusercontent.com/vm-packages/0e28118f551692f3401ac669e1d6761d/raw/packages_badge.svg)](https://github.com/mandiant/VM-Packages/wiki/Packages)
 [![Daily run failures Windows 2022](https://gist.githubusercontent.com/vm-packages/7d6b2592948d916eb5529350308f01d1/raw/windows-2022_daily_badge.svg)](https://github.com/mandiant/VM-Packages/wiki/Daily-Failures)
 [![MyGet version mismatches](https://gist.githubusercontent.com/vm-packages/dfe6ed22576b6c1d2fa749ff46f3bc6f/raw/myget_badge.svg)](https://github.com/mandiant/VM-Packages/wiki/MyGet-Version-Mismatches)
-[![CI](https://github.com/mandiant/VM-packages/workflows/CI/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3ACI+branch%3Amain)
+[![CI](https://github.com/mandiant/VM-Packages/actions/workflows/ci.yml/badge.svg)](https://github.com/mandiant/VM-packages/actions?query=workflow%3ACI+branch%3Amain)
 
 # Virtual Machine Packages
 
