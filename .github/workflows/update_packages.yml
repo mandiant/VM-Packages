@@ -49,17 +49,18 @@ jobs:
               # Clean changes and built packages
               git restore .
               Remove-Item built_pkgs -Recurse -ErrorAction Ignore
-              if ($tested) {
-                # Only allow 1 successful package install
+
+              # Commit changes if new version update was sucessfull
+              if ($newVersion) {
+                if ($finalUpdateType -eq 'DYNAMIC_URL') {
+                  git commit -m "Fix broken hash in $package"
+                }
+                else {
+                  git commit -m "Update $package to $newVersion"
+                }
+
+                # Only allow 1 type of package update
                 break
-              }
-            }
-            if ($newVersion) {
-              if ($finalUpdateType -eq 'DYNAMIC_URL') {
-                git commit -m "Fix broken hash in $package"
-              }
-              else {
-              git commit -m "Update $package to $newVersion"
               }
             }
           }
