@@ -25,24 +25,25 @@ jobs:
           New-Item test_logs -itemType Directory | Out-Null
           foreach ($packagePath in (Get-ChildItem packages)){
             $package = $packagePath.Name
+            echo $package
+
             $newVersion = 0
             # Test independently every type of update and commit what works
             foreach ($UPDATE_TYPE in ('GITHUB_URL', 'MSIXBUNDLE_URL', 'VERSION_URL', 'DYNAMIC_URL', 'DEPENDENCIES')) {
               $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
               $updated = $?
-              echo "$package $version"
               if ($updated -and $version) {
                 # Test package before committing
-                scripts\test\test_install.ps1 -max_tries 1 $package | out-null
+                scripts\test\test_install.ps1 -max_tries 1 $package *>$null
                 $tested = $?
                 cd $root
                 if ($tested) {
-                  git add "packages/$package/"
+                  git add "packages/$package/" | Out-Null
                   $newVersion = $version
                   # Save the update type to use it in the commit
                   $finalUpdateType = $UPDATE_TYPE
                 } else {
-                  echo "$package $version FAILED"
+                  echo "$package $version FAILED ($UPDATE_TYPE)"
                   git diff
                 }
               }
@@ -52,11 +53,12 @@ jobs:
 
               # Commit changes if new version update was sucessfull
               if ($newVersion) {
+                echo "$package $version SUCCEEDED ($UPDATE_TYPE)"
                 if ($finalUpdateType -eq 'DYNAMIC_URL') {
-                  git commit -m "Fix broken hash in $package"
+                  git commit -m "Fix broken hash in $package" | Out-Null
                 }
                 else {
-                  git commit -m "Update $package to $newVersion"
+                  git commit -m "Update $package to $newVersion" | Out-Null
                 }
 
                 # Only allow 1 type of package update
