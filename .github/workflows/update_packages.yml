@@ -27,23 +27,35 @@ jobs:
             $package = $packagePath.Name
             echo $package
 
-            $newVersion = 0
             # Test independently every type of update and commit what works
             foreach ($UPDATE_TYPE in ('GITHUB_URL', 'MSIXBUNDLE_URL', 'VERSION_URL', 'DYNAMIC_URL', 'DEPENDENCIES')) {
               $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
               $updated = $?
+              $installSucceeded = $False
               if ($updated -and $version) {
-                # Test package before committing
-                scripts\test\test_install.ps1 -max_tries 1 $package *>$null
-                $tested = $?
-                cd $root
-                if ($tested) {
+                # Ensure linter succeed
+                python scripts/test/lint.py "packages\$package" *>$null
+                $lintSucceeded = $?
+
+                # Only if linting succeeds, test package
+                if ($lintSucceeded) {
+                    scripts\test\test_install.ps1 -max_tries 1 $package *>$null
+                    $installSucceeded = $? # $installSucceeded is now the result of the install test
+                    cd $root
+                }
+
+                # If linter and test succeed, commit changes
+                if ($installSucceeded) {
                   git add "packages/$package/" | Out-Null
-                  $newVersion = $version
                   # Save the update type to use it in the commit
                   $finalUpdateType = $UPDATE_TYPE
                 } else {
-                  echo "$package $version FAILED ($UPDATE_TYPE)"
+                  if (-not $lintSucceeded) {
+                    echo "$package $version - linter FAILED ($UPDATE_TYPE)"
+                  }
+                  else {
+                    echo "$package $version - testing FAILED ($UPDATE_TYPE)"
+                  }
                   git diff
                 }
               }
@@ -52,13 +64,13 @@ jobs:
               Remove-Item built_pkgs -Recurse -ErrorAction Ignore
 
               # Commit changes if new version update was sucessfull
-              if ($newVersion) {
-                echo "$package $version SUCCEEDED ($UPDATE_TYPE)"
+              if ($installSucceeded) {
+                echo "$package $version - SUCCEEDED ($UPDATE_TYPE)"
                 if ($finalUpdateType -eq 'DYNAMIC_URL') {
                   git commit -m "Fix broken hash in $package" | Out-Null
                 }
                 else {
-                  git commit -m "Update $package to $newVersion" | Out-Null
+                  git commit -m "Update $package to $version" | Out-Null
                 }
 
                 # Only allow 1 type of package update
