@@ -31,6 +31,8 @@ import sys
 from typing import Dict
 from xml.dom import minidom
 
+from packaging.version import Version
+
 GIT_EXE = "git"
 
 # set log level for debugging here script-wide
@@ -199,11 +201,6 @@ class VersionNotIncreased(Lint):
             return None
         return m.group("version")
 
-    # Convert 1.02.0 to 1.2 to ensure we compare versions consistency
-    def __format_version(self, version):
-        version = re.sub(r"\.0(?P<digit>\d)", lambda x: f".{x.group('digit')}", version)
-        return re.sub(r"(\.0+)+$", "", version)
-
     def check(self, path):
         dom = minidom.parse(str(path))
         metadata = dom.getElementsByTagName("metadata")[0]
@@ -216,7 +213,7 @@ class VersionNotIncreased(Lint):
             print("Package not found in MyGet")
             return False
 
-        if self.__format_version(local_version) < self.__format_version(remote_version):
+        if Version(local_version) < Version(remote_version):
             print(f"{path} package version ({local_version}) must be higher than the one in MyGet ({remote_version})")
             return True
         return False
