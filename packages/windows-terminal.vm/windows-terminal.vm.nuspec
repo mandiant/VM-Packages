@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>windows-terminal.vm</id>
-    <version>1.22.11141</version>
+    <version>1.22.11751</version>
     <authors>Microsoft</authors>
     <description>Windows Terminal is a new, modern, feature-rich, productive terminal application for command-line users.</description>
     <dependencies>
