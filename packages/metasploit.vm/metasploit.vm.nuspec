@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>metasploit.vm</id>
-    <version>6.4.13.20250716</version>
+    <version>6.4.13.20250730</version>
     <authors>Rapid7</authors>
     <description>Metasploit is a penetration testing framework for finding vulnerabilities, penetration testing, and developing IDS signatures.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
       <!-- vcbuildtools.vm installs signtool.exe needed by VM-Assert-Signature -->
-      <dependency id="vcbuildtools.vm" />
+      <dependency id="vcbuildtools.vm" version="0.0.0.20250729" />
     </dependencies>
     <tags>Command and Control</tags>
     <projectUrl>https://docs.metasploit.com</projectUrl>
