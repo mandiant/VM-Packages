@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>regcool.vm</id>
-    <version>0.0.0.20250611</version>
+    <version>0.0.0.20250729</version>
     <authors>Kurt Zimmermann</authors>
     <description>RegCool is a flexible editor for the Windows registry database.</description>
     <dependencies>

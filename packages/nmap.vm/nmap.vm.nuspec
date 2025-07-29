@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>nmap.vm</id>
-    <version>7.94</version>
+    <version>7.95</version>
     <authors>Fyodor, Nmap Project</authors>
     <description>Port scanning utility and nc replacement with extended features</description>
     <dependencies>
