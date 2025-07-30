@@ -7,8 +7,8 @@ try {
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
-    $exeUrl = 'https://nmap.org/dist/nmap-7.95-setup.exe'
-    $exeSha256 = 'c59b51d15b5965f27db4c5bbd21793ad6b492c8c751836ba8bd43829d791146e'
+    $exeUrl = 'https://nmap.org/dist/nmap-7.96-setup.exe'
+    $exeSha256 = 'bf2d6f24fc284af48de07d8be754b7cc498f8f4f40f6dd26277cc22cfdfc62b7'
     $installerName = Split-Path -Path $exeUrl -Leaf
 
     $packageArgs = @{
