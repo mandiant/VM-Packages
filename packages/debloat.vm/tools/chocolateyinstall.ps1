@@ -21,7 +21,7 @@ function Fix-AppxPackageDeployment {
     [CmdletBinding()]
     param()
 
-    Write-Output "Fixing AppxPackage deployment in Windows 11..." -ForegroundColor Yellow
+    VM-Write-Log "INFO" "Fixing AppxPackage deployment in Windows 11..."
 
     try {
         # Add the new DLLs to the Global Assembly Cache
@@ -37,21 +37,20 @@ function Fix-AppxPackageDeployment {
 
         foreach ($dll in $dlls) {
             $dllPath = Join-Path -Path $env:SystemRoot\System32\WindowsPowerShell\v1.0 -ChildPath $dll
-            Write-Output "Attempting to GacInstall: $dllPath" -ForegroundColor Cyan
+            VM-Write-Log "INFO" "Attempting to GacInstall: $dllPath"
             $publish.GacInstall($dllPath)
-            Write-Output "$dll successfully added to GAC." -ForegroundColor Green
+            VM-Write-Log "INFO" "$dll successfully added to GAC."
         }
 
         # Create a file so we can easily track that this computer was fixed (in case we need to revert)
         $markerFilePath = Join-Path -Path $env:SystemRoot\System32\WindowsPowerShell\v1.0 -ChildPath "DllFix.txt"
         New-Item -Path (Split-Path $markerFilePath) -Name (Split-Path $markerFilePath -Leaf) -ItemType File -Value "$dlls added to the Global Assembly Cache" -Force | Out-Null
-        Write-Output "Marker file 'DllFix.txt' created at '$markerFilePath'." -ForegroundColor Green
+        VM-Write-Log "INFO" "Marker file 'DllFix.txt' created at '$markerFilePath'."
 
-        Write-Output "AppxPackage deployment fix applied successfully." -ForegroundColor Green
+        VM-Write-Log "INFO" "AppxPackage deployment fix applied successfully."
     }
     catch {
-        Write-Error "An error occurred during the AppxPackage fix: $($_.Exception.Message)"
-        Write-Output "Please ensure you run this script with Administrator privileges." -ForegroundColor Red
+        VM-Write-Log "ERROR" "An error occurred during the AppxPackage fix: $($_.Exception.Message). Please ensure you run this script with Administrator privileges."
     }
 }
 
@@ -66,6 +65,7 @@ try {
         "Win10" { $config = Join-Path $packageToolsDir "win10.xml" }
         "Win11" {
             $config = Join-Path $packageToolsDir "win11.xml"
+            VM-Write-Log "INFO" "Cleaning up start menu in Windows 11."
             # Clean up start menu. Cleanest solution possible given lack
             # of relative path and inifinite paths for user download location
             Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\")
@@ -77,17 +77,18 @@ try {
         }
         "Win11ARM" {
             $config = Join-Path $packageToolsDir "win11arm.xml"
+            VM-Write-Log "INFO" "Cleaning up start menu in Windows 11."
             Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\")
             Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start.bin")
         }
         default {
-            Write-Output "WARN" "Debloater unable to determine debloat config, applying win10.xml"
+            VM-Write-Log "WARN" "Debloater unable to determine Windows version, defaulting to Windows 10."
             $config = Join-Path $packageToolsDir "win10.xml"
         }
     }
-    Write-Output "Applying $config"
+    VM-Write-Log "INFO" "Applying $config"
     VM-Apply-Configurations $config
-    Write-Output "INFO" "Debloating and performance modifications for $osVersion done"
+    VM-Write-Log "INFO" "Debloating and performance modifications for $osVersion done"
 }
 catch {
     VM-Write-Log-Exception $_
