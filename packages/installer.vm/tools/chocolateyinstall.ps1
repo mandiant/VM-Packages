@@ -42,8 +42,79 @@ function Install-Packages([object] $packagesToInstall) {
     }
 }
 
+function Fix-WebThreatDefSvcPermissions {
+    <#
+    .SYNOPSIS
+    Takes ownership of and grants full control to Administrators for the C:\Windows\System32\WebThreatDefSvc directory.
+
+    .DESCRIPTION
+    This function executes two command-line utilities: 'takeown' and 'icacls'.
+    It first takes ownership of the specified directory (and its subfolders/files)
+    and then grants the 'Administrators' group full control over it.
+    This is used to resolve "Access to the path 'C:\Windows\System32\WebThreatDefSvc' is denied" errors.
+
+    .NOTES
+    Requires elevated (Administrator) privileges to run successfully.
+    #>
+    [CmdletBinding()]
+    Param()
+
+    $targetPath = "C:\Windows\System32\WebThreatDefSvc"
+
+    VM-Write-Log "INFO" "Attempting to fix permissions for: $targetPath"
+
+    if (-not (Test-Path -Path $targetPath -PathType Container)) {
+        VM-Write-Log "INFO" "'$targetPath' does not exist."
+        return
+    }
+
+    # Check for Administrator privileges
+    if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        VM-Write-Log "ERROR" "This function must be run with Administrator privileges. Please run PowerShell as Administrator."
+        return
+    }
+
+    try {
+        VM-Write-Log "INFO" "Fixing WebThreatDefSvc permissions: 1. Take ownership of '$targetPath'..."
+        # /f: specifies file or directory
+        # /r: performs recursive operation on all files and subfolders
+        # /d y: suppresses prompt for confirmation when taking ownership of subdirectories
+        $takeownOutput = cmd.exe /c "takeown /f `"$targetPath`" /r /d y" 2>&1
+        if ($LASTEXITCODE) {
+            VM-Write-Log "WARN" "takeown command failed with exit code: $LASTEXITCODE"
+            if ($takeownOutput) {
+                VM-Write-Log "INFO" $takeownOutput
+            }
+        } else {
+            VM-Write-Log "INFO" "Ownership taken successfully."
+        }
+
+        VM-Write-Log "INFO" "Fixing WebThreatDefSvc permissions: 2. Grant full control to 'Administrators' for '$targetPath'..."
+        # /grant Administrators:F: Grants full control (F) to the Administrators group
+        # /T: Performs recursive operation on all files and subfolders
+        # /C: Continues on file errors (important for robustness)
+        # /Q: Suppresses success messages
+        $icaclsOutput = cmd.exe /c "icacls `"$targetPath`" /grant Administrators:F /T /C /Q" 2>&1
+        if ($LASTEXITCODE) {
+            VM-Write-Log "WARN" "icacls command failed with exit code: $LASTEXITCODE"
+            if ($icaclsOutput) {
+                VM-Write-Log "INFO" $icaclsOutput
+            }
+        } else {
+            VM-Write-Log "INFO" "Full control granted to Administrators successfully."
+        }
+    }
+    catch {
+        VM-Write-Log "ERROR" "Failed to apply WebThreatDefSvc permission fix: $_`n$($_.InvocationInfo.PositionMessage)"
+    }
+}
+
 try {
-    # Gather packages to install
+    $osVersion = VM-Get-WindowsVersion
+    if ($osVersion -eq "Win11" -or $osVersion -eq "Win11ARM") {
+        Fix-WebThreatDefSvcPermissions
+    }
+
     $installedPackages = (VM-Get-InstalledPackages).Name
     $configPath = Join-Path ${Env:VM_COMMON_DIR} "packages.xml" -Resolve
     $configXml = [xml](Get-Content $configPath)
