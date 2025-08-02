@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>common.vm</id>
-    <version>0.0.0.20250509</version>
+    <version>0.0.0.20250801</version>
     <description>Common libraries for VM-packages</description>
     <authors>Mandiant</authors>
   </metadata>

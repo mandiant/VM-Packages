@@ -1281,17 +1281,17 @@ function VM-Set-Service-Manual-Start {
         $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
         if ($service) {
             if ($service.Status -eq "Running") {
-                Write-Output "INFO" "Stopping service $serviceName..."
+                VM-Write-Log "INFO" "Stopping service $serviceName..."
                 Stop-Service -Name $service.Name -Force -ErrorAction Stop
-                Write-Output "INFO" "Service $serviceName has been stopped."
+                VM-Write-Log "INFO" "Service $serviceName has been stopped."
             }
             Set-Service -Name $service.Name -StartupType Manual
-            Write-Output "INFO" "Service $serviceName has been set to manual startup."
+            VM-Write-Log "INFO" "Service $serviceName has been set to manual startup."
         } else {
-            Write-Output "WARN" "Service $serviceName not found."
+            VM-Write-Log "WARN" "Service $serviceName not found."
         }
     } catch {
-        Write-Output "ERROR" "An error occurred: $_"
+        VM-Write-Log "ERROR" "An error occurred: $_"
     }
 }
 
@@ -1517,6 +1517,8 @@ function VM-Configure-PS-Logging {
 # Main function for debloater and configuration changes
 # Expects an XML file
 function VM-Apply-Configurations {
+    # Main function for debloater and configuration changes
+    # Expects an XML file
     param(
         [Parameter(Position = 0)]
         [string]$configFile
@@ -1526,73 +1528,109 @@ function VM-Apply-Configurations {
         # Load and parse the XML config file
         VM-Assert-Path $configFile
         $config = [xml](Get-Content $configFile)
+    } catch {
+        VM-Write-Log "ERROR" "An error occurred while loading or parsing the config file. Error: $_"
+        return # Exit the function if the file cannot be loaded.
+    }
 
-        # Process the apps
-        if ($config.config.apps.app) {
-            $config.config.apps.app | ForEach-Object {
+    # Process the apps
+    if ($config.config.apps.app) {
+        VM-Write-Log "INFO" "Processing Appx Packages..."
+        $config.config.apps.app | ForEach-Object {
+            try {
                 $appName = $_.name
                 VM-Remove-Appx-Package -appName $appName
+            } catch {
+                VM-Write-Log "ERROR" "Failed to remove app '$appName'. Error: $($_.Exception.Message)"
             }
         }
+    }
 
-        # Process the services
-        if ($config.config.services.service) {
-            $config.config.services.service | ForEach-Object {
+    # Process the services
+    if ($config.config.services.service) {
+        VM-Write-Log "INFO" "Processing services..."
+        $config.config.services.service | ForEach-Object {
+            try {
                 $serviceName = $_.name
                 VM-Set-Service-Manual-Start -serviceName $serviceName
+            } catch {
+                VM-Write-Log "ERROR" "Failed to set service '$serviceName' to manual start. Error: $($_.Exception.Message)"
             }
         }
+    }
 
-        # Process the tasks
-        if ($config.config.tasks.task) {
-            $config.config.tasks.task | ForEach-Object {
+    # Process the tasks
+    if ($config.config.tasks.task) {
+        VM-Write-Log "INFO" "Processing scheduled tasks..."
+        $config.config.tasks.task | ForEach-Object {
+            try {
                 $descName = $_.name
                 $taskName = $_.value
                 VM-Disable-Scheduled-Task -name $descName -value $taskName
+            } catch {
+                VM-Write-Log "ERROR" "Failed to disable task '$taskName'. Error: $($_.Exception.Message)"
             }
         }
+    }
 
-        # Process the registry items
-        if ($config.config."registry-items"."registry-item") {
-            $config.config."registry-items"."registry-item" | ForEach-Object {
+    # Process the registry items
+    if ($config.config."registry-items"."registry-item") {
+        VM-Write-Log "INFO" "Processing registry items..."
+        $config.config."registry-items"."registry-item" | ForEach-Object {
+            try {
                 $name = $_.name
                 $path = $_.path
                 $value = $_.value
                 $type = $_.type
                 $data = $_.data
                 VM-Update-Registry-Value -name $name -path $path -value $value -type $type -data $data
+            } catch {
+                VM-Write-Log "ERROR" "Failed to update registry item '$name'. Error: $($_.Exception.Message)"
             }
         }
+    }
 
-        # Process the path items
-        if ($config.config."path-items"."path-item") {
-            $config.config."path-items"."path-item" | ForEach-Object {
+    # Process the path items
+    if ($config.config."path-items"."path-item") {
+        VM-Write-Log "INFO" "Processing path items..."
+        $config.config."path-items"."path-item" | ForEach-Object {
+            try {
                 $name = $_.name
                 $type = $_.type
                 $path = $_.path
                 VM-Remove-Path -name $name -type $type -path $path
+            } catch {
+                VM-Write-Log "ERROR" "Failed to remove path item '$name'. Error: $($_.Exception.Message)"
             }
         }
+    }
 
-        # Process the locales
-        if ($config.config."locales"."locale") {
-            $config.config."locales"."locale" | ForEach-Object {
+    # Process the locales
+    if ($config.config."locales"."locale") {
+        VM-Write-Log "INFO" "Processing locales..."
+        $config.config."locales"."locale" | ForEach-Object {
+            try {
                 $name = $_.name
                 $lang = $_.lang
                 VM-Install-Locale -name $name -lang $lang
+            } catch {
+                VM-Write-Log "ERROR" "Failed to install locale '$name'. Error: $($_.Exception.Message)"
             }
         }
+    }
 
-        # Process the custom items
-        if ($config.config."custom-items"."custom-item") {
-            $config.config."custom-items"."custom-item" | ForEach-Object {
+    # Process the custom items
+    if ($config.config."custom-items"."custom-item") {
+        VM-Write-Log "INFO" "Processing custom commands..."
+        $config.config."custom-items"."custom-item" | ForEach-Object {
+            try {
                 $name = $_.name
                 $cmds = @($_.cmd | ForEach-Object { $_.value })
                 VM-Execute-Custom-Command -name $name -cmds $cmds
+            } catch {
+                VM-Write-Log "ERROR" "Failed to execute custom commands for '$name'. Error: $($_.Exception.Message)"
             }
         }
-    } catch {
-        VM-Write-Log "ERROR" "An error occurred while applying config. Error: $_"
     }
 }
 
