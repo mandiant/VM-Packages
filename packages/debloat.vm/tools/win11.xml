@@ -258,96 +258,96 @@
         <registry-item name="Disable Windows Update Automatic Download" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" value="AUOptions" type="DWord" data="2" />
         <registry-item name="Disable Windows Update Automatic Restart" path="HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" value="Debugger" type="String" data="cmd.exe" />
         <registry-item name="Disable Microsoft Connectivity Test (msftconnecttest.com)" path="HKLM:\SYSTEM\CurrentControlSet\services\NlaSvc\Parameters\Internet" value="EnableActiveProbing" type="DWord" data="0" />
-        <registry-item name="Disable Resetbase" path="HKLM\Software\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" value="DisableResetbase" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable LetAppsActivateWithVoice" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable Resetbase" path="HKLM\Software\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" value="DisableResetbase" type="DWord" data="0"/>
+        <registry-item name="Disable LetAppsActivateWithVoice" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice" type="DWord" data="2"/>
         <registry-item name="Disable LetAppsActivateWithVoice_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsActivateWithVoice_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsActivateWithVoice_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoice_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
-        <registry-item name="Disable LetAppsActivateWithVoiceAboveLock" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsActivateWithVoiceAboveLock" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock" type="DWord" data="2"/>
         <registry-item name="Disable LetAppsActivateWithVoiceAboveLock_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsActivateWithVoiceAboveLock_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsActivateWithVoiceAboveLock_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsActivateWithVoiceAboveLock_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
-        <registry-item name="Disable LetAppsAccessLocation" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsAccessLocation" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation" type="DWord" data="2"/>
         <registry-item name="Disable LetAppsAccessLocation_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsAccessLocation_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsAccessLocation_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessLocation_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable location CapabilityAccessManager" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" value="Value" type="REG_SZ" data="Deny"/>
-        <registry-item name="Disable lfsvc Status" path="HKLM\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" value="Status" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable LetAppsAccessAccountInfo" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable lfsvc Status" path="HKLM\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" value="Status" type="DWord" data="0"/>
+        <registry-item name="Disable LetAppsAccessAccountInfo" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo" type="DWord" data="2"/>
         <registry-item name="Disable LetAppsAccessAccountInfo_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsAccessAccountInfo_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsAccessAccountInfo_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessAccountInfo_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable userAccountInformation CapabilityAccessManager" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" value="Value" type="REG_SZ" data="Deny"/>
-        <registry-item name="Disable LetAppsAccessMotion" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion" type="REG_DWORD" data="2"/>
+        <registry-item name="Disable LetAppsAccessMotion" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion" type="DWord" data="2"/>
         <registry-item name="Disable LetAppsAccessMotion_UserInControlOfTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion_UserInControlOfTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsAccessMotion_ForceAllowTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion_ForceAllowTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable LetAppsAccessMotion_ForceDenyTheseApps" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" value="LetAppsAccessMotion_ForceDenyTheseApps" type="REG_MULTI_SZ" data="0"/>
         <registry-item name="Disable activity CapabilityAccessManager" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\activity" value="Value" type="REG_SZ" data="Deny"/>
-        <registry-item name="Disable CEIPEnable SQMClient Windows" path="HKLM\Software\Policies\Microsoft\SQMClient\Windows" value="CEIPEnable" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable CEIPEnable SQMClient" path="HKLM\Software\Microsoft\SQMClient" value="CEIPEnable" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable UploadDisableFlag SQMClient" path="HKLM\Software\Microsoft\SQMClient" value="UploadDisableFlag" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable CEIPEnable SQMClient Windows" path="HKLM\Software\Policies\Microsoft\SQMClient\Windows" value="CEIPEnable" type="DWord" data="0"/>
+        <registry-item name="Disable CEIPEnable SQMClient" path="HKLM\Software\Microsoft\SQMClient" value="CEIPEnable" type="DWord" data="0"/>
+        <registry-item name="Disable UploadDisableFlag SQMClient" path="HKLM\Software\Microsoft\SQMClient" value="UploadDisableFlag" type="DWord" data="0"/>
         <registry-item name="Disable Debugger CompatTelRunner.exe" path="HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\CompatTelRunner.exe" value="Debugger" type="REG_SZ" data="%SYSTEMROOT%\System32\taskkill.exe"/>
         <registry-item name="Disable Debugger DeviceCensus.exe" path="HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DeviceCensus.exe" value="Debugger" type="REG_SZ" data="%SYSTEMROOT%\System32\taskkill.exe"/>
-        <registry-item name="Disable AllowDesktopAnalyticsProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowDesktopAnalyticsProcessing" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowDeviceNameInTelemetry" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowDeviceNameInTelemetry" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable MicrosoftEdgeDataOptIn" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="MicrosoftEdgeDataOptIn" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowWUfBCloudProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowWUfBCloudProcessing" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowUpdateComplianceProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowUpdateComplianceProcessing" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowCommercialDataPipeline" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowCommercialDataPipeline" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowTelemetry DataCollection" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowTelemetry DataCollection Policies" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowTelemetry" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable DisableOneSettingsDownloads" path="HKLM\Software\Policies\Microsoft\Windows\DataCollection" value="DisableOneSettingsDownloads" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable NoGenTicket" path="HKLM\Software\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" value="NoGenTicket" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable Disabled Windows Error Reporting" path="HKLM\Software\Policies\Microsoft\Windows\Windows Error Reporting" value="Disabled" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable Disabled Windows Error Reporting Microsoft" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="Disabled" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DefaultConsent Windows Error Reporting Consent" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting\Consent" value="DefaultConsent" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DefaultOverrideBehavior Windows Error Reporting Consent" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting\Consent" value="DefaultOverrideBehavior" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DontSendAdditionalData Windows Error Reporting" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="DontSendAdditionalData" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable LoggingDisabled Windows Error Reporting" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="LoggingDisabled" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DODownloadMode" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" value="DODownloadMode" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable DisableSoftLanding" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" value="DisableSoftLanding" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DisableWindowsSpotlightFeatures" path="HKLM\Software\Policies\Microsoft\Windows\CloudContent" value="DisableWindowsSpotlightFeatures" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DisableWindowsConsumerFeatures" path="HKLM\Software\Policies\Microsoft\Windows\CloudContent" value="DisableWindowsConsumerFeatures" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DisabledByGroupPolicy" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" value="DisabledByGroupPolicy" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable EnableExperimentation" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="EnableExperimentation" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable EnableConfigFlighting" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="EnableConfigFlighting" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowExperimentation" path="HKLM\SOFTWARE\Microsoft\PolicyManager\default\System\AllowExperimentation" value="value" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AllowBuildPreview" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="AllowBuildPreview" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable HideInsiderPage" path="HKLM\SOFTWARE\Microsoft\WindowsSelfHost\UI\Visibility" value="HideInsiderPage" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DoNotShowFeedbackNotifications Policies DataCollection" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable Enabled TIPC" path="HKLM\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection Policies" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection Policies 2" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="DoNotShowFeedbackNotifications" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable Enabled TIPC 2" path="HKLM\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable HideSCAMeetNow Explorer" path="HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable TurnOffWindowsCopilot" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DisableFileSyncNGSC OneDrive" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSyncNGSC" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable DisableFileSync OneDrive" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSync" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable AgentActivationEnabled" path="HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" value="AgentActivationEnabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AgentActivationOnLockScreenEnabled" path="HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" value="AgentActivationOnLockScreenEnabled" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable AllowDesktopAnalyticsProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowDesktopAnalyticsProcessing" type="DWord" data="0"/>
+        <registry-item name="Disable AllowDeviceNameInTelemetry" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowDeviceNameInTelemetry" type="DWord" data="0"/>
+        <registry-item name="Disable MicrosoftEdgeDataOptIn" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="MicrosoftEdgeDataOptIn" type="DWord" data="0"/>
+        <registry-item name="Disable AllowWUfBCloudProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowWUfBCloudProcessing" type="DWord" data="0"/>
+        <registry-item name="Disable AllowUpdateComplianceProcessing" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowUpdateComplianceProcessing" type="DWord" data="0"/>
+        <registry-item name="Disable AllowCommercialDataPipeline" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowCommercialDataPipeline" type="DWord" data="0"/>
+        <registry-item name="Disable AllowTelemetry DataCollection" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="AllowTelemetry" type="DWord" data="0"/>
+        <registry-item name="Disable AllowTelemetry DataCollection Policies" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="AllowTelemetry" type="DWord" data="0"/>
+        <registry-item name="Disable DisableOneSettingsDownloads" path="HKLM\Software\Policies\Microsoft\Windows\DataCollection" value="DisableOneSettingsDownloads" type="DWord" data="1"/>
+        <registry-item name="Disable NoGenTicket" path="HKLM\Software\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" value="NoGenTicket" type="DWord" data="1"/>
+        <registry-item name="Disable Disabled Windows Error Reporting" path="HKLM\Software\Policies\Microsoft\Windows\Windows Error Reporting" value="Disabled" type="DWord" data="1"/>
+        <registry-item name="Disable Disabled Windows Error Reporting Microsoft" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="Disabled" type="DWord" data="1"/>
+        <registry-item name="Disable DefaultConsent Windows Error Reporting Consent" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting\Consent" value="DefaultConsent" type="DWord" data="1"/>
+        <registry-item name="Disable DefaultOverrideBehavior Windows Error Reporting Consent" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting\Consent" value="DefaultOverrideBehavior" type="DWord" data="1"/>
+        <registry-item name="Disable DontSendAdditionalData Windows Error Reporting" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="DontSendAdditionalData" type="DWord" data="1"/>
+        <registry-item name="Disable LoggingDisabled Windows Error Reporting" path="HKLM\Software\Microsoft\Windows\Windows Error Reporting" value="LoggingDisabled" type="DWord" data="1"/>
+        <registry-item name="Disable DODownloadMode" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" value="DODownloadMode" type="DWord" data="0"/>
+        <registry-item name="Disable DisableSoftLanding" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" value="DisableSoftLanding" type="DWord" data="1"/>
+        <registry-item name="Disable DisableWindowsSpotlightFeatures" path="HKLM\Software\Policies\Microsoft\Windows\CloudContent" value="DisableWindowsSpotlightFeatures" type="DWord" data="1"/>
+        <registry-item name="Disable DisableWindowsConsumerFeatures" path="HKLM\Software\Policies\Microsoft\Windows\CloudContent" value="DisableWindowsConsumerFeatures" type="DWord" data="1"/>
+        <registry-item name="Disable DisabledByGroupPolicy" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" value="DisabledByGroupPolicy" type="DWord" data="1"/>
+        <registry-item name="Disable EnableExperimentation" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="EnableExperimentation" type="DWord" data="0"/>
+        <registry-item name="Disable EnableConfigFlighting" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="EnableConfigFlighting" type="DWord" data="0"/>
+        <registry-item name="Disable AllowExperimentation" path="HKLM\SOFTWARE\Microsoft\PolicyManager\default\System\AllowExperimentation" value="value" type="DWord" data="0"/>
+        <registry-item name="Disable AllowBuildPreview" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" value="AllowBuildPreview" type="DWord" data="0"/>
+        <registry-item name="Disable HideInsiderPage" path="HKLM\SOFTWARE\Microsoft\WindowsSelfHost\UI\Visibility" value="HideInsiderPage" type="DWord" data="1"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="DoNotShowFeedbackNotifications" type="DWord" data="1"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications Policies DataCollection" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="DoNotShowFeedbackNotifications" type="DWord" data="1"/>
+        <registry-item name="Disable Enabled TIPC" path="HKLM\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection Policies" path="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" value="DoNotShowFeedbackNotifications" type="DWord" data="1"/>
+        <registry-item name="Disable DoNotShowFeedbackNotifications DataCollection Policies 2" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" value="DoNotShowFeedbackNotifications" type="DWord" data="1"/>
+        <registry-item name="Disable Enabled TIPC 2" path="HKLM\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable HideSCAMeetNow Explorer" path="HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" value="HideSCAMeetNow" type="DWord" data="1"/>
+        <registry-item name="Disable TurnOffWindowsCopilot" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="DWord" data="1"/>
+        <registry-item name="Disable DisableFileSyncNGSC OneDrive" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSyncNGSC" type="DWord" data="1"/>
+        <registry-item name="Disable DisableFileSync OneDrive" path="HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" value="DisableFileSync" type="DWord" data="1"/>
+        <registry-item name="Disable AgentActivationEnabled" path="HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" value="AgentActivationEnabled" type="DWord" data="0"/>
+        <registry-item name="Disable AgentActivationOnLockScreenEnabled" path="HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" value="AgentActivationOnLockScreenEnabled" type="DWord" data="0"/>
         <registry-item name="Disable Value DeviceAccess Global" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" value="Value" type="REG_SZ" data="Deny"/>
         <registry-item name="Disable Value DeviceAccess Global 2" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{E6AD100E-5F4E-44CD-BE0F-2265D88D14F5}" value="Value" type="REG_SZ" data="Deny"/>
         <registry-item name="Disable Value DeviceAccess Global 3" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{C1D23ACC-752B-43E5-8448-8D0E519CD6D6}" value="Value" type="REG_SZ" data="Deny"/>
-        <registry-item name="Disable IsMSACloudSearchEnabled" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" value="IsMSACloudSearchEnabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable IsAADCloudSearchEnabled" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" value="IsAADCloudSearchEnabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable Enabled AdvertisingInfo" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" value="Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable SubscribedContent-338393Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-338393Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable SubscribedContent-353694Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-353694Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable SubscribedContent-353696Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-353696Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable NumberOfSIUFInPeriod" path="HKCU\SOFTWARE\Microsoft\Siuf\Rules" value="NumberOfSIUFInPeriod" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AcceptedPrivacyPolicy" path="HKCU\SOFTWARE\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable Enabled TIPC" path="HKCU\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable NumberOfSIUFInPeriod (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Siuf\Rules" value="NumberOfSIUFInPeriod" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AcceptedPrivacyPolicy (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable Enabled TIPC (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable ShowCopilotButton" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowCopilotButton" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable AutoOpenCopilotLargeScreens" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" value="AutoOpenCopilotLargeScreens" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable IsUserEligible BingChat" path="HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" value="IsUserEligible" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable TurnOffWindowsCopilot" path="HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="REG_DWORD" data="1"/>
-        <registry-item name="Disable TaskbarDa" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarDa" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable System.IsPinnedToNameSpaceTree CLSID" path="HKCU\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" value="System.IsPinnedToNameSpaceTree" type="REG_DWORD" data="0"/>
-        <registry-item name="Disable System.IsPinnedToNameSpaceTree Wow6432Node CLSID" path="HKCU\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" value="System.IsPinnedToNameSpaceTree" type="REG_DWORD" data="0"/>
+        <registry-item name="Disable IsMSACloudSearchEnabled" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" value="IsMSACloudSearchEnabled" type="DWord" data="0"/>
+        <registry-item name="Disable IsAADCloudSearchEnabled" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" value="IsAADCloudSearchEnabled" type="DWord" data="0"/>
+        <registry-item name="Disable Enabled AdvertisingInfo" path="HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" value="Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable SubscribedContent-338393Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-338393Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable SubscribedContent-353694Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-353694Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable SubscribedContent-353696Enabled" path="HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" value="SubscribedContent-353696Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable NumberOfSIUFInPeriod" path="HKCU\SOFTWARE\Microsoft\Siuf\Rules" value="NumberOfSIUFInPeriod" type="DWord" data="0"/>
+        <registry-item name="Disable AcceptedPrivacyPolicy" path="HKCU\SOFTWARE\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="DWord" data="0"/>
+        <registry-item name="Disable Enabled TIPC" path="HKCU\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable NumberOfSIUFInPeriod (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Siuf\Rules" value="NumberOfSIUFInPeriod" type="DWord" data="0"/>
+        <registry-item name="Disable AcceptedPrivacyPolicy (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Personalization\Settings" value="AcceptedPrivacyPolicy" type="DWord" data="0"/>
+        <registry-item name="Disable Enabled TIPC (Duplicate)" path="HKCU\SOFTWARE\Microsoft\Input\TIPC" value="Enabled" type="DWord" data="0"/>
+        <registry-item name="Disable ShowCopilotButton" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="ShowCopilotButton" type="DWord" data="0"/>
+        <registry-item name="Disable AutoOpenCopilotLargeScreens" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" value="AutoOpenCopilotLargeScreens" type="DWord" data="0"/>
+        <registry-item name="Disable IsUserEligible BingChat" path="HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" value="IsUserEligible" type="DWord" data="0"/>
+        <registry-item name="Disable TurnOffWindowsCopilot" path="HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="DWord" data="1"/>
+        <registry-item name="Disable TaskbarDa" path="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarDa" type="DWord" data="0"/>
+        <registry-item name="Disable System.IsPinnedToNameSpaceTree CLSID" path="HKCU\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" value="System.IsPinnedToNameSpaceTree" type="DWord" data="0"/>
+        <registry-item name="Disable System.IsPinnedToNameSpaceTree Wow6432Node CLSID" path="HKCU\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" value="System.IsPinnedToNameSpaceTree" type="DWord" data="0"/>
         <registry-item name="Disable TaskbarDa" path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" value="TaskbarDa" type="DWord" data="0"/>
         <registry-item name="Disable MicrosoftWindows.Client.WebExperience" path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy" value="" type="String" data=""/>
         <registry-item name="Disable Windows Copilot (Machine)" path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" value="TurnOffWindowsCopilot" type="DWord" data="1"/>
