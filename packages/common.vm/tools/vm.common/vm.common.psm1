@@ -269,16 +269,26 @@ function VM-Install-Shortcut{
     Install-ChocolateyShortcut @shortcutArgs
     VM-Assert-Path $shortcut
 
+    # Ensure shortcut has target as in some weird cases (e.g. with virtualbox scripting) the shortcut is created without the arguments
+    $shell = New-Object -ComObject ("WScript.Shell")
+    $shortcutObject = $shell.CreateShortcut($shortcut)
+    if (-Not $shortcutObject.TargetPath) {
+        VM-Write-Log "WARN" "$shortcut has no target, trying to update shortcut using ComObject"
+        $shortcutObject.TargetPath = $executablePath
+        $shortcutObject.Arguments = $arguments
+        $shortcutObject.WorkingDirectory = $executableDir
+        $shortcutObject.IconLocation = $iconLocation
+        # We do not update RunAsAdmin as it requires editing the shortcut as bytes and we have only experienced the
+        # issue with packages that do not use it: https://stackoverflow.com/a/29002207/6245337
+        $shortcutObject.Save()
+    }
+
     # If the targets is a .bat file, change the shortcut icon to Windows default
     if ($extension -eq ".bat") {
-        $Shell = New-Object -ComObject ("WScript.Shell")
-        $Shortcut = $Shell.CreateShortcut($shortcut)
-
-        $IconArrayIndex = -68 # This is the specific icon that Windows uses for .bat files by default
-        $IconLocation = "C:\WINDOWS\system32\imageres.dll"
-        $Shortcut.IconLocation = "$IconLocation,$IconArrayIndex"
-
-        $Shortcut.Save()
+        $iconArrayIndex = -68 # This is the specific icon that Windows uses for .bat files by default
+        $iconLocation = "C:\WINDOWS\system32\imageres.dll"
+        $shortcutObject.IconLocation = "$iconLocation,$iconArrayIndex"
+        $shortcutObject.Save()
     }
 }
 
