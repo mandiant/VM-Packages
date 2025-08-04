@@ -54,6 +54,33 @@ function Fix-AppxPackageDeployment {
     }
 }
 
+function Clean-Win11StartMenu {
+    <#
+    .SYNOPSIS
+        Cleans up the start menu by copying a predefined binary file.
+
+    .DESCRIPTION
+        This function handles the logic for cleaning up the Windows 11 start menu
+        by replacing the default configuration files. It uses a predefined
+        'start2.bin' file to ensure a consistent, clean start menu layout.
+        This is a shared function called by both 'Win11' and 'Win11ARM' sections
+        to avoid code duplication.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$PackageStartDir
+    )
+
+    VM-Write-Log "INFO" "Cleaning up start menu in Windows 11."
+
+    # Cleanest solution possible given lack of relative path and infinite paths for user download location
+    Copy-Item -Path (Join-Path $PackageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\")
+
+    # Cover case in older win11 versions where the config file is still start.bin
+    Copy-Item -Path (Join-Path $PackageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start.bin")
+}
+
 try {
     # Determine OS Version
     $osVersion = VM-Get-WindowsVersion
@@ -62,24 +89,21 @@ try {
     $packageStartDir = Join-Path $packageToolsDir "start" -Resolve
 
     switch ($osVersion) {
-        "Win10" { $config = Join-Path $packageToolsDir "win10.xml" }
+        "Win10" {
+            $config = Join-Path $packageToolsDir "win10.xml"
+        }
         "Win11" {
             $config = Join-Path $packageToolsDir "win11.xml"
-            VM-Write-Log "INFO" "Cleaning up start menu in Windows 11."
-            # Clean up start menu. Cleanest solution possible given lack
-            # of relative path and inifinite paths for user download location
-            Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\")
-            # cover case in older win11 versions where the config file is still start.bin
-            Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start.bin")
+            # Call the new function to clean the start menu
+            Clean-Win11StartMenu -PackageStartDir $packageStartDir
 
             # Call the function to apply the AppxPackage fix for Windows 11
             Fix-AppxPackageDeployment
         }
         "Win11ARM" {
             $config = Join-Path $packageToolsDir "win11arm.xml"
-            VM-Write-Log "INFO" "Cleaning up start menu in Windows 11."
-            Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\")
-            Copy-Item -Path (Join-Path $packageStartDir "start2.bin") -Destination (Join-Path ${Env:UserProfile} "Appdata\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start.bin")
+            # Call the new function to clean the start menu
+            Clean-Win11StartMenu -PackageStartDir $packageStartDir
         }
         default {
             VM-Write-Log "WARN" "Debloater unable to determine Windows version, defaulting to Windows 10."
