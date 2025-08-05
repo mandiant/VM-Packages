@@ -268,8 +268,19 @@ def set_taskbar_accent_color(hex_color, hex_color_palette, color_prevalence):
             winreg.KEY_ALL_ACCESS,
         )
         binary_data = bytes.fromhex(hex_color_palette)
+
+        # Update the color palette only if the new one is different to
+        # avoid resetting `AccentColorMenu` as doing that every second
+        # causes `explorer.exe` CPU consumption to spike
+        value, _ = winreg.QueryValueEx(key, "AccentPalette")
+        if binary_data != value:
+            winreg.SetValueEx(key, "AccentPalette", 0, winreg.REG_BINARY, binary_data)
+            # Force refreshing by resetting `AccentColorMenu` value
+            winreg.SetValueEx(key, "AccentColorMenu", 0, winreg.REG_DWORD, 0)
+            winreg.FlushKey(key)
+
+        # This has no effect if the old value is the same as the new one
         winreg.SetValueEx(key, "AccentColorMenu", 0, winreg.REG_DWORD, color_value)
-        winreg.SetValueEx(key, "AccentPalette", 0, winreg.REG_BINARY, binary_data)
         winreg.CloseKey(key)
 
     except WindowsError as e:
