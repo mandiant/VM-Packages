@@ -231,63 +231,64 @@ function VM-Install-Shortcut{
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $shortcut = Join-Path $shortcutDir "$toolName.lnk"
 
-    # Set the default icon to be the executable's icon
-    if (-Not $iconLocation) {$iconLocation = $executablePath}
+    $extension = [System.IO.Path]::GetExtension($executablePath)
 
     if (-not $executableDir) {
         $executableDir = Join-Path ${Env:UserProfile} "Desktop"
     }
     VM-Assert-Path $executableDir
 
-    if ($consoleApp -or $powershell) {
-        if ($consoleApp) {
-            $executableCmd = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
-            # Change to executable dir, print command to execute, and execute command
-            $executableArgs = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
-        } else {
-            $executableCmd = Join-Path "${PSHome}" "powershell.exe" -Resolve
-            $executableArgs = "-ExecutionPolicy Bypass -NoExit -Command `"`$cmd = '$arguments'; Write-Host PS $executableDir ``> `$cmd; Invoke-Expression `$cmd`""
-            $iconLocation = $executableCmd
-        }
-
-        $shortcutArgs = @{
-            ShortcutFilePath = $shortcut
-            TargetPath       = $executableCmd
-            Arguments        = $executableArgs
-            WorkingDirectory = $executableDir
-            IconLocation     = $iconLocation
-        }
-        if ($runAsAdmin) {
-            $shortcutArgs.RunAsAdmin = $true
-        }
-        Install-ChocolateyShortcut @shortcutArgs
-
-    } else {
-        $shortcutArgs = @{
-            ShortcutFilePath = $shortcut
-            TargetPath       = $executablePath
-            Arguments        = $arguments
-            WorkingDirectory = $executableDir
-            IconLocation     = $iconLocation
-        }
-        if ($runAsAdmin) {
-            $shortcutArgs.RunAsAdmin = $true
-        }
-        Install-ChocolateyShortcut @shortcutArgs
+    if ($powershell) {
+        $arguments = "-ExecutionPolicy Bypass -NoExit -Command `"`$cmd = '$arguments'; Write-Host PS $executableDir ``> `$cmd; Invoke-Expression `$cmd`""
+        $executablePath = Join-Path "${PSHome}" "powershell.exe" -Resolve
+        $iconLocation = $executablePath
     }
+    else {
+        # Set the default icon to be the executable's icon
+        if (-Not $iconLocation) {$iconLocation = $executablePath}
+    }
+
+    if ($consoleApp) {
+        # Change to executable dir, print command to execute, and execute command
+        $arguments = "/K `"cd `"$executableDir`" && echo $executableDir^> $executablePath $arguments && `"$executablePath`" $arguments`""
+        $executablePath = Join-Path ${Env:WinDir} "system32\cmd.exe" -Resolve
+    }
+
+    $shortcutArgs = @{
+        ShortcutFilePath = $shortcut
+        TargetPath       = $executablePath
+        Arguments        = $arguments
+        WorkingDirectory = $executableDir
+        IconLocation     = $iconLocation
+    }
+
+    if ($runAsAdmin) {
+        $shortcutArgs.RunAsAdmin = $true
+    }
+
+    Install-ChocolateyShortcut @shortcutArgs
     VM-Assert-Path $shortcut
 
+    # Ensure shortcut has target as in some weird cases (e.g. with virtualbox scripting) the shortcut is created without the arguments
+    $shell = New-Object -ComObject ("WScript.Shell")
+    $shortcutObject = $shell.CreateShortcut($shortcut)
+    if (-Not $shortcutObject.TargetPath) {
+        VM-Write-Log "WARN" "$shortcut has no target, trying to update shortcut using ComObject"
+        $shortcutObject.TargetPath = $executablePath
+        $shortcutObject.Arguments = $arguments
+        $shortcutObject.WorkingDirectory = $executableDir
+        $shortcutObject.IconLocation = $iconLocation
+        # We do not update RunAsAdmin as it requires editing the shortcut as bytes and we have only experienced the
+        # issue with packages that do not use it: https://stackoverflow.com/a/29002207/6245337
+        $shortcutObject.Save()
+    }
+
     # If the targets is a .bat file, change the shortcut icon to Windows default
-    $extension = [System.IO.Path]::GetExtension($executablePath)
     if ($extension -eq ".bat") {
-        $Shell = New-Object -ComObject ("WScript.Shell")
-        $Shortcut = $Shell.CreateShortcut($shortcut)
-
-        $IconArrayIndex = -68 # This is the specific icon that Windows uses for .bat files by default
-        $IconLocation = "C:\WINDOWS\system32\imageres.dll"
-        $Shortcut.IconLocation = "$IconLocation,$IconArrayIndex"
-
-        $Shortcut.Save()
+        $iconArrayIndex = -68 # This is the specific icon that Windows uses for .bat files by default
+        $iconLocation = "C:\WINDOWS\system32\imageres.dll"
+        $shortcutObject.IconLocation = "$iconLocation,$iconArrayIndex"
+        $shortcutObject.Save()
     }
 }
 
@@ -477,11 +478,10 @@ function VM-Install-From-Zip {
 	    $iconLocation = Join-Path $toolDir $iconName -Resolve
 	}
         if ($powershellCommand) {
-            $executablePath = $toolDir
             if ($iconName) {
-                VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $executablePath -powershell -iconLocation $iconLocation
+                VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $toolDir -powershell -iconLocation $iconLocation
             } else {
-            	VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $executablePath -powershell
+                VM-Install-Shortcut -toolName $toolName -category $category -arguments $powershellCommand -executableDir $toolDir -powershell
             }
         }
         elseif ($withoutBinFile) { # Used when tool does not have an associated executable
