@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>evtxecmd.vm</id>
-    <version>1.5.0.20250730</version>
+    <version>1.5.0.20250814</version>
     <authors>Eric Zimmerman</authors>
     <description>Event log (evtx) parser with standardized CSV, XML, and json output! Custom maps, locked file support, and more!</description>
     <dependencies>
-      <dependency id="common.vm" version="0.0.0.20250206" />
+      <dependency id="common.vm" version="0.0.0.20250814" />
       <dependency id="dotnet-6.vm" />
       <!-- vcbuildtools.vm installs signtool.exe needed by VM-Assert-Signature -->
       <dependency id="vcbuildtools.vm" version="0.0.0.20250729" />
