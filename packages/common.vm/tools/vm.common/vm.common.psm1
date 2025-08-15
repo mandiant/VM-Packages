@@ -457,7 +457,7 @@ function VM-Install-From-Zip {
 
         if ($verifySignature) {
             # Check signature of all executable files individually
-            Get-ChildItem -Path "$toolDir\*.exe" | ForEach-Object {
+            Get-ChildItem -Path "$toolDir\*.exe", "$toolDir\*.dll" | ForEach-Object {
                 $file = $_
                 try {
                     # Check signature for each file
