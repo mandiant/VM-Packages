@@ -32,7 +32,7 @@ try {
         $executablePath = Join-Path $toolDir "\x64\$toolName.exe" -Resolve
     }
 
-    VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath -consoleApp $true
+    VM-Install-Shortcut -toolName $toolName -category $category -executablePath $executablePath
     Install-BinFile -Name $toolName -Path $executablePath
 } catch {
     VM-Write-Log-Exception $_
