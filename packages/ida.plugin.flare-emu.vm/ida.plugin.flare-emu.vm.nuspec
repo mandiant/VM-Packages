@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ida.plugin.flare-emu.vm</id>
+    <version>0.0.0.20250815</version>
+    <authors>James T. Bennett</authors>
+    <description>A user friendly scriptable emulation framework that supports multiple binary analysis tools.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20240509" />
+      <dependency id="libraries.python3.vm" />
+    </dependencies>
+    <tags>IDA Plugins</tags>
+    <projectUrl>https://github.com/mandiant/flare-emu</projectUrl>
+  </metadata>
+</package>
