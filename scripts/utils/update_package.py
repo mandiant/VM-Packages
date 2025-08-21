@@ -9,8 +9,20 @@ from pathlib import Path
 
 import requests
 
-# Requests without headers fail in Cloudtop
 headers = {"User-Agent": "FLARE-VM"}
+
+
+def perform_request(url):
+    """Performs a GET request, returning the response object on success or None on any failure."""
+    try:
+        # Requests without headers fail in Cloudtop
+        response = requests.get(url, headers=headers)
+        if response.ok:
+            return response
+        return None
+    except Exception:
+        # The request could fail for example because of a timeout
+        return None
 
 
 # Replace version in nuspec, for example:
@@ -38,10 +50,11 @@ def replace_version(latest_version, nuspec_content):
 
 # Get latest version from GitHub releases
 def get_latest_version(org, project, version):
-    response = requests.get(f"https://api.github.com/repos/{org}/{project}/releases/latest", headers=headers)
-    if not response.ok:
+    response = perform_request(f"https://api.github.com/repos/{org}/{project}/releases/latest")
+    if not response:
         print(f"GitHub API response not ok: {response.status_code}")
         return None
+
     latest_version = response.json()["tag_name"]
     # Version parsing in update_github_url excludes 'v'. Consequently the latest_version must also exclude 'v' if present.
     # Otherwise, the github URL would would be replace by a version with double `v`, such as:
@@ -54,9 +67,10 @@ def get_latest_version(org, project, version):
 
 # Get URL response's content SHA256 hash
 def get_sha256(url):
-    response = requests.get(url, headers=headers)
-    if not response.ok:
+    response = perform_request(url)
+    if not response:
         return None
+
     return hashlib.sha256(response.content).hexdigest()
 
 
@@ -191,8 +205,8 @@ def get_msixbundle_version(url, version):
 
     pack_name = url.split("/")[-1].replace(".msixbundle", "")
 
-    resp = requests.get(f"https://aka.ms/{pack_name}/download", headers=headers)
-    if not resp.ok:
+    response = perform_request(f"https://aka.ms/{pack_name}/download")
+    if not response:
         return (None, None)
 
     namespace = "http://schemas.microsoft.com/appx/appinstaller/2018"
@@ -200,7 +214,7 @@ def get_msixbundle_version(url, version):
     app_installer_version = None
     msixbundle_uri = None
     try:
-        xml = ET.fromstring(resp.content.decode("utf-8"))
+        xml = ET.fromstring(response.content.decode("utf-8"))
         app_installer_version = xml.get("Version")
         main_bundle_element = xml.find("ai:MainBundle", namespaces)
         if main_bundle_element is not None:
