@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>notepadpp.plugin.xmltools.vm</id>
-    <version>3.1.1.20250218</version>
-    <description>XML Tools plugin for Notepad++</description>
+    <version>3.1.1.20250902</version>
+    <description>XMLTools is a Notepad++ plugin for editing XML.</description>
     <authors>Nicolas Crittin</authors>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="notepadplusplus.vm" />
     </dependencies>
     <tags>Productivity Tools</tags>
+    <projectUrl>https://github.com/morbac/xmltools</projectUrl>
   </metadata>
 </package>
