@@ -3,7 +3,7 @@
   <metadata>
     <id>chrome.extensions.vm</id>
     <version>0.0.0.20250902</version>
-    <authors>Mandiant</authors>
+    <authors>Several, check Chrome Web Store for every of the extensions</authors>
     <description>Chrome extensions for popular crypto wallets and password managers to aid in the analysis of credential stealers.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
