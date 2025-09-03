@@ -5,10 +5,10 @@ try {
   $toolName = '010Editor'
   $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-  $url   = 'https://download.sweetscape.com/010EditorWin32Installer16.0.exe'
-  $checksum = '1755625c398d27418eb400c1953d247892e75ae8298be22192a9380e4add6920'
-  $url64 = 'https://download.sweetscape.com/010EditorWin64Installer16.0.exe'
-  $checksum64 = 'a856580b11aba8aa74fd8dc7bfce0afb3f64ba76cb097f9f0379433ac3edba01'
+  $url   = 'https://download.sweetscape.com/010EditorWin32Installer16.0.1.exe'
+  $checksum = 'be211075b267a23d35e86c8c41aaa121f670e978aa2ec6db306d0bd996341c6f'
+  $url64 = 'https://download.sweetscape.com/010EditorWin64Installer16.0.1.exe'
+  $checksum64 = 'c6b05cc77d20ef366a243eba2f10dc58e8313f4cb40b0ed761b7da212ef0569d'
 
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}

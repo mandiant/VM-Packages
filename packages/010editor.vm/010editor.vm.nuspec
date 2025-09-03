@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>010editor.vm</id>
-    <version>16.0.0.20250814</version>
+    <version>16.0.1</version>
     <description>010 Editor is a text and hex editor with Binary Templates technology.</description>
     <authors>SweetScape</authors>
     <dependencies>
