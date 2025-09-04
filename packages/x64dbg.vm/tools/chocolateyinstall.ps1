@@ -12,8 +12,8 @@ try {
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
-    url           = "https://sourceforge.net/projects/x64dbg/files/snapshots/snapshot_2025-03-15_15-57.zip/download"
-    checksum      = '490a428d209c0ed87ed050db6e47b5f626ae98a7f69917c9f87f14a7c53afca0'
+    url           = "https://github.com/x64dbg/x64dbg/releases/download/2025.08.19/snapshot_2025-08-19_19-40.zip"
+    checksum      = 'cc614caf34f9fe1ec156f045129db3a513c35593ff1ee647bc819a352dc12271'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs
