@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>7zip.vm</id>
-    <version>23.01.0.20250219</version>
+    <version>23.01.0.20250902</version>
     <authors>myfreeer</authors>
-    <description>7-zip build with nsis script decompiling</description>
+    <description>7-zip with NSIS script decompiling that adds an `unzip infected` option to the right click menu.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
     </dependencies>
     <tags>Productivity Tools</tags>
+    <projectUrl>https://github.com/myfreeer/7z-build-nsis</projectUrl>
   </metadata>
 </package>
