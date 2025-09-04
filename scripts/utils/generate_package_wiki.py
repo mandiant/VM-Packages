@@ -26,6 +26,7 @@ def create_package_wiki_file(file_path, packages_by_category, default_packages):
     """
     wiki_content = f"""This page documents the available VM packages sorted by category.
 The packages in the [FLARE-VM default configuration]({DEFAULT_CONFIG_URL}) are marked in bold.
+Note that packages installed as dependencies may not be marked in bold and still installed as part of the default configuration.
 
 > **Note:**
 > This page is [generated automatically](https://github.com/mandiant/VM-Packages/blob/main/.github/workflows/generate_package_wiki.yml).
