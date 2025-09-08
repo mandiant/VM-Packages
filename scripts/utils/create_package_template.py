@@ -62,7 +62,7 @@ NUSPEC_TEMPLATE_NODE = r"""<?xml version="1.0" encoding="utf-8"?>
     <description>{description}</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
-      <dependency id="nodejs.vm" version="0.0.0.20240516" />
+      <dependency id="nodejs.vm" version="0.0.0.20250730" />
     </dependencies>
     <tags>{category}</tags>
   </metadata>

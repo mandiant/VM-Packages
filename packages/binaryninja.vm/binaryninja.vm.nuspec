@@ -2,14 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>binaryninja.vm</id>
-    <version>4.2.6455.20250417</version>
+    <version>4.2.6455.20250730</version>
     <authors>Vector 35, Inc.</authors>
-    <description>Binary Ninja is an interactive decompiler, disassembler, debugger, and binary analysis platform built by reverse engineers, for reverse engineers.</description>
+    <description>Binary Ninja is an interactive decompiler, disassembler, debugger, and binary analysis platform.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250509" />
       <!-- vcbuildtools.vm installs signtool.exe needed by VM-Assert-Signature -->
-      <dependency id="vcbuildtools.vm" />
+      <dependency id="vcbuildtools.vm" version="0.0.0.20250729" />
     </dependencies>
     <tags>Disassemblers</tags>
+    <projectUrl>https://binary.ninja</projectUrl>
   </metadata>
 </package>

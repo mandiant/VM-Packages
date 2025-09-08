@@ -3,7 +3,7 @@
     <module name="acefile"/>
     <module name="rpyc"/>
     <module name="art"/>
-    <module name="capstone-windows"/>
+    <module name="capstone"/>
     <module name="dissect"/>
     <module name="dncil"/>
     <module name="dnfile"/>

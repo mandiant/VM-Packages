@@ -7,8 +7,8 @@ try {
     $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
     $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
-    $exeUrl = 'https://nmap.org/dist/nmap-7.93-setup.exe'
-    $exeSha256 = 'f1160a33fb79c764cdc4c023fa700054ae2945ed91880e37348a17c010ca716f'
+    $exeUrl = 'https://nmap.org/dist/nmap-7.97-setup.exe'
+    $exeSha256 = 'd953719622808d1f58fb65ad2ddf3e7d03e33f1105c6d422b76e420ad6e1f45f'
     $installerName = Split-Path -Path $exeUrl -Leaf
 
     $packageArgs = @{
@@ -44,11 +44,12 @@ try {
     }
 
     # Add shortcut for Zenmap
-    $executablePath = Join-Path $toolDir "zenmap.exe" -Resolve
-    $shortcut = Join-Path $shortcutDir "zenmap.lnk"
-    Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -WorkingDirectory $executableDir -RunAsAdmin
-    VM-Assert-Path $shortcut
-    Install-BinFile -Name "zenmap" -Path $executablePath
+    $originalShortcut = Join-Path $toolDir "zenmap.lnk"
+    VM-Assert-Path $originalShortcut
+    # Add run as admin shortcut to $shortcutDir
+    $newAdminShortcut = Join-Path $shortcutDir "zenmap.lnk"
+    Install-ChocolateyShortcut -shortcutFilePath $newAdminShortcut -targetPath $originalShortcut -WorkingDirectory $toolDir -RunAsAdmin
+    VM-Assert-Path $newAdminShortcut
 } catch {
     VM-Write-Log-Exception $_
 }

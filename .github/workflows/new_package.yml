@@ -13,6 +13,7 @@ jobs:
         uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1.3.0
         with:
           labels: send PR
+          github_token: ${{ secrets.REPO_TOKEN }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Parse issue

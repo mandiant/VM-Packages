@@ -554,8 +554,8 @@ function VM-Install-Node-Tool-From-Zip {
     )
     $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $innerFolder -powershellCommand "node $command")[0]
 
-    # Install tool dependencies with npm
-    Set-Location $toolDir; npm install --no-update-notifier
+    # Install tool dependencies with npm (warnings are suppressed as it prevents the package from being installed)
+    Set-Location $toolDir; npm install --loglevel=error --no-update-notifier
 }
 
 # This functions returns $executablePath

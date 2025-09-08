@@ -31,6 +31,8 @@ import sys
 from typing import Dict
 from xml.dom import minidom
 
+from packaging.version import Version
+
 GIT_EXE = "git"
 
 # set log level for debugging here script-wide
@@ -185,6 +187,87 @@ class VersionFormatIncorrect(Lint):
         return False
 
 
+class VersionNotIncreased(Lint):
+    name = "the version has not been increased"
+    recommendation = "the version in the nuspec file must be higher than the one in MyGet"
+
+    source = "https://www.myget.org/F/vm-packages/api/v2"
+
+    # The head ref or source branch of the pull request in a workflow run.
+    # This property is only set when the event that triggers a workflow run
+    # is either pull_request or pull_request_target. For example, feature-branch-1.
+    GITHUB_REF = os.getenv("GITHUB_REF")
+    if not GITHUB_REF:
+        GITHUB_REF = run_cmd(f"{GIT_EXE} rev-parse --abbrev-ref HEAD")
+    # The name of the base ref or target branch of the pull request in a workflow run.
+    # This is only set when the event that triggers a workflow run is either pull_request or pull_request_target.
+    # For example, main.
+    GITHUB_BASE_REF = os.getenv("GITHUB_BASE_REF")
+    if not GITHUB_BASE_REF:
+        # assume main
+        GITHUB_BASE_REF = "main"
+    GITHUB_BASE_REF = "origin/" + GITHUB_BASE_REF
+    logger.debug("GITHUB_HEAD_REF = %s", GITHUB_REF)
+    logger.debug("GITHUB_BASE_REF = %s", GITHUB_BASE_REF)
+
+    run_cmd(f"{GIT_EXE} version")
+    run_cmd(f"{GIT_EXE} --no-pager branch -r")
+    changed_files = run_cmd(f"{GIT_EXE} --no-pager diff --name-only {GITHUB_BASE_REF}")
+    changed_files = set(map(pathlib.Path, changed_files.splitlines()))
+    nuspecs = set([file for file in changed_files if file.suffix == ".nuspec"])
+    others = changed_files - nuspecs
+
+    logger.debug("changed: %s", changed_files)
+    logger.debug("nuspecs: %s", nuspecs)
+    logger.debug("others: %s", others)
+
+    def __get_remote_version(self, package_name):
+        stream = os.popen(f"powershell.exe choco find -er {package_name} -s {self.source}")
+        output = stream.read()
+        m = re.search(rf"^{package_name}\|(?P<version>.+)", output, re.M)
+        if not m:
+            return None
+        return m.group("version")
+
+    def check(self, path):
+        package_path = None
+        for part in path.parts:
+            if part.endswith(".vm"):
+                # find package path, only want to check exact path, i.e., `/<package>/`
+                # note: git appears to return slash (/) separated paths on Windows and Linux
+                # working around this here via pathlib
+                package_path = f"{part}"
+                break
+
+        if package_path is None:
+            logger.error("could not find package path <package.vm> in %s", path)
+            return True
+
+        # has any file in this package, including nuspec files, been updated?
+        logger.debug("is package path '%s' in part of changed files?", package_path)
+        if not any([package_path in cfile.parts for cfile in self.changed_files]):
+            logger.debug(" no change in %s detected", package_path)
+            return False
+
+        # Package has been updated, get its new version
+        dom = minidom.parse(str(path))
+        metadata = dom.getElementsByTagName("metadata")[0]
+        local_version = metadata.getElementsByTagName("version")[0].firstChild.data
+
+        package_id = metadata.getElementsByTagName("id")[0].firstChild.data
+        remote_version = self.__get_remote_version(package_id)
+        # Package not found in MyGet, the local version is the first version of the package
+        if not remote_version:
+            print("Package not found in MyGet")
+            return False
+
+        if Version(local_version) <= Version(remote_version):
+            print(f"{path} package version ({local_version}) must be higher than the one in MyGet ({remote_version})")
+            return True
+
+        return False
+
+
 class DoesNotListDependencyCommonVm(Lint):
     name = "does not depend on common.vm"
     recommendation = "add the common.vm dependency"
@@ -215,66 +298,6 @@ class DependencyContainsUppercaseChar(Lint):
             if any(c.isupper() for c in d.getAttribute("id")):
                 return True
         return False
-
-
-class VersionNotUpdated(Lint):
-    name = "the version has not been updated"
-    recommendation = "update the version in the nuspec file"
-
-    # The head ref or source branch of the pull request in a workflow run.
-    # This property is only set when the event that triggers a workflow run
-    # is either pull_request or pull_request_target. For example, feature-branch-1.
-    GITHUB_REF = os.getenv("GITHUB_REF")
-    if not GITHUB_REF:
-        GITHUB_REF = run_cmd(f"{GIT_EXE} rev-parse --abbrev-ref HEAD")
-    # The name of the base ref or target branch of the pull request in a workflow run.
-    # This is only set when the event that triggers a workflow run is either pull_request or pull_request_target.
-    # For example, main.
-    GITHUB_BASE_REF = os.getenv("GITHUB_BASE_REF")
-    if not GITHUB_BASE_REF:
-        # assume main
-        GITHUB_BASE_REF = "main"
-    GITHUB_BASE_REF = "origin/" + GITHUB_BASE_REF
-    logger.debug("GITHUB_HEAD_REF = %s", GITHUB_REF)
-    logger.debug("GITHUB_BASE_REF = %s", GITHUB_BASE_REF)
-
-    run_cmd(f"{GIT_EXE} version")
-    run_cmd(f"{GIT_EXE} --no-pager branch -r")
-    changed_files = run_cmd(f"{GIT_EXE} --no-pager diff --name-only {GITHUB_BASE_REF}")
-    changed_files = set(map(pathlib.Path, changed_files.splitlines()))
-    nuspecs = set([file for file in changed_files if file.suffix == ".nuspec"])
-    others = changed_files - nuspecs
-
-    logger.debug("changed: %s", changed_files)
-    logger.debug("nuspecs: %s", nuspecs)
-    logger.debug("others: %s", others)
-
-    def check(self, path):
-        package_path = None
-        for part in path.parts:
-            if part.endswith(".vm"):
-                # find package path, only want to check exact path, i.e., `/<package>/`
-                # note: git appears to return slash (/) separated paths on Windows and Linux
-                # working around this here via pathlib
-                package_path = f"{part}"
-                break
-
-        if package_path is None:
-            logger.error("could not find package path <package.vm> in %s", path)
-            return True
-
-        # has any file in this package, including nuspec files, been updated?
-        logger.debug("is package path '%s' in part of changed files?", package_path)
-        if not any([package_path in cfile.parts for cfile in self.changed_files]):
-            logger.debug(" no change in %s detected", package_path)
-            return False
-
-        # look for version string in git diff
-        revision_diffs = run_cmd(f"{GIT_EXE} --no-pager diff --unified=0 {self.GITHUB_BASE_REF} {str(path)}")
-        if "<version>" in revision_diffs:
-            return False
-
-        return True
 
 
 class PackageIdNotMatchingFolderOrNuspecName(Lint):
@@ -325,9 +348,9 @@ class UsesInvalidCategory(Lint):
 NUSPEC_LINTS = (
     IncludesRequiredFieldsOnly(),
     VersionFormatIncorrect(),
+    VersionNotIncreased(),
     DoesNotListDependencyCommonVm(),
     DependencyContainsUppercaseChar(),
-    VersionNotUpdated(),
     PackageIdNotMatchingFolderOrNuspecName(),
     UsesInvalidCategory(),
     InvalidDescriptionLength(),
