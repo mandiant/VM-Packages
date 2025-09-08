@@ -10,6 +10,5 @@ $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 # Replace with https://github.com/ReFirmLabs/binwalk when they provide a Windows binary.
 $zipUrl = 'https://github.com/socketz/binwalk/releases/download/v3.1.1/binwalk-Windows-msvc-x86_64.zip'
 $zipSha256 = '5418e2d88af47d89b7f5fe47449d47acdf1ded1aabdccc582aabbbca6d39da89'
-$arguments = ''
 
-VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false -arguments $arguments
+VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
