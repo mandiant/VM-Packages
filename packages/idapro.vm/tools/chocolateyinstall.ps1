@@ -28,8 +28,9 @@ try {
 
   # Wait for IDA to be installed
   Start-Sleep -Seconds 10
-  $executablePath = Resolve-Path "${Env:ProgramFiles}\IDA Professional 9*\ida.exe"
-  VM-Assert-Path $executablePath
+
+  $toolDir = Get-ChildItem -Path "${Env:ProgramFiles}\IDA Professional 9*" -Directory
+  $executablePath = Join-Path $toolDir "ida.exe" -Resolve
 
   Install-BinFile -Name $toolname -Path $executablePath
 
@@ -44,14 +45,14 @@ try {
   # Download ida_launcher.exe and store it in %RAW_TOOLS_DIR%
   # ida_launcher.exe is a custom binary that searches for the latest ida64.exe and executes it
   $launcherName = 'ida_launcher'
-  $launcherSource = 'https://raw.githubusercontent.com/mandiant/VM-Packages/119ba385de053b01b0d1732d60ad1b1152496dc2/ida_launcher/ida_launcher.exe'
+  $launcherSource = 'https://github.com/mandiant/VM-Packages/raw/ab43abbebf0f58abf579775e0794c2888285dee1/ida_launcher/ida_launcher.exe'
   $launcherPath = Join-Path ${Env:RAW_TOOLS_DIR} "$launcherName.exe"
-  $launcherChecksum = "a98241e476150d053d67d149c1b54816c8306db51e0987613ec25a0f8ad22006"
+  $launcherChecksum = "e6d6799254985a4db1098806515a9bcf4b818bde246d37839769874ecf7a2a84"
   Get-ChocolateyWebFile -PackageName $launcherName -FileFullPath $launcherPath -Url $launcherSource -Checksum $launcherChecksum -ChecksumType "sha256"
   VM-Assert-Path $launcherPath
 
   # Use ida_launcher.exe in the right click option "Open with IDA"
-  $icon = Resolve-Path "${Env:ProgramFiles}\IDA*\$toolName.ico" | Select-Object -last 1
+  $icon = Join-Path $toolDir "ida.ico" -Resolve
   VM-Add-To-Right-Click-Menu $launcherName 'Open with IDA' "`"$launcherPath`" `"%1`"" "$icon"
 
 

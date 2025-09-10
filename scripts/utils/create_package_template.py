@@ -105,7 +105,19 @@ NUSPEC_TEMPLATE_PIP = r"""<?xml version="1.0" encoding="utf-8"?>
     <authors>{authors}</authors>
     <description>{description}</description>
     <dependencies>
-      <dependency id="common.vm" version="{common_version}" />
+      <dependency id="common.vm" version="{
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      }" />
       <dependency id="python3.vm" />
     </dependencies>
     <tags>{category}</tags>

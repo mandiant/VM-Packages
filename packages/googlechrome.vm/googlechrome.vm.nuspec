@@ -2,15 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>googlechrome.vm</id>
-    <version>0.0.0.20250414</version>
+    <version>0.0.0.20250902</version>
     <authors>Google LLC.</authors>
-    <description>Chrome is a popular web browser.</description>
+    <description>Google Chrome is a web browser with powerful DevTools.</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
       <!-- vcbuildtools.vm installs signtool.exe needed by VM-Assert-Signature -->
-      <dependency id="vcbuildtools.vm" />
+      <dependency id="vcbuildtools.vm" version="0.0.0.20250729" />
       <dependency id="setdefaultbrowser" />
     </dependencies>
     <tags>Productivity Tools</tags>
+    <projectUrl>https://www.google.com/chrome</projectUrl>
   </metadata>
 </package>

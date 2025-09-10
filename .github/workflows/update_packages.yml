@@ -25,37 +25,56 @@ jobs:
           New-Item test_logs -itemType Directory | Out-Null
           foreach ($packagePath in (Get-ChildItem packages)){
             $package = $packagePath.Name
-            $newVersion = 0
+            echo $package
+
             # Test independently every type of update and commit what works
-            foreach ($UPDATE_TYPE in ('DEPENDENCIES', 'GITHUB_URL', 'VERSION_URL', 'DYNAMIC_URL', 'MSIXBUNDLE_URL')) {
+            foreach ($UPDATE_TYPE in ('GITHUB_URL', 'MSIXBUNDLE_URL', 'VERSION_URL', 'DYNAMIC_URL', 'DEPENDENCIES')) {
               $version = python scripts\utils\update_package.py $package --update_type $UPDATE_TYPE
               $updated = $?
-              echo "$package $version"
+              $installSucceeded = $False
               if ($updated -and $version) {
-                # Test package before committing
-                scripts\test\test_install.ps1 -max_tries 1 $package | out-null
-                $tested = $?
-                cd $root
-                if ($tested) {
-                  git add "packages/$package/"
-                  $newVersion = $version
+                # Ensure linter succeed
+                python scripts/test/lint.py "packages\$package" *>$null
+                $lintSucceeded = $?
+
+                # Only if linting succeeds, test package
+                if ($lintSucceeded) {
+                    scripts\test\test_install.ps1 -max_tries 1 $package *>$null
+                    $installSucceeded = $? # $installSucceeded is now the result of the install test
+                    cd $root
+                }
+
+                # If linter and test succeed, commit changes
+                if ($installSucceeded) {
+                  git add "packages/$package/" | Out-Null
                   # Save the update type to use it in the commit
                   $finalUpdateType = $UPDATE_TYPE
                 } else {
-                  echo "$package $version FAILED"
+                  if (-not $lintSucceeded) {
+                    echo "$package $version - linter FAILED ($UPDATE_TYPE)"
+                  }
+                  else {
+                    echo "$package $version - testing FAILED ($UPDATE_TYPE)"
+                  }
                   git diff
                 }
               }
               # Clean changes and built packages
               git restore .
               Remove-Item built_pkgs -Recurse -ErrorAction Ignore
-            }
-            if ($newVersion) {
-              if ($finalUpdateType -eq 'DYNAMIC_URL') {
-                git commit -m "Fix broken hash in $package"
-              }
-              else {
-              git commit -m "Update $package to $newVersion"
+
+              # Commit changes if new version update was sucessfull
+              if ($installSucceeded) {
+                echo "$package $version - SUCCEEDED ($UPDATE_TYPE)"
+                if ($finalUpdateType -eq 'DYNAMIC_URL') {
+                  git commit -m "Fix broken hash in $package" | Out-Null
+                }
+                else {
+                  git commit -m "Update $package to $version" | Out-Null
+                }
+
+                # Only allow 1 type of package update
+                break
               }
             }
           }

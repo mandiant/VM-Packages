@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.xrefer.vm</id>
-    <version>1.0.3.20250213</version>
-    <description>Custom navigation interface within IDA.</description>
+    <version>1.0.3.20250715</version>
+    <description>XRefer is an IDAPython plugin that provides a custom navigation interface with path graphs and Gemini-powered descriptions to speed up analysis.</description>
     <authors>Muhammad Umair</authors>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20241029"/>
@@ -11,5 +11,6 @@
       <dependency id="openjdk.vm" />
     </dependencies>
     <tags>IDA Plugins</tags>
+    <projectUrl>https://github.com/mandiant/xrefer</projectUrl>
   </metadata>
 </package>

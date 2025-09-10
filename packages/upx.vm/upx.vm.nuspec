@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>upx.vm</id>
-    <version>5.0.1</version>
+    <version>5.0.2</version>
     <authors>markus-oberhumer</authors>
     <description>UPX is a free, secure, portable, extendable, high-performance executable packer for several executable formats.</description>
     <dependencies>

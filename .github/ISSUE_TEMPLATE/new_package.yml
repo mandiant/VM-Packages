@@ -33,9 +33,9 @@ body:
       label: Package type
       description: |
         - **`ZIP_EXE`** - An executable tool distributed in a ZIP file
-        - **`SINGLE_EXE`** - An executable tool distributed via direct/raw download
+        - **`SINGLE_EXE`** - An executable tool (not an installer for the tool) distributed via direct/raw download
         - **`SINGLE_PS1`** - A PowerShell script distributed via direct/raw download
-        - **`OTHER/UNKNOWN`** - A tool distributed in a different way than the ones described above. It is required that you provide details of how the tool is installed in the `Extra information` section. Note this type does not support automation, a PR would be appreciated!
+        - **`OTHER/UNKNOWN`** - A tool distributed in a different way than the ones described above. For example, an EXE or MSI installer for the tool. It is required that you provide details of how the tool is installed in the `Extra information` section. Note this type does not support automation, a PR would be appreciated!
       options:
         - ZIP_EXE
         - SINGLE_EXE

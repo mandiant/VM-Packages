@@ -46,11 +46,16 @@ try {
         'Utilities' = @('procexp', 'procmon')
         'Reconnaissance' = @('ADExplorer')
     }
+    $osArchitecture = (Get-CimInstance Win32_operatingsystem).OSArchitecture
     ForEach ($tool in $tools.GetEnumerator()) {
         $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $tool.key
         ForEach ($toolName in $tool.value) {
-            $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
             $shortcut = Join-Path $shortcutDir "$toolName.lnk"
+            # Use the specific architecture in the target shortcut to avoid duplication in the taskbar
+            if ($osArchitecture -eq "64-bit") {
+                $toolName = "${toolName}64"
+            }
+            $executablePath = Join-Path $toolDir "$toolName.exe" -Resolve
             Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin
             VM-Assert-Path $shortcut
         }

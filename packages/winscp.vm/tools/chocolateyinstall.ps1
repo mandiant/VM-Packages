@@ -4,11 +4,9 @@ Import-Module vm.common -Force -DisableNameChecking
 try {
   $toolName = 'WinSCP'
   $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
-  $shimPath = '\bin\winscp.exe'
-
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
   $shortcut = Join-Path $shortcutDir "$toolName.lnk"
-  $executablePath = Join-Path ${Env:ChocolateyInstall} $shimPath -Resolve
+  $executablePath = Join-Path ${Env:ProgramFiles(x86)} "$toolName\$toolName.exe" -Resolve
   Install-BinFile -Name $toolName -Path $executablePath
 
   Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin

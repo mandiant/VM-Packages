@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>openvpn.vm</id>
-    <version>2.6.14</version>
+    <version>2.6.14.20250729</version>
     <authors>OpenVPN Technologies Inc</authors>
     <description>OpenVPN is a full-featured open source SSL VPN solution that accommodates a wide range of configurations.</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="openvpn" version="[2.6.14.1]" />
+      <dependency id="openvpn" version="[2.6.14.2]" />
     </dependencies>
     <tags>Networking</tags>
   </metadata>
