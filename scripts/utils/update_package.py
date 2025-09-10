@@ -308,11 +308,11 @@ def update_dependencies(package):
 def update_metapackage_dependencies(package):
     nuspec_path, content = get_nuspec(package)
     matches = re.findall(
-        r'<dependency id=["\'](?P<dependency>[^"\']+)["\']\s+(version=["\'](?P<version>[^"\'\[\]]+)["\'] *)?/>', content
+        r'<dependency id=["\'](?P<dependency>[^"\']+)["\']\s+(?:version=["\'](?P<version>[^"\'\[\]]+)["\'] *)?/>', content
     )
 
     updates = False
-    for dependency, _, version in matches:
+    for dependency, version in matches:
         stream = os.popen(f"powershell.exe choco find -er {dependency}")
         output = stream.read()
         # ignore case to also find dependencies like GoogleChrome
@@ -320,8 +320,12 @@ def update_metapackage_dependencies(package):
         if m:
             latest_version = m.group("version")
             if latest_version != version:
+                if version is not None:
+                    pattern = rf'<dependency id="{dependency}"\s+version=["\']{re.escape(version)}["\']\s*/>'
+                else:
+                    pattern = rf'<dependency id="{dependency}"\s*/>'
                 content = re.sub(
-                    rf'<dependency id="{dependency}"\s+(version=["\']{version}["\']\s*)?/>',
+                    pattern,
                     f'<dependency id="{dependency}" version="{latest_version}" />',
                     content,
                 )
