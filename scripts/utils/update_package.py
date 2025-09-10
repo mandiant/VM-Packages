@@ -445,10 +445,9 @@ if __name__ == "__main__":
 
     latest_version = None
 
-    # Update dependencies first, as it is required for other updates
-    update_metapackage_dependencies(args.package_name)
-
     if args.update_type & UpdateType.DEPENDENCIES:
+        # Update dependencies first, as it is required for other updates
+        update_metapackage_dependencies(args.package_name)
         latest_version = update_dependencies(args.package_name)
 
     if is_install_script_present:
