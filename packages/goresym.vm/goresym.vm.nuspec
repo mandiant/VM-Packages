@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>goresym.vm</id>
-    <version>3.1.1</version>
+    <version>3.1.2</version>
     <authors>stevemk14ebr</authors>
     <description>GoReSym is a Go symbol recovery tool.</description>
     <dependencies>

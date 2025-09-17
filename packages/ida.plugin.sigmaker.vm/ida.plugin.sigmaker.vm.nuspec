@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.sigmaker.vm</id>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <authors>A200K</authors>
     <description>Signature Maker is an IDA 9+ Pro plugin that generates signatures.</description>
     <dependencies>
