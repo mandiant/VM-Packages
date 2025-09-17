@@ -5,9 +5,9 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'hashcat'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://github.com/hashcat/hashcat/releases/download/v7.0.0/hashcat-7.0.0.7z'
-$zipSha256 = '19e126642e1db7902125072dce539c53485c721735325a747bd03e8af3135d78'
-$zipName = 'hashcat-7.0.0'
+$zipUrl = 'https://github.com/hashcat/hashcat/releases/download/v7.1.2/hashcat-7.1.2.7z'
+$zipSha256 = '80db0316387794ce9d14ed376da75b8a7742972485b45db790f5f8260307ff98'
+$zipName = 'hashcat-7.1.2'
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} "$toolName"
 $workingDir = Join-Path "$toolDir" "$zipname"
 
