@@ -7,8 +7,6 @@ try {
     'nkbihfbeogaeaoehlefnkodbefgpgknn'
     # Phantom
     'bfnaelmomeimhlpmgjnjophhpkkoljpa'
-    # BNB Chain Wallet
-    'fhbohimaelbohpjbbldcngcnapndodjp'
     # Avira Password Manager
     'caljgklbbfbcjjanaijlacgncafpegll'
     # KeePassXC-Browser
@@ -44,7 +42,7 @@ try {
   Stop-Process -Force -Name Chrome -ea 0
 
   # Start Chrome to load the extensions.
-  $chromeProcess = Start-Process -FilePath $chromePath -passthru
+  $chromeProcess = Start-Process -FilePath $chromePath -passthru -ArgumentList "--do-not-de-elevate"
 
   $tries = 0
   $loaded = $false

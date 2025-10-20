@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>chrome.extensions.vm</id>
-    <version>0.0.0.20250902</version>
+    <version>0.0.0.20251017</version>
     <authors>Several, check Chrome Web Store for every of the extensions</authors>
     <description>Chrome extensions for popular crypto wallets and password managers to aid in the analysis of credential stealers.</description>
     <dependencies>
