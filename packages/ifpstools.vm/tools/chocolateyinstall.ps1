@@ -5,7 +5,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'ifpsdasm'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://github.com/Wack0/IFPSTools.NET/releases/download/v2.0.3/ifpstools-net_v2.0.3.zip'
-$zipSha256 = '3b642789e4b7eec8faa316df66f7ad588f679a470df7c098453bb4c877f91682'
+$zipUrl = 'https://github.com/Wack0/IFPSTools.NET/releases/download/v2.0.4/ifpstools-net_v2.0.4.zip'
+$zipSha256 = '41d6e11bd7e5d956eddfba4ac4c5cc525eea68f8fcb201d0677cb1e246251e12'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true
