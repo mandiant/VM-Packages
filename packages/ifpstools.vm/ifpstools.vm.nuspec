@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ifpstools.vm</id>
-    <version>2.0.3.20250716</version>
+    <version>2.0.4</version>
     <authors>Wack0, Jonson Tan</authors>
     <description>IFPSTools.NET creates, modifies, assembles, and disassembles RemObjects compiled bytecode files.</description>
     <dependencies>
