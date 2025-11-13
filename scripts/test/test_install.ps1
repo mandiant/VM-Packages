@@ -85,8 +85,11 @@ Write-Host -ForegroundColor Green "`nSUCCESS:$success"
 Write-Host -ForegroundColor Red "FAILURE:$failed"
 
 Write-Host "`nWriting success/failure/total and failing packages to $result_file"
-$failures_str = $failures -join ","
-"{`"success`":$success,`"failure`":$failed,`"total`":$($packages.Count),`"failures`":[$failures_str]}" | Out-File -FilePath $result_file
+$failures_str = ""
+if ($failed -ne 0) {
+    $failures_str =  "`n`t`t$($failures -join ",`n`t`t")`n`t"
+}
+"{`n`t`"success`": $success,`n`t`"failure`": $failed,`n`t`"total`": $($packages.Count),`n`t`"failures`": [$failures_str]`n}" | Out-File -FilePath $result_file
 
 if ($failed){ Exit 1 }
 # Return 0 to avoid valid exit codes to fail the test
