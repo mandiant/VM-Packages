@@ -1607,7 +1607,7 @@ function VM-Get-WindowsVersion {
     if ($version -match "10") {
         return "Win10"
     }
-    elseif ($version -match "11" -and $osArchitecture -eq "64-bit") {
+    elseif ($version -match "11" -and $osArchitecture -like "64?bit") {
         return "Win11"
     }
     elseif ($version -match "11" -and $osArchitecture -match "ARM") {
