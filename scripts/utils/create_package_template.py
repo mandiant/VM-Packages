@@ -118,6 +118,21 @@ $arguments = '{arguments}'
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp ${console_app} -innerFolder ${inner_folder} -arguments $arguments
 """
 
+INSTALLER_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Stop'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
+
+$exeUrl = '{target_url}'
+$exeSha256 = '{target_hash}'
+
+$toolDir = Join-Path ${{Env:RAW_TOOLS_DIR}} $toolName
+$executablePath = (Join-Path $toolDir '{target_file}')
+VM-Install-With-Installer $toolName $category "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /Dir=`"$($toolDir)`"" `
+    $executablePath $exeUrl -sha256 $exeSha256
+"""
+
 """
 Needs the following format strings:
     tool_name="...", category="..."
@@ -228,6 +243,17 @@ $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 VM-Uninstall $toolName $category
 """
 
+UNINSTALLER_EXE_TEMPLATE = r"""$ErrorActionPreference = 'Continue'
+Import-Module vm.common -Force -DisableNameChecking
+
+$toolName = '{tool_name}'
+$category = VM-Get-Category($MyInvocation.MyCommand.Definition)
+
+VM-Uninstall-With-Uninstaller $toolName $category "EXE" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
+
+VM-Uninstall $toolName $category
+"""
+
 """
 Needs the following format strings:
     tool_name="...", category="..."
@@ -277,6 +303,23 @@ def create_zip_exe_template(packages_path, **kwargs):
         console_app=kwargs.get("console_app"),
         inner_folder=kwargs.get("inner_folder"),
         arguments=kwargs.get("arguments"),
+    )
+
+
+def create_installer_exe_template(packages_path, **kwargs):
+    create_template(
+        INSTALLER_EXE_TEMPLATE,
+        uninstall_template=UNINSTALLER_EXE_TEMPLATE,
+        packages_path=packages_path,
+        pkg_name=kwargs.get("pkg_name"),
+        version=kwargs.get("version"),
+        authors=kwargs.get("authors"),
+        description=kwargs.get("description"),
+        tool_name=kwargs.get("tool_name"),
+        category=kwargs.get("category"),
+        target_url=kwargs.get("target_url"),
+        target_hash=kwargs.get("target_hash"),
+        target_file=kwargs.get("target_file"),
     )
 
 
@@ -388,6 +431,7 @@ def create_template(
     category="",
     target_url="",
     target_hash="",
+    target_file="",
     shim_path="",
     dependency="",
     console_app="",
@@ -427,6 +471,7 @@ def create_template(
                 arguments=arguments,
                 target_url=target_url,
                 target_hash=target_hash,
+                target_file=target_file,
                 shim_path=shim_path,
                 console_app=console_app,
                 inner_folder=inner_folder,
@@ -474,6 +519,22 @@ TYPES = {
             "category",
             "target_url",
             "target_hash",
+        ],
+    },
+    "INSTALLER_EXE": {
+        "cb": create_installer_exe_template,
+        "doc": "An installer distributed as an EXE file",
+        "example": "<url>/tool.exe",
+        "arguments": [
+            "pkg_name",
+            "version",
+            "authors",
+            "description",
+            "tool_name",
+            "category",
+            "target_url",
+            "target_hash",
+            "target_file",
         ],
     },
     "NODE": {
@@ -627,6 +688,7 @@ def main(argv=None):
     parser.add_argument("--dependency", type=str, default="", help="Metapackage dependency")
     parser.add_argument("--target_url", type=str, default="", help="URL to target file (zip or executable)")
     parser.add_argument("--target_hash", type=str, default="", help="SHA256 hash of target file (zip or executable)")
+    parser.add_argument("--target_file", type=str, default="", help="EXE name/path under the installed tool folder")
     parser.add_argument("--shim_path", type=str, default="", help="Metapackage shim path")
     parser.add_argument(
         "--console_app",
