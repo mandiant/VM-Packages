@@ -115,7 +115,7 @@ try {
         Fix-WebThreatDefSvcPermissions
     }
 
-    $installedPackages = (VM-Get-InstalledPackages).Name
+    $installedPackages = VM-Get-InstalledPackages
     $configPath = Join-Path ${Env:VM_COMMON_DIR} "packages.xml" -Resolve
     $configXml = [xml](Get-Content $configPath)
     $packagesToInstall = $configXml.config.packages.package.name | Where-Object { $installedPackages -notcontains $_ }
