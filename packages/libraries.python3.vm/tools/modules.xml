@@ -9,6 +9,7 @@
     <module name="dncil"/>
     <module name="dnfile"/>
     <module name="hexdump"/>
+    <module name="jupyterlab==4.4.8"/>
     <module name="ldapdomaindump"/>
     <module name="lznt1"/>
     <module name="mkyara"/>
