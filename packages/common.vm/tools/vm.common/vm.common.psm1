@@ -1698,18 +1698,18 @@ function VM-Remove-DesktopFiles {
     )
     foreach ($userDesktopPath in $userAccounts) {
         # Use -Force to get hidden files (such as desktop.ini)
+        VM-Write-Log "INFO" "Deleting the files and folders under $($userDesktopPath)"
         Get-ChildItem -Path $userDesktopPath -Force | ForEach-Object {
             $item = $_
             if ($item.PSIsContainer -and ($item.Name -notin $excludeFolders -and $item.FullName -notin $excludeFolders)) {
-                VM-Write-Log "INFO" "Deleting folder: $($item.FullName)"
                 Remove-Item -Path $item.FullName -Recurse -Force -ErrorAction SilentlyContinue
             }
             elseif ($item.PSIsContainer -eq $false -and ($item.Name -notin $excludeFiles -and $item.FullName -notin $excludeFiles)) {
-                VM-Write-Log "INFO" "Deleting file: $($item.FullName)"
                 Remove-Item -Path $item.FullName -Force -ErrorAction SilentlyContinue
             }
             if(!$?){
-                VM-Write-Log "ERROR" "`tFailed to delete"
+                # Verbosely logging the errors since it's very unlikely to happen
+                VM-Write-Log "ERROR" "`tFailed to delete $($item.FullName)"
             }
         }
     }
@@ -1721,14 +1721,29 @@ function VM-Clear-TempAndCache {
     $localAppDataPath = [System.Environment]::GetFolderPath('LocalApplicationData')
     $commonAppDataPath = [System.Environment]::GetFolderPath('CommonApplicationData')
     $nugetCache = Join-Path $localAppDataPath 'NuGet\cache'
-    $packageCache1 = Join-Path $localAppDataPath 'Package` Cache'
-    $packageCache2 = Join-Path $commonAppDataPath 'Package` Cache'
+    $packageCache1 = Join-Path $localAppDataPath 'Package Cache'
+    $packageCache2 = Join-Path $commonAppDataPath 'Package Cache'
 
-    $command1 = 'cmd /c del /Q /S ' + $temp
-    $command2 = 'cmd /c rmdir /Q /S ' + $chocolatey + ' ' + $nugetCache + ' ' + $packageCache1 + ' ' + $packageCache2
+    VM-Write-Log "INFO" "Deleting the files under $($temp)"
+    Get-ChildItem -Path $temp -Force -Recurse -File | Remove-Item -Force -ErrorAction SilentlyContinue
 
-    Invoke-Expression $command1
-    Invoke-Expression $command2
+    foreach ($folder in @(
+        $chocolatey, $nugetCache, $packageCache1, $packageCache2
+    )) {
+        VM-Write-Log "INFO" "Deleting the folder $($folder)"
+        Remove-Item -Path $folder -Force -Recurse -ErrorAction SilentlyContinue
+    }
+}
+
+function VM-Disk-Cleanup {
+    VM-Write-Log "INFO" "Performing Disk Cleanup."
+    $cleanmgrPath = Get-Command -Name "cleanmgr.exe" -ErrorAction SilentlyContinue
+    if ($cleanmgrPath) {
+        Invoke-Expression 'cmd /c cleanmgr /AUTOCLEAN'
+    }
+    else {
+        VM-Write-Log "ERROR" "`tcleanmgr not found."
+    }
 }
 
 # SDelete can take a bit of time (~2+ mins) and requires sysinternals to be installed
@@ -1763,8 +1778,7 @@ function VM-Clean-Up {
     Clear-RecycleBin -Force -ErrorAction Continue
 
     Write-Host "[+] Running Disk Cleanup..." -ForegroundColor Green
-    VM-Write-Log "INFO" "Performing Disk Cleanup."
-    Invoke-Expression 'cmd /c cleanmgr.exe /AUTOCLEAN'
+    VM-Disk-Cleanup
 
     Write-Host "[+] Clearing up free space. This may take a few minutes..." -ForegroundColor Green
     VM-Clear-FreeSpace
@@ -1929,8 +1943,9 @@ function VM-Set-Legal-Notice {
         [string[]]$legalnoticetext
     )
     $RegistryPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
-    New-ItemProperty -Path $RegistryPath -Name legalnoticecaption -Value "Terms and Conditions" -Force
-    New-ItemProperty -Path $RegistryPath -Name legalnoticetext -Value $legalnoticetext -Force
+    New-ItemProperty -Path $RegistryPath -Name legalnoticecaption -Value "Terms and Conditions" -Force  | Out-Null
+    New-ItemProperty -Path $RegistryPath -Name legalnoticetext -Value $legalnoticetext -Force | Out-Null
+    VM-Write-Log "INFO" "System legal notice is updated to '$legalnoticetext'"
 }
 
 # Converts image file to .ico needed for file icons
