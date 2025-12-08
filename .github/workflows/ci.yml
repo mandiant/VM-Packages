@@ -25,6 +25,23 @@ jobs:
         run: flake8 --max-line-length=150
       - name: Run isort
         run: isort --check --diff --profile black --line-length=120 .
+      - name: Check issue template package categories
+        run: |
+          Install-Module powershell-yaml -Force
+          $categories = Get-Content -Path categories.txt | Where-Object { $_ -ne "IDA plugins" }
+          $issueTemplates = Get-ChildItem -Path .github/ISSUE_TEMPLATE -Filter new_*package.yml
+
+          foreach ($issueTemplate in $issueTemplates) {
+              $template = Get-Content -Path $issueTemplate.FullName -Raw | ConvertFrom-Yaml
+              $category = $template.body | Where-Object { $_.id -eq "category" }
+              $options = $category.attributes.options | Where-Object { $_ -ne $null }
+              if (!$options -or (Compare-Object -ReferenceObject $categories -DifferenceObject $options)) {
+                  echo "Issue template $($issueTemplate.Name) supported package categories are not updated"
+                  exit(1)
+              }
+          }
+
+          exit(0)
       - name: Run lint.py
         run: python scripts/test/lint.py packages
       - name: Run lint.ps1
