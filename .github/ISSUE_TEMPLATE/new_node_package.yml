@@ -86,6 +86,7 @@ body:
         - Visual Basic
         - Web Application
         - Wordlists
+        - VB
   - type: input
     id: authors
     attributes:
