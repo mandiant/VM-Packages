@@ -33,11 +33,13 @@ body:
       label: Package type
       description: |
         - **`ZIP_EXE`** - An executable tool distributed in a ZIP file
+        - **`INSTALLER_EXE`** - An installer distributed as an EXE file
         - **`SINGLE_EXE`** - An executable tool (not an installer for the tool) distributed via direct/raw download
         - **`SINGLE_PS1`** - A PowerShell script distributed via direct/raw download
         - **`OTHER/UNKNOWN`** - A tool distributed in a different way than the ones described above. For example, an EXE or MSI installer for the tool. It is required that you provide details of how the tool is installed in the `Extra information` section. Note this type does not support automation, a PR would be appreciated!
       options:
         - ZIP_EXE
+        - INSTALLER_EXE
         - SINGLE_EXE
         - SINGLE_PS1
         - OTHER/UNKNOWN
@@ -136,6 +138,12 @@ body:
       label: Download SHA256 Hash
       description: |
         SHA256 hash of the `.zip` file downloaded from the download url introduced in the previous field. The hash is used for verification purposes. Example: `62af5cce80dbbf5cdf961ec9515549334a2112056d4168fced75c892c24baa95 `
+  - type: input
+    id: target_file
+    attributes:
+      label: Main EXE file
+      description: |
+        Main EXE file name or path under the installed tool folder. Example: `bin\x86\tool.exe` or `tool.exe`
   - type: input
     id: arguments
     attributes:
