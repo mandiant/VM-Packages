@@ -628,7 +628,7 @@ def have_all_required_args(type_, args):
     typ = TYPES.get(type_)
     required_args = typ["arguments"]
     for required_arg in required_args:
-        if not args.get(required_arg):
+        if args.get(required_arg) is None:
             print(f"{type_}: {typ['doc']}, e.g., {typ['example']}")
             print(f" missing argument: {required_arg}")
             print(f" requires: {', '.join(required_args)}")
