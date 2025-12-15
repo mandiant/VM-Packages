@@ -7,6 +7,8 @@ try {
     $shimPath = 'bin\ghidra.exe'
     # get version as defined in nuspec and remove potential 4th segment `.YYYYMMDD`
     $version = $env:ChocolateyPackageVersion -replace '\.\d{4}\d{2}\d{2}$'
+    # adjust version based on NSA versioning scheme
+    $version = $version -replace '\.0$', ''
     $versionPath = 'ghidra_' + $version + '_PUBLIC'
 
     $toolsDir = $(Split-Path -parent $MyInvocation.MyCommand.Definition)
