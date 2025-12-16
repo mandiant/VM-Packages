@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>unpy2exe.vm</id>
+    <version>0.0.0.20251215</version>
+    <authors>Matias Bordese</authors>
+    <description>unpy2exe extracts .pyc files from executables created with py2exe.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20250206" />
+       <!-- unpy2exe.vm only verified to work up to python 3.11 -->
+      <dependency id="python311" />
+    </dependencies>
+    <tags>Python</tags>
+    <projectUrl>https://github.com/matiasb/unpy2exe</projectUrl>
+  </metadata>
+</package>
