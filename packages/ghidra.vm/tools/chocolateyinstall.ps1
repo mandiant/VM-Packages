@@ -25,6 +25,10 @@ try {
     Install-ChocolateyShortcut -shortcutFilePath $shortcut -targetPath $executablePath -RunAsAdmin -IconLocation $icon
     VM-Assert-Path $shortcut
 
+    # Install PyGhidra
+    VM-Pip-Install pyghidra
+    VM-Pip-Install "ghidra-stubs==$version"
+
     # Attempt to set JDK_HOME for Ghidra
     $jdkPath = Join-Path ${Env:ProgramFiles} "OpenJDK"
     if (Test-Path $jdkPath) {
