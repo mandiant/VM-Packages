@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>networkminer.vm</id>
-    <version>3.0.0.20250505</version>
+    <version>3.1.0.20251201</version>
     <authors>Netresec</authors>
     <description>NetworkMiner is a network forensics tool for extracting artifacts (files, images, emails, passwords) from PCAP files and live traffic. </description>
     <dependencies>
