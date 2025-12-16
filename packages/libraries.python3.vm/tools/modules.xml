@@ -3,11 +3,12 @@
     <module name="acefile"/>
     <module name="rpyc"/>
     <module name="art"/>
-    <module name="binwalk" url="https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip"/>
     <module name="capstone"/>
     <module name="dissect"/>
     <module name="dncil"/>
     <module name="dnfile"/>
+    <module name="frida"/>
+    <module name="frida-tools"/>
     <module name="hexdump"/>
     <module name="jupyterlab==4.4.8"/>
     <module name="ldapdomaindump"/>
@@ -26,15 +27,10 @@
     <module name="pyreadline3"/>
     <module name="pythonnet"/>
     <module name="requests"/>
-    <module name="stringsifter"/>
-    <module name="uncompyle6"/>
     <module name="unicorn"/>
-    <module name="unpy2exe"/>
     <module name="vivisect"/>
     <module name="XLMMacroDeobfuscator"/>
     <module name="yara-python"/>
-    <module name="frida"/>
-    <module name="frida-tools"/>
     <!-- Dependencies of the internet detector tool that are also useful for malware analysis
       The internet detector needs to build the Python executable with a version of pyinstaller capable of executing in admin cmd.
       Fix also the version of pywin32 and icmplib to avoid issues
