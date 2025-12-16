@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>stringsifter.vm</id>
+    <version>3.0.0.20230711</version>
+    <authors>Philip Tully (FDS), Matthew Haigh (FLARE), Jay Gibble (FLARE), and Michael Sikorski (FLARE)</authors>
+    <description>StringSifter is a machine learning tool that automatically ranks strings based on their relevance for malware analysis.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20250206" />
+      <!-- stringsifter.vm only verified to work up to python 3.11 -->
+      <dependency id="python311" />
+    </dependencies>
+    <tags>File Information</tags>
+    <projectUrl>https://github.com/mandiant/stringsifter</projectUrl>
+  </metadata>
+</package>
