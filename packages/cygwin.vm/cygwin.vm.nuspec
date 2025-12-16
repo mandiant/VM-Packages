@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>cygwin.vm</id>
-    <version>3.6.4.20250902</version>
+    <version>3.6.5</version>
     <description>cygwin (Unix-like environment and command-line interface) and useful cygwin packages.</description>
     <authors>Red Hat Inc.</authors>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="cygwin" version="[3.6.4]" />
+      <dependency id="cygwin" version="[3.6.5]" />
     </dependencies>
     <tags>Productivity Tools</tags>
     <projectUrl>https://www.cygwin.com</projectUrl>
