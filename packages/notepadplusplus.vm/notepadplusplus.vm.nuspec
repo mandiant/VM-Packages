@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>notepadplusplus.vm</id>
-    <version>8.8.8</version>
+    <version>8.8.9</version>
     <description>Notepad++ is a powerful source code editor.</description>
     <authors>Don Ho</authors>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
-      <dependency id="notepadplusplus" version="[8.8.8]" />
+      <dependency id="notepadplusplus" version="[8.8.9]" />
     </dependencies>
     <tags>Productivity Tools</tags>
     <projectUrl>https://github.com/notepad-plus-plus/notepad-plus-plus</projectUrl>
