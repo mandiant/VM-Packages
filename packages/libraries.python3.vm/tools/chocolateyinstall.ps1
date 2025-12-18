@@ -10,21 +10,42 @@ try {
     VM-Pip-Install "pip~=23.2.1"
 
     $failures = @()
+    $pipArgs = @()
     $modules = $modulesXml.modules.module
+
+    Write-Host "Attempting to install the following Python3 modules:"
     foreach ($module in $modules) {
-        Write-Host "[+] Attempting to install Python3 module: $($module.name)"
+        Write-Host "[+] $($module.name)"
         $installValue = $module.name
         if ($module.url) {
             $installValue = $module.url
         }
+        $pipArgs += $installValue
+    }
 
-        VM-Pip-Install $installValue
+    Write-Host "Batch installing Python modules..."
+    $batchInstallString = $pipArgs -join " "
+    VM-Pip-Install $batchInstallString
 
-        if ($LastExitCode -eq 0) {
-            Write-Host "`t[+] Installed Python 3.10 module: $($module.name)" -ForegroundColor Green
+    foreach ($module in $modules) {
+        $pkgName = $module.name
+
+        # Clean up version pins (e.g., "pywin32==308" -> "pywin32") for install check
+        if ($pkgName -match "==") {
+            $pkgName = $pkgName -split "==" | Select-Object -First 1
+        }
+        if ($pkgName -match ">=") {
+            $pkgName = $pkgName -split ">=" | Select-Object -First 1
+        }
+
+        # 'pip show' returns exit code 0 if found, 1 if missing
+        $null = py -3.10 -m pip show $pkgName 2>&1
+
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "`t[!] Failed to install Python 3.10 module:$pkgName" -ForegroundColor Red
+            $failures += $pkgName
         } else {
-            Write-Host "`t[!] Failed to install Python 3.10 module: $($module.name)" -ForegroundColor Red
-            $failures += $module.Name
+            Write-Host "`t[+] Installed Python 3.10 module: $pkgName" -ForegroundColor Green
         }
     }
 
@@ -32,10 +53,15 @@ try {
         foreach ($module in $failures) {
             VM-Write-Log "ERROR" "Failed to install Python 3.10 module: $module"
         }
-        $outputFile = $outputFile.replace('lib\', 'lib-bad\')
-        VM-Write-Log "ERROR" "Check $outputFile for more information"
-        exit 1
+        throw "Package installation failed. The following modules could not be verified: $($failures -join ', ')"
     }
+
+    # Fix issue with chocolately printing incorrect install directory
+    $pythonPath = py -3.10 -c "import sys; print(sys.prefix)" 2>$null
+    if ($pythonPath) {
+        $env:ChocolateyPackageInstallLocation = $pythonPath
+    }
+
     # Avoid WARNINGs to fail the package install
     exit 0
 } catch {
