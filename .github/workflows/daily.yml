@@ -30,6 +30,9 @@ jobs:
         run: scripts/test/test_install.ps1 -all
       - name: Upload logs to artifacts
         uses: ./.github/actions/upload-logs
+        if: always()
+        with:
+          os: ${{ matrix.os }}
       - name: Checkout wiki code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:

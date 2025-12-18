@@ -82,6 +82,8 @@ jobs:
       - name: Upload logs to artifacts
         uses: ./.github/actions/upload-logs
         if: always()
+        with:
+          os: windows-2022
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc # v6.0.1
         with:
