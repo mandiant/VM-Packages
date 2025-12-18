@@ -20,21 +20,20 @@ runs:
         if (Test-Path "C:\ProgramData\_VM\log.txt") {
           Copy-Item "C:\ProgramData\_VM\log.txt" -Destination "vm_logs_staging\log.txt"
         }
-        
         # Copy the workspace file to the same D: folder
         if (Test-Path "success_failure.json") {
           Copy-Item "success_failure.json" -Destination "vm_logs_staging\"
         }
 
     - name: Upload VM logs to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
       if: always()
       with:
         name: log-VM-${{ inputs.os }}
-        path: vm_logs_staging/ # Now it only looks at one folder on one drive!
+        path: vm_logs_staging/
 
     - name: Upload chocolatey logs to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
       if: always()
       with:
         name: logs-choco-${{ inputs.os }}
