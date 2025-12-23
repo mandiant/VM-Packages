@@ -4,8 +4,8 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'FTK Imager'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$exeUrl = 'https://d1kpmuwb7gvu1i.cloudfront.net/AccessData_FTK_Imager_4.7.1.exe'
-$exeSha256 = '57020f3e585d0f2a7ee783054c50886db4c65af1bbbe5e12e114dbf674326184'
+$exeUrl = 'https://d1kpmuwb7gvu1i.cloudfront.net/Imgr/4.7.3.81%20Release/Exterro_FTK_Imager_%28x64%29-4.7.3.81.exe'
+$exeSha256 = '443843a3923a55d479d6ebb339dfbec12b5c1aabed196bf0541669abbe9b1c51'
 
 $toolDir = Join-Path ${Env:ProgramFiles} "AccessData"
 $toolDir = Join-Path $toolDir $toolName
