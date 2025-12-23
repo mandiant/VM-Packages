@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ftk-imager.vm</id>
-    <version>4.7.1.20250506</version>
+    <version>4.7.3.20251222</version>
     <authors>AccessData</authors>
     <description>FTK Imager is a data preview and imaging tool used to acquire electronic evidence in a forensically sound manner.</description>
     <dependencies>
