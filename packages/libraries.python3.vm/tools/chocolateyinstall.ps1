@@ -30,7 +30,7 @@ try {
     }
 
     Write-Host "Batch installing Python modules..."
-    $batchInstallString = $pipArgs -join " "
+    $batchInstallString = "-U " + ($pipArgs -join " ")
     VM-Pip-Install $batchInstallString
 
     foreach ($module in $modules) {
