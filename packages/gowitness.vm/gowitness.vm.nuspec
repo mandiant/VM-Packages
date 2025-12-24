@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>gowitness.vm</id>
-    <version>3.0.5.20250506</version>
+    <version>3.1.1</version>
     <authors>sensepost</authors>
     <description>gowitness uses Chrome Headless for website screenshots and provides a built-in report viewer.</description>
     <dependencies>
