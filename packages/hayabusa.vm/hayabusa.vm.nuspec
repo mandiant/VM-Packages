@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>hayabusa.vm</id>
-    <version>3.6.0</version>
+    <version>3.7.0</version>
     <authors>Yamato Security</authors>
     <description>Windows event log fast forensics timeline generator and threat hunting tool</description>
     <dependencies>

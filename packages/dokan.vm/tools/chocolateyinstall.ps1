@@ -3,8 +3,8 @@ Import-Module vm.common -Force -DisableNameChecking
 
 $toolName = 'Dokan'
 
-$exeUrl = 'https://github.com/dokan-dev/dokany/releases/download/v2.3.0.1000/Dokan_x64.msi'
-$exeSha256 = '1aec3fda5497ea3e4847c8e033a2834c720fa69b5e1c060b6a4d32d0199e8e29'
+$exeUrl = 'https://github.com/dokan-dev/dokany/releases/download/v2.3.1.1000/Dokan_x64.msi'
+$exeSha256 = '69ff8cb37bfec3a75921c85ffd1c6370b50a9ec4ecef2cf3a009d488dcbf5465'
 
 $fileType = 'MSI'
 $silentArgs = '/qn /norestart'
