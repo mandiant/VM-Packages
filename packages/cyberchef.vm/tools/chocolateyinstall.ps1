@@ -11,8 +11,8 @@ try {
   $packageArgs = @{
     packageName   = ${Env:ChocolateyPackageName}
     unzipLocation = $toolDir
-    url           = 'https://github.com/gchq/CyberChef/releases/download/v10.19.4/CyberChef_v10.19.4.zip'
-    checksum      = '3788b29ffb54f5784968fcf998286f0f75670be8a92e40eb683743ebaab97510'
+    url           = 'https://github.com/gchq/CyberChef/releases/download/v10.20.0/CyberChef_v10.20.0.zip'
+    checksum      = '3030457c151fb4a0c3c3330ef40166b0e92eeb78931cf2a622e096f77c1a704b'
     checksumType  = 'sha256'
   }
   Install-ChocolateyZipPackage @packageArgs
