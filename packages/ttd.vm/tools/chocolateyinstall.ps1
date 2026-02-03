@@ -6,8 +6,8 @@ try {
     $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
     # From https://aka.ms/ttd/download
-    $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/1-11-553-0/TTD.msixbundle"
-    $bundleSha256 = "f9cd5adf2da0d077e5d9f95a9f099e45fb0f87c51eae17c67db711f29b3e2d4a"
+    $bundleUrl = "https://windbg.download.prss.microsoft.com/dbazure/prod/1-11-584-0/TTD.msixbundle"
+    $bundleSha256 = "25e397426b2c0ff55e8663ed608114f4d8df3d26888d16914606410031c77b04"
 
     $packageArgs = @{
         packageName   = ${Env:ChocolateyPackageName}
