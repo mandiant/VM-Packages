@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'AmcacheParser'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://download.mikestammer.com/net6/AmcacheParser.zip'
-$zipSha256 = '0e0214d3b8d17500946e445f3dec92f9485d00f788316eaa5ca78ebb31c92d78'
+$zipUrl = 'https://download.ericzimmermanstools.com/AmcacheParser.zip'
+$zipSha256 = '334D03D26B1261646B06401BBB77E5FBE74BF0C4C636C2479B0F53CFB094EA81'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
