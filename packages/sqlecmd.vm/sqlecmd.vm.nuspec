@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sqlecmd.vm</id>
-    <version>1.0.0.20250814</version>
+    <version>1.0.0.20260316</version>
     <authors>Eric Zimmerman</authors>
     <description>Find and process SQLite files according to your needs with maps!</description>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250814" />
-      <dependency id="dotnet-6.vm" />
+      <dependency id="dotnet-9.vm" />
       <!-- vcbuildtools.vm installs signtool.exe needed by VM-Assert-Signature -->
       <dependency id="vcbuildtools.vm" version="0.0.0.20250729" />
     </dependencies>
