@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ilspy.vm</id>
-    <version>9.1.0.20260128</version>
+    <version>9.1.0.20260316</version>
     <authors>SharpDevelop Team</authors>
     <description>ILSpy is a .NET assembly browser and decompiler.</description>
     <dependencies>
