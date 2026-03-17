@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>recaf.vm</id>
-    <version>4.0.0.20251215</version>
+    <version>4.0.0.20260316</version>
     <authors>Matt</authors>
     <description>java bytecode editor</description>
     <dependencies>
