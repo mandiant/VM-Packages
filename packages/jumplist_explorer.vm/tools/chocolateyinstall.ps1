@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'JumpListExplorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://download.mikestammer.com/net6/JumpListExplorer.zip'
-$zipSha256 = '5543774e73f6c42ece035b95f2e3689a1a52ef89cb04b15512da264c8bc799f9'
+$zipUrl = 'https://download.ericzimmermanstools.com/net9/JumpListExplorer.zip'
+$zipSha256 = '7c01f2ab828e4a3da3c06f2f3ab904ea2e266f2efd82f7b83ba6c872e95b4f62'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false -innerFolder $true
