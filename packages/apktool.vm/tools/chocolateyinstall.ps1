@@ -15,8 +15,8 @@ try {
 
   # Download apktool.jar
   $toolPath = Join-Path $rawToolPath "$toolName.jar"
-  $toolSource = 'https://github.com/iBotPeaches/Apktool/releases/download/v2.12.1/apktool_2.12.1.jar'
-  $toolChecksum = "66cf4524a4a45a7f56567d08b2c9b6ec237bcdd78cee69fd4a59c8a0243aeafa"
+  $toolSource = 'https://github.com/iBotPeaches/Apktool/releases/download/v3.0.1/apktool_3.0.1.jar'
+  $toolChecksum = "b947b945b4bc455609ba768d071b64d9e63834079898dbaae15b67bf03bcd362"
   Get-ChocolateyWebFile -PackageName $toolName -FileFullPath $toolPath -Url $toolSource -Checksum $toolChecksum -ChecksumType "sha256"
   VM-Assert-Path $toolPath
 
