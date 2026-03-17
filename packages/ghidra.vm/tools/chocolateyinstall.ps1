@@ -27,7 +27,7 @@ try {
 
     # Install PyGhidra
     VM-Pip-Install pyghidra
-    VM-Pip-Install "ghidra-stubs==$version"
+    VM-Pip-Install "ghidra-stubs"
 
     # Attempt to set JDK_HOME for Ghidra
     $jdkPath = Join-Path ${Env:ProgramFiles} "OpenJDK"
