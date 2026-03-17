@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'MFTECmd'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://download.mikestammer.com/net6/MFTECmd.zip'
-$zipSha256 = '9831a27f11714b4ca8b8f8806df98cf54c70536b635b37a11dff466768d0ef0e'
+$zipUrl = 'https://download.ericzimmermanstools.com/net9/MFTECmd.zip'
+$zipSha256 = 'd8124cfe0344bdf4e01bb96cf46900c194ecd7df364d335a1bb3e883a1b34e44'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false

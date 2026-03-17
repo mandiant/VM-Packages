@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'SDBExplorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://download.mikestammer.com/net6/SDBExplorer.zip'
-$zipSha256 = 'c88085e74405801f9d4f2557ce35eaa6316e6fe812e5efd66a6a1d87f1b1cbd6'
+$zipUrl = 'https://download.ericzimmermanstools.com/net9/SDBExplorer.zip'
+$zipSha256 = '22d7f8ea565f3b29a701a9542094534e4ca190a0d6e7fd95caefaabeb0e04568'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false -innerFolder $true
