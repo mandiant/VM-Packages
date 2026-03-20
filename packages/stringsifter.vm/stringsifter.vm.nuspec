@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>stringsifter.vm</id>
-    <version>3.0.0.20230711</version>
+    <version>3.0.0.20260320</version>
     <authors>Philip Tully (FDS), Matthew Haigh (FLARE), Jay Gibble (FLARE), and Michael Sikorski (FLARE)</authors>
     <description>StringSifter is a machine learning tool that automatically ranks strings based on their relevance for malware analysis.</description>
     <dependencies>

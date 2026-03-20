@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>unpy2exe.vm</id>
-    <version>0.0.0.20251215</version>
+    <version>0.0.0.20260320</version>
     <authors>Matias Bordese</authors>
     <description>unpy2exe extracts .pyc files from executables created with py2exe.</description>
     <dependencies>

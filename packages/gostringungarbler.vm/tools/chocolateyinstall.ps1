@@ -35,7 +35,7 @@ try {
 
     $pyPath = (Get-Command py).Source
     $filePath = Join-Path $toolDir "$toolName"
-    $arguments = "-3.10 " + $filePath + " -h"
+    $arguments = "-3.13 " + $filePath + " -h"
     VM-Install-Shortcut -toolName $toolName -category $category -executablePath $pyPath -consoleApp $true -arguments $arguments
 
 } catch {

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>gostringungarbler.vm</id>
-    <version>1.0.0.20250505</version>
+    <version>1.0.0.20260320</version>
     <authors>Chuong Dong</authors>
     <description>GoStringUngarbler deobfuscates strings in Go binaries obfuscated by garble.</description>
     <dependencies>
