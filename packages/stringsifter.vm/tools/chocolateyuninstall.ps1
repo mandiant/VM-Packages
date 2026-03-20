@@ -1,8 +1,8 @@
 $ErrorActionPreference = 'Continue'
 Import-Module vm.common -Force -DisableNameChecking
 
-$toolName = 'unpyc3'
+$toolName = 'stringsifter'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
+Invoke-Expression "py -3.11 -m pip uninstall $toolName -y --disable-pip-version-check 2>&1"
 VM-Remove-Tool-Shortcut $toolName $category
-Invoke-Expression "py.exe -3.13 -m pip uninstall $toolName -y --disable-pip-version-check 2>&1"
