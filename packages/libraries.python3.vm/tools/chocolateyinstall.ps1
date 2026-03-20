@@ -33,6 +33,7 @@ try {
     $batchInstallString = $pipArgs -join " "
     VM-Pip-Install $batchInstallString
 
+<<<<<<< HEAD
     foreach ($module in $modules) {
         $pkgName = $module.name
 
@@ -52,20 +53,53 @@ try {
             $failures += $pkgName
         } else {
             Write-Host "`t[+] Installed Python 3.10 module: $pkgName" -ForegroundColor Green
+=======
+        if ($LastExitCode -eq 0) {
+            Write-Host "`t[+] Installed Python 3.13 module: $($module.name)" -ForegroundColor Green
+        } else {
+            Write-Host "`t[!] Failed to install Python 3.13 module: $($module.name)" -ForegroundColor Red
+            $failures += $module.Name
+>>>>>>> 7d42816f (update python to 3.13 and adjusted package dependencies)
         }
     }
 
     if ($failures.Count -gt 0) {
         foreach ($module in $failures) {
-            VM-Write-Log "ERROR" "Failed to install Python 3.10 module: $module"
+            VM-Write-Log "ERROR" "Failed to install Python 3.13 module: $module"
         }
         throw "Package installation failed. The following modules could not be verified: $($failures -join ', ')"
     }
 
+<<<<<<< HEAD
     # Fix issue with chocolately printing incorrect install directory
     $pythonPath = py -3.10 -c "import sys; print(sys.prefix)" 2>$null
     if ($pythonPath) {
         $env:ChocolateyPackageInstallLocation = $pythonPath
+=======
+    # Add Monkey Patch to `pyreadline3` for Python 3.13 compatibility
+    $sitePackages = python -c "import site; print(site.getsitepackages()[1])"
+    $potentialPath = Join-Path $sitePackages "readline.py"
+    if (Test-Path $potentialPath) {
+        $targetFile = $potentialPath
+    } else {
+        # Fallback, just in case.
+        try {
+            $targetFile = & $(Get-Command python).Source -c "import sys; sys.path.append(r'C:\Python313\Lib\site-packages'); import readline; print(readline.__file__)"
+        } catch {
+            $targetFile = $null
+        }
+    }
+    if ($targetFile -and (Test-Path $targetFile)) {
+        $content = Get-Content $targetFile -Raw
+        if ($content -match "backend = 'pyreadline'") {
+            Write-Host "Already patched!" -ForegroundColor Yellow
+        } else {
+            Add-Content -Path $targetFile -Value "`n# Patch for Python 3.13`nbackend = 'pyreadline'"
+            Write-Host "Patch applied to: $targetFile" -ForegroundColor Green
+        }
+    } else {
+        Write-Host "Could not locate readline file." -ForegroundColor Red
+>>>>>>> 7d42816f (update python to 3.13 and adjusted package dependencies)
     }
 
     # Avoid WARNINGs to fail the package install

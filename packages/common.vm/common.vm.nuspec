@@ -2,7 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>common.vm</id>
+<<<<<<< HEAD
     <version>0.0.0.20260316</version>
+=======
+    <version>0.0.0.20251215</version>
+>>>>>>> 7d42816f (update python to 3.13 and adjusted package dependencies)
     <description>Common libraries for VM-packages</description>
     <authors>Mandiant</authors>
   </metadata>
