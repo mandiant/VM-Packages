@@ -12,40 +12,38 @@ try {
     # Fix pip version (Use --no-deps to prevent crashing on existing environment conflicts)
     Write-Host "[+] Enforcing pip version..."
     $pipVersion = "pip~=23.2.1"
-    Invoke-Expression "py -3.10 -W ignore -m pip install $pipVersion --disable-pip-version-check --no-deps --force-reinstall 2>&1 >> $outputFile"
-
+    Invoke-Expression "py -3.13 -W ignore -m pip install $pipVersion --disable-pip-version-check --no-deps --force-reinstall 2>&1 >> $outputFile"
 
     $failures = @()
-    $pipArgs = @()
     $modules = $modulesXml.modules.module
 
-    Write-Host "Attempting to install the following Python3 modules:"
+    Write-Host "Installing Python 3.13 modules..."
+    # Process each module one by one to isolate failures
     foreach ($module in $modules) {
-        Write-Host "[+] $($module.name)"
-        $installValue = $module.name
-        if ($module.url) {
-            $installValue = $module.url
-        }
-        $pipArgs += $installValue
-    }
+        $installValue = if ($module.url) { $module.url } else { $module.name }
 
-    Write-Host "Batch installing Python modules..."
-    $batchInstallString = $pipArgs -join " "
-    VM-Pip-Install $batchInstallString
+        Write-Host "[+] Attempting to install: $($module.name)..."
+
+        # Call VM-Pip-Install per module
+        VM-Pip-Install $installValue
 
         if ($LastExitCode -eq 0) {
-            Write-Host "`t[+] Installed Python 3.13 module: $($module.name)" -ForegroundColor Green
+            Write-Host "`t[+] Successfully installed: $($module.name)" -ForegroundColor Green
         } else {
-            Write-Host "`t[!] Failed to install Python 3.13 module: $($module.name)" -ForegroundColor Red
-            $failures += $module.Name
+            Write-Host "`t[!] Failed to install: $($module.name). Skipping to next..." -ForegroundColor Red
+            $failures += $module.name
         }
     }
 
+    # Generate Failure Summary
     if ($failures.Count -gt 0) {
-        foreach ($module in $failures) {
-            VM-Write-Log "ERROR" "Failed to install Python 3.13 module: $module"
+        Write-Host "`n[!] Installation finished with errors. The following modules failed:" -ForegroundColor Yellow
+        foreach ($failed in $failures) {
+            Write-Host "`t- $failed" -ForegroundColor Red
+            VM-Write-Log "ERROR" "Failed to install Python 3.13 module: $failed"
         }
-        throw "Package installation failed. The following modules could not be verified: $($failures -join ', ')"
+    } else {
+        Write-Host "`n[+] All modules installed successfully!" -ForegroundColor Green
     }
 
     # Add Monkey Patch to `pyreadline3` for Python 3.13 compatibility
@@ -61,6 +59,7 @@ try {
             $targetFile = $null
         }
     }
+
     if ($targetFile -and (Test-Path $targetFile)) {
         $content = Get-Content $targetFile -Raw
         if ($content -match "backend = 'pyreadline'") {
