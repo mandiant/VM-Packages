@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>angr.vm</id>
-    <version>9.2.157</version>
+    <version>9.2.207</version>
     <authors>Yan Shoshitaishvili, Ruoyu (Fish) Wang, Audrey Dutcher, Lukas Dresel, Zion Leonahenahe Basque, Eric Gustafson, Nilo Redini, Paul Grosen, Colin Unger, Chris Salls, Nick Stephens, Christophe Hauser, Jessie Grosen</authors>
     <description>angr is a multi-architecture binary analysis toolkit providing features like disassembly, IR lifting, program instrumentation, symbolic execution, and decompilation.</description>
     <dependencies>
