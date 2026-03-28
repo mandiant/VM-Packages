@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>nmap.vm</id>
-    <version>7.98</version>
+    <version>7.98.0.20260327</version>
     <authors>Fyodor, Nmap Project</authors>
     <description>Port scanning utility and nc replacement with extended features</description>
     <dependencies>
       <dependency id="common.vm"  version="0.0.0.20250206" />
       <dependency id="npcap.vm" />
-      <dependency id="autohotkey" version="[2.0.19]" />
+      <dependency id="autohotkey" version="[2.0.21]" />
       <dependency id="vcredist140.vm" />
     </dependencies>
     <tags>Networking</tags>
