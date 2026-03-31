@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>isd.vm</id>
-    <version>1.5.0.20250716</version>
+    <version>1.5.0.20260331</version>
     <authors>VDisAsm</authors>
     <description>Inno Setup Decompiler provides a useful UI to analyze Inno Setup compiled code scripts.</description>
     <dependencies>
@@ -11,3 +11,4 @@
     <tags>InnoSetup</tags>
   </metadata>
 </package>
+

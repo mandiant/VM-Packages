@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dnspyex.vm</id>
-    <version>6.5.1.20250505</version>
+    <version>6.5.1.20260331</version>
     <authors>0xd4d, ElektroKill</authors>
     <description>dnSpyEx is a unofficial continuation of the dnSpy project which is a debugger and .NET assembly editor.</description>
     <dependencies>
@@ -12,3 +12,4 @@
     <projectUrl>https://github.com/dnSpyEx/dnSpy</projectUrl>
   </metadata>
 </package>
+

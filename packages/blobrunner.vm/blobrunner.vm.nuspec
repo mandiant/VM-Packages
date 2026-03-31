@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>blobrunner.vm</id>
-    <version>0.0.5.20250219</version>
+    <version>0.0.5.20260331</version>
     <authors>OALabs</authors>
     <description>BlobRunner is a simple tool to quickly debug shellcode extracted during malware analysis.</description>
     <dependencies>
@@ -11,3 +11,4 @@
     <tags>Shellcode</tags>
   </metadata>
 </package>
+

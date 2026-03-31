@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ipython.vm</id>
-    <version>8.27.0.20250902</version>
+    <version>8.27.0.20260331</version>
     <authors>Fernando Perez</authors>
     <description>IPython is an interactive Python shell.</description>
     <dependencies>
@@ -13,3 +13,4 @@
     <projectUrl>https://ipython.org</projectUrl>
   </metadata>
 </package>
+
