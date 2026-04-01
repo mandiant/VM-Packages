@@ -1598,24 +1598,34 @@ function VM-Apply-Configurations {
 
 # This function returns a string of "Win10", "Win11", or "Win11ARM"
 function VM-Get-WindowsVersion {
-    $osInfo = Get-ComputerInfo
+    $osInfo = Get-CimInstance Win32_OperatingSystem
 
-    # Extract the version number and other details
-    $version = $osInfo.OsName
-    $osArchitecture = $osInfo.OSArchitecture
+    # Extract the version number
+    $version = $osInfo.Version # e.g., "10.0.22000"
 
-    if ($version -match "10") {
-        return "Win10"
+    # Check for Windows 11 (Build >= 22000) or Windows 10
+    $major, $minor, $build = $version -split '\.'
+    $buildNumber = [int]$build
+
+    $winVersion = "Unknown"
+    if ([int]$major -eq 10) {
+        if ($buildNumber -ge 22000) {
+            $winVersion = "Win11"
+        } else {
+            $winVersion = "Win10"
+        }
     }
-    elseif ($version -match "11" -and $osArchitecture -like "64?bit") {
-        return "Win11"
+
+    # Check for ARM (assuming if not x86 and not amd64, or check specifically)
+    $arch = $env:PROCESSOR_ARCHITECTURE
+    if ($arch -eq "ARM64") {
+        # Check if it's Win11 ARM
+        if ($winVersion -eq "Win11") {
+            return "Win11ARM"
+        }
     }
-    elseif ($version -match "11" -and $osArchitecture -match "ARM") {
-        return "Win11ARM"
-    }
-    else {
-        return "Unknown"
-    }
+
+    return $winVersion
 }
 
 function VM-Get-InstalledPackages {
