@@ -1,10 +1,10 @@
 name: Daily Test
 
-on:
-  workflow_dispatch:
-
 permissions:
   contents: read
+
+on:
+  workflow_dispatch:
   schedule:
     # Runs daily at a weird time (03:17 UTC) to avoid delays during periods of
     # high loads of GitHub Actions workflow runs.
