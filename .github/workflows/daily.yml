@@ -34,12 +34,13 @@ jobs:
       # Removed max-parallel: 1 to allow true parallel execution.
       # The wiki race condition is now handled by a separate publish job at the end.
       matrix:
-        # TODO: Add windows-2025, see https://github.com/mandiant/VM-Packages/issues/1447
-        os: [windows-2022]
+        os: [windows-2022, windows-2025]
         chunk: ${{ fromJson(needs.setup.outputs.chunks) }}
         include:
           - os: windows-2022
-            os_name: Win22
+            os_name: Windows 10
+          - os: windows-2025
+            os_name: Windows 11
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
