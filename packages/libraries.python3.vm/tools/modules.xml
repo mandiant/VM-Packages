@@ -27,6 +27,9 @@
     <module name="pythonnet"/>
     <module name="requests"/>
     <module name="rpyc"/>
+    <!-- Pin setuptools because version 82.0.0 removed pkg_resources, which is needed by unicorn -->
+    <module name="setuptools==81.0.0"/>
+    <module name="speakeasy-emulator"/>
     <module name="unicorn"/>
     <module name="vivisect"/>
     <module name="XLMMacroDeobfuscator"/>
