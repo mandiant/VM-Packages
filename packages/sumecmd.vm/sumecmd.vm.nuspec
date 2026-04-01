@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sumecmd.vm</id>
-    <version>1.0.0.20260316</version>
+    <version>1.0.0.20260331</version>
     <authors>Eric Zimmerman</authors>
     <description>Process Microsoft User Access Logs found under "C:\Windows\System32\LogFiles\SUM"</description>
     <dependencies>
@@ -12,3 +12,4 @@
     <tags>Forensic</tags>
   </metadata>
 </package>
+

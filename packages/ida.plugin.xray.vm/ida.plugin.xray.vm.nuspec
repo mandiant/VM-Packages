@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ida.plugin.xray.vm</id>
-    <version>0.0.0.20250715</version>
+    <version>0.0.0.20260331</version>
     <authors>patois</authors>
     <description>xray is an IDAPython plugin that filters and colorizes Hexrays decompiler output based on regular expressions to highlight interesting code patterns.</description>
     <dependencies>
@@ -12,3 +12,4 @@
     <projectUrl>https://github.com/patois/xray</projectUrl>
   </metadata>
 </package>
+
