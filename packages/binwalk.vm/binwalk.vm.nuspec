@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>binwalk.vm</id>
+    <version>3.1.1.20260331</version>
+    <authors>ReFirmLabs</authors>
+    <description>Binwalk identifies and extracts files and data that have been embedded inside of other files.</description>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="vcredist140.vm" />
+    </dependencies>
+    <tags>Utilities</tags>
+  </metadata>
+</package>
