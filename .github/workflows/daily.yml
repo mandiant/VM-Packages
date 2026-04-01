@@ -2,23 +2,41 @@ name: Daily Test
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
   schedule:
     # Runs daily at a weird time (03:17 UTC) to avoid delays during periods of
     # high loads of GitHub Actions workflow runs.
     - cron: '17 3 * * *'
 
 jobs:
+  setup:
+    runs-on: windows-latest
+    outputs:
+      chunks: ${{ steps.set-matrix.outputs.chunks }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Calculate package chunks
+        id: set-matrix
+        run: |
+          $chunks = python scripts/utils/split_packages.py
+          echo "chunks=$chunks" >> $env:GITHUB_OUTPUT
+
   test:
+    needs: setup
     runs-on: ${{ matrix.os }}
-    # Testing all packages takes several hours
+    # Setting timeout parameter to 23 hours, but GitHub-hosted public runners seem to
+    # have a hard limit of 6 hours (360 mins) per job before being auto-aborted.
     timeout-minutes: 1380
     strategy:
       fail-fast: false
-      # Updating the wiki fails if between the checkout of the wiki and the push of the update the other job pushes its update
-      max-parallel: 1
+      # Removed max-parallel: 1 to allow true parallel execution.
+      # The wiki race condition is now handled by a separate publish job at the end.
       matrix:
         # TODO: Add windows-2025, see https://github.com/mandiant/VM-Packages/issues/1447
         os: [windows-2022]
+        chunk: ${{ fromJson(needs.setup.outputs.chunks) }}
         include:
           - os: windows-2022
             os_name: Win22
@@ -27,12 +45,35 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Build and test all packages
         continue-on-error: true
-        run: scripts/test/test_install.ps1 -all
+        run: scripts/test/test_install.ps1 -package_names "${{ matrix.chunk }}" -all -max_tries 3
       - name: Upload logs to artifacts
         uses: ./.github/actions/upload-logs
         if: always()
         with:
-          os: ${{ matrix.os }}
+          os: ${{ matrix.os }}-${{ strategy.job-index }}
+      - name: Upload results artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: success_failure_${{ strategy.job-index }}
+          path: success_failure.json
+
+  publish:
+    needs: test
+    runs-on: windows-latest
+    if: always() # Run even if tests fail
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded_artifacts
+          pattern: success_failure_*
+
       - name: Checkout wiki code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
@@ -40,16 +81,19 @@ jobs:
           path: wiki
           token: ${{ secrets.REPO_TOKEN }}
           fetch-depth: 0
-      - name: Add results to wiki
-        run: python scripts/utils/generate_daily_results.py ${{ github.repository }} ${{ github.sha }} ${{ github.run_number }} ${{ github.run_id }} ${{ matrix.os }}
-      - name: Commit changes
+
+      - name: Combine results and create Wiki entry
+        run: python scripts/utils/combine_results.py
+
+      - name: Commit changes to Wiki
         working-directory: wiki
         run: |
           git config user.email 'vm-packages@google.com'
           git config user.name 'vm-packages'
           git commit -am 'Add daily results'
           git push
-      - name: Get badge info
+
+      - name: Get combined badge info
         run: |
           pwd
           $json = Get-Content -Raw "success_failure.json" | ConvertFrom-Json
@@ -60,6 +104,7 @@ jobs:
           if (-not $failure) { $message += " 🎉" }
           echo "failure=$failure" >> $env:GITHUB_ENV
           echo "message=$message" >> $env:GITHUB_ENV
+
       - name: Update dynamic badge gist
         uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483 # v1.7.0
         with:
