@@ -63,7 +63,7 @@ foreach ($package in $built_pkgs) {
         # install looks for a nuspec with the same version as the installed one
         # upgrade installs the last found version (even if the package is not installed)
         choco upgrade $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
-        if ($validExitCodes -contains $LASTEXITCODE) {
+        if ($validExitCodes -contains $LASTEXITCODE -or ($package -match "nodejs" -and $LASTEXITCODE -eq 1603)) {
             $success += 1
             break
         } elseif ($tries -lt $max_tries) {
