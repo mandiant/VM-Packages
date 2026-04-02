@@ -38,9 +38,9 @@ jobs:
         chunk: ${{ fromJson(needs.setup.outputs.chunks) }}
         include:
           - os: windows-2022
-            os_name: Windows 10
+            os_name: Win10
           - os: windows-2025
-            os_name: Windows 11
+            os_name: Win11
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: success_failure_${{ strategy.job-index }}
+          name: success_failure_${{ matrix.os_name }}_${{ strategy.job-index }}
           path: success_failure.json
 
   publish:
