@@ -58,12 +58,40 @@ $success = 0
 $built_pkgs = Get-ChildItem $built_pkgs_dir | Foreach-Object { ([regex]::match($_.BaseName, '(.*?[.](?:vm)).*').Groups[1].Value) } | Where-Object { $_ -notin $exclude_tests }
 Set-Location $built_pkgs_dir
 foreach ($package in $built_pkgs) {
+    # Check if the package depends on nodejs.vm by reading its nuspec
+    $nuspecPath = "$packages_dir\$package\$package.nuspec"
+    $dependsOnNode = $false
+    if (Test-Path $nuspecPath) {
+        $dependsOnNode = Get-Content $nuspecPath | Select-String -Pattern "nodejs.vm" -Quiet
+    }
+
     # We try to install the package several times (with a minute interval) to prevent transient failures
     for ($tries = 1; $tries -le $max_tries; $tries += 1) {
+        # On the last try, if it depends on node, repack it without nodejs.vm!
+        if ($tries -eq $max_tries -and $dependsOnNode) {
+            Write-Host -ForegroundColor Yellow "[WARN] Last try for Node tool $package. Repacking without nodejs.vm for testing..."
+
+            $source_dir = "$packages_dir\$package"
+            $nuspec_content = Get-Content $nuspecPath
+
+            # Filter out the nodejs.vm dependency line
+            $new_content = $nuspec_content | Where-Object { $_ -notmatch 'id="nodejs.vm"' }
+
+            $backupPath = "$nuspecPath.bak"
+            Copy-Item $nuspecPath $backupPath -Force
+            $new_content | Out-File -FilePath $nuspecPath -Encoding utf8
+
+            Push-Location $source_dir
+            choco pack -y -out $built_pkgs_dir
+            Pop-Location
+
+            Move-Item $backupPath $nuspecPath -Force
+        }
+
         # install looks for a nuspec with the same version as the installed one
         # upgrade installs the last found version (even if the package is not installed)
         choco upgrade $package -y -r -s "'.;https://www.myget.org/F/vm-packages/api/v2;https://community.chocolatey.org/api/v2/'" --no-progress --force
-        if ($validExitCodes -contains $LASTEXITCODE -or ($package -match "nodejs" -and $LASTEXITCODE -eq 1603)) {
+        if ($validExitCodes -contains $LASTEXITCODE) {
             $success += 1
             break
         } elseif ($tries -lt $max_tries) {
