@@ -5,6 +5,6 @@ $toolName = 'SDBExplorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.ericzimmermanstools.com/net9/SDBExplorer.zip'
-$zipSha256 = '22d7f8ea565f3b29a701a9542094534e4ca190a0d6e7fd95caefaabeb0e04568'
+$zipSha256 = 'C3CA7453F659BB0981BF2A573672B74BFFFEE5985E752CEC35BDA3ABC20080DE'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false -innerFolder $true

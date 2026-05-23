@@ -5,6 +5,6 @@ $toolName = 'AppCompatCacheParser'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.ericzimmermanstools.com/net9/AppCompatCacheParser.zip'
-$zipSha256 = '58b1a999c1f31e6d28ffcc722e49fadf0254a7ad04c48cde2537a61ccb6d1198'
+$zipSha256 = '67756841DBCD8CA3F47083BE2B016A22F61BDE0EA3450F0A776CF878BF66D42D'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false
