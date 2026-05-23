@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>x64dbg.vm</id>
-    <version>2025.08.19.20251217</version>
+    <version>2026.04.20</version>
     <description>x64dbg is a user mode debugger optimized for reverse engineering and malware analysis.</description>
     <authors>mrexodia</authors>
     <dependencies>
