@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>hasher.vm</id>
-    <version>2.1.0.20250505</version>
+    <version>5.0.0.20260509</version>
     <authors>Eric Zimmerman</authors>
     <description>Hasher is a tool to calculate hashes.</description>
     <dependencies>

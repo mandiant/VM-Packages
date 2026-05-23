@@ -5,6 +5,6 @@ $toolName = 'MFTExplorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.ericzimmermanstools.com/net9/MFTExplorer.zip'
-$zipSha256 = '43fbcf955417acc200939935f9f691051f8a47eb662efdd1827c7ee5c97b89a8'
+$zipSha256 = '6266F057B3B8243931FF6533B0D72885F3D53976C44F2DB531372117CA54ADE9'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false -innerFolder $true

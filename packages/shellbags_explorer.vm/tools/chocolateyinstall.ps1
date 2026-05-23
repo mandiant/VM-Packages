@@ -5,7 +5,7 @@ $toolName = 'ShellBagsExplorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.ericzimmermanstools.com/net9/ShellBagsExplorer.zip'
-$zipSha256 = '750c2b298945ec871f134804f39334bb764bbfb1bb7d0615e5f08a8ae2694a43'
+$zipSha256 = '56A5ADBCB7649CA4B3F8740EA285FE814AEA4CC8F185EAFBF6A0051ECE9B09CE'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false -innerFolder $true
 $rawToolDir = Join-Path $Env:RAW_TOOLS_DIR "$toolName\$toolName"

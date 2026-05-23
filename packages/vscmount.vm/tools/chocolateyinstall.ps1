@@ -5,6 +5,6 @@ $toolName = 'VSCMount'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.ericzimmermanstools.com/net9/VSCMount.zip'
-$zipSha256 = '6b263ea122a8fe3404a7bff68c7ac316c69f9d9f5c093bf439e06bcea0ffc8b5'
+$zipSha256 = '33F375B78C2FBB27901A63CEED1C79FA1F23EE9ABDA80D9371ABE163C434B8E0'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false

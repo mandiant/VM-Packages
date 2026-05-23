@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>sdb_explorer.vm</id>
-    <version>2.1.0.20260316</version>
+    <version>5.0.0.20260509</version>
     <authors>Eric Zimmerman</authors>
     <description>Shim database GUI</description>
     <dependencies>
