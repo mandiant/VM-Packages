@@ -4,8 +4,8 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'Autopsy'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$exeUrl = "https://github.com/sleuthkit/autopsy/releases/download/autopsy-4.23.0/autopsy-4.23.0-64bit.msi"
-$exeSha256 = 'cebc637497eee96b43b23390292b7aba9723ac71e63e8f442e9a13ab1de20580'
+$exeUrl = "https://github.com/sleuthkit/autopsy/releases/download/autopsy-4.23.1/autopsy-4.23.1-64bit.msi"
+$exeSha256 = 'f0f368e10cf615a805c85248356673a00c88a5e19c3b632859a1c98569ae03b6'
 
 $toolDir = Join-Path ${Env:ProgramFiles} $toolName
 $executablePath = Join-Path $toolDir "bin\autopsy64.exe"
