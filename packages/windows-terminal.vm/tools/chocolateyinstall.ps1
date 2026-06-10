@@ -6,8 +6,8 @@ try {
   $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
   $executableName = "wt.exe"
 
-  $zipUrl = 'https://github.com/microsoft/terminal/releases/download/v1.24.10921.0/Microsoft.WindowsTerminal_1.24.10921.0_x64.zip'
-  $zipSha256 = '4f64736da2f075a517e0f40ecac2a8acc9cd22076e6a7eddf84a86a3917b725e'
+  $zipUrl = 'https://github.com/microsoft/terminal/releases/download/v1.24.11321.0/Microsoft.WindowsTerminal_1.24.11321.0_x64.zip'
+  $zipSha256 = '7caef554147e5498ed1becdca73cdedb79fbc81f89032e46ae9b095c53433812'
 
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
