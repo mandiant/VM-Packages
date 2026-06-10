@@ -4,9 +4,9 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'hayabusa'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = "https://github.com/Yamato-Security/hayabusa/releases/download/v3.8.1/hayabusa-3.8.1-win-x64.zip"
-$zipSha256 = 'bc60ca3667169939abdb44ad740060277fa75c37efd960398414c208ebb334e2'
+$zipUrl = "https://github.com/Yamato-Security/hayabusa/releases/download/v3.9.0/hayabusa-3.9.0-win-x64.zip"
+$zipSha256 = 'cf3a1de0e7819dbcef5061632dab25b6dc344d828ba6bfdf6f2ef80ba7299eab'
 
-$executableName = $toolName.ToLower() + "-3.8.1-win-x64.exe"
+$executableName = $toolName.ToLower() + "-3.9.0-win-x64.exe"
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $true -innerFolder $false -executableName $executableName
