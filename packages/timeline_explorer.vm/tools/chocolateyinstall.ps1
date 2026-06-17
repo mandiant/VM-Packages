@@ -5,6 +5,6 @@ $toolName = 'TimelineExplorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $zipUrl = 'https://download.ericzimmermanstools.com/net9/TimelineExplorer.zip'
-$zipSha256 = 'EFB9630E0A887E58EBB37A9BC3CB8D6D0C9D4E59B3ECEC7B8F771C8316223EC6'
+$zipSha256 = '4c79248786cc6ea342f66e105588f72fc8d571b5bc89acdb5178a392416d93e9'
 
 VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -consoleApp $false -innerFolder $true
