@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ilspycmd.vm</id>
+    <version>9.0.0.20260616</version>
+    <description>Command-line tool for ILSpy decompiler.</description>
+    <authors>icsharpcode</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+      <dependency id="dotnet-8.vm" />
+    </dependencies>
+    <tags>dotNet</tags>
+    <projectUrl>https://github.com/icsharpcode/ILSpy</projectUrl>
+  </metadata>
+</package>
