@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>mal_unpack.vm</id>
+    <version>1.0.0.20260618</version>
+    <description>Dynamic malware unpacker based on PE-sieve</description>
+    <authors>hasherezade</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+    <tags>Packers</tags>
+    <projectUrl>https://github.com/hasherezade/mal_unpack</projectUrl>
+  </metadata>
+</package>

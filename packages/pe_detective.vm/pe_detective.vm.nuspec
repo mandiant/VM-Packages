@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>pe_detective.vm</id>
+    <version>1.0.0.20260618</version>
+    <description>PE Detective detects compilers, packers, cryptors and installers used on PE files.</description>
+    <authors>Daniel Pistelli</authors>
+    <dependencies>
+      <dependency id="common.vm" />
+    </dependencies>
+    <tags>PE</tags>
+    <projectUrl>https://ntcore.com/pe-detective/</projectUrl>
+  </metadata>
+</package>
