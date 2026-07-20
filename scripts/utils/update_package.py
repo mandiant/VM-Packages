@@ -67,11 +67,17 @@ def get_latest_version(org, project, version):
 
 # Get URL response's content SHA256 hash
 def get_sha256(url):
-    response = perform_request(url)
-    if not response:
+    try:
+        with requests.get(url, headers=headers, stream=True) as response:
+            if not response.ok:
+                return None
+            sha256_hash = hashlib.sha256()
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    sha256_hash.update(chunk)
+            return sha256_hash.hexdigest()
+    except Exception:
         return None
-
-    return hashlib.sha256(response.content).hexdigest()
 
 
 # Get first three segments of version (which can be preceded by `v`)
@@ -214,7 +220,7 @@ def get_msixbundle_version(url, version):
     app_installer_version = None
     msixbundle_uri = None
     try:
-        xml = ET.fromstring(response.content.decode("utf-8"))
+        xml = ET.fromstring(response.content.decode("utf-8-sig"))
         app_installer_version = xml.get("Version")
         main_bundle_element = xml.find("ai:MainBundle", namespaces)
         if main_bundle_element is not None:
