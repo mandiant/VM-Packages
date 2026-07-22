@@ -4,8 +4,8 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'chainsaw'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://github.com/WithSecureLabs/chainsaw/releases/download/v2.16.0/chainsaw_all_platforms+rules.zip'
-$zipSha256 = '9c6633fa5f3dffaed780ea5320a6fdd0f1e9b21b47dd4894f32d9a58347a7495'
+$zipUrl = 'https://github.com/WithSecureLabs/chainsaw/releases/download/v2.16.2/chainsaw_all_platforms+rules.zip'
+$zipSha256 = '210d174b96da9421b0897daf2e4dd5fc01be4fa45790974247a76071b127c899'
 
 $executableName = $toolName + "_x86_64-pc-windows-msvc.exe"
 
