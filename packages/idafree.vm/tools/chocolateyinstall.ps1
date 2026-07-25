@@ -8,7 +8,7 @@ try {
   # Download IDA .7z with the IDA installer and the FLARE-VM license
   $idaZipPath = Join-Path ${Env:TEMP} "ida_installer.7z"
   $idaZipSource = "https://hex-rays.com/hubfs/FlareVM/ida_installer.7z"
-  $idaZipChecksum = "9bf95862f33e9839d4fffbca8f9c864a832c2e9e0c747cd13e8b3df93e31c4f9"
+  $idaZipChecksum = "ee31457132fd272ea9c411882adde965dee3aaac090b24398a779d1189ecc25b"
   Get-ChocolateyWebFile -PackageName $toolName -fileFullPath $idaZipPath -Url $idaZipSource -Checksum $idaZipChecksum -ChecksumType "sha256"
   VM-Assert-Path $idaZipPath
 
