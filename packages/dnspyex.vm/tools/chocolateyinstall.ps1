@@ -5,8 +5,8 @@ try {
   $toolName = 'dnSpy'
   $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-  $zipUrl = "https://github.com/dnSpyEx/dnSpy/releases/download/v6.5.1/dnSpy-netframework.zip"
-  $zipSha256 = "95816dae47093966ccdb780c063f71576640d85d3e8584de490be43b1452f4e4"
+  $zipUrl = "https://github.com/dnSpyEx/dnSpy/releases/download/v6.6.0/dnSpy-netframework.zip"
+  $zipSha256 = "2eadb7f4931ad1882d10477cf57185d288cacc6e3abf9958e7ae73c0a0f31dd1"
   $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256)[0]
 
   $toolNameX86 = "$toolName-x86"
