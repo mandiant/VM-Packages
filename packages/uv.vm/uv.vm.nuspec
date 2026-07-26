@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>uv.vm</id>
-    <version>0.10.9</version>
-    <description>uv is an extremely fast Python package and project manager written in Rust.</description>
+    <version>0.11.32</version>
+    <description>An extremely fast Python package and project manager written in Rust.</description>
     <authors>Astral</authors>
     <dependencies>
       <dependency id="common.vm" version="0.0.0.20250206" />
