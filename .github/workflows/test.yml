@@ -18,4 +18,4 @@ jobs:
         continue-on-error: true
         env:
           MATRIX_OS: ${{ matrix.os }}
-        run: scripts/test/test_install.ps1 -package_names "nodejs.vm" -all -max_tries 3
+        run: scripts/test/test_install.ps1 -package_names "asar.vm js-beautify.vm js-deobfuscator.vm malware-jail.vm obfuscator-io-deobfuscator.vm pkg-unpacker.vm" -all -max_tries 1
