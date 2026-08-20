@@ -12,3 +12,8 @@ jobs:
     steps:
       - name: Print Node version
         run: node -v
+      - name: Build and nodejs.vm
+        continue-on-error: true
+        env:
+          MATRIX_OS: ${{ matrix.os }}
+        run: scripts/test/test_install.ps1 -package_names "nodejs.vm" -all -max_tries 3
