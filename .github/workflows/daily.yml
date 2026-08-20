@@ -48,6 +48,7 @@ jobs:
         continue-on-error: true
         env:
           MATRIX_OS: ${{ matrix.os }}
+          NODE_OPTIONS: --disable-warning=ExperimentalWarning
         run: scripts/test/test_install.ps1 -package_names "${{ matrix.chunk }}" -all -max_tries 3
       - name: Upload logs to artifacts
         uses: ./.github/actions/upload-logs
