@@ -1,0 +1,14 @@
+name: Test
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: windows-2022
+    steps:
+      - name: Print Node version
+        run: node -v
