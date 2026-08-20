@@ -5,7 +5,7 @@ $toolName = 'DCode'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $url = 'https://www.digital-detective.net/download/download.php?downcode=ae2znu5994j1lforlh03'
-$sha256 = '9ffe1106ee9d9f55b53d5707621d5990f493604e20f3dbdb0d22ec1b8ecb2458'
+$sha256 = 'be3383c8c37af8a8e2978011009d8bb3041c294eeda0ec8424341c8cec2e064f'
 
 $toolDir = Join-Path ${Env:ProgramFiles(x86)} "Digital Detective"
 $toolDir = Join-Path $toolDir "$toolName v5"
