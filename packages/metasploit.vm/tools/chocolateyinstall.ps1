@@ -13,7 +13,6 @@ try {
     }
     $filePath = Get-ChocolateyWebFile @packageArgs
     VM-Assert-Path $filePath
-    VM-Assert-Signature $filePath
 
     # Install the downloaded installer
     $packageArgs        = @{

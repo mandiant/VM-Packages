@@ -5,7 +5,7 @@ $toolName = 'Event Log Explorer'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
 $exeUrl = 'https://eventlogxp.com/download/elex_setup.exe'
-$exeSha256 = '45fdb740ea5acbfc1b5386b019fa0bb6d19fa5cae382bebd01834f11d725df12'
+$exeSha256 = 'b9c270fe9f7f8add0703ea1c4465fc3bd7f06cbdd82d01129c1d719d52af3a4c'
 
 $toolDir = Join-Path ${Env:ProgramFiles(x86)} $toolName
 $executablePath = Join-Path $toolDir "elex.exe"
