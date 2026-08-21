@@ -77,7 +77,7 @@ if ($isWin2025) {
     }
 }
 
-
+$env:NODE_OPTIONS = "--disable-warning=ExperimentalWarning" # Node experimental warnings make the installation fail
 $exclude_tests = @("installer.vm", "idapro.vm")
 if ($env:MATRIX_OS -eq "windows-2025") {
     $exclude_tests += "nodejs.vm"
