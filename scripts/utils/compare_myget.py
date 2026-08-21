@@ -1,6 +1,7 @@
 import glob
 import os
 import re
+import subprocess
 
 log_file = "wiki/MyGet-Version-Mismatches.md"
 source = "https://www.myget.org/F/vm-packages/api/v2"
@@ -13,12 +14,26 @@ def format_version(version):
 
 
 def get_remote_version(package_name):
-    stream = os.popen(f"powershell.exe choco find -er {package_name} -s {source}")
+    stream = os.popen(f"choco find -er {package_name} -s {source}")
     output = stream.read()
     m = re.search(rf"^{package_name}\|(?P<version>.+)", output, re.M)
     if not m:
         return ""
     return m.group("version")
+
+
+def sync_package(package_name, local_version):
+    os.makedirs("built_pkgs", exist_ok=True)
+    proc = subprocess.run(f"choco pack packages\\{package_name}\\{package_name}.nuspec -y -out built_pkgs", shell=True)
+    if proc.returncode != 0:
+        return False
+
+    pkg_nupkg = f"built_pkgs\\{package_name}.{local_version}.nupkg"
+    proc = subprocess.run(f"choco push {pkg_nupkg} -s {source} -k {os.environ.get('MYGET_TOKEN')}", shell=True)
+    if proc.returncode != 0:
+        return False
+
+    return True
 
 
 mismatches = []
@@ -37,7 +52,8 @@ for nuspec in nuspecs:
         local_version = m2.group("version")
         my_get_version = get_remote_version(name)
         if format_version(local_version) != format_version(my_get_version):
-            mismatches.append([name, my_get_version, local_version])
+            if not sync_package(name, local_version):
+                mismatches.append([name, my_get_version, local_version])
 
 log_f = open(log_file, "w")
 if not mismatches:

@@ -7,6 +7,8 @@ on:
     # high loads of GitHub Actions workflow runs.
     - cron: '41 2 * * *'
 
+permissions:
+  contents: write
 
 jobs:
   update_badge:
@@ -22,6 +24,8 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
           fetch-depth: 0
       - name: Add results to wiki
+        env:
+          MYGET_TOKEN: ${{ secrets.MYGET_TOKEN }}
         run: |
           $mismatches=$(python scripts/utils/compare_myget.py)
           echo "mismatches=$mismatches" >> $env:GITHUB_ENV
