@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>yara-x.vm</id>
+    <version>1.19.0.20260824</version>
+    <authors>YARA-X contributors</authors>
+    <description>YARA-X is a re-incarnation of YARA that intends to be faster, safer and more user-friendly.</description>
+    <dependencies>
+      <dependency id="common.vm" version="0.0.0.20260331" />
+    </dependencies>
+    <tags>Utilities</tags>
+    <projectUrl>https://github.com/VirusTotal/yara-x</projectUrl>
+  </metadata>
+</package>
