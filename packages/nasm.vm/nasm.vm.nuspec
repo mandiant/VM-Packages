@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>nasm.vm</id>
-    <version>3.2.0</version>
+    <version>3.2.0.20260825</version>
     <authors>NASM Authors</authors>
     <description>NASM (Netwide Assembler) is an assembler that supports multiple output formats.</description>
     <dependencies>
