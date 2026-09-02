@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>uv.vm</id>
-    <version>0.11.32</version>
+    <version>0.12.9</version>
     <description>An extremely fast Python package and project manager written in Rust.</description>
     <authors>Astral</authors>
     <dependencies>
