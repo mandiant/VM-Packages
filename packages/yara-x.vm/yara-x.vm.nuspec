@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>yara-x.vm</id>
-    <version>1.19.0.20260824</version>
+    <version>1.20.0</version>
     <authors>YARA-X contributors</authors>
     <description>YARA-X is a re-incarnation of YARA that intends to be faster, safer and more user-friendly.</description>
     <dependencies>
