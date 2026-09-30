@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>de4dotex.vm</id>
-    <version>3.8.0.20260824</version>
+    <version>3.9.0</version>
     <authors>G DATA Advanced Analytics</authors>
     <description>de4dotEx is a fork of de4dot that contains fixes and additions made in various different forks over the years.</description>
     <dependencies>
