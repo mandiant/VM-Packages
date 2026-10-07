@@ -94,7 +94,7 @@ function Fix-WebThreatDefSvcPermissions {
         # /T: Performs recursive operation on all files and subfolders
         # /C: Continues on file errors (important for robustness)
         # /Q: Suppresses success messages
-        $icaclsOutput = cmd.exe /c "icacls `"$targetPath`" /grant Administrators:F /T /C /Q" 2>&1
+        $icaclsOutput = cmd.exe /c "icacls `"$targetPath`" /grant *S-1-5-32-544:F /T /C /Q" 2>&1
         if ($LASTEXITCODE) {
             VM-Write-Log "WARN" "icacls command failed with exit code: $LASTEXITCODE"
             if ($icaclsOutput) {
