@@ -8,8 +8,8 @@ try {
   $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} 'Process-Dump'
   $shortcutDir = Join-Path ${Env:TOOL_LIST_DIR} $category
 
-  $url = 'https://github.com/glmcdona/Process-Dump/releases/download/v2.1.1/pd32.exe'
-  $checksum = 'c5d3535d33797a3b62916f5ea16b8710a0f5a7ce79ca4b2920eab245d99980d1'
+  $url = 'https://github.com/glmcdona/Process-Dump/releases/download/v3.0.0/pd32.exe'
+  $checksum = '1f6cff215c710e241f69d11300171a5b43c084103fe9b75dbf1bcfc47e8336de'
 
   $executablePath = Join-Path $toolDir ($toolName + "32.exe")
   $packageArgs = @{
@@ -32,8 +32,8 @@ try {
   Install-BinFile -Name ($toolName + "32") -Path $executablePath
 
   if (Get-OSArchitectureWidth -Compare 64) {
-    $url = 'https://github.com/glmcdona/Process-Dump/releases/download/v2.1.1/pd64.exe'
-    $checksum = 'f2c2d46331ddf2a4982ada7f3f2ea3a0946b99204d172b68d7bd6301eac5bb95'
+    $url = 'https://github.com/glmcdona/Process-Dump/releases/download/v3.0.0/pd64.exe'
+    $checksum = '5bb74f6bf8d7d54280031fa0b479a6f3822cd52bc87c1417b3f2b40224215507'
 
     $executablePath = Join-Path $toolDir ($toolName + "64.exe")
     $packageArgs = @{
