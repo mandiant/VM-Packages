@@ -526,6 +526,10 @@ function VM-Install-Node-Tool {
     )
     try {
         # "--no-update-notifier" removes the npm funding notice that may cause an error
+        # Recent Node.js versions print an "ExperimentalWarning" to stderr when npm
+        # starts, which Chocolatey/PowerShell treat as a fatal error; suppress node
+        # warnings so only actual error output remains fatal
+        $env:NODE_NO_WARNINGS = '1'
         npm install -g $toolName --no-update-notifier --loglevel=error
         VM-Install-Shortcut -toolName $toolName -category $category -arguments "$toolName $arguments" -powershell
     } catch {
@@ -555,6 +559,7 @@ function VM-Install-Node-Tool-From-Zip {
     $toolDir = (VM-Install-From-Zip $toolName $category $zipUrl $zipSha256 -innerFolder $innerFolder -powershellCommand "node $command")[0]
 
     # Install tool dependencies with npm (warnings are suppressed as it prevents the package from being installed)
+    $env:NODE_NO_WARNINGS = '1'
     Set-Location $toolDir; npm install --loglevel=error --no-update-notifier
 }
 
