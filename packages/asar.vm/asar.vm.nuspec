@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>asar.vm</id>
-    <version>4.0.0.20260820</version>
+    <version>4.0.0.20261012</version>
     <authors>@electron/asar contributors</authors>
     <description>asar decompresses .asar archives</description>
     <dependencies>
