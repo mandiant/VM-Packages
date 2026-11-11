@@ -5,8 +5,8 @@ $toolName = 'Merlin'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 $toolDir = Join-Path ${Env:RAW_TOOLS_DIR} $toolName
 
-$zipUrl = 'https://github.com/Ne0nd0g/merlin/releases/download/v2.1.4/merlinServer-Windows-x64.7z'
-$zipSha256 = 'e89443ecc3e47f8c43d541f7d9f741c01f30380ffb05689ebee233fc94cdf106'
+$zipUrl = 'https://github.com/Ne0nd0g/merlin/releases/download/v2.2.2/merlinServer-Windows-x64.7z'
+$zipSha256 = '6a93f70be0720d1ca3c4938f79fbef947c0be21d94b61a634d6a2a7061334983'
 $zipPassword = 'merlin'
 $fileName = 'merlinServer-Windows-x64'
 
