@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>jadx.vm</id>
-    <version>1.5.6.20260824</version>
+    <version>1.5.7</version>
     <authors>@skylot</authors>
     <description>Dex to Java decompiler.</description>
     <dependencies>
