@@ -31,10 +31,13 @@ function Install-Packages([object] $packagesToInstall) {
         foreach ($package in $packagesToInstall) {
             VM-Write-Log "INFO" "Installing: $package"
             choco install "$package" -y
-            if ($LASTEXITCODE) {
-              VM-Write-Log "ERROR" "`t$package has not been installed"
-            } else {
+            # Under Boxstarter, choco is a PowerShell function that runs Chocolatey in-process, so
+            # $LASTEXITCODE is not set by it. Check whether the package ended up installed instead.
+            $chocoLibPackage = Join-Path ${Env:ProgramData} "chocolatey\lib\$package"
+            if (Test-Path $chocoLibPackage) {
               VM-Write-Log "INFO" "`t$package has been installed"
+            } else {
+              VM-Write-Log "ERROR" "`t$package has not been installed"
             }
         }
     } catch {
@@ -184,7 +187,9 @@ try {
     $cache = "${Env:LocalAppData}\ChocoCache"
     Remove-Item $cache -Recurse -Force
 
-    # Write installed packages to log file
+    # Write installed packages to log file. Refresh the list first: the one read before the
+    # install does not include the packages installed during this run.
+    $installedPackages = VM-Get-InstalledPackages
     foreach ($package in $installedPackages){
         VM-Write-Log "INFO" "Package installed:  $($package.Name) | $($package.Version)"
     }
@@ -193,6 +198,7 @@ try {
     # as we use it in FLARE-VM unattended installation to check if the installation has finished.
     $failedPackagesFile = Join-Path $Env:VM_COMMON_DIR "failed_packages.txt"
     New-Item $failedPackagesFile
+    $logPath = Join-Path ${Env:VM_COMMON_DIR} "log.txt"
 
     $failedPackages = Get-Failed-Packages
     if ($failedPackages) {
@@ -202,7 +208,7 @@ try {
         }
 
         VM-Write-Log "ERROR" "For each failed package, you may attempt a manual install via: choco install -y <package_name>"
-        VM-Write-Log "ERROR" "Failed package list saved to: $failedPackages"
+        VM-Write-Log "ERROR" "Failed package list saved to: $failedPackagesFile"
         VM-Write-Log "ERROR" "Please check the following logs for additional errors:"
         VM-Write-Log "ERROR" "`t$logPath (this file)"
         VM-Write-Log "ERROR" "`t%PROGRAMDATA%\chocolatey\logs\chocolatey.log"
@@ -210,7 +216,6 @@ try {
     }
 
     # Display installer log if available
-    $logPath = Join-Path ${Env:VM_COMMON_DIR} "log.txt"
     if ((Test-Path $logPath)) {
         Write-Host "[-] Please check the following logs for any errors:" -ForegroundColor Yellow
         Write-Host "`t[-] $logPath" -ForegroundColor Yellow
