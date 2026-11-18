@@ -4,7 +4,7 @@ Import-Module vm.common -Force -DisableNameChecking
 $toolName = 'jadx'
 $category = VM-Get-Category($MyInvocation.MyCommand.Definition)
 
-$zipUrl = 'https://github.com/skylot/jadx/releases/download/v1.5.6/jadx-gui-1.5.6-win.zip'
-$zipSha256 = '6e070b197d4e40275d10f6559a1661bdd2e2bb325e9ef4181c7ac1286b274d99'
+$zipUrl = 'https://github.com/skylot/jadx/releases/download/v1.5.7/jadx-gui-1.5.7-win.zip'
+$zipSha256 = '996bf3e956d1eac7726899f8fe5d5c9fcdc05b36b3e97db46455ad81e1612bd5'
 
-VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -executableName 'jadx-gui-1.5.6.exe'
+VM-Install-From-Zip $toolName $category $zipUrl -zipSha256 $zipSha256 -executableName 'jadx-gui-1.5.7.exe'
