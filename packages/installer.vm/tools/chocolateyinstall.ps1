@@ -118,7 +118,7 @@ try {
     $installedPackages = VM-Get-InstalledPackages
     $configPath = Join-Path ${Env:VM_COMMON_DIR} "packages.xml" -Resolve
     $configXml = [xml](Get-Content $configPath)
-    $packagesToInstall = $configXml.config.packages.package.name | Where-Object { $installedPackages -notcontains $_ }
+    $packagesToInstall = $configXml.config.packages.package.name | Where-Object { $installedPackages.Name -notcontains $_ }
 
     # List packages to install
     Write-Host "[+] Packages to install:"
